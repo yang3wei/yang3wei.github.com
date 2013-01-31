@@ -5,15 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>设置 vim 默认编码为 utf-8 - yang3wei的专栏</title>
+  <title>Tag: octopress - yang3wei的专栏</title>
   <meta name="author" content="yang3wei">
 
   
-  <meta name="description" content="花了不少功夫来学习 vim，这不终于有机会用 vim 来写博文了
-结果发现 vim 里面对编码格式的支持出了问题，
-输入的中文在再次打开的时候都玩变形记，- -、
-不过肯定是有解决办法的，谁让 vim 这么强大呢！
-遂 googling，即刻便找到了解决方案 &hellip;">
+  <meta name="description" content="Tag: octopress">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -22,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://yang3wei.github.com/blog/2013/01/28/she-zhi-vim-mo-ren-bian-ma-wei-utf-8/">
+  <link rel="canonical" href="http://yang3wei.github.comtags/octopress/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -67,139 +63,78 @@
   <div id="main">
     <div id="content">
       <div>
-<article class="hentry" role="article">
+<article role="article">
   
   <header>
-    
-      <h1 class="entry-title">设置 Vim 默认编码为 Utf-8</h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-28T14:00:00+08:00" pubdate data-updated="true">Jan 28<span>th</span>, 2013</time>
-        
-         | <a href="#disqus_thread">Comments</a>
-        
-      </p>
+    <h1 class="entry-title">Tag: Octopress</h1>
     
   </header>
-
-
-<div class="entry-content"><p>花了不少功夫来学习 vim，这不终于有机会用 vim 来写博文了<br/>
-结果发现 vim 里面对编码格式的支持出了问题，<br/>
-输入的中文在再次打开的时候都玩变形记，- -、<br/>
-不过肯定是有解决办法的，谁让 vim 这么强大呢！<br/>
-遂 googling，即刻便找到了解决方案：</p>
-
-<!-- more -->
-
-
-<pre><code>" =====================
-" 多语言环境
-" 默认为 UTF-8 编码
-" =====================
-if has("multi_byte")
-    set encoding=utf-8
-    " English messages only
-    "language messages zh_CN.utf-8
   
-    if has('win32')
-        language english
-        let &termencoding=&encoding
-    endif
-  
-    set fencs=ucs-bom,utf-8,gbk,cp936,latin1
-    set formatoptions+=mM
-    set nobomb " 不使用 Unicode 签名
-  
-    if v:lang =~? '^\(zh\)\|\(ja\)\|\(ko\)'
-        set ambiwidth=double
-    endif
-else
-    echoerr "Sorry, this version of (g)vim was not compiled with +multi_byte"
-endif</code></pre>
-
-
-<p>将上面的配置追加到 ~/.vimrc 文件中</p>
-
-<p>PS:<br/>
-发现一个写 markdown 的时候要注意的地方，<br/>
-在 categories: 后面追加类别的时候需要用空格隔开，<br/>
-应该是做的强制性要求，不然在用 rake generate 命令生成的时候会出错：</p>
-
-<pre><code>ERROR: YOUR SITE COULD NOT BE BUILT:
-(&lt;unknown&gt;): could not find expected ':' while scanning a simple key at line 6 column 1 in /Users/user/octopress/source/_posts/2013-01-28-she-zhi-vim-mo-ren-bian-ma-wei-utf-8.markdown</code></pre>
-
-
-<p>不过这样也好，用空格隔开的话，看起来显得更加泾渭分明~</p>
-</div>
-
-
-  <footer>
-    <p class="meta">
-      
-  
-
-<span class="byline author vcard">Posted by <span class="fn">yang3wei</span></span>
-
-      
-
-
-
-
-
+  <div id="blog-archives" class="tag">
 
 
 
   
+  <h2>2013</h2>
 
-
-<time datetime="2013-01-28T14:00:00+08:00" pubdate data-updated="true">Jan 28<span>th</span>, 2013</time>
-      
-
-<span class="categories">
+<article>
   
-    <a class='category' href='/blog/categories/vim相关/'>vim相关</a>
-  
-</span>
+<h1><a href="/blog/2013/01/30/zhuan-zai-octopress-zen-yao-kai-qi-ping-lun-gong-neng/">(扩充)Octopress 怎么开启评论功能</a></h1>
+<time datetime="2013-01-30T18:09:00+08:00" pubdate><span class='month'>Jan</span> <span class='day'>30</span> <span class='year'>2013</span></time>
+
+<footer>
+  <span class="categories">posted in <a class='category' href='/blog/categories/octopress相关/'>octopress相关</a></span>
+</footer>
 
 
-    </p>
-    
-      <div class="sharing">
-  
-  
-  
-</div>
-
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2013/01/15/zhuan-zai-da-zao-shu-yu-zi-ji-de-vim-shen-qi/" title="Previous Post: (转载)打造属于自己的Vim神器">&laquo; (转载)打造属于自己的Vim神器</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2013/01/28/zhuan-zai-zai-github-shang-shi-yong-octopress/" title="Next Post: (转载)在 github 上使用 octopress">(转载)在 github 上使用 octopress &raquo;</a>
-      
-    </p>
-  </footer>
 </article>
 
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+<article>
+  
+<h1><a href="/blog/2013/01/30/zhuan-zai-wei-octopress-tian-jia-biao-qian-yun/">(扩充)为 octopress 添加标签云</a></h1>
+<time datetime="2013-01-30T02:54:00+08:00" pubdate><span class='month'>Jan</span> <span class='day'>30</span> <span class='year'>2013</span></time>
+
+<footer>
+  <span class="categories">posted in <a class='category' href='/blog/categories/octopress相关/'>octopress相关</a></span>
+</footer>
+
+
+</article>
+
+
+
+<article>
+  
+<h1><a href="/blog/2013/01/28/octopress-xin-zeng-bo-wen-shi-yao-zhu-yi-de-di-fang/">Octopress 新增博文时要注意的地方</a></h1>
+<time datetime="2013-01-28T22:11:00+08:00" pubdate><span class='month'>Jan</span> <span class='day'>28</span> <span class='year'>2013</span></time>
+
+<footer>
+  <span class="categories">posted in <a class='category' href='/blog/categories/octopress相关/'>octopress相关</a></span>
+</footer>
+
+
+</article>
+
+
+
+<article>
+  
+<h1><a href="/blog/2013/01/03/zhuan-zai-wo-wei-shi-yao-yao-cong-wordpress-zhuan-dao-octopress/">(转载)我为什么要从wordpress转到octopress</a></h1>
+<time datetime="2013-01-03T13:44:00+08:00" pubdate><span class='month'>Jan</span> <span class='day'>03</span> <span class='year'>2013</span></time>
+
+<footer>
+  <span class="categories">posted in <a class='category' href='/blog/categories/octopress相关/'>octopress相关</a></span>
+</footer>
+
+
+</article>
+
 </div>
-  </section>
+
+  
+</article>
 
 </div>
 
@@ -271,10 +206,7 @@ endif</code></pre>
       var disqus_shortname = 'yang3wei';
       
         
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://yang3wei.github.com/blog/2013/01/28/she-zhi-vim-mo-ren-bian-ma-wei-utf-8/';
-        var disqus_url = 'http://yang3wei.github.com/blog/2013/01/28/she-zhi-vim-mo-ren-bian-ma-wei-utf-8/';
-        var disqus_script = 'embed.js';
+        var disqus_script = 'count.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

@@ -1,43 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[My Octopress Blog]]></title>
+  <title><![CDATA[yang3wei的专栏]]></title>
   <link href="http://yang3wei.github.com/atom.xml" rel="self"/>
   <link href="http://yang3wei.github.com/"/>
-  <updated>2013-01-31T14:09:29+08:00</updated>
+  <updated>2013-01-31T14:57:54+08:00</updated>
   <id>http://yang3wei.github.com/</id>
   <author>
-    <name><![CDATA[Your Name]]></name>
+    <name><![CDATA[yang3wei]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[ATestsdffefe]]></title>
-    <link href="http://yang3wei.github.com/blog/2013/01/31/atestsdffefe/"/>
-    <updated>2013-01-31T11:12:00+08:00</updated>
-    <id>http://yang3wei.github.com/blog/2013/01/31/atestsdffefe</id>
-    <content type="html"><![CDATA[<p>D:\RoboCup\Dev\TinMan>git push rubix master
-To ssh://dnoakes@rubix/volume1/git/TinMan
- ! [rejected]        master -> master (non-fast-forward)
-error: failed to push some refs to &#8216;ssh://dnoakes@rubix/volume1/git/TinMan&#8217;
-To prevent you from losing history, non-fast-forward updates were rejected
-Merge the remote changes before pushing again.  See the &#8216;Note about
-fast-forwards&#8217; section of &#8216;git push &#8211;help&#8217; for details.
-I&#8217;ve read through the documentation on git push but at this
-point I can&#8217;t understand why I&#8217;m seeing this problem.</p>
-
-<p>Here is some other contextual info:</p>
-
-<p>D:\RoboCup\Dev\TinMan>git &#8211;version
-git version 1.7.0.2.msysgit.0</p>
-
-<p>D:\RoboCup\Dev\TinMan>git branch
-* (no branch)
-  master</p>
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[(转载)初次运行 Git 前的配置]]></title>

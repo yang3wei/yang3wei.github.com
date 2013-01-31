@@ -4,7 +4,7 @@ title: "设置 vim 默认编码为 utf-8"
 date: 2013-01-28 14:00
 comments: true
 categories: vim相关
-tags: vim
+tags: [vim]
 ---
 
 花了不少功夫来学习 vim，这不终于有机会用 vim 来写博文了  

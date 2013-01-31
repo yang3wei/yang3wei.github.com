@@ -4,7 +4,7 @@ title: "(扩充)Octopress 怎么开启评论功能"
 date: 2013-01-30 18:09
 comments: true
 categories: octopress相关
-tags: octopress
+tags: [octopress]
 ---
 原文链接：  
 [http://gangmax.me/blog/2012/01/20/how-to-use-disqus-in-octopress/](http://gangmax.me/blog/2012/01/20/how-to-use-disqus-in-octopress/ "Blog of GangMax")  

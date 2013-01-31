@@ -4,7 +4,7 @@ title: "(扩充)为 octopress 添加标签云"
 date: 2013-01-30 02:54
 comments: true
 categories: octopress相关
-tags: octopress
+tags: [octopress]
 ---
 原文链接：[http://codemacro.com/2012/07/18/add-tag-to-octopress/](http://codemacro.com/2012/07/18/add-tag-to-octopress/ "loop in codes")  
 同添加 `category list` 一样，网络上有很多方法，这里列举一种。  

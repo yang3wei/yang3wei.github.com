@@ -4,7 +4,7 @@ title: "灾后重建 octopress 博客遇到的问题"
 date: 2013-01-31 16:58
 comments: true
 categories: octopress相关
-tags: octopress
+tags: [octopress]
 ---
 今天上午十点的时候试了一下 `git pull` 命令，  
 结果导致 `octopress` 博客在我本地的目录乱成了一团浆糊，  

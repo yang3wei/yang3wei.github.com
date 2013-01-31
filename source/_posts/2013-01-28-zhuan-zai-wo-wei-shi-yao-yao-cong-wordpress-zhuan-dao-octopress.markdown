@@ -4,7 +4,7 @@ title: (转载)我为什么要从wordpress转到octopress
 date: 2013-01-03 13:44
 comments: true
 categories: octopress相关
-tags: octopress
+tags: [octopress]
 ---
 原文链接：[http://zilongshanren.com/blog/2013/01/03/migrate-to-octopress/](http://zilongshanren.com/blog/2013/01/03/migrate-to-octopress/ "子龙山人")
 {% img right /images/posts/octpress-logo.png 300 300 %}

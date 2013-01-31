@@ -4,7 +4,7 @@ title: "不问过去几多奢靡 但愿前路了无遗憾"
 date: 2013-01-28 23:55
 comments: true
 categories: 伟少手札
-tags: WeiShaoShouZha
+tags: [伟少手札]
 ---
 用着 MacVim 作为 octopress 新增博文的编辑器~  
 此刻，我终于明白子龙山人兄台说的话了，能使用本地应用程序作为博文的编辑器，  

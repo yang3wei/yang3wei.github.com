@@ -4,7 +4,7 @@ title: "MacVim 用 mvim 命令打开文件到新的标签页"
 date: 2013-01-30 15:22
 comments: true
 categories: vim相关
-tags: vim
+tags: [vim]
 ---
 原文链接：  
 [http://www.reake.com/how-to-use-terminal-command-to-open-file-to-macvim-mvim-tab/](http://www.reake.com/how-to-use-terminal-command-to-open-file-to-macvim-mvim-tab/ "瑞克互动")  

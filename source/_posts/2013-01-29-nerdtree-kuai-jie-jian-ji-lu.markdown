@@ -4,7 +4,7 @@ title: "NERDTree 快捷键辑录"
 date: 2013-01-29 13:45
 comments: true
 categories: vim相关
-tags: vim
+tags: [vim]
 ---
 参看连接：[http://www.cnblogs.com/lexus/archive/2012/11/04/2753187.html](http://www.cnblogs.com/lexus/archive/2012/11/04/2753187.html "朗志工作室(Langzhi Studio)")  
 ###切换工作台和目录

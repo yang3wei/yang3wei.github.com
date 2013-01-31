@@ -4,7 +4,7 @@ title: "(转载)Git 如何删除 Remote 的文件"
 date: 2013-01-28 17:25
 comments: true
 categories: git相关
-tags: git
+tags: [git]
 ---
 原文链接：[http://hi.baidu.com/zairl23/item/4a34c60084108fd01ef0464d](http://hi.baidu.com/zairl23/item/4a34c60084108fd01ef0464d "The Way")  
 使用 toto 做了个博客挂着 heroku 上。  

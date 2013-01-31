@@ -4,7 +4,7 @@ title: "(转载)初次运行 Git 前的配置"
 date: 2013-01-31 00:29
 comments: true
 categories: git相关
-tags: git
+tags: [git]
 ---
 原文链接：  
 [http://wuzongbin2008.blog.163.com/blog/static/214687332010111992437496/](http://wuzongbin2008.blog.163.com/blog/static/214687332010111992437496/ "人生、梦想、炼狱、天堂")  

@@ -4,7 +4,7 @@ title: "(转载)在 github 上使用 octopress"
 date: 2013-01-28 14:46
 comments: true
 categories: git相关
-tags: git
+tags: [git, octopress]
 ---
 
 原文链接：[http://huanggang.me/archives/654](http://huanggang.me/archives/654 "海阔天空")

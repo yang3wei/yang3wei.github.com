@@ -4,7 +4,7 @@ title: "Octopress 新增博文时要注意的地方"
 date: 2013-01-28 22:11
 comments: true
 categories: octopress相关
-tags: octopress
+tags: [octopress]
 ---
 用 MacVim 的请注意，执行 rake deploy 的时候，  
 切记要将 MacVim 正在编辑的 markdown 博文文件保存并关闭掉~  

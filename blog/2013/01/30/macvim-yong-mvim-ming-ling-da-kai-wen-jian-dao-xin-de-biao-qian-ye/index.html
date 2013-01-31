@@ -1,0 +1,265 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>MacVim 用 mvim 命令打开文件到新的标签页 - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="原文链接：
+http://www.reake.com/how-to-use-terminal-command-to-open-file-to-macvim-mvim-tab/
+从 MacVim(GitHub) 官网下载后，解压出两个文件：MacVim.app 和 mvim # 将 `MacVim. &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://yang3wei.github.com/blog/2013/01/30/macvim-yong-mvim-ming-ling-da-kai-wen-jian-dao-xin-de-biao-qian-ye/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:yang3wei.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">MacVim 用 Mvim 命令打开文件到新的标签页</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-30T15:22:00+08:00" pubdate data-updated="true">Jan 30<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>原文链接：<br/>
+<a href="http://www.reake.com/how-to-use-terminal-command-to-open-file-to-macvim-mvim-tab/" title="瑞克互动">http://www.reake.com/how-to-use-terminal-command-to-open-file-to-macvim-mvim-tab/</a><br/>
+从 <code>MacVim(GitHub)</code> 官网下载后，解压出两个文件：<code>MacVim.app</code> 和 <code>mvim</code></p>
+
+<pre><code># 将 `MacVim.app` 拷入 `/Applications` 目录
+sudo cp -f MacVim.app /Applications/
+# 将 `mvim` 拷入 `/usr/bin` 目录
+sudo cp -f mvim /usr/bin/</code></pre>
+
+
+<p>然后在 <code>Terminal</code> 键入命令 <code>mvim project_file.php</code> ，出现了一个 MacVim 窗口。<br/>
+但 <code>MacVim</code> 支持当前窗口多标签页功能，每次打开都是新窗口，<br/>
+虽然苹果有 <code>Mission Control</code> 切换，但文件窗口多了，显示还是很麻烦，<br/>
+所以想让 <code>mvim</code> 打开文件直接在 <code>MacVim</code> 当前窗口的新标签页里打开，<br/>
+需要在命令后加 <code>--remote-tab</code> 参数，感觉挺麻烦，何不设置为默认就在标签页中打开呢?</p>
+
+<!-- more -->
+
+
+<p>这里给出一种直接修改 <code>mvim</code> 以达到上述目的的方案：<br/>
+1.切换到 <code>/usr/bin/</code> 目录并打开 <code>mvim</code> 文件</p>
+
+<pre><code>cd /usr/bin/; mvim mvim</code></pre>
+
+
+<p>2.更改 <code>/usr/bin/mvim/</code> 文件中的配置
+首先，在文件头部加入</p>
+
+<pre><code>tabs=true</code></pre>
+
+
+<p>然后，把底部的 <code>if</code> 块替换成下面的：</p>
+
+<pre><code>if [ "$gui" ]; then
+  if $tabs && [[ `$binary --serverlist` = "VIM" ]]; then
+    exec "$binary" -g $opts --remote-tab-silent ${1:+"$@"}
+  else
+    exec "$binary" -g $opts ${1:+"$@"}
+  fi
+else
+  exec "$binary" $opts ${1:+"$@"}
+fi</code></pre>
+
+
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-30T15:22:00+08:00" pubdate data-updated="true">Jan 30<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/vim相关/'>vim相关</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://yang3wei.github.com/blog/2013/01/30/macvim-yong-mvim-ming-ling-da-kai-wen-jian-dao-xin-de-biao-qian-ye/" data-via="" data-counturl="http://yang3wei.github.com/blog/2013/01/30/macvim-yong-mvim-ming-ling-da-kai-wen-jian-dao-xin-de-biao-qian-ye/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/01/30/zhuan-zai-wei-octopress-tian-jia-biao-qian-yun/" title="Previous Post: (扩充)为 octopress 添加标签云">&laquo; (扩充)为 octopress 添加标签云</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/01/30/zhuan-zai-octopress-zen-yao-kai-qi-ping-lun-gong-neng/" title="Next Post: (扩充)Octopress 怎么开启评论功能">(扩充)Octopress 怎么开启评论功能 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/01/31/atestsdffefe/">ATestsdffefe</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/31/zhuan-zai-chu-ci-yun-xing-git-qian-de-pei-zhi/">(转载)初次运行 Git 前的配置</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/30/zhuan-zai-octopress-zen-yao-kai-qi-ping-lun-gong-neng/">(扩充)Octopress 怎么开启评论功能</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/30/macvim-yong-mvim-ming-ling-da-kai-wen-jian-dao-xin-de-biao-qian-ye/">MacVim 用 mvim 命令打开文件到新的标签页</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/30/zhuan-zai-wei-octopress-tian-jia-biao-qian-yun/">(扩充)为 octopress 添加标签云</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

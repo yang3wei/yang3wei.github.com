@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: vim相关 | My Octopress Blog]]></title>
+  <link href="http://yang3wei.github.com/blog/categories/vim相关/atom.xml" rel="self"/>
+  <link href="http://yang3wei.github.com/"/>
+  <updated>2013-01-31T14:09:29+08:00</updated>
+  <id>http://yang3wei.github.com/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[MacVim 用 mvim 命令打开文件到新的标签页]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/01/30/macvim-yong-mvim-ming-ling-da-kai-wen-jian-dao-xin-de-biao-qian-ye/"/>
+    <updated>2013-01-30T15:22:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/01/30/macvim-yong-mvim-ming-ling-da-kai-wen-jian-dao-xin-de-biao-qian-ye</id>
+    <content type="html"><![CDATA[<p>原文链接：<br/>
+<a href="http://www.reake.com/how-to-use-terminal-command-to-open-file-to-macvim-mvim-tab/" title="瑞克互动">http://www.reake.com/how-to-use-terminal-command-to-open-file-to-macvim-mvim-tab/</a><br/>
+从 <code>MacVim(GitHub)</code> 官网下载后，解压出两个文件：<code>MacVim.app</code> 和 <code>mvim</code></p>
+
+<pre><code># 将 `MacVim.app` 拷入 `/Applications` 目录
+sudo cp -f MacVim.app /Applications/
+# 将 `mvim` 拷入 `/usr/bin` 目录
+sudo cp -f mvim /usr/bin/</code></pre>
+
+
+<p>然后在 <code>Terminal</code> 键入命令 <code>mvim project_file.php</code> ，出现了一个 MacVim 窗口。<br/>
+但 <code>MacVim</code> 支持当前窗口多标签页功能，每次打开都是新窗口，<br/>
+虽然苹果有 <code>Mission Control</code> 切换，但文件窗口多了，显示还是很麻烦，<br/>
+所以想让 <code>mvim</code> 打开文件直接在 <code>MacVim</code> 当前窗口的新标签页里打开，<br/>
+需要在命令后加 <code>--remote-tab</code> 参数，感觉挺麻烦，何不设置为默认就在标签页中打开呢?</p>
+
+<!-- more -->
+
+
+<p>这里给出一种直接修改 <code>mvim</code> 以达到上述目的的方案：<br/>
+1.切换到 <code>/usr/bin/</code> 目录并打开 <code>mvim</code> 文件</p>
+
+<pre><code>cd /usr/bin/; mvim mvim</code></pre>
+
+
+<p>2.更改 <code>/usr/bin/mvim/</code> 文件中的配置
+首先，在文件头部加入</p>
+
+<pre><code>tabs=true</code></pre>
+
+
+<p>然后，把底部的 <code>if</code> 块替换成下面的：</p>
+
+<pre><code>if [ "$gui" ]; then
+  if $tabs && [[ `$binary --serverlist` = "VIM" ]]; then
+    exec "$binary" -g $opts --remote-tab-silent ${1:+"$@"}
+  else
+    exec "$binary" -g $opts ${1:+"$@"}
+  fi
+else
+  exec "$binary" $opts ${1:+"$@"}
+fi</code></pre>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[NERDTree 快捷键辑录]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/01/29/nerdtree-kuai-jie-jian-ji-lu/"/>
+    <updated>2013-01-29T13:45:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/01/29/nerdtree-kuai-jie-jian-ji-lu</id>
+    <content type="html"><![CDATA[<p>参看连接：<a href="http://www.cnblogs.com/lexus/archive/2012/11/04/2753187.html" title="朗志工作室(Langzhi Studio)">http://www.cnblogs.com/lexus/archive/2012/11/04/2753187.html</a></p>
+
+<h3>切换工作台和目录</h3>
+
+<pre><code>ctrl + w + h    光标 focus 左侧树形目录
+ctrl + w + l    光标 focus 右侧文件显示窗口
+ctrl + w + w    光标自动在左右侧窗口切换
+ctrl + w + r    移动当前窗口的布局位置
+</code></pre>
+
+
+<!-- more -->
+
+
+<pre><code>o       在已有窗口中打开文件、目录或书签，并跳到该窗口
+go      在已有窗口 中打开文件、目录或书签，但不跳到该窗口
+t       在新 Tab 中打开选中文件/书签，并跳到新 Tab
+T       在新 Tab 中打开选中文件/书签，但不跳到新 Tab
+i       split 一个新窗口打开选中文件，并跳到该窗口
+gi      split 一个新窗口打开选中文件，但不跳到该窗口
+s       vsplit 一个新窗口打开选中文件，并跳到该窗口
+gs      vsplit 一个新 窗口打开选中文件，但不跳到该窗口
+!       执行当前文件
+O       递归打开选中 结点下的所有目录
+x       合拢选中结点的父目录
+X       递归 合拢选中结点下的所有目录
+e       Edit the current dif
+
+双击    相当于 NERDTree-o
+中键    对文件相当于 NERDTree-i，对目录相当于 NERDTree-e
+
+D       删除当前书签
+
+P       跳到根结点
+p       跳到父结点
+K       跳到当前目录下同级的第一个结点
+J       跳到当前目录下同级的最后一个结点
+k       跳到当前目录下同级的前一个结点
+j       跳到当前目录下同级的后一个结点
+
+C       将选中目录或选中文件的父目录设为根结点
+u       将当前根结点的父目录设为根目录，并变成合拢原根结点
+U       将当前根结点的父目录设为根目录，但保持展开原根结点
+r       递归刷新选中目录
+R       递归刷新根结点
+m       显示文件系统菜单
+cd      将 CWD 设为选中目录
+
+I       切换是否显示隐藏文件
+f       切换是否使用文件过滤器
+F       切换是否显示文件
+B       切换是否显示书签
+
+q       关闭 NerdTree 窗口
+?       切换是否显示 Quick Help
+</code></pre>
+
+
+<h3>切换标签页</h3>
+
+<pre><code>:tabnew [++opt选项] ［＋cmd］ 文件      建立对指定文件新的tab
+:tabc   关闭当前的 tab
+:tabo   关闭所有其他的 tab
+:tabs   查看所有打开的 tab
+:tabp   前一个 tab
+:tabn   后一个 tab
+
+标准模式下：
+gT      前一个 tab
+gt      后一个 tab
+
+MacVim 还可以借助快捷键来完成 tab 的关闭、切换
+cmd+w   关闭当前的 tab
+cmd+{   前一个 tab
+cmd+}   后一个 tab
+</code></pre>
+
+
+<h3>NerdTree 在 .vimrc 中的常用配置</h3>
+
+<pre><code>" 在 vim 启动的时候默认开启 NERDTree（autocmd 可以缩写为 au）
+autocmd VimEnter * NERDTree
+
+" 按下 F2 调出/隐藏 NERDTree
+map <F2> :silent! NERDTreeToggle<CR>
+
+" 将 NERDTree 的窗口设置在 vim 窗口的右侧（默认为左侧）
+let NERDTreeWinPos="right"
+
+" 当打开 NERDTree 窗口时，自动显示 Bookmarks
+let NERDTreeShowBookmarks=1
+</code></pre>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[设置 vim 默认编码为 utf-8]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/01/28/she-zhi-vim-mo-ren-bian-ma-wei-utf-8/"/>
+    <updated>2013-01-28T14:00:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/01/28/she-zhi-vim-mo-ren-bian-ma-wei-utf-8</id>
+    <content type="html"><![CDATA[<p>花了不少功夫来学习 vim，这不终于有机会用 vim 来写博文了<br/>
+结果发现 vim 里面对编码格式的支持出了问题，<br/>
+输入的中文在再次打开的时候都玩变形记，- -、<br/>
+不过肯定是有解决办法的，谁让 vim 这么强大呢！<br/>
+遂 googling，即刻便找到了解决方案：</p>
+
+<!-- more -->
+
+
+<pre><code>" =====================
+" 多语言环境
+" 默认为 UTF-8 编码
+" =====================
+if has("multi_byte")
+    set encoding=utf-8
+    " English messages only
+    "language messages zh_CN.utf-8
+  
+    if has('win32')
+        language english
+        let &termencoding=&encoding
+    endif
+  
+    set fencs=ucs-bom,utf-8,gbk,cp936,latin1
+    set formatoptions+=mM
+    set nobomb " 不使用 Unicode 签名
+  
+    if v:lang =~? '^\(zh\)\|\(ja\)\|\(ko\)'
+        set ambiwidth=double
+    endif
+else
+    echoerr "Sorry, this version of (g)vim was not compiled with +multi_byte"
+endif</code></pre>
+
+
+<p>将上面的配置追加到 ~/.vimrc 文件中</p>
+
+<p>PS:<br/>
+发现一个写 markdown 的时候要注意的地方，<br/>
+在 categories: 后面追加类别的时候需要用空格隔开，<br/>
+应该是做的强制性要求，不然在用 rake generate 命令生成的时候会出错：</p>
+
+<pre><code>ERROR: YOUR SITE COULD NOT BE BUILT:
+(&lt;unknown&gt;): could not find expected ':' while scanning a simple key at line 6 column 1 in /Users/user/octopress/source/_posts/2013-01-28-she-zhi-vim-mo-ren-bian-ma-wei-utf-8.markdown</code></pre>
+
+
+<p>不过这样也好，用空格隔开的话，看起来显得更加泾渭分明~</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[(转载)打造属于自己的Vim神器]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/01/15/zhuan-zai-da-zao-shu-yu-zi-ji-de-vim-shen-qi/"/>
+    <updated>2013-01-15T13:39:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/01/15/zhuan-zai-da-zao-shu-yu-zi-ji-de-vim-shen-qi</id>
+    <content type="html"><![CDATA[<p>转载自：<a href="http://zilongshanren.com/blog/2013/01/15/vim-the-killer/" title="子龙山人">http://zilongshanren.com/blog/2013/01/15/vim-the-killer/</a></p>
+
+<h2>Why Vim?</h2>
+
+<p>为什么要使用Vim？</p>
+
+<p>我们先看看其他人怎么说：</p>
+
+<blockquote><p>Vim or Emacs就好比倚天和屠龙，得一可得天下。 -- By vimer.cn</p>
+
+<p>Vim就像学钢琴一样，一旦学会，终身受益无穷。   --By Practical Vim</p></blockquote>
+
+<!-- more -->
+
+
+<p>这些话都是出自vim高手之口，对于Vim新手，可能暂时没办法体会。而我使用Vim也有一段时间了，肯定不能算是高手，但至少也是一个熟手。</p>
+
+<p>我现在主要使用Vim来编写c/c++、js、lua代码,我觉得非常方便，比Xcode和Eclise都强（调试部分可能相对弱一点）。当然，我还使用Vim来修改其它文档，比如Html、XML、文本文件等。现在我正在使用Vim书写本篇博文，非常酷，非常爽！</p>
+
+<p>我转成Vim党的感受，一句话：</p>
+
+<blockquote><p>Vim streamline my daily workflow and boost my coding productivity.</p></blockquote>
+
+<p>现在，我客观地说明一下Vim的一些好处：</p>
+
+<ul>
+<li><p>跨平台、支持N（N>40)种编程语言</p></li>
+<li><p>可安装各种插件，也可以编写自定义的插件，编辑器功能可无限扩展。</p></li>
+<li><p>配合Git管理Vim配置和插件,可极大地提高编辑器的适配性</p></li>
+<li><p>小巧、安装方便、开源、免费</p></li>
+<li><p>可打造出属于自已的个性化IDE工作环境，提高生产率</p></li>
+</ul>
+
+
+<h2>Why not Vim?</h2>
+
+<p>为什么不使用Vim？</p>
+
+<p>可能有以下几种声音：</p>
+
+<ul>
+<li><p>Vim过时了，用Vim就是找虐，别装比了，专心学好数据结构与算法吧。</p></li>
+<li><p>我是Java党，我只用Eclipse，也能安装各种插件。我是.Net党，我喜欢强大的VS,也有牛比的插件（如VC助手)</p></li>
+<li><p>我是果粉，我喜欢Xcode的优雅，也是免费的，有苹果罩着，LLVM代码补全用着超爽。</p></li>
+<li><p>我也知道用Vim或者Emacs很强大，但是学习曲线真的很陡，我还是老老实实用我的IDE吧。</p></li>
+<li><p>我在用TextMate、Notepad++、Sumbline text 2，我用着很爽，这些也是神器，我不需要Vim。</p></li>
+</ul>
+
+
+<p>我在这里不去说现代的IDE有什么不好，或者Vim相比于这些IDE来说有哪些优点。我知道这样说，又马上会引起一场语言之争，编辑器大战出来。其实，真的是没必要去纠结用什么开发工具,也没必要纠结用什么语言。</p>
+
+<p>只是我觉得程序员天生就是用来折腾的。有牛人讲过一句话：</p>
+
+<blockquote><p>每年学习一门新的编程语言，而且这门语言跟你之前熟悉的语言关系越远越好</p></blockquote>
+
+<p>现在，我也呼吁一下吧：从现在起，学习一门新的文本编辑工具Vim，它跟你之前所用到的编辑器体验完全不一样。它的Modal Editing是独一无二的，程序员值得拥有。而且你不用每年换一个编辑器，因为你只需要一个Vim编辑器。你越了解它，越使用它，就越会对它爱不释手。</p>
+
+<p>让我们一起来折腾吧！Vim, the Killer! Oh~Ye.:)</p>
+
+<h2>How to make Vim as a IDE?</h2>
+
+<blockquote><p>Know the saw, then sharpen it.</p></blockquote>
+
+<p>很多人不使用Vim的原因很简单，除了不习惯它的Modal Editing之外，更多的是觉得它算不上一个IDE。但是，稍微对Vim有过了解的朋友都知道，Vim是可以被打造成一个IDE的，而且是专门属于自己的IDE。</p>
+
+<p>为什么要使用IDE，请看<a href="http://stackoverflow.com/questions/208193/why-should-i-use-an-ide">此贴</a></p>
+
+<p>博客园的池建强写了一系列的博文《谁说Vim不是IDE》（<a href="http://www.cnblogs.com/chijianqiang/archive/2012/10/30/vim-1.html">一</a>、<a href="http://www.cnblogs.com/chijianqiang/archive/2012/10/31/vim-2.html">二</a>、<a href="http://www.cnblogs.com/chijianqiang/archive/2012/11/06/vim-3.html">三</a>、<a href="http://www.cnblogs.com/chijianqiang/archive/2012/12/17/vim-4.html">四</a>。）有兴趣的朋友可以去看看，看完后你会发现，原来Vim也可以变成IDE。：）</p>
+
+<p>关于如何把Vim打造成一个IDE，只要你现在随便谷歌一下，你肯定能找到一大堆贴子。但是，由于Vim历史悠久，有许多贴之已经过时了。</p>
+
+<p>其中最主要的变化有:</p>
+
+<ul>
+<li><p>有些插件有新的替代插件了（因为站在巨人肩膀上的缘故）</p></li>
+<li><p>安装和管理插件的方式变了，以前是手动复制相应目录和文件，现在改为插件管理器+Github了。</p></li>
+<li><p>有些插件已经不推荐使用了</p></li>
+</ul>
+
+
+<p>但是，Vim社区总是很活跃的。目前，已经有牛人把最新的Vim配置方式分享出来了。我找到了3篇，大家可以参考一下。（不过都是英文哦）</p>
+
+<ul>
+<li><a href="http://oblita.com/blog/2012/08/30/vim-the-killer/">Vim, The Killer </a></li>
+<li><a href="http://haridas.in/vim-as-your-ide.html">Vim as your IDE</a></li>
+<li><a href="https://github.com/mbrochh/vim-as-a-python-ide">Vim as a python IDE</a></li>
+</ul>
+
+
+<p>其实可以列举的还有很多，国内也有许多优秀的Vimer，欢迎你们推荐优秀的设置Vim为IDE的教程或者文章，Thanks.:)</p>
+
+<h2>Recommended plugins</h2>
+
+<p>没有安装插件的Vim算不了什么，但是，一旦安装好插件，Vim立马就牛比了。这里，作为一名cocos2d-x游戏程序员，我给大家推荐一些插件，关于插件的用法，大家可以查看help文档，我这里就不赘述了。</p>
+
+<h3>Basic plugins</h3>
+
+<p><a href="https://github.com/tpope/vim-pathogen">Pathogen</a>:该插件用来管理Vim的插件，可以让插件的安装与卸载更加方便。配合Github和Submodule效果更佳。</p>
+
+<p><a href="https://github.com/scrooloose/nerdtree">NerdTree</a>:该插件会生成工程目录树</p>
+
+<p><a href="https://github.com/majutsushi/tagbar">TagBar</a>:该插件生成函数、变量列表。之前有一个插件叫TagList，我觉得那个有点不好用，推荐TagBar</p>
+
+<p><a href="https://github.com/SirVer/ultisnips">UltiSnips</a>:类似TextMate的snippets，之前有个插件叫SnipMate，这个基于SnipMate，比SnipMate要强很多。强烈推荐。</p>
+
+<p><a href="https://github.com/tpope/vim-commentary.git">vim-commentary</a>:注释代码的插件。</p>
+
+<p><a href="https://github.com/scrooloose/syntastic">syntastic</a>:保存文件时检查语法的插件。</p>
+
+<p><a href="https://github.com/tpope/vim-fugitive.git">fugitive</a>:方便在Vim里面使用Git的插件。</p>
+
+<p><a href="https://github.com/altercation/vim-colors-solarized">vim-colors-solarized</a>:Vim颜色配色方案。</p>
+
+<p><a href="https://github.com/kien/ctrlp.vim.git">ctrlp</a>：搜索目录下的文件，类似功能的插件有Comment-T，我喜欢ctrlp，因为它不依赖于ruby，且是轻量级的.</p>
+
+<p><a href="https://github.com/vim-scripts/AutoClose">AutoClose</a>:成对生成(),{},[]</p>
+
+<p><a href="https://github.com/tpope/vim-surround.git">vim-surround</a>：给文本添加“外套”，呵呵，试试就知道有多强大了。</p>
+
+<p><a href="https://github.com/ervandew/supertab">supertab</a>:让tab键可以飞起来。</p>
+
+<p><a href="https://github.com/vim-scripts/a.vim">a</a>:让cpp文件在.h和.cpp文件中切换。</p>
+
+<p><a href="https://github.com/vim-scripts/bufexplorer.zip">buferexplorer</a>:方便浏览buffer的插件。</p>
+
+<p><a href="https://github.com/oblitum/clang_complete">clangComplete</a>:自动代码补全的插件，比OmniCppComplete好N多，速度有一点影响。不过配合neocomplcache，加上这个版本，效率还不错。</p>
+
+<p><a href="https://github.com/Shougo/neocomplcache">neocomplcache</a>:关键字补全、文件路径补全、tag补全等等，各种，非常好用，速度超快。</p>
+
+<p><a href="https://github.com/osyo-manga/neocomplcache-clang_complete">neocomplcache-clang</a>:解决clang_complete和neocomplcache的冲突。</p>
+
+<p><a href="https://github.com/magic-dot-files/TagHighlight"> TagHightlight </a>:根据生成的Tag文件，高亮类、变量、函数和关键字。</p>
+
+<h3>Bonus plugins</h3>
+
+<p><a href="https://github.com/oblitum/bufkill.git">bufkill</a>:让nerdTree在最后一个buffer窗口关闭时，不让其缩放。</p>
+
+<p><a href="https://github.com/oblitum/vimprj">vimprj</a>:方便管理工程相关的vim配置。参考如何设置Vim为IDE中的第一篇E文。</p>
+
+<p><a href="https://github.com/tpope/vim-unimpaired">vim-unimpaired</a>:一些不错的配置，可以让[]发挥奇效。</p>
+
+<p><a href="https://github.com/Lokaltog/vim-powerline">vim-powerline</a>:超有爱的状态栏。</p>
+
+<p><a href="https://github.com/kana/vim-textobj-line">vim-textobj-line</a>:文本对象插件，可以操纵当前行。</p>
+
+<p>更多插件，可以到我的Github上面去查看。可以从本博右上角Fork Me on Github处进入。当然，如果各种Vimer有什么好的插件，也欢迎推荐给我。</p>
+
+<h2>Troubleshootings</h2>
+
+<p>这部分主要记录我在打造神器的过程中遇到的一些问题：</p>
+
+<ul>
+<li><p>Vim版本最好用gvim或者macvim，然后从源码编译最好。最好是支持python,ruby,cscope等,大部分vim发行版本都是支持这些特性的。</p></li>
+<li><p>使用Excubert-ctags和<a href="https://github.com/mozilla/doctorjs">DoctorJs</a>来生成tag文件，配合cscope效果好。如果是mac用户，自带的ctags不管用，需要用homebrew或者macport来安装</p></li>
+<li><p>配置pyclewn时，安装需要指定Editor和home设置。运行的时候，如果要让GDB支持tty，还需要重新安装GDB，最好是homebrew或者macport来安装。安装好之后，要给gdb添加codesigning。</p></li>
+<li><p>windows版本下有些配置可能不太一样，特别是vimrc文件的配置，跟*nix系统不太一样。可以考虑用has(win32)之类的代码来区分vimrc配置。这样可以让vim运行在多个平台上。</p></li>
+</ul>
+
+
+<h2>Further Reading</h2>
+
+<p>强烈推荐阅读：<a href="http://pragprog.com/book/dnvim/practical-vim">《Practical Vim》</a></p>
+
+<p>推荐视频网站三个：<a href="http://www.vimcasts.org/">Vimcasts.org</a>,<a href="http://net.tutsplus.com/sessions/vim-essential-plugins/">essential vim plugins</a>和<a href="http://www.derekwyatt.org/vim/vim-tutorial-videos/">Derek Wyatt's Blog</a></p>
+
+<p>国内站点推荐三个：<a href="http://www.vimer.cn/">vimer世界</a>,<a href="http://easwy.com/blog/archives/advanced-vim-skills-catalog/">易水的博客</a>,<a href="http://www.newsmth.net/bbsdoc.php?board=VIM">水木清华社区</a></p>
+
+<p>最后推荐一个vimrc设置技巧网站<a href="http://www.vimbits.com/">vimbits</a>,这个网站会选出最流行的vimrc配置，大家可以时不时去上面淘金。当然，如果你发现好用的vimrc配置，也记得一定要分享出来啊。社区需要你！</p>
+
+<h2>References</h2>
+
+<p>Google + Wiki. :)</p>
+]]></content>
+  </entry>
+  
+</feed>

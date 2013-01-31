@@ -1,0 +1,293 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>(扩充)为 octopress 添加标签云 - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="原文链接：http://codemacro.com/2012/07/18/add-tag-to-octopress/
+同添加 category list 一样，网络上有很多方法，这里列举一种。
+首先将以下两个项目克隆到本地： https://github.com/robbyedwards/ &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://yang3wei.github.com/blog/2013/01/30/zhuan-zai-wei-octopress-tian-jia-biao-qian-yun/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:yang3wei.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">(扩充)为 Octopress 添加标签云</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-30T02:54:00+08:00" pubdate data-updated="true">Jan 30<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>原文链接：<a href="http://codemacro.com/2012/07/18/add-tag-to-octopress/" title="loop in codes">http://codemacro.com/2012/07/18/add-tag-to-octopress/</a><br/>
+同添加 <code>category list</code> 一样，网络上有很多方法，这里列举一种。<br/>
+首先将以下两个项目克隆到本地：</p>
+
+<pre><code>https://github.com/robbyedwards/octopress-tag-pages 
+https://github.com/robbyedwards/octopress-tag-cloudclone
+</code></pre>
+
+
+<p>这两个项目分别用于产生 <code>tag page</code> 和 <code>tag cloud</code>。<br/>
+针对这两个插件，需要手工复制一些文件到你的 octopress 目录。</p>
+
+<!-- more -->
+
+
+<h3>1.octopress-tag-pages</h3>
+
+<p>复制 <code>tag_generator.rb</code> 到 <code>/plugins</code> 目录。<br/>
+复制 <code>tag_index.html</code> 到 <code>/source/_layouts</code> 目录。<br/>
+复制 <code>tag_feed.xml</code> 到 <code>/source/_includes/custom/</code> 目录。<br/>
+其他文件就不需要复制了，都是些例子。</p>
+
+<h3>2.octopress-tag-cloud</h3>
+
+<p>复制 <code>tag_cloud.rb</code> 到 <code>/plugins</code> 目录。<br/>
+复制以下代码到 <code>/source/_includes/custom/asides/tags.html</code>。<br/>
+<strong>注意：先去掉 % 前面的反斜杠</strong></p>
+
+<pre><code>&lt;section&gt;
+    &lt;h1&gt;Tags&lt;/h1&gt;
+    &lt;ul class="tag-cloud"&gt;
+        {\% tag_cloud font-size: 100-210%, limit: 49, style: para \%}
+    &lt;/ul&gt;
+&lt;/section&gt;
+</code></pre>
+
+
+<p><code>tag_cloud</code> 的参数中：<br/>
+<code>style: para</code> 指定不使用 <code>li</code> 来分割；<br/>
+<code>limit</code> 限定 10 个 tag；<br/>
+<code>font-size</code> 指定 tag 的大小范围，具体参数参看官方文档。</p>
+
+<p>最后，当然是在 <code>_config.yml</code> 的 <code>default_asides</code> 中添加这个 <code>tag cloud</code> 到导航栏，例如：</p>
+
+<pre><code>default_asides: [asides/category_list.html, asides/recent_posts.html, custom/asides/tags.html]</code></pre>
+
+
+<h3>3.本人扩充: 有一个要注意的地方</h3>
+
+<p>结合自身经历，我按照前文所述操作且核对了很多次，<br/>
+发现在 <code>rake generate</code> 和 <code>rake preview</code> 以后，<br/>
+在预览页面却依然无法得到正常的结果，具体表现如下：<br/>
+标签云确实是出现在了右栏里面，不过当我点击某个 tag 的时候，<br/>
+跳转到的却不是有效的地址，而仅仅只是一个 tag 关键词！<br/>
+灰常地荒谬，灰常地震惊，我甚至一度思忖，作者是不是故意在和我开玩笑。<br/>
+经历了艰辛地排查，终于我在 <code>firebug</code> 下面发现了一些蛛丝马迹：<br/>
+常规情况下 tag 对应的地址应该是 <code>/tags/关键字</code>，<br/>
+但是我发现在我的站点上面却不是这样的，仅仅只有 <code>//关键字</code>，<br/>
+体现在浏览器里面就仅仅是一个 tag 关键字了，因为两个斜杠都被滤掉了~<br/>
+发现了问题的症结以后，我就跑到 _config.yml 配置文件去中查看，<br/>
+并且拿自己的配置文件和其他正常人的配置文件作对比，果然发现了一些猫腻：<br/>
+我的配置文件中少了一行配置：<code>tag_dir: tags</code>，也算是歪打正着了，<br/>
+把这一行配置加进去之后，执行 <code>rake generate</code> 和 <code>rake preview</code> 命令，<br/>
+转到浏览器里面键入 <code>localhost:4000</code> 进行查看，标签云的功能总算是回归正常了~</p>
+
+<p>谈一谈我对此的感受吧：<br/>
+之前我也没有删掉过 tag_dir 这一行配置，也就是说 octopress 本身就没有包含这一行配置~<br/>
+我很奇怪为什么其他人竟然都没有提出甚至谈及这个问题，<br/>
+难道是 octopress 在升级的过程中刚才将这一行配置去掉？<br/>
+不论如何，此次经历还是让我相当的不愉快，我花了至少五个小时来解决这个问题！！<br/>
+这让我难以接受，要知道此时此刻我本该已经躺在床上呼呼大睡了！<br/>
+直言不讳吧，虽然拿 MacVim 写 markdown 很舒服，但我不得不承认：<br/>
+octopress 毕竟还是没能达到我心目中理想的高度，此次就是不成熟的一个典型体现~</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-30T02:54:00+08:00" pubdate data-updated="true">Jan 30<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/octopress相关/'>octopress相关</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://yang3wei.github.com/blog/2013/01/30/zhuan-zai-wei-octopress-tian-jia-biao-qian-yun/" data-via="" data-counturl="http://yang3wei.github.com/blog/2013/01/30/zhuan-zai-wei-octopress-tian-jia-biao-qian-yun/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/01/29/git-bi-ji-gai-lan/" title="Previous Post: git 笔记概览">&laquo; git 笔记概览</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/01/30/macvim-yong-mvim-ming-ling-da-kai-wen-jian-dao-xin-de-biao-qian-ye/" title="Next Post: MacVim 用 mvim 命令打开文件到新的标签页">MacVim 用 mvim 命令打开文件到新的标签页 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/01/31/atestsdffefe/">ATestsdffefe</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/31/zhuan-zai-chu-ci-yun-xing-git-qian-de-pei-zhi/">(转载)初次运行 Git 前的配置</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/30/zhuan-zai-octopress-zen-yao-kai-qi-ping-lun-gong-neng/">(扩充)Octopress 怎么开启评论功能</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/30/macvim-yong-mvim-ming-ling-da-kai-wen-jian-dao-xin-de-biao-qian-ye/">MacVim 用 mvim 命令打开文件到新的标签页</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/30/zhuan-zai-wei-octopress-tian-jia-biao-qian-yun/">(扩充)为 octopress 添加标签云</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

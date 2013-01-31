@@ -4,7 +4,7 @@
   <title><![CDATA[My Octopress Blog]]></title>
   <link href="http://yang3wei.github.com/atom.xml" rel="self"/>
   <link href="http://yang3wei.github.com/"/>
-  <updated>2013-01-31T14:04:54+08:00</updated>
+  <updated>2013-01-31T14:09:29+08:00</updated>
   <id>http://yang3wei.github.com/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -12,5 +12,1302 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[ATestsdffefe]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/01/31/atestsdffefe/"/>
+    <updated>2013-01-31T11:12:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/01/31/atestsdffefe</id>
+    <content type="html"><![CDATA[<p>D:\RoboCup\Dev\TinMan>git push rubix master
+To ssh://dnoakes@rubix/volume1/git/TinMan
+ ! [rejected]        master -> master (non-fast-forward)
+error: failed to push some refs to &#8216;ssh://dnoakes@rubix/volume1/git/TinMan&#8217;
+To prevent you from losing history, non-fast-forward updates were rejected
+Merge the remote changes before pushing again.  See the &#8216;Note about
+fast-forwards&#8217; section of &#8216;git push &#8211;help&#8217; for details.
+I&#8217;ve read through the documentation on git push but at this
+point I can&#8217;t understand why I&#8217;m seeing this problem.</p>
+
+<p>Here is some other contextual info:</p>
+
+<p>D:\RoboCup\Dev\TinMan>git &#8211;version
+git version 1.7.0.2.msysgit.0</p>
+
+<p>D:\RoboCup\Dev\TinMan>git branch
+* (no branch)
+  master</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[(转载)初次运行 Git 前的配置]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/01/31/zhuan-zai-chu-ci-yun-xing-git-qian-de-pei-zhi/"/>
+    <updated>2013-01-31T00:29:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/01/31/zhuan-zai-chu-ci-yun-xing-git-qian-de-pei-zhi</id>
+    <content type="html"><![CDATA[<p>原文链接：<br/>
+<a href="http://wuzongbin2008.blog.163.com/blog/static/214687332010111992437496/" title="人生、梦想、炼狱、天堂">http://wuzongbin2008.blog.163.com/blog/static/214687332010111992437496/</a><br/>
+<a href="http://progit.org/book/zh/ch1-5.html">http://progit.org/book/zh/ch1-5.html</a><br/>
+一般在新的系统上，我们都需要先配置下自己的 Git 工作环境。<br/>
+配置工作只需一次，以后升级时还会沿用现在的配置。<br/>
+当然，如果需要，你随时可以用相同的命令修改已有的配置。</p>
+
+<!-- more -->
+
+
+<p>Git 提供了一个叫做 <code>git config</code> 的工具<br/>
+（译注：实际是 <code>git-config</code> 命令，只不过可以通过 git 加一个名字来呼叫此命令），<br/>
+专门用来配置或读取相应的工作环境变量。<br/>
+而正是由这些环境变量，决定了 Git 在各个环节的具体工作方式和行为。<br/>
+这些变量可以存放在以下三个不同的地方：</p>
+
+<h3>1.<code>/etc/gitconfig</code> 文件</h3>
+
+<p>系统中对所有用户都普遍适用的配置。<br/>
+若使用 <code>git config</code> 时用 <code>--system</code> 选项，读写的就是这个文件。</p>
+
+<h3>2.<code>~/.gitconfig</code> 文件</h3>
+
+<p>用户目录下的配置文件只适用于该用户。<br/>
+若使用 <code>git config</code> 时用 <code>--global</code> 选项，读写的就是这个文件。</p>
+
+<h3>3.当前项目 <code>.git</code> 隐藏目录下的 config 文件</h3>
+
+<p>这里的配置仅仅针对当前项目有效。<br/>
+每一个级别的配置都会覆盖上层的相同配置，<br/>
+所以 <code>.git/config</code> 里的配置会覆盖 <code>/etc/gitconfig</code> 中的同名变量。</p>
+
+<p>在 <code>Windows</code> 系统上，Git 会找寻用户主目录下的 <code>.gitconfig</code> 文件。<br/>
+主目录即 <code>$HOME</code> 变量指定的目录，一般都是 <code>C:\Documents and Settings\$USER</code>。<br/>
+此外，Git 还会尝试找寻 <code>/etc/gitconfig</code> 文件，<br/>
+只不过看当初 Git 装在什么目录，就以此作为根目录来定位。</p>
+
+<h2>用户信息</h2>
+
+<p>第一个要配置的是你个人的用户名称和电子邮件地址。<br/>
+这两条配置很重要，每次 Git 提交时都会引用这两条信息，<br/>
+说明是谁提交了更新，所以会随更新内容一起被永久纳入历史记录：</p>
+
+<pre><code>git config --global user.name "John Doe"
+git config --global user.email johndoe@example.com
+</code></pre>
+
+
+<p>如果用了 <code>--global</code> 选项，那么更改的配置文件就是位于你用户主目录下的那个，<br/>
+以后你所有的项目都会默认使用这里配置的用户信息。<br/>
+如果要在某个特定的项目中使用其他名字或者电邮，只要去掉 <code>--global</code> 选项重新配置即可，<br/>
+新的设定保存在当前项目的 <code>.git/config</code> 文件里。</p>
+
+<h2>文本编辑器</h2>
+
+<p>接下来要设置的是默认使用的文本编辑器。<br/>
+Git 需要你输入一些额外消息的时候，会自动调用一个外部文本编辑器给你用。<br/>
+默认会使用操作系统指定的默认编辑器，一般可能会是 <code>Vi</code> 或者 <code>Vim</code>。<br/>
+如果你有其他偏好，比如 <code>Emacs</code> 的话，可以重新设置：</p>
+
+<pre><code>git config --global core.editor emacs</code></pre>
+
+
+<h2>差异分析工具</h2>
+
+<p>还有一个比较常用的是，在解决合并冲突时使用哪种差异分析工具。比如要改用 vimdiff 的话：</p>
+
+<pre><code>git config --global merge.tool vimdiff</code></pre>
+
+
+<p>Git 可以理解 <code>kdiff3</code>，<code>tkdiff</code>，<code>meld</code>，<code>xxdiff</code>，<code>emerge</code>，<br/>
+<code>vimdiff</code>，<code>gvimdiff</code>，<code>ecmerge</code>，<code>opendiff</code> 等合并工具的输出信息。<br/>
+当然，你也可以指定使用自己开发的工具，具体怎么做可以参阅第七章。</p>
+
+<h2>查看配置信息</h2>
+
+<p>要检查已有的配置信息，可以使用 git config &#8211;list 命令：</p>
+
+<pre><code>git config --list user.name=Scott Chacon user.email=schacon@gmail.com color.status=auto color.branch=auto color.interactive=auto color.diff=auto ...</code></pre>
+
+
+<p>有时候会看到重复的变量名，那就说明它们来自不同的配置文件<br/>
+（比如 <code>/etc/gitconfig</code> 和 <code>~/.gitconfig</code>），不过最终 Git 实际采用的是最后一个。</p>
+
+<p>也可以直接查阅某个环境变量的设定，只要把特定的名字跟在后面即可，像这样：</p>
+
+<pre><code>git config user.name Scott Chacon</code></pre>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[(扩充)Octopress 怎么开启评论功能]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/01/30/zhuan-zai-octopress-zen-yao-kai-qi-ping-lun-gong-neng/"/>
+    <updated>2013-01-30T18:09:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/01/30/zhuan-zai-octopress-zen-yao-kai-qi-ping-lun-gong-neng</id>
+    <content type="html"><![CDATA[<p>原文链接：<br/>
+<a href="http://gangmax.me/blog/2012/01/20/how-to-use-disqus-in-octopress/" title="Blog of GangMax">http://gangmax.me/blog/2012/01/20/how-to-use-disqus-in-octopress/</a></p>
+
+<h3>1.Octopress 默认支持 disqus，开启即可</h3>
+
+<!-- more -->
+
+
+<p>这两天我一直想给 octopress 加入评论功能。<br/>
+于是我尝试搜索 <code>disqus octopress jekyll</code> 这样的关键字，但是没有找到具体的做法。
+后来我想到：可以查看一个具有评论功能的 github octopress 实例代码，看看别人是怎么做的，比如<a href="https://github.com/roylez/roylez.github.com">这个</a>。</p>
+
+<p>我首先查看 <code>source/_layout/post.html</code>，看到里面有处理 disqus 的相关代码。<br/>
+我的第一反应是我应该在我自己的对应文件里面也加上相应的代码。<br/>
+但是随即发现我的文件中已经有了一模一样的代码。</p>
+
+<p>也就是说，其实 <code>octopress/jekyll</code> 默认就有这些代码。<br/>
+这说明 octopress 自身就支持 disqus，<br/>
+可能这就是为什么没有人评论该怎么在 octopress 里面加入 disqus 支持的原因。</p>
+
+<p>于是打开 <code>_config.yml</code>，找到了 disqus 相关的配置项，修改即可：</p>
+
+<pre><code>disqus_short_name: your_disqus_short_name
+disqus_show_comment_count: true</code></pre>
+
+
+<p>当然，前提是你需要先注册一个 <a href="http://www.disqus.com/">disqus</a> 帐号，这个就不用我多说了。</p>
+
+<h3>2.一个要注意的地方</h3>
+
+<p>原文请参看如下链接：<br/>
+<a href="http://www.ducea.com/2012/11/12/disqus-comments-not-visible-in-octopress/" title="MDLog:/sysadmin">http://www.ducea.com/2012/11/12/disqus-comments-not-visible-in-octopress/</a>
+大意就是在更改 octopress 配置文件 _config.yml 时，<br/>
+下面两者有很大的区别，后者多加了一个斜杠将直接导致看不见 disqus 的评论内容！
+<strong><code>url: http://yang3wei.github.com</code>  <br/>
+<code>url: http://yang3wei.github.com/</code></strong></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MacVim 用 mvim 命令打开文件到新的标签页]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/01/30/macvim-yong-mvim-ming-ling-da-kai-wen-jian-dao-xin-de-biao-qian-ye/"/>
+    <updated>2013-01-30T15:22:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/01/30/macvim-yong-mvim-ming-ling-da-kai-wen-jian-dao-xin-de-biao-qian-ye</id>
+    <content type="html"><![CDATA[<p>原文链接：<br/>
+<a href="http://www.reake.com/how-to-use-terminal-command-to-open-file-to-macvim-mvim-tab/" title="瑞克互动">http://www.reake.com/how-to-use-terminal-command-to-open-file-to-macvim-mvim-tab/</a><br/>
+从 <code>MacVim(GitHub)</code> 官网下载后，解压出两个文件：<code>MacVim.app</code> 和 <code>mvim</code></p>
+
+<pre><code># 将 `MacVim.app` 拷入 `/Applications` 目录
+sudo cp -f MacVim.app /Applications/
+# 将 `mvim` 拷入 `/usr/bin` 目录
+sudo cp -f mvim /usr/bin/</code></pre>
+
+
+<p>然后在 <code>Terminal</code> 键入命令 <code>mvim project_file.php</code> ，出现了一个 MacVim 窗口。<br/>
+但 <code>MacVim</code> 支持当前窗口多标签页功能，每次打开都是新窗口，<br/>
+虽然苹果有 <code>Mission Control</code> 切换，但文件窗口多了，显示还是很麻烦，<br/>
+所以想让 <code>mvim</code> 打开文件直接在 <code>MacVim</code> 当前窗口的新标签页里打开，<br/>
+需要在命令后加 <code>--remote-tab</code> 参数，感觉挺麻烦，何不设置为默认就在标签页中打开呢?</p>
+
+<!-- more -->
+
+
+<p>这里给出一种直接修改 <code>mvim</code> 以达到上述目的的方案：<br/>
+1.切换到 <code>/usr/bin/</code> 目录并打开 <code>mvim</code> 文件</p>
+
+<pre><code>cd /usr/bin/; mvim mvim</code></pre>
+
+
+<p>2.更改 <code>/usr/bin/mvim/</code> 文件中的配置
+首先，在文件头部加入</p>
+
+<pre><code>tabs=true</code></pre>
+
+
+<p>然后，把底部的 <code>if</code> 块替换成下面的：</p>
+
+<pre><code>if [ "$gui" ]; then
+  if $tabs && [[ `$binary --serverlist` = "VIM" ]]; then
+    exec "$binary" -g $opts --remote-tab-silent ${1:+"$@"}
+  else
+    exec "$binary" -g $opts ${1:+"$@"}
+  fi
+else
+  exec "$binary" $opts ${1:+"$@"}
+fi</code></pre>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[(扩充)为 octopress 添加标签云]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/01/30/zhuan-zai-wei-octopress-tian-jia-biao-qian-yun/"/>
+    <updated>2013-01-30T02:54:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/01/30/zhuan-zai-wei-octopress-tian-jia-biao-qian-yun</id>
+    <content type="html"><![CDATA[<p>原文链接：<a href="http://codemacro.com/2012/07/18/add-tag-to-octopress/" title="loop in codes">http://codemacro.com/2012/07/18/add-tag-to-octopress/</a><br/>
+同添加 <code>category list</code> 一样，网络上有很多方法，这里列举一种。<br/>
+首先将以下两个项目克隆到本地：</p>
+
+<pre><code>https://github.com/robbyedwards/octopress-tag-pages 
+https://github.com/robbyedwards/octopress-tag-cloudclone
+</code></pre>
+
+
+<p>这两个项目分别用于产生 <code>tag page</code> 和 <code>tag cloud</code>。<br/>
+针对这两个插件，需要手工复制一些文件到你的 octopress 目录。</p>
+
+<!-- more -->
+
+
+<h3>1.octopress-tag-pages</h3>
+
+<p>复制 <code>tag_generator.rb</code> 到 <code>/plugins</code> 目录。<br/>
+复制 <code>tag_index.html</code> 到 <code>/source/_layouts</code> 目录。<br/>
+复制 <code>tag_feed.xml</code> 到 <code>/source/_includes/custom/</code> 目录。<br/>
+其他文件就不需要复制了，都是些例子。</p>
+
+<h3>2.octopress-tag-cloud</h3>
+
+<p>复制 <code>tag_cloud.rb</code> 到 <code>/plugins</code> 目录。<br/>
+复制以下代码到 <code>/source/_includes/custom/asides/tags.html</code>。<br/>
+<strong>注意：先去掉 % 前面的反斜杠</strong></p>
+
+<pre><code>&lt;section&gt;
+    &lt;h1&gt;Tags&lt;/h1&gt;
+    &lt;ul class="tag-cloud"&gt;
+        {\% tag_cloud font-size: 100-210%, limit: 49, style: para \%}
+    &lt;/ul&gt;
+&lt;/section&gt;
+</code></pre>
+
+
+<p><code>tag_cloud</code> 的参数中：<br/>
+<code>style: para</code> 指定不使用 <code>li</code> 来分割；<br/>
+<code>limit</code> 限定 10 个 tag；<br/>
+<code>font-size</code> 指定 tag 的大小范围，具体参数参看官方文档。</p>
+
+<p>最后，当然是在 <code>_config.yml</code> 的 <code>default_asides</code> 中添加这个 <code>tag cloud</code> 到导航栏，例如：</p>
+
+<pre><code>default_asides: [asides/category_list.html, asides/recent_posts.html, custom/asides/tags.html]</code></pre>
+
+
+<h3>3.本人扩充: 有一个要注意的地方</h3>
+
+<p>结合自身经历，我按照前文所述操作且核对了很多次，<br/>
+发现在 <code>rake generate</code> 和 <code>rake preview</code> 以后，<br/>
+在预览页面却依然无法得到正常的结果，具体表现如下：<br/>
+标签云确实是出现在了右栏里面，不过当我点击某个 tag 的时候，<br/>
+跳转到的却不是有效的地址，而仅仅只是一个 tag 关键词！<br/>
+灰常地荒谬，灰常地震惊，我甚至一度思忖，作者是不是故意在和我开玩笑。<br/>
+经历了艰辛地排查，终于我在 <code>firebug</code> 下面发现了一些蛛丝马迹：<br/>
+常规情况下 tag 对应的地址应该是 <code>/tags/关键字</code>，<br/>
+但是我发现在我的站点上面却不是这样的，仅仅只有 <code>//关键字</code>，<br/>
+体现在浏览器里面就仅仅是一个 tag 关键字了，因为两个斜杠都被滤掉了~<br/>
+发现了问题的症结以后，我就跑到 _config.yml 配置文件去中查看，<br/>
+并且拿自己的配置文件和其他正常人的配置文件作对比，果然发现了一些猫腻：<br/>
+我的配置文件中少了一行配置：<code>tag_dir: tags</code>，也算是歪打正着了，<br/>
+把这一行配置加进去之后，执行 <code>rake generate</code> 和 <code>rake preview</code> 命令，<br/>
+转到浏览器里面键入 <code>localhost:4000</code> 进行查看，标签云的功能总算是回归正常了~</p>
+
+<p>谈一谈我对此的感受吧：<br/>
+之前我也没有删掉过 tag_dir 这一行配置，也就是说 octopress 本身就没有包含这一行配置~<br/>
+我很奇怪为什么其他人竟然都没有提出甚至谈及这个问题，<br/>
+难道是 octopress 在升级的过程中刚才将这一行配置去掉？<br/>
+不论如何，此次经历还是让我相当的不愉快，我花了至少五个小时来解决这个问题！！<br/>
+这让我难以接受，要知道此时此刻我本该已经躺在床上呼呼大睡了！<br/>
+直言不讳吧，虽然拿 MacVim 写 markdown 很舒服，但我不得不承认：<br/>
+octopress 毕竟还是没能达到我心目中理想的高度，此次就是不成熟的一个典型体现~</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[git 笔记概览]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/01/29/git-bi-ji-gai-lan/"/>
+    <updated>2013-01-29T16:12:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/01/29/git-bi-ji-gai-lan</id>
+    <content type="html"><![CDATA[<!-- more -->
+
+
+<h3>Git 如何删除 Remote 的文件</h3>
+
+<p><a href="http://yang3wei.github.com/blog/2013/01/28/zhuan-zai-git-ru-he-shan-chu-remote-de-wen-jian/" title="(转载)Git 如何删除 Remote 的文件">Git 如何删除 Remote 的文件</a></p>
+
+<h3>git - 简易指南</h3>
+
+<p><a href="http://rogerdudler.github.com/git-guide/index.zh.html" title="git - 简易指南">助你开始使用 git 的简易指南，木有高深内容，;)</a></p>
+
+<h3>git 删除远程分支的命令</h3>
+
+<p>如果通过命令 <code>git branch -b feature_x source</code> 建立了 source 的一个分支 feature_x，<br/>
+而且还将 feature_x 这个分支提交到 github 服务器上面去了，<br/>
+此时由 feature_x 切换回 source 分支后执行 <code>git branch -d feature_x</code> 命令只能删除本地分支，<br/>
+怎么将 github 服务器上面的 feature_x 分支给干掉呢？<br/>
+执行 <code>git push origin :feature_x</code> 命令即可！</p>
+
+<h3>Git 分支管理策略</h3>
+
+<p><a href="http://yang3wei.github.com/blog/2013/01/29/zhuan-zai-git-fen-zhi-guan-li-ce-lue/" title="Git 分支管理策略">Git 分支管理策略</a></p>
+
+<h3>Git 怎么为 github 生成 ssh 密钥</h3>
+
+<p><a href="https://help.github.com/articles/generating-ssh-keys" title="Generating SSH Keys">github:help - Generating SSH Keys</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[(转载)Git 分支管理策略]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/01/29/zhuan-zai-git-fen-zhi-guan-li-ce-lue/"/>
+    <updated>2013-01-29T15:21:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/01/29/zhuan-zai-git-fen-zhi-guan-li-ce-lue</id>
+    <content type="html"><![CDATA[<p>原文链接：<a href="http://www.ruanyifeng.com/blog/2012/07/git.html" title="阮一峰的网络日志">http://www.ruanyifeng.com/blog/2012/07/git.html</a><br/>
+如果你严肃对待编程，就必定会使用&#8221;版本管理系统&#8221;（Version Control System）。
+眼下最流行的&#8221;版本管理系统&#8221;，非 Git 莫属。<br/>
+<img src="http://yang3wei.github.com/images/posts/bg2012070501.png" alt="cool git" /></p>
+
+<!-- more -->
+
+
+<p>相比同类软件，Git 有很多优点。其中很显著的一点，就是版本的分支（branch）和合并（merge）十分方便。有些传统的版本管理软件，分支操作实际上会生成一份现有代码的物理拷贝，而 Git 只生成一个指向当前版本（又称&#8221;快照&#8221;）的指针，因此非常快捷易用。
+但是，太方便了也会产生副作用。如果你不加注意，很可能会留下一个枝节蔓生、四处开放的版本库，到处都是分支，完全看不出主干发展的脉络。<br/>
+<img src="http://yang3wei.github.com/images/posts/bg2012070502.png" alt="cool git" /><br/>
+Vincent Driessen提出了一个分支管理的策略，我觉得非常值得借鉴。它可以使得版本库的演进保持简洁，主干清晰，各个分支各司其职、井井有条。理论上，这些策略对所有的版本管理系统都适用，Git 只是用来举例而已。如果你不熟悉 Git，跳过举例部分就可以了。</p>
+
+<h2>一、主分支 Master</h2>
+
+<p>首先，代码库应该有一个、且仅有一个主分支。所有提供给用户使用的正式版本，都在这个主分支上发布。<br/>
+<img src="http://yang3wei.github.com/images/posts/bg2012070503.png" alt="cool git" /><br/>
+Git 主分支的名字，默认叫做 Master。它是自动建立的，版本库初始化以后，默认就是在主分支在进行开发。</p>
+
+<h2>二、开发分支 Develop</h2>
+
+<p>主分支只用来分布重大版本，日常开发应该在另一条分支上完成。我们把开发用的分支，叫做 Develop。<br/>
+<img src="http://yang3wei.github.com/images/posts/bg2012070504.png" alt="cool git" /><br/>
+这个分支可以用来生成代码的最新隔夜版本（nightly）。如果想正式对外发布，就在 Master 分支上，对 Develop 分支进行&#8221;合并&#8221;（merge）。
+Git 创建 Develop 分支的命令：</p>
+
+<pre><code>git checkout -b develop master</code></pre>
+
+
+<p>将 Develop 分支发布到 Master 分支的命令：</p>
+
+<pre><code># 切换到 Master 分支
+git checkout master
+# 对 Develop 分支进行合并
+git merge --no-ff develop</code></pre>
+
+
+<p>这里稍微解释一下，上一条命令的 &#8211;no-ff 参数是什么意思。默认情况下，Git 执行&#8221;快进式合并&#8221;（fast-farward merge），会直接将 Master 分支指向 Develop 分支。<br/>
+<img src="http://yang3wei.github.com/images/posts/bg2012070505.png" alt="cool git" /><br/>
+使用 &#8211;no-ff 参数后，会执行正常合并，在 Master 分支上生成一个新节点。为了保证版本演进的清晰，我们希望采用这种做法。关于合并的更多解释，请参考 Benjamin Sandofsky的《Understanding the Git Workflow》。<br/>
+<img src="http://yang3wei.github.com/images/posts/bg2012070506.png" alt="cool git" /></p>
+
+<h2>三、临时性分支</h2>
+
+<p>前面讲到版本库的两条主要分支：Master 和 Develop。前者用于正式发布，后者用于日常开发。其实，常设分支只需要这两条就够了，不需要其他了。
+但是，除了常设分支以外，还有一些临时性分支，用于应对一些特定目的的版本开发。临时性分支主要有三种：
+　　<em> 功能（feature）分支
+　　</em> 预发布（release）分支
+　　* 修补bug（fixbug）分支
+这三种分支都属于临时性需要，使用完以后，应该删除，使得代码库的常设分支始终只有 Master 和 Develop。</p>
+
+<h2>四、 功能分支</h2>
+
+<p>接下来，一个个来看这三种 &#8220;临时性分支&#8221;。
+第一种是功能分支，它是为了开发某种特定功能，从 Develop 分支上面分出来的。开发完成后，要再并入 Develop。<br/>
+<img src="http://yang3wei.github.com/images/posts/bg2012070507.png" alt="cool git" /><br/>
+功能分支的名字，可以采用 feature-* 的形式命名。
+创建一个功能分支：</p>
+
+<pre><code>git checkout -b feature-x develop</code></pre>
+
+
+<p>开发完成后，将功能分支合并到 develop 分支：</p>
+
+<pre><code>git checkout develop
+git merge --no-ff feature-x</code></pre>
+
+
+<p>删除 feature 分支：</p>
+
+<pre><code>git branch -d feature-x</code></pre>
+
+
+<h2>五、预发布分支</h2>
+
+<p>第二种是预发布分支，它是指发布正式版本之前（即合并到 Master 分支之前），我们可能需要有一个预发布的版本进行测试。
+预发布分支是从 Develop 分支上面分出来的，预发布结束以后，必须合并进 Develop 和 Master 分支。它的命名，可以采用 release-* 的形式。
+创建一个预发布分支：</p>
+
+<pre><code>git checkout -b release-1.2 develop</code></pre>
+
+
+<p>确认没有问题后，合并到 master 分支：</p>
+
+<pre><code>git checkout master
+git merge --no-ff release-1.2
+# 对合并生成的新节点，做一个标签
+git tag -a 1.2</code></pre>
+
+
+<p>再合并到 develop 分支：</p>
+
+<pre><code>git checkout develop
+git merge --no-ff release-1.2</code></pre>
+
+
+<p>最后，删除预发布分支：</p>
+
+<pre><code>git branch -d release-1.2</code></pre>
+
+
+<p>六、修补 bug 分支
+最后一种是修补 bug 分支。软件正式发布以后，难免会出现 bug。这时就需要创建一个分支，进行 bug 修补。
+修补 bug 分支是从 Master 分支上面分出来的。修补结束以后，再合并进 Master 和 Develop 分支。它的命名，可以采用 fixbug-* 的形式。<br/>
+<img src="http://yang3wei.github.com/images/posts/bg2012070508.png" alt="cool git" /><br/>
+创建一个修补 bug 分支：</p>
+
+<pre><code>git checkout -b fixbug-0.1 master</code></pre>
+
+
+<p>修补结束后，合并到 master 分支：</p>
+
+<pre><code>git checkout master
+git merge --no-ff fixbug-0.1
+git tag -a 0.1.1</code></pre>
+
+
+<p>再合并到 develop 分支：</p>
+
+<pre><code>git checkout develop
+git merge --no-ff fixbug-0.1</code></pre>
+
+
+<p>最后，删除 &#8220;修补 bug 分支&#8221;：</p>
+
+<pre><code>git branch -d fixbug-0.1</code></pre>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[NERDTree 快捷键辑录]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/01/29/nerdtree-kuai-jie-jian-ji-lu/"/>
+    <updated>2013-01-29T13:45:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/01/29/nerdtree-kuai-jie-jian-ji-lu</id>
+    <content type="html"><![CDATA[<p>参看连接：<a href="http://www.cnblogs.com/lexus/archive/2012/11/04/2753187.html" title="朗志工作室(Langzhi Studio)">http://www.cnblogs.com/lexus/archive/2012/11/04/2753187.html</a></p>
+
+<h3>切换工作台和目录</h3>
+
+<pre><code>ctrl + w + h    光标 focus 左侧树形目录
+ctrl + w + l    光标 focus 右侧文件显示窗口
+ctrl + w + w    光标自动在左右侧窗口切换
+ctrl + w + r    移动当前窗口的布局位置
+</code></pre>
+
+
+<!-- more -->
+
+
+<pre><code>o       在已有窗口中打开文件、目录或书签，并跳到该窗口
+go      在已有窗口 中打开文件、目录或书签，但不跳到该窗口
+t       在新 Tab 中打开选中文件/书签，并跳到新 Tab
+T       在新 Tab 中打开选中文件/书签，但不跳到新 Tab
+i       split 一个新窗口打开选中文件，并跳到该窗口
+gi      split 一个新窗口打开选中文件，但不跳到该窗口
+s       vsplit 一个新窗口打开选中文件，并跳到该窗口
+gs      vsplit 一个新 窗口打开选中文件，但不跳到该窗口
+!       执行当前文件
+O       递归打开选中 结点下的所有目录
+x       合拢选中结点的父目录
+X       递归 合拢选中结点下的所有目录
+e       Edit the current dif
+
+双击    相当于 NERDTree-o
+中键    对文件相当于 NERDTree-i，对目录相当于 NERDTree-e
+
+D       删除当前书签
+
+P       跳到根结点
+p       跳到父结点
+K       跳到当前目录下同级的第一个结点
+J       跳到当前目录下同级的最后一个结点
+k       跳到当前目录下同级的前一个结点
+j       跳到当前目录下同级的后一个结点
+
+C       将选中目录或选中文件的父目录设为根结点
+u       将当前根结点的父目录设为根目录，并变成合拢原根结点
+U       将当前根结点的父目录设为根目录，但保持展开原根结点
+r       递归刷新选中目录
+R       递归刷新根结点
+m       显示文件系统菜单
+cd      将 CWD 设为选中目录
+
+I       切换是否显示隐藏文件
+f       切换是否使用文件过滤器
+F       切换是否显示文件
+B       切换是否显示书签
+
+q       关闭 NerdTree 窗口
+?       切换是否显示 Quick Help
+</code></pre>
+
+
+<h3>切换标签页</h3>
+
+<pre><code>:tabnew [++opt选项] ［＋cmd］ 文件      建立对指定文件新的tab
+:tabc   关闭当前的 tab
+:tabo   关闭所有其他的 tab
+:tabs   查看所有打开的 tab
+:tabp   前一个 tab
+:tabn   后一个 tab
+
+标准模式下：
+gT      前一个 tab
+gt      后一个 tab
+
+MacVim 还可以借助快捷键来完成 tab 的关闭、切换
+cmd+w   关闭当前的 tab
+cmd+{   前一个 tab
+cmd+}   后一个 tab
+</code></pre>
+
+
+<h3>NerdTree 在 .vimrc 中的常用配置</h3>
+
+<pre><code>" 在 vim 启动的时候默认开启 NERDTree（autocmd 可以缩写为 au）
+autocmd VimEnter * NERDTree
+
+" 按下 F2 调出/隐藏 NERDTree
+map <F2> :silent! NERDTreeToggle<CR>
+
+" 将 NERDTree 的窗口设置在 vim 窗口的右侧（默认为左侧）
+let NERDTreeWinPos="right"
+
+" 当打开 NERDTree 窗口时，自动显示 Bookmarks
+let NERDTreeShowBookmarks=1
+</code></pre>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[不问过去几多奢靡 但愿前路了无遗憾]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/01/28/bu-wen-guo-qu-ji-duo-she-mi-dan-yuan-qian-lu-liao-wu-yi-han/"/>
+    <updated>2013-01-28T23:55:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/01/28/bu-wen-guo-qu-ji-duo-she-mi-dan-yuan-qian-lu-liao-wu-yi-han</id>
+    <content type="html"><![CDATA[<p>用着 MacVim 作为 octopress 新增博文的编辑器~<br/>
+此刻，我终于明白子龙山人兄台说的话了，能使用本地应用程序作为博文的编辑器，<br/>
+甚至还是功能强大、扩展随心的 vim 来撰写博文，怎么会不爽歪歪~</p>
+
+<p>对比产生幸福，我最开始接触的博客是 csdn，<br/>
+csdn 的博文编辑器是嵌在网页里面的，而且我有幸得知这个编辑器插件的名字叫 xhEditor~<br/>
+不做太多评论，这个编辑器其实也还是挺不错的，能满足我的大部分需求了~<br/>
+不过有一点我是非常不满意的：这个编辑器将会产生大量重复 html 代码，<br/>
+如果你使用过 csdn 的博文编辑器，你应该会认同我的说法，<br/>
+如果你还没有体会到这一点，<br/>
+那么我建议你通过编辑区顶部的小按钮切换到源代码模式下看一看，<br/>
+说实在的，要多丑陋有多丑陋，大量垃圾标签混杂其中，<br/>
+要想把博文数据干净的分离出来真不是一件轻松事儿~</p>
+
+<!-- more -->
+
+
+<p>
+好吧，毕竟也陪伴了我走过了这么多年，我就不多说它的坏话了~<br/>
+再来看看 WordPress 自带的博文编辑器~<br/>
+如果说 csdn 的博文编辑器还行的话，那 wordpress 的博文编辑器就无愧于垃圾二字了~<br/>
+从功能的角度来看，二者感觉完全不是一个级别的，<br/>
+csdn 的编辑器要比 wordpress 的编辑器强太多了~</p>
+
+<p>当然，wordpress 也是可以安装编辑器插件的，<br/>
+我也尝试过安装编辑器插件，但发现效果都不怎么理想~<br/>
+我也找到了 xhEditor 的 wordpress 插件，不过因为时隔已久，已经不对新版 wp 作支持了~<br/>
+就这么将就了一段时间，我也在 wordpress 架的个人博客里面写了好几十篇文章了~<br/>
+后来实在是受不鸟了，主要原因有三：<br/>
+1. wp 的博文编辑器功能过于简陋； <br/>
+2. 因为 blog 仅架在本地，没有挂上互联网，没有观众，我也就渐渐没有激情去用心打理了~<br/>
+3. 感觉积累的技术数据仅放在本地还是不太安全，假如有一天我硬盘出问题了，数据就得丢了~</p>
+
+<p>我写博客主要还是给自己整理思路、做笔记待日后方便查阅用，所以安全性是我特别重视的一点。<br/>
+使用 csdn 来作为主要的博文集散地，既可以获得各位看观的点击，相互交流以做提升，<br/>
+还存在另一个好处：csdn 的存储服务的稳定性还是刚刚的，很少会出现博文丢失的情况~<br/>
+拿我自己来说，是于 2010 年 12 月在 csdn 开博的，至今已经有好几个年头了，<br/>
+写了几百篇博文了，转载的文章更是高达 500+，访问老一些的博文从来没有遇到过什么问题~<br/>
+这是值得欣喜的一点，但是我也曾不放心过 csdn 的存储服务，我担心有一天我的心血就那么毁了~<br/>
+我的博文数据丢失对 csdn 来说不过就是丢失了我这么一个免费博客用户，<br/>
+但是对于我自身而言，这却是一笔非常大的财产，见证者我曾经的资历和努力~</p>
+
+<p>我还是做到了防患于未然的，<br/>
+那次将博文从 csdn 迁移到用 wordpress 搭建的本地服务器里面就是因为这个原因~ <br/>
+为了达到数据安全的目的，我也是花费了不少精力的~<br/>
+精心挑选了一个适合我的需求的 wordpress 主题，带有分页、搜索的基本功能~<br/>
+后来我还粗略地去学习了一下 php 的写法，我给 wordpress 新增了标签云，快速通道等功能~<br/>
+介于我的前端功力实在不怎么样，而且也没有充裕的时间去学习前端的一些设计和技巧，<br/>
+所以直到现在，wordpress 本地服务器的界面都不怎么样，<br/>
+一言以蔽之，我实在没有勇气把他挂上互联网~</p>
+
+<p>话说那次将 csdn 上面的所有博文迁移到 wordpress 数据库里面都是一个比较难的问题~<br/>
+那时候 csdn 还没有开发好 “博客搬家” 的功能版块，<br/>
+我还是借助了一个建立在 live-space-mover.py 功能之上的 python 脚本实现数据迁移的，<br/>
+这个脚本还是挺不错的，大部分的博文和博文配图都给抓到本地来了，<br/>
+而且博文数据还能以非常方便的形式导入到 wordpress 的数据库，相当地难能可贵了~<br/>
+前面也说到在使用 wordpress 的时候我也因为一些功能上的不如意产生过反感的情绪~<br/>
+那种反感一度导致我弃用本地的博客系统重返 csdn，就在我使用 octopress 的前一刻，<br/>
+我还在 csdn 不断地敲击这 command + R 刷新 chrome 的标签页~<br/>
+正待我有心要杀回 csdn 博客准备做它最忠实奴仆的时候，csdn 又要不给力了，<br/>
+页面半天刷不出来就不说了，某些博文里面上传到 csdn 服务器的图片还不给显示了<br/>
+难道让我连访问 csdn 博客都要把 vpn 一直打开着？~</p>
+
+<p>还有，在建立 wordpress 本地博客时没有提及的一个问题，<br/>
+那就是在我建好 wordpress 本地博客系统以后，发现我竟然无法抉择应该到哪里去写博文了~<br/>
+wordpress 本地博客系统当然是我的心肝宝贝儿，但 csdn 也是我的心头肉啊！<br/>
+就博文的呈现效果来看，csdn 的表现是要更佳的，毕竟那里曾经也是博文们的诞生地么~ <br/>
+通过前文提及的那个 python 脚本实现博文迁移以后，<br/>
+很多博文在 wp 本地博客里面的呈现效果都乱掉了，
+我曾一度试着去调整，但博文的数量实在是太多了，原创和转载的加在一起甚至要接近 800 篇了！<br/>
+非常惊人的一个数字了，要想通过手动的方式去一一调整，那将是一件非常费神费力的事情，<br/>
+而且即使调整完毕，也仅能起到让我看起感觉更舒服了一些的作用，其他的一无是处~<br/>
+到这里的话，我也是相当的无奈了，放宽心想一想，<br/>
+只是能将数据保存下来就已经很不错了，何苦要追求绝对的完美？<br/>
+从另外一个角度来看，如果今后有一天我连 wordpress 也不用了，又换了另一种博客系统，<br/>
+那我是不是又得再一次做博文格式整改？这是个令人感到相当棘手的问题！<br/>
+我纠结了很久，最终做出了一个决定：该在哪儿的就让它安安分分地待在那儿吧~<br/>
+这也是我如今的态度，既然无法改变，又何必再去强求？<br/>
+可知人生苦短，须及时行乐啊！有时候我甚至觉得过往所做的很多事情都是徒劳无益的~<br/>
+说不定有一天我也会觉得写下来的这么多博文也是一种对生命的浪费~</p>
+
+<p>对此我是有前车之鉴的，过去我疯狂地迷恋过中国象棋和魔兽争霸~<br/>
+中国象棋我在 qq 游戏里面的总盘数超过了数千盘，每一盘如果花去 20 分钟，<br/>
+那么在青春的黄金时期我浪费了多么大一笔资产！对此我至今仍懊悔不已~<br/>
+同伴们的青春都和其他青春少女度过了，我却是和下象棋的老头子们，让人简直难以平衡~<br/>
+说实话我真的挺冤枉的，小时候真是太不懂事儿了~<br/>
+莫说小时候了，就是读了大学，我也还是死性不改，又迷恋上了魔兽争霸，<br/>
+这笔开销少说也榨干了我大学生活清醒时间的十分之一，不夸张，应该还有多的！<br/>
+好吧，中国象棋和魔兽争霸我还攒下了一笔对局棋谱和对局录像，<br/>
+我感觉我现在甚至连一秒都不愿意拿出来，用来回味这些过去留下的记忆片段~<br/>
+本就是一些无意义的事情，现在又让我再去浪费时间，让我如何不感到怒发冲冠？<br/>
+不知不觉就敲了好多字了，过去的就过去了吧，还得向前看哪！</p>
+
+<h1>不问过去几多奢靡，但愿前路了无遗憾~</h1>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Octopress 新增博文时要注意的地方]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/01/28/octopress-xin-zeng-bo-wen-shi-yao-zhu-yi-de-di-fang/"/>
+    <updated>2013-01-28T22:11:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/01/28/octopress-xin-zeng-bo-wen-shi-yao-zhu-yi-de-di-fang</id>
+    <content type="html"><![CDATA[<p>用 MacVim 的请注意，执行 rake deploy 的时候，<br/>
+切记要将 MacVim 正在编辑的 markdown 博文文件保存并关闭掉~<br/>
+因为在 deploy 的时候会对 source/_posts 目录下的文件执行 cp 操作~<br/>
+如果 MacVim 当前正在编辑博文的 markdown 文件的话，<br/>
+很有可能在执行 rake deploy 的时候给予失败的提示~<br/>
+究其根源就是因为 MacVim 锁定了某个文件（swp 格式的），<br/>
+然后对 rake deploy 命令的执行造成了阻碍~</p>
+
+<!-- more -->
+
+
+<p>
+不知道其他的版本的 vim（vim、gvim，etc） 会不会也受到这个问题的影响~<br/>
+我在 google 上面搜寻了一下这个问题，没有找到什么有用的资料~<br/>
+能够解决掉这个问题还是占了很大的运气成分的，<br/>
+刚开始我还误以为是 markdown、md 后缀带来的这个问题~<br/>
+因为在我将 source/_posts 目录下的所有博文文件后缀由 markdown 改为 md 以后，<br/>
+发现又能正常的执行 rake deploy 命令了~</p>
+
+<h2>关于 swp 文件</h2>
+
+<p>1.swp 文件是 vim 防止终端崩溃后恢复文件用的。<br/>
+每次当文件内容被修改而没有用 :w 保存的时候，都会有这么一个文件，<br/>
+这样可以解决多个用户编辑同一个文件，或忘记存盘而先关了终端的情况</p>
+
+<p>2.兄弟，那可是一个好东东啊，你还嫌它？<br/>
+我在 solaris 中误删了刚写的 shell 脚本，只有哭的份！</p>
+
+<h2>octopress 发布博文的常规流程</h2>
+
+<p>作为一个过来人，我觉得这是一个非常有必要记录一下的问题！<br/>
+发布第一篇博文时该怎么弄我是咨询过 google 的~<br/>
+我最初的认识是这样的：<br/>
+在 Terminal 里面，通过 <code>cd ~/octopress</code> 命令切换到 octopress 的默认目录~<br/>
+然后，执行 <code>rake new_post["博文标题"]</code> 命令，<br/>
+它的作用是在 ~/octopress/source/_posts 目录下新建一个 “日期_时间_博文标题.markdown” 文件~<br/>
+接下来，通过 MacVim 等编辑器按照 markdown 的语法在上述新建的文件中撰写博文~<br/>
+撰写完毕之后再依次执行 <code>rake generate</code>、<code>rake preview</code>、<code>rake deploy</code> 命令<br/>
+它们的作用分别是：<br/>
+由 markdown 文件生成静态 html 页面，<br/>
+开启本地服务器提供预览（访问 <code>http://localhost:4000</code>），<br/>
+将静态页面部署到 github 博客服务器供他人访问。<br/>
+其中，rake preview 命令是否执行是可选的，<br/>
+如果你足够自信的话，完全可以跳过这一步直接进行部署~</p>
+
+<p>这种流程是没有问题的，不过效率比较低！<br/>
+假如在 _posts 目录中有 800 个 markdown 文件，<br/>
+那么在执行 rake generate 命令时，会重新解析所有的 markdown 文件~<br/>
+这是对生命和电能的巨大浪费，可以使用如下步骤来提升效率：<br/>
+在撰写博文伊始就在 Terminal 中执行 rake preview 命令开启本地预览功能，<br/>
+它会实时监控 _posts 目录，你的新增、保存动作都会被捕捉到，<br/>
+最最重要的一点是，你每执行一次保存操作，更新的内容都能在浏览器中有所反映，<br/>
+待工作完毕之后，你只需要部署、提交源文件一次就行了，大大地提高了撰写博文的效率！</p>
+
+<h2>twitter 被屏蔽导致持续请求的问题</h2>
+
+<p>国内用 octopress 架设好博客以后，<br/>
+因为天朝屏蔽了 twitter，而 octopress 又默认启用了 twitter，<br/>
+所以会导致一个问题（我用的是 mac 平台的 chrome 浏览器）：<br/>
+博客页面打开时，标签页里面的圆圈要转动很久才停止，<br/>
+浏览器左下角呈现字样：<br/>
+<strong>Waiting for platform.twitter.com&#8230;</strong></p>
+
+<p>怎么解决这个问题呢？<br/>
+打开 octopress 所在的目录，编辑 _config.yml 文件，<br/>
+将 <code>twitter_follow_button</code> 和 <code>twitter_tweet_button</code> 的值设置为 false 即可！</p>
+
+<h2>谈一下自己对 markdown 格式的感受：</h2>
+
+<p>markdown 格式用来写博文真的挺好的，没有糊里花哨的颜色料理，<br/>
+可以很好的区分开代码和文字，加粗样式什么的用起来也挺方便灵活的~<br/>
+给我的感觉就是：方便实用，精炼简洁，没有一丝冗余之感~<br/>
+另外，我非常喜欢 octopress 的默认主题，简洁而大气，<br/>
+我想我应该不会为了避免撞衫而去寻找其他的主题了，有了这个我就已经感到非常满足了~<br/>
+此刻我用 MacVim 写着 markdown 格式的博文，这感觉真是爽透了~<br/>
+从未曾想象此刻能如此轻松惬意地书写着博文，这美妙的初体验我将铭记于心！<br/>
+最后的最后，此种方式的博文书写，本地机器和 github 服务器人手一份拷贝，<br/>
+再也不用担心数据丢失的问题了~</p>
+
+<h2>后记：  </h2>
+
+<p>历经磨难终于在 github 上面架好了自己的 blog，灰常开心啊~</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[(转载)Git 如何删除 Remote 的文件]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/01/28/zhuan-zai-git-ru-he-shan-chu-remote-de-wen-jian/"/>
+    <updated>2013-01-28T17:25:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/01/28/zhuan-zai-git-ru-he-shan-chu-remote-de-wen-jian</id>
+    <content type="html"><![CDATA[<p>原文链接：<a href="http://hi.baidu.com/zairl23/item/4a34c60084108fd01ef0464d" title="The Way">http://hi.baidu.com/zairl23/item/4a34c60084108fd01ef0464d</a><br/>
+使用 toto 做了个博客挂着 heroku 上。<br/>
+使用 git push 的方法发布博客确实有点cool。<br/>
+可是发现以前删除的测试文件仍然在, 如何将他们通过 git 的方式删除呢?<br/>
+不止是 heroku, 我发现 github 上也保留有我删除掉的文件.<br/>
+由于某些原因，git 远程的文件与本地文件产生了不一致，现在需要删除远程的一个文件：</p>
+
+<!-- more -->
+
+
+<p>通过使用：</p>
+
+<pre><code>git status</code></pre>
+
+
+<p>
+得到下面的信息：<br/>
+<strong># On branch master<br/>
+# Changes not staged for commit:<br/>
+#   (use &#8220;git add/rm <file>&#8230;&#8221; to update what will be committed)<br/>
+#   (use &#8220;git checkout &#8211; <file>&#8230;&#8221; to discard changes in working directory)<br/>
+# deleted:    app/assets/stylesheets/base.css<br/>
+# deleted:    app/assets/stylesheets/blue.css<br/>
+ no changes added to commit (use &#8220;git add&#8221; and/or &#8220;git commit -a&#8221;)</strong></p>
+
+<p>即是说，base.css 和 blue.css 两个文件已经在本地删除，却因为没有 commit，而还在远程的 git 里面了，那么重新执行：</p>
+
+<pre><code>git rm app/assets/stylesheets/base.css</code></pre>
+
+
+<p>
+显示：<br/>
+<strong>rm &#8216;app/assets/stylesheets/base.css&#8217;</strong></p>
+
+<pre><code>git rm app/assets/stylesheets/blue.css</code></pre>
+
+
+<p>
+显示：<br/>
+<strong>rm &#8216;app/assets/stylesheets/blue.css&#8217;</strong></p>
+
+<p>现在要 commit 了：</p>
+
+<pre><code>git commit -m 'delete base-blue css'</code></pre>
+
+
+<p>
+显示：<br/>
+<strong>[master 41124a8] delete base-blue css
+2 files changed, 0 insertions(+), 690 deletions(-)
+delete mode 100644 app/assets/stylesheets/base.css
+delete mode 100644 app/assets/stylesheets/blue.css</strong></p>
+
+<p>然后提交：</p>
+
+<pre><code>git push origin master</code></pre>
+
+
+<blockquote></blockquote>
+
+<p>ok 了。总结一下：<br/>
+多运行 git staus 查看有没有未曾 commit 过的文件，<br/>
+因为在 git 里面，只有 commit，你才能够 push 成功的!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[(转载)在 github 上使用 octopress]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/01/28/zhuan-zai-zai-github-shang-shi-yong-octopress/"/>
+    <updated>2013-01-28T14:46:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/01/28/zhuan-zai-zai-github-shang-shi-yong-octopress</id>
+    <content type="html"><![CDATA[<p>原文链接：<a href="http://huanggang.me/archives/654" title="海阔天空">http://huanggang.me/archives/654</a></p>
+
+<h2>一、Octopress 简介</h2>
+
+<p>Octopress 是使用 ruby 语言编写的一套建立在 jekyll 之上的博客系统，它有一些很独特的特点：</p>
+
+<pre><code>1. 使用静态页面；
+2. 不使用数据库；
+3. 使用 markdown 标记语言编写文章；
+4. 可以与 git 紧密集成，方便地进行博客的版本管理；
+5. 可以于 Github Pages 集成，不需要单独的 web hosting，只要你有 github 帐号即可。
+</pre>
+
+
+<p></code>
+这些特点中的第三点到第五点尤其吸引我（第一点和第二点也很酷），于是我花了些时间研究。<br/>
+以下是相关的步骤和心得。</p>
+
+<!-- more -->
+
+
+<p></p>
+
+<h2>二、在你本地安装 octopress</h2>
+
+<p>说“安装”可能不太恰当，准确的说是你需要从 github 上取得 octopress 的代码并进行些许配置。步骤请参考这里。</p>
+
+<ol>
+<li><p>安装 RVM(Ruby Version Manager) 并使用”Ruby 1.9.2″作为你本地的 ruby 实现，<br/>
+这事我之前按照这篇文章做过，这里就不详细说了，你也可以按照octopress官方的介绍来安装RVM。</p></li>
+<li><p>从 github 得到 octopress 代码，运行以下命令：</p></li>
+</ol>
+
+
+<pre><code>git clone git://github.com/imathis/octopress.git octopress
+cd octopress    # If you use RVM, You'll be asked if you trust the .rvmrc file (say yes).
+ruby --version  # Should report Ruby 1.9.2
+
+gem install bundler # Install dependencies
+bundle install
+
+rake install # Install the default Octopress theme
+</pre>
+
+
+<p></code></p>
+
+<h2>三、配置你本地的 octopress，使之可以发布到你的 github pages</h2>
+
+<p>这样就可以做到：<br/>
+你在本地创建博客文章(当然是用 markdown 写成的)，然后直接 deploy 到你的 github pages repo，github会自动进行发布。<br/>
+也就是说：所有发博客的动作只需要在你本地用命令完成，酷吧！</p>
+
+<p>参考了这里。</p>
+
+<ol>
+<li>创建你的 github pages repo</li>
+</ol>
+
+
+<p>如果你的 github 用户名是 username，那个就创建一个名称为”username.github.com”的repo，
+这个 repo 就是你的 github pages repo，更多信息可以参考这里。</p>
+
+<ol>
+<li>在你本地运行以下命令，octopress 会自动帮你进行配置：</li>
+</ol>
+
+
+<pre><code>cd your_local_octopress_directory
+rake setup_github_pages
+</pre>
+
+
+<p></code></p>
+
+<p>注意：当命令提示你输入github URL时，请使用这个格式的URL:<br/>
+<code>git@github.com:username/username.github.com.git</code></p>
+
+<p>当这个命令运行完成之后，你的github pages repo会有两个branches:<br/>
+master branch 用于静态页面的发布(“octopress/<em>deploy”的内容)，<br/>
+source branch 用于保存你的 blog 内容（”octopress”目录中除了”</em>deploy”的其它内容）</p>
+
+<p>到这里基本的配置就完成了，你还可以参考这里配置你博客的名称等信息。</p>
+
+<h2>四、编写并发布文章</h2>
+
+<p>请参考这里。</p>
+
+<ol>
+<li>写文章</li>
+</ol>
+
+
+<pre><code>cd your_local_octopress_directory
+rake new_post["Your Title of Your Article"]
+</pre>
+
+
+<p></code>
+该命令会在你的”octopress/source/_posts”目录下生成对应的”.markdown”文件，<br/>
+用任意文本编辑器编辑，使用 markdown 语法编写你的文章。</p>
+
+<ol>
+<li>生成，预览并发布：</li>
+</ol>
+
+
+<pre><code>cd your_local_octopress_directory
+rake generate
+rake preview
+rake deploy
+</pre>
+
+
+<p></code>
+rake generate 命令用于将 markdown 文件转化为静态页面
+rake preview 命令用于打开一个 web server 供你预览编写的页面效果如何，通过 “http://localhost:4000”进行访问
+rake deploy 命令用于将生成的静态页面内容提交到 github 的 repo（“master”branch）</p>
+
+<p>还有很重要的一步是把你的修改(文本修改，不包含”_deploy”目录，”deploy”目录保存”rake generate”生成的静态页面内容，会被”rake deploy”命令提交到”master branch”)放到你的github pages(“source” branch)上:</p>
+
+<pre><code>cd your_local_octopress_directory
+git add .
+git commit -m 'your message'
+git push origin source
+</pre>
+
+
+<p></code>
+—–EOF—–</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[设置 vim 默认编码为 utf-8]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/01/28/she-zhi-vim-mo-ren-bian-ma-wei-utf-8/"/>
+    <updated>2013-01-28T14:00:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/01/28/she-zhi-vim-mo-ren-bian-ma-wei-utf-8</id>
+    <content type="html"><![CDATA[<p>花了不少功夫来学习 vim，这不终于有机会用 vim 来写博文了<br/>
+结果发现 vim 里面对编码格式的支持出了问题，<br/>
+输入的中文在再次打开的时候都玩变形记，- -、<br/>
+不过肯定是有解决办法的，谁让 vim 这么强大呢！<br/>
+遂 googling，即刻便找到了解决方案：</p>
+
+<!-- more -->
+
+
+<pre><code>" =====================
+" 多语言环境
+" 默认为 UTF-8 编码
+" =====================
+if has("multi_byte")
+    set encoding=utf-8
+    " English messages only
+    "language messages zh_CN.utf-8
+  
+    if has('win32')
+        language english
+        let &termencoding=&encoding
+    endif
+  
+    set fencs=ucs-bom,utf-8,gbk,cp936,latin1
+    set formatoptions+=mM
+    set nobomb " 不使用 Unicode 签名
+  
+    if v:lang =~? '^\(zh\)\|\(ja\)\|\(ko\)'
+        set ambiwidth=double
+    endif
+else
+    echoerr "Sorry, this version of (g)vim was not compiled with +multi_byte"
+endif</code></pre>
+
+
+<p>将上面的配置追加到 ~/.vimrc 文件中</p>
+
+<p>PS:<br/>
+发现一个写 markdown 的时候要注意的地方，<br/>
+在 categories: 后面追加类别的时候需要用空格隔开，<br/>
+应该是做的强制性要求，不然在用 rake generate 命令生成的时候会出错：</p>
+
+<pre><code>ERROR: YOUR SITE COULD NOT BE BUILT:
+(&lt;unknown&gt;): could not find expected ':' while scanning a simple key at line 6 column 1 in /Users/user/octopress/source/_posts/2013-01-28-she-zhi-vim-mo-ren-bian-ma-wei-utf-8.markdown</code></pre>
+
+
+<p>不过这样也好，用空格隔开的话，看起来显得更加泾渭分明~</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[(转载)打造属于自己的Vim神器]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/01/15/zhuan-zai-da-zao-shu-yu-zi-ji-de-vim-shen-qi/"/>
+    <updated>2013-01-15T13:39:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/01/15/zhuan-zai-da-zao-shu-yu-zi-ji-de-vim-shen-qi</id>
+    <content type="html"><![CDATA[<p>转载自：<a href="http://zilongshanren.com/blog/2013/01/15/vim-the-killer/" title="子龙山人">http://zilongshanren.com/blog/2013/01/15/vim-the-killer/</a></p>
+
+<h2>Why Vim?</h2>
+
+<p>为什么要使用Vim？</p>
+
+<p>我们先看看其他人怎么说：</p>
+
+<blockquote><p>Vim or Emacs就好比倚天和屠龙，得一可得天下。 &#8211; By vimer.cn</p>
+
+<p>Vim就像学钢琴一样，一旦学会，终身受益无穷。   &#8211;By Practical Vim</p></blockquote>
+
+<!-- more -->
+
+
+<p>这些话都是出自vim高手之口，对于Vim新手，可能暂时没办法体会。而我使用Vim也有一段时间了，肯定不能算是高手，但至少也是一个熟手。</p>
+
+<p>我现在主要使用Vim来编写c/c++、js、lua代码,我觉得非常方便，比Xcode和Eclise都强（调试部分可能相对弱一点）。当然，我还使用Vim来修改其它文档，比如Html、XML、文本文件等。现在我正在使用Vim书写本篇博文，非常酷，非常爽！</p>
+
+<p>我转成Vim党的感受，一句话：</p>
+
+<blockquote><p>Vim streamline my daily workflow and boost my coding productivity.</p></blockquote>
+
+<p>现在，我客观地说明一下Vim的一些好处：</p>
+
+<ul>
+<li><p>跨平台、支持N（N>40)种编程语言</p></li>
+<li><p>可安装各种插件，也可以编写自定义的插件，编辑器功能可无限扩展。</p></li>
+<li><p>配合Git管理Vim配置和插件,可极大地提高编辑器的适配性</p></li>
+<li><p>小巧、安装方便、开源、免费</p></li>
+<li><p>可打造出属于自已的个性化IDE工作环境，提高生产率</p></li>
+</ul>
+
+
+<h2>Why not Vim?</h2>
+
+<p>为什么不使用Vim？</p>
+
+<p>可能有以下几种声音：</p>
+
+<ul>
+<li><p>Vim过时了，用Vim就是找虐，别装比了，专心学好数据结构与算法吧。</p></li>
+<li><p>我是Java党，我只用Eclipse，也能安装各种插件。我是.Net党，我喜欢强大的VS,也有牛比的插件（如VC助手)</p></li>
+<li><p>我是果粉，我喜欢Xcode的优雅，也是免费的，有苹果罩着，LLVM代码补全用着超爽。</p></li>
+<li><p>我也知道用Vim或者Emacs很强大，但是学习曲线真的很陡，我还是老老实实用我的IDE吧。</p></li>
+<li><p>我在用TextMate、Notepad++、Sumbline text 2，我用着很爽，这些也是神器，我不需要Vim。</p></li>
+</ul>
+
+
+<p>我在这里不去说现代的IDE有什么不好，或者Vim相比于这些IDE来说有哪些优点。我知道这样说，又马上会引起一场语言之争，编辑器大战出来。其实，真的是没必要去纠结用什么开发工具,也没必要纠结用什么语言。</p>
+
+<p>只是我觉得程序员天生就是用来折腾的。有牛人讲过一句话：</p>
+
+<blockquote><p>每年学习一门新的编程语言，而且这门语言跟你之前熟悉的语言关系越远越好</p></blockquote>
+
+<p>现在，我也呼吁一下吧：从现在起，学习一门新的文本编辑工具Vim，它跟你之前所用到的编辑器体验完全不一样。它的Modal Editing是独一无二的，程序员值得拥有。而且你不用每年换一个编辑器，因为你只需要一个Vim编辑器。你越了解它，越使用它，就越会对它爱不释手。</p>
+
+<p>让我们一起来折腾吧！Vim, the Killer! Oh~Ye.:)</p>
+
+<h2>How to make Vim as a IDE?</h2>
+
+<blockquote><p>Know the saw, then sharpen it.</p></blockquote>
+
+<p>很多人不使用Vim的原因很简单，除了不习惯它的Modal Editing之外，更多的是觉得它算不上一个IDE。但是，稍微对Vim有过了解的朋友都知道，Vim是可以被打造成一个IDE的，而且是专门属于自己的IDE。</p>
+
+<p>为什么要使用IDE，请看<a href="http://stackoverflow.com/questions/208193/why-should-i-use-an-ide">此贴</a></p>
+
+<p>博客园的池建强写了一系列的博文《谁说Vim不是IDE》（<a href="http://www.cnblogs.com/chijianqiang/archive/2012/10/30/vim-1.html">一</a>、<a href="http://www.cnblogs.com/chijianqiang/archive/2012/10/31/vim-2.html">二</a>、<a href="http://www.cnblogs.com/chijianqiang/archive/2012/11/06/vim-3.html">三</a>、<a href="http://www.cnblogs.com/chijianqiang/archive/2012/12/17/vim-4.html">四</a>。）有兴趣的朋友可以去看看，看完后你会发现，原来Vim也可以变成IDE。：）</p>
+
+<p>关于如何把Vim打造成一个IDE，只要你现在随便谷歌一下，你肯定能找到一大堆贴子。但是，由于Vim历史悠久，有许多贴之已经过时了。</p>
+
+<p>其中最主要的变化有:</p>
+
+<ul>
+<li><p>有些插件有新的替代插件了（因为站在巨人肩膀上的缘故）</p></li>
+<li><p>安装和管理插件的方式变了，以前是手动复制相应目录和文件，现在改为插件管理器+Github了。</p></li>
+<li><p>有些插件已经不推荐使用了</p></li>
+</ul>
+
+
+<p>但是，Vim社区总是很活跃的。目前，已经有牛人把最新的Vim配置方式分享出来了。我找到了3篇，大家可以参考一下。（不过都是英文哦）</p>
+
+<ul>
+<li><a href="http://oblita.com/blog/2012/08/30/vim-the-killer/">Vim, The Killer </a></li>
+<li><a href="http://haridas.in/vim-as-your-ide.html">Vim as your IDE</a></li>
+<li><a href="https://github.com/mbrochh/vim-as-a-python-ide">Vim as a python IDE</a></li>
+</ul>
+
+
+<p>其实可以列举的还有很多，国内也有许多优秀的Vimer，欢迎你们推荐优秀的设置Vim为IDE的教程或者文章，Thanks.:)</p>
+
+<h2>Recommended plugins</h2>
+
+<p>没有安装插件的Vim算不了什么，但是，一旦安装好插件，Vim立马就牛比了。这里，作为一名cocos2d-x游戏程序员，我给大家推荐一些插件，关于插件的用法，大家可以查看help文档，我这里就不赘述了。</p>
+
+<h3>Basic plugins</h3>
+
+<p><a href="https://github.com/tpope/vim-pathogen">Pathogen</a>:该插件用来管理Vim的插件，可以让插件的安装与卸载更加方便。配合Github和Submodule效果更佳。</p>
+
+<p><a href="https://github.com/scrooloose/nerdtree">NerdTree</a>:该插件会生成工程目录树</p>
+
+<p><a href="https://github.com/majutsushi/tagbar">TagBar</a>:该插件生成函数、变量列表。之前有一个插件叫TagList，我觉得那个有点不好用，推荐TagBar</p>
+
+<p><a href="https://github.com/SirVer/ultisnips">UltiSnips</a>:类似TextMate的snippets，之前有个插件叫SnipMate，这个基于SnipMate，比SnipMate要强很多。强烈推荐。</p>
+
+<p><a href="https://github.com/tpope/vim-commentary.git">vim-commentary</a>:注释代码的插件。</p>
+
+<p><a href="https://github.com/scrooloose/syntastic">syntastic</a>:保存文件时检查语法的插件。</p>
+
+<p><a href="https://github.com/tpope/vim-fugitive.git">fugitive</a>:方便在Vim里面使用Git的插件。</p>
+
+<p><a href="https://github.com/altercation/vim-colors-solarized">vim-colors-solarized</a>:Vim颜色配色方案。</p>
+
+<p><a href="https://github.com/kien/ctrlp.vim.git">ctrlp</a>：搜索目录下的文件，类似功能的插件有Comment-T，我喜欢ctrlp，因为它不依赖于ruby，且是轻量级的.</p>
+
+<p><a href="https://github.com/vim-scripts/AutoClose">AutoClose</a>:成对生成(),{},[]</p>
+
+<p><a href="https://github.com/tpope/vim-surround.git">vim-surround</a>：给文本添加“外套”，呵呵，试试就知道有多强大了。</p>
+
+<p><a href="https://github.com/ervandew/supertab">supertab</a>:让tab键可以飞起来。</p>
+
+<p><a href="https://github.com/vim-scripts/a.vim">a</a>:让cpp文件在.h和.cpp文件中切换。</p>
+
+<p><a href="https://github.com/vim-scripts/bufexplorer.zip">buferexplorer</a>:方便浏览buffer的插件。</p>
+
+<p><a href="https://github.com/oblitum/clang_complete">clangComplete</a>:自动代码补全的插件，比OmniCppComplete好N多，速度有一点影响。不过配合neocomplcache，加上这个版本，效率还不错。</p>
+
+<p><a href="https://github.com/Shougo/neocomplcache">neocomplcache</a>:关键字补全、文件路径补全、tag补全等等，各种，非常好用，速度超快。</p>
+
+<p><a href="https://github.com/osyo-manga/neocomplcache-clang_complete">neocomplcache-clang</a>:解决clang_complete和neocomplcache的冲突。</p>
+
+<p><a href="https://github.com/magic-dot-files/TagHighlight"> TagHightlight </a>:根据生成的Tag文件，高亮类、变量、函数和关键字。</p>
+
+<h3>Bonus plugins</h3>
+
+<p><a href="https://github.com/oblitum/bufkill.git">bufkill</a>:让nerdTree在最后一个buffer窗口关闭时，不让其缩放。</p>
+
+<p><a href="https://github.com/oblitum/vimprj">vimprj</a>:方便管理工程相关的vim配置。参考如何设置Vim为IDE中的第一篇E文。</p>
+
+<p><a href="https://github.com/tpope/vim-unimpaired">vim-unimpaired</a>:一些不错的配置，可以让[]发挥奇效。</p>
+
+<p><a href="https://github.com/Lokaltog/vim-powerline">vim-powerline</a>:超有爱的状态栏。</p>
+
+<p><a href="https://github.com/kana/vim-textobj-line">vim-textobj-line</a>:文本对象插件，可以操纵当前行。</p>
+
+<p>更多插件，可以到我的Github上面去查看。可以从本博右上角Fork Me on Github处进入。当然，如果各种Vimer有什么好的插件，也欢迎推荐给我。</p>
+
+<h2>Troubleshootings</h2>
+
+<p>这部分主要记录我在打造神器的过程中遇到的一些问题：</p>
+
+<ul>
+<li><p>Vim版本最好用gvim或者macvim，然后从源码编译最好。最好是支持python,ruby,cscope等,大部分vim发行版本都是支持这些特性的。</p></li>
+<li><p>使用Excubert-ctags和<a href="https://github.com/mozilla/doctorjs">DoctorJs</a>来生成tag文件，配合cscope效果好。如果是mac用户，自带的ctags不管用，需要用homebrew或者macport来安装</p></li>
+<li><p>配置pyclewn时，安装需要指定Editor和home设置。运行的时候，如果要让GDB支持tty，还需要重新安装GDB，最好是homebrew或者macport来安装。安装好之后，要给gdb添加codesigning。</p></li>
+<li><p>windows版本下有些配置可能不太一样，特别是vimrc文件的配置，跟*nix系统不太一样。可以考虑用has(win32)之类的代码来区分vimrc配置。这样可以让vim运行在多个平台上。</p></li>
+</ul>
+
+
+<h2>Further Reading</h2>
+
+<p>强烈推荐阅读：<a href="http://pragprog.com/book/dnvim/practical-vim">《Practical Vim》</a></p>
+
+<p>推荐视频网站三个：<a href="http://www.vimcasts.org/">Vimcasts.org</a>,<a href="http://net.tutsplus.com/sessions/vim-essential-plugins/">essential vim plugins</a>和<a href="http://www.derekwyatt.org/vim/vim-tutorial-videos/">Derek Wyatt&#8217;s Blog</a></p>
+
+<p>国内站点推荐三个：<a href="http://www.vimer.cn/">vimer世界</a>,<a href="http://easwy.com/blog/archives/advanced-vim-skills-catalog/">易水的博客</a>,<a href="http://www.newsmth.net/bbsdoc.php?board=VIM">水木清华社区</a></p>
+
+<p>最后推荐一个vimrc设置技巧网站<a href="http://www.vimbits.com/">vimbits</a>,这个网站会选出最流行的vimrc配置，大家可以时不时去上面淘金。当然，如果你发现好用的vimrc配置，也记得一定要分享出来啊。社区需要你！</p>
+
+<h2>References</h2>
+
+<p>Google + Wiki. :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[(转载)我为什么要从wordpress转到octopress]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/01/03/zhuan-zai-wo-wei-shi-yao-yao-cong-wordpress-zhuan-dao-octopress/"/>
+    <updated>2013-01-03T13:44:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/01/03/zhuan-zai-wo-wei-shi-yao-yao-cong-wordpress-zhuan-dao-octopress</id>
+    <content type="html"><![CDATA[<p>原文链接：<a href="http://zilongshanren.com/blog/2013/01/03/migrate-to-octopress/" title="子龙山人">http://zilongshanren.com/blog/2013/01/03/migrate-to-octopress/</a>
+<img class="right" src="http://yang3wei.github.com/images/posts/octpress-logo.png" width="300" height="300"></p>
+
+<h2>我的博客写作历史</h2>
+
+<p>我是从2011年3月开始写博客的，博客主要是分享学习cocos2d、以及iOS游戏开发的一些内容。目前，该博客已经超过80万的访问量了。Amazing!</p>
+
+<p>其实我最早开始写博客可能是07年了。那时候刚开始学c语言，为了锻炼自己的c语言能力，在百度知道里面回答各种c语言基础题，为了一个所谓的“专家”称号而乐此不疲。后来，由于找我做“学生成绩管理系统”的人实在是太多了，我就在百度开设了自己的第一个博客。当然，主要的内容就是c语言制作XX管理系统，还有一些算法题的解法以及一些百度知道的问题的答案。后来由于学习的压力，加上疏于打理，渐渐的我也不准备写博客了。</p>
+
+<!-- more -->
+
+
+<p>再到后来，我又在csdn开始过博客。因为我很喜欢看书，很多牛人都主张要写博客。因为书写确实可以整理自己的思路，同时可以和别人分享自己的idea，这本身也是很有乐趣的一件事情。可是好景不长，没有坚持多久，这个博客又荒废了。纠其原因，我总结了如下三点：</p>
+
+<ul>
+<li><p>  自己还处在学习基础知识的阶段，写的大都是读书笔记类的东西，没有读者，也没有反馈，写起来没劲</p></li>
+<li><p>  写博客还是不方便，排版困难，写一篇博客通常要花费几个小时的时间</p></li>
+<li><p>   积累不够，没有东西写，而且没有一个好的规划，不能坚持。我现在打算是每周一篇blog，这样的时间目前还算能接受</p></li>
+</ul>
+
+
+<p>再后来，自己保送了研究生，开始关注前沿的技术和行业发展了。特别是10年，我开始接触iOS游戏开发,开始接触了Git、Cocos2d、Github和Vim等。一切都开始朝着良性的方向发展了。</p>
+
+<p>在刚开始学习Cocos2D的时候，国内那时候中文资料特别少，唯一的资料就是知易的。但是，我通过google，我发现国外还是有许多优秀的cocos2d教程的。当时，我也看到有一些人在翻译教程。但是质量不是很高，包括准确度和阅读体验都不是很好。恰好那时候，我对博客园也产生了浓厚的兴趣，于是乎便产生了要在博客园开始一个专门介绍Cocos2D游戏开发的博客。</p>
+
+<p>由于当时移动互联网被炒得很火，同时很多小公司需要Cocos2D，这个博客凭着天时也火起来了。一旦开始火起来，我的压力就大了。我当时还在兼职，工作压力还蛮大的，学校事情也多，手上还有一个游戏项目，而且全部只能靠我自己。但是，每每我不想翻译的时候，只要想到还有那么多读者在等着我发文章，我就又有动力了。为此，那段时间，我晚上写代码一度到2、3点。时间确实是不够。</p>
+
+<p>后面我便萌生念头，让热心网友和我一起来做翻译的事情。果然，程序员社区还是有很多热心人士的，Iven、小狼、北方、skingTree，Benna，糖炒小虾、u0u0、无敌葫芦娃、蓝羽、大侠自来也等等。这些人给我的博客贡献了不少文章，再次感谢你们！</p>
+
+<p>后来，由于读者数量越来越多。我又建了相应的QQ群，由于QQ群讨论的很多东西都流失了。同样的问题被反复问及，有时候不回答，别人还以为你不友好。所以，也导致我和Iven后来一起创办“泰然论坛”的想法。</p>
+
+<p>讲了这么多，其实我觉得写博客并没有那么难。看到国外好的文章，我们可以举手之劳翻译之。自己花了几个小时解决某个问题的方案也可以用博客来记录之。这样做不仅可以方便以后查阅，还可以帮助到他人，交到很多朋友，何乐而不为呢？</p>
+
+<p>再后来，我又自己申请域名，建立了自己的wordpress博客。到现在，我放弃了自己花了200块大洋买的空间，回归开源的怀抱，我采用Github来托管我的博客。</p>
+
+<p>为什么我要这样折腾呢？</p>
+
+<h2>为什么转到wordpress</h2>
+
+<p>其实我完全可以在博客园上面一直写博客，而且免费，平台大，人气足，往首页随便发一篇文章都有好几百的pv。但是，我想拥有自己的域名，拥有自己的主机空间。说白了，我想折腾了。</p>
+
+<p>当然，折腾是有代价的。除了经济上的开销以外，更多的是新平台，新环境的适应。我在wordpress平台上面大概花了2-3个月，也发表了10几篇文章。（有中文的，也有英文的，现在都转到octopress博客平台上来了。）</p>
+
+<p>wordpress给我的感觉是很成熟，很傻瓜化，很容易上手，安装过程只要1分钟。然后选择一个合适的主题，装上一堆插件就可以马上写博客了。作为一个非常成熟的CMS系统，wordpress真的很强大，而且速度很快。作为个人博客来讲，真的够用了。</p>
+
+<p>但是，我不喜欢它的编辑器，太简陋了，没有博客园的好用。其实博客园的也不太好用，因为我习惯了博客园的编辑器，所以会觉得wordpress更烂。当然，我也有尝试使用百度开发的ueditor编辑器。虽然功能强大了，但是，有时候容易把好不容易排好版的文章的样式给搞乱。这个实在是让人抓狂。(后面我发现，我不是不喜欢wordpress的编辑器，而是不喜欢那样写博客的方式，我希望写博客和写代码一样方便)</p>
+
+<p>而且wordpress采用php开发，php我不熟悉，所以，有些定制功能，我可能不会。如果全部是带着问题到处google，我也觉得累。为了写一篇博客，何苦这么麻烦了。更何况我对php开发web应用也没多大兴趣。（其实我一直就不太喜欢web开发，不管是任何平台的。不过最近我对django和ruby
+on rails有了一点兴趣了。）</p>
+
+<p>我冲着wordpress更多的控制权，我投奔了她的怀抱。但是，由于我不喜欢她的编辑文章和发布博客的方式，我最终还是决定离开她了。</p>
+
+<h2>为什么我转到octopress</h2>
+
+<p>在转到<a href="http://octopress.org/">octopress</a>之前，先讲一个小插曲。我以前学习过vim，不过没有认真对待它。前段时间为了使用cocos2d-x的lua和jsbinding来写点东西。发现没有好用的编辑器，textMate和sublime text2都不错，可是它们离我心目中的IDE还差不少。由于，我google之，我发现vim满足我的要求。于是乎，我重拾vim。这一次，我学习得非常快。我采用github和pathogen来管理我的vim插件和配置。而且由于practical Vim这本书的出现，让我对vim的认识更多了。</p>
+
+<blockquote><p>Vim真是无所不能!</p></blockquote>
+
+<p>由于我疯狂地学习vim、实践vim，现在我已经对它爱不释手了。真的不想再换编辑器了，呵呵。要充分发挥vim的能力，首先你得是一个TouchTypist。意味着你至少要能够盲打，同时，你要彻底说服自己不再用鼠标。我是怎么从一个windows用户，天天用鼠标+现代IDE来开发程序的程序员转向vim的呢？答案其实很简单：自从我接触mac以后，自从我接触mac的touch板以后。鼠标对我来说就是多余的，除了打dota的时候可能需要使用。mac系统的手势太好用了。</p>
+
+<p>用了vim以后，我就开始尝试用markdown语法+vim编辑器来向wordpress平台发博客。但是，它对图片和代码支持不好。wordpress本身也没有提供太好的markdown语法的支持。于是乎，我就找到了octopress。</p>
+
+<blockquote><p>Octopress: A blogging framework for hackers.</p></blockquote>
+
+<p>这是octopress的首页说明，酷吧！使用octopress，你可以像写代码一样写博客。同时，它与vim完美结合，并且让我的coding、blogging、git工作流程顺畅无比。我从未如此开心，原来博客还可以这样写的。当然，这里我不是推销员，我只是介绍一下我喜欢的菜。具体用什么工具和博客平台，是大家的选择，萝卜白菜各有所爱嘛。而且最重要的不是平台，而是博文，要坚持写博客才是最重要的。但是，octopress让我有想写博客的欲望。：）</p>
+
+<p>最后，octopress采用Html5+css3构建，同时支持<a href="http://liquidmarkup.org/">liquid</a>和ruby。（其实python也有类似的博客系统，不过貌似octopress社区更活跃一点）我可以通过此博客慢慢过渡到Ruby on Rails.</p>
+
+<p>关于octopress博客的搭建，大家可以google之。网上有大量的文章可供参考，其实官方的文档就足够了，非常详尽。如果大家想折腾的，可以去尝试一下。如果遇到什么问题，可以在本文下方留言。如果问题我也遇到了，我会跟大家分享滴～</p>
+
+<p>最后，贴几篇文章，讲老外为什么从wordpress转到jekyll的（octopress基于jekyll，但是，更容易使用，推荐像我一样的新手使用）</p>
+
+<p><a href="http://vitobotta.com/migrating-from-wordpress-to-jekyll-part-one-why-I-gave-up-on-wordpress/">why I migrate from wordpress to jekyll</a></p>
+
+<p><a href="http://vitobotta.com/how-to-migrate-from-wordpress-to-jekyll/">How to migrate from wordpress to jekyll</a></p>
+
+<p>最后，我贴出本文的vim中markdown编辑的一个截图吧,秀一下，呵呵：）</p>
+
+<p><img class="left" src="http://yang3wei.github.com/images/posts/vimoctopress.png" width="750" height="300"></p>
+]]></content>
+  </entry>
   
 </feed>

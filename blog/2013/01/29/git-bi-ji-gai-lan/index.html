@@ -109,7 +109,7 @@
 而且还将 feature_x 这个分支提交到 github 服务器上面去了，<br/>
 此时由 feature_x 切换回 source 分支后执行 <code>git branch -d feature_x</code> 命令只能删除本地分支，<br/>
 怎么将 github 服务器上面的 feature_x 分支给干掉呢？<br/>
-执行 <code>git push origin :feature_x</code> 命令即可！</p>
+执行 <code>git push origin :feature\_x</code> 命令即可！</p>
 
 <h3>Git 分支管理策略</h3>
 
@@ -118,6 +118,68 @@
 <h3>Git 怎么为 github 生成 ssh 密钥</h3>
 
 <p><a href="https://help.github.com/articles/generating-ssh-keys" title="Generating SSH Keys">github:help - Generating SSH Keys</a></p>
+
+<h3>Git 恢复删掉的一个文件</h3>
+
+<p>删除一个文件：<br/>
+<code>git rm 5.c</code><br/>
+现在要恢复：<br/>
+<code>git reset HEAD 5.c</code><br/>
+<code>git checkout 5.c</code><br/>
+完成（HEAD 似乎表示当前分支的当前版本）</p>
+
+<h3>Git 在各版本之间自由穿梭</h3>
+
+<p>恢复到上一个提交的版本<br/>
+<code>git reset --hard HEAD^</code><br/>
+恢复到某一个提交的版本<br/>
+<code>git reset --hard e0dea1a7eaca4b9325e36fdbdf0909d02a067d43</code><br/>
+<strong>注：各版本的 <code>hash</code> 可以去 <code>github</code> 查看，也可以使用 <code>git log</code> 命令查看。</strong></p>
+
+<h3>Git 怎么忽略某个文件</h3>
+
+<p>仓库的 <code>.gitignore</code> 或 <code>git/info/exclude</code>，<code>exclude</code> 本身不被 <code>git</code> 管理。<br/>
+一般情况下不要使用第一种方法，因为 <code>.gitignore</code> 本身是被 <code>git</code> 管理的，是大家共用的。<br/>
+所以，不要随便修改 <code>.gitignore</code> 文件！</p>
+
+<h3>Yasin Lee 的 git 学习笔记</h3>
+
+<p><a href="http://blog.csdn.net/coder_jack/article/details/5975070#">http://blog.csdn.net/coder_jack/article/details/5975070#</a></p>
+
+<h3>Problem with &#8220;git remote add origin git@github.com:yang3wei/test.git&#8221;？</h3>
+
+<p>试着先执行一下 <code>git remote rm origin</code> 命令。<br/>
+<a href="http://stackoverflow.com/questions/10904339/github-fatal-remote-origin-already-exists">github-fatal-remote-origin-already-exists</a></p>
+
+<h3>fatal: &#8230; did you run git update-server-info on the server?</h3>
+
+<p>You have to carefully look after your spelling. <br/>
+According to Github&#8217;s guide, your username is nalgene, <br/>
+hence the URL is <code>https://github.com/nalgene/MultiView.git</code>. <br/>
+The error message hints that you added the remote as <br/>
+<code>https://github.com/naglene/MultiView.git</code> <br/>
+which is not the same username, as you swapped the <code>l</code> and <code>g</code>.<br/>
+Also, the default branch is called <code>master</code>, not <code>maaster</code> or <code>mater</code>.<br/>
+<a href="http://stackoverflow.com/questions/11094547/fatal-https-github-com-user-repo-git-info-refs-not-found-did-you-run-git-upd">original link</a></p>
+
+<h3>What does &#8220;origin&#8221; mean in &#8220;git push origin master&#8221;?</h3>
+
+<p><code>git push origin master</code> 的完整命令如下：<br/>
+<code>git push git@github.com:{username}/{projectname}.git HEAD:{branchname}</code></p>
+
+<p>Also, you don&#8217;t need to type out the whole url each time you want to push. <br/>
+When you ran the clone, git saved that URL as <code>origin</code>, <br/>
+that&#8217;s why you can run something like &#8216;merge origin/test&#8217; - <br/>
+it means the <code>test</code> branch on your <code>origin</code> server. <br/>
+So, the simplest way to push to your server in that case would be:<br/>
+<code>git push origin my_test:test</code><br/>
+That will push your local <code>my_test</code> branch to the <code>test</code> branch on your <code>origin</code> server. <br/>
+If you had named your local branch the same as the branch on the server, <br/>
+then the colon is not neccesary, you can simply do:<br/>
+<code>git push origin test</code><br/>
+<a href="http://stackoverflow.com/questions/959477/error-when-git-push-to-github">Error when “git push” to github</a></p>
+
+<h2>#</h2>
 </div>
 
 
@@ -185,6 +247,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/01/31/zai-hou-zhong-jian-octopress-bo-ke-yu-dao-de-wen-ti/">灾后重建 octopress 博客遇到的问题</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/01/31/zhuan-zai-chu-ci-yun-xing-git-qian-de-pei-zhi/">(转载)初次运行 Git 前的配置</a>
       </li>
     
@@ -200,23 +266,19 @@
         <a href="/blog/2013/01/30/zhuan-zai-wei-octopress-tian-jia-biao-qian-yun/">(扩充)为 octopress 添加标签云</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2013/01/29/git-bi-ji-gai-lan/">git 笔记概览</a>
-      </li>
-    
   </ul>
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/git相关'>git相关 (5)</a></li><li><a href='/blog/categories/octopress相关'>octopress相关 (4)</a></li><li><a href='/blog/categories/vim相关'>vim相关 (4)</a></li><li><a href='/blog/categories/伟少手札'>伟少手札 (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/git相关'>git相关 (5)</a></li><li><a href='/blog/categories/octopress相关'>octopress相关 (5)</a></li><li><a href='/blog/categories/vim相关'>vim相关 (4)</a></li><li><a href='/blog/categories/伟少手札'>伟少手札 (1)</a></li></ul>
 </section>
 <section>
     <h1>Tags</h1>
     <ul class="tag-cloud">
-        <a style="font-size: 60%" href="//weishaoshouzha/">WeiShaoShouZha</a>
-<a style="font-size: 165%" href="//git/">git</a>
-<a style="font-size: 150%" href="//octopress/">octopress</a>
-<a style="font-size: 150%" href="//vim/">vim</a>
+        <a style="font-size: 60%" href="/tags/weishaoshouzha/">WeiShaoShouZha</a>
+<a style="font-size: 165%" href="/tags/git/">git</a>
+<a style="font-size: 165%" href="/tags/octopress/">octopress</a>
+<a style="font-size: 150%" href="/tags/vim/">vim</a>
 
     </ul>
 </section>

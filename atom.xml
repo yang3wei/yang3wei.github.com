@@ -4,7 +4,7 @@
   <title><![CDATA[yang3wei的专栏]]></title>
   <link href="http://yang3wei.github.com/atom.xml" rel="self"/>
   <link href="http://yang3wei.github.com/"/>
-  <updated>2013-01-31T14:57:54+08:00</updated>
+  <updated>2013-01-31T18:45:57+08:00</updated>
   <id>http://yang3wei.github.com/</id>
   <author>
     <name><![CDATA[yang3wei]]></name>
@@ -12,6 +12,108 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[灾后重建 octopress 博客遇到的问题]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/01/31/zai-hou-zhong-jian-octopress-bo-ke-yu-dao-de-wen-ti/"/>
+    <updated>2013-01-31T16:58:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/01/31/zai-hou-zhong-jian-octopress-bo-ke-yu-dao-de-wen-ti</id>
+    <content type="html"><![CDATA[<p>今天上午十点的时候试了一下 <code>git pull</code> 命令，<br/>
+结果导致 <code>octopress</code> 博客在我本地的目录乱成了一团浆糊，<br/>
+因为对 <code>git</code> 的了解不是很充分，所以在多番努力修复无果之后，我决定重新洗牌。</p>
+
+<p>话说 <code>git</code> 的分支、合并什么的确实有些不容易理解~<br/>
+其实 <code>blog</code> 还是能够正常使用的，但是我本地 <code>octopress</code> 的目录被完全破坏掉了，<br/>
+失去了我对它的掌控，另外就是，在提交的时候老提示类似如下的信息</p>
+
+<pre><code># On branch master
+# Your branch is ahead of 'origin/master' by 1 commit.
+#
+nothing to commit (working directory clean)</code></pre>
+
+
+<p>我是一个追求完美的人，这些个多余的东西让我浑身不自在，于是我有了 <code>重装</code> 的想法，<br/>
+重装其实也有其他的用意，比如说，让我对架设 octopress 博客的流程更加轻车熟路些。<br/>
+因为之前走过一遍，所以我在做费时评估时是准备在 10 分钟内搞定的。</p>
+
+<p>但是现实往往是那么地不可预料，这不，在重装的过程中又遇到了一些问题，- -、</p>
+
+<h3>第一步，清除所有陈旧的东西</h3>
+
+<p>将 <code>octopress</code> 博客的本地目录拽入垃圾箱；<br/>
+在 <code>github</code> 里面删除 <code>yang3wei.github.com</code> 博客仓库。<br/>
+ok，就这么多！</p>
+
+<h3>第二步，在 github 上面重建 yang3wei.github.com 仓库</h3>
+
+<p>这个不多说，<code>github</code> 官网上面有做全方位地向导。</p>
+
+<h3>第三步，重新布置 octopress 博客的本地目录</h3>
+
+<p>这个也没什么好说的，顺着 <code>octopress</code> 主页底部的 <code>start here</code> 链接一路往下走即可。</p>
+
+<p>但是这里面有猫腻，如果处理的不好，将导致管理 octopress 博客出现一些混乱！<br/>
+这里说一下存在问题的处理方式：<br/>
+按照 <code>octopress</code> 主页上面介绍的搭建流程，<br/>
+我开启一个 <code>Termimal</code> 窗口，直接在里面粘贴并执行如下的命令：<br/>
+<code>git clone git://github.com/imathis/octopress.git octopress</code><br/>
+<code>Terminal</code> 窗口开启的时候默认的所在目录为 <code>~</code>，<br/>
+上面的命令会将 <code>octopress</code> 的安装文件克隆到本地的 <code>~/octopress</code> 目录。<br/>
+之后我规规矩矩地执行下列命令：<code>cd octopress</code>、<code>rake install</code>，</p>
+
+<p>然后我点击 <code>Next Steps</code> 下面的 <code>Set up deployment</code> 链接进入到创建 <code>github</code> 博客仓库的环节。<br/>
+按照 <code>octopress</code> 给出的提示，我在 <code>github</code> 里面创建了一个名为 <code>yang3wei.github.com</code> 的仓库。
+之后我复制好 <code>github</code> 所生成的命令文本：</p>
+
+<pre><code>touch README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/yang3wei/yang3wei.github.com.git
+git push -u origin master
+</code></pre>
+
+
+<p>二话不说跑到之前打开的那个 <code>Terminal</code> 窗口里面就粘贴执行了，<br/>
+但在执行这组命令时并没有想象中的顺利，在执行倒数第二行命令的时候出现了故障：<br/>
+<code>fatal: remote origin already exists</code><br/>
+<code>googling</code> 一番以后找到问题的解决方案，在执行倒数第二行命令前先执行一遍如下命令：<br/>
+<code>git remote rm origin</code><br/>
+然后，依次粘贴执行前述命令块儿的最后两条命令，其间没有再生出其他的枝节。<br/>
+问题解决方案的相关链接：<a href="http://stackoverflow.com/questions/10904339/github-fatal-remote-origin-already-exists">Github “fatal: remote origin already exists”</a></p>
+
+<p>做完了上面的操作，就算是将 <code>github</code> 上 <code>yang3wei.github.com</code> 仓库的本地目录给布置好了。<br/>
+之后点进 <a href="http://octopress.org/docs/deploying/github/">Deploying to Github Pages</a> 链接，继续按照提示往下走，<br/>
+我在之前提到的那个 <code>Terminal</code> 窗口里面再次粘贴并执行如下命令块儿：</p>
+
+<pre><code>rake setup_github_pages
+rake generate
+rake deploy
+git add .
+git commit -m "first commit"
+git push origin source
+</code></pre>
+
+
+<p>在依次执行到最后一条命令 <code>git push origin source</code> 时，<br/>
+问题再次降临，本地提交的数据死活推不进 <code>github</code> 服务器。<br/>
+我用 <code>git status</code> 和 <code>git branch -a</code> 命令查看了一下当前的分支状态和所有的分支条目，<br/>
+发现 <code>source</code> 分支根本就不存在，当前所处的也只是 <code>master</code> 分支。<br/>
+我感到非常的不可思议，因为在我之前顺利搭建好 octopress 博客的时候，<br/>
+我是一直都工作在 <code>source</code> 分支下面的，现在却仅仅只有一个 <code>master</code> 分支！<br/>
+我重复删除创建实践了很多次，最终却都只得到上述的结局。<br/>
+有几次我忍不住按照 git 给出的提示执行了 <code>git pull</code> 命令，结果一下就完蛋了：<br/>
+静态页的数据直接被拉到 <code>octopress</code> 根目录，把根目录弄得混乱的一塌糊涂。</p>
+
+<h3>真相在哪里？</h3>
+
+<p>聪明的看官可能已经发现问题的所在了！<br/>
+我不明所以地将 <code>yang3wei.github.com</code> 仓库的本地目录和 <code>~/octopress</code> 目录重叠了起来。<br/>
+正是因为这一点导致了我 <code>n + 1</code> 次的重建失败！正确的处理方法：<br/>
+<strong>使用除 <code>~/octopress</code> 目录之外的其他目录作为 <code>yang3wei.github.com</code> 的本地目录。</strong><br/>
+庆幸我是一个执着的人，没有 <code>n + 1</code> 次的失败，哪有第 <code>n + 2</code> 次的成功？</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[(转载)初次运行 Git 前的配置]]></title>
@@ -311,7 +413,7 @@ octopress 毕竟还是没能达到我心目中理想的高度，此次就是不�
 而且还将 feature_x 这个分支提交到 github 服务器上面去了，<br/>
 此时由 feature_x 切换回 source 分支后执行 <code>git branch -d feature_x</code> 命令只能删除本地分支，<br/>
 怎么将 github 服务器上面的 feature_x 分支给干掉呢？<br/>
-执行 <code>git push origin :feature_x</code> 命令即可！</p>
+执行 <code>git push origin :feature\_x</code> 命令即可！</p>
 
 <h3>Git 分支管理策略</h3>
 
@@ -320,6 +422,68 @@ octopress 毕竟还是没能达到我心目中理想的高度，此次就是不�
 <h3>Git 怎么为 github 生成 ssh 密钥</h3>
 
 <p><a href="https://help.github.com/articles/generating-ssh-keys" title="Generating SSH Keys">github:help - Generating SSH Keys</a></p>
+
+<h3>Git 恢复删掉的一个文件</h3>
+
+<p>删除一个文件：<br/>
+<code>git rm 5.c</code><br/>
+现在要恢复：<br/>
+<code>git reset HEAD 5.c</code><br/>
+<code>git checkout 5.c</code><br/>
+完成（HEAD 似乎表示当前分支的当前版本）</p>
+
+<h3>Git 在各版本之间自由穿梭</h3>
+
+<p>恢复到上一个提交的版本<br/>
+<code>git reset --hard HEAD^</code><br/>
+恢复到某一个提交的版本<br/>
+<code>git reset --hard e0dea1a7eaca4b9325e36fdbdf0909d02a067d43</code><br/>
+<strong>注：各版本的 <code>hash</code> 可以去 <code>github</code> 查看，也可以使用 <code>git log</code> 命令查看。</strong></p>
+
+<h3>Git 怎么忽略某个文件</h3>
+
+<p>仓库的 <code>.gitignore</code> 或 <code>git/info/exclude</code>，<code>exclude</code> 本身不被 <code>git</code> 管理。<br/>
+一般情况下不要使用第一种方法，因为 <code>.gitignore</code> 本身是被 <code>git</code> 管理的，是大家共用的。<br/>
+所以，不要随便修改 <code>.gitignore</code> 文件！</p>
+
+<h3>Yasin Lee 的 git 学习笔记</h3>
+
+<p><a href="http://blog.csdn.net/coder_jack/article/details/5975070#">http://blog.csdn.net/coder_jack/article/details/5975070#</a></p>
+
+<h3>Problem with &#8220;git remote add origin git@github.com:yang3wei/test.git&#8221;？</h3>
+
+<p>试着先执行一下 <code>git remote rm origin</code> 命令。<br/>
+<a href="http://stackoverflow.com/questions/10904339/github-fatal-remote-origin-already-exists">github-fatal-remote-origin-already-exists</a></p>
+
+<h3>fatal: &#8230; did you run git update-server-info on the server?</h3>
+
+<p>You have to carefully look after your spelling. <br/>
+According to Github&#8217;s guide, your username is nalgene, <br/>
+hence the URL is <code>https://github.com/nalgene/MultiView.git</code>. <br/>
+The error message hints that you added the remote as <br/>
+<code>https://github.com/naglene/MultiView.git</code> <br/>
+which is not the same username, as you swapped the <code>l</code> and <code>g</code>.<br/>
+Also, the default branch is called <code>master</code>, not <code>maaster</code> or <code>mater</code>.<br/>
+<a href="http://stackoverflow.com/questions/11094547/fatal-https-github-com-user-repo-git-info-refs-not-found-did-you-run-git-upd">original link</a></p>
+
+<h3>What does &#8220;origin&#8221; mean in &#8220;git push origin master&#8221;?</h3>
+
+<p><code>git push origin master</code> 的完整命令如下：<br/>
+<code>git push git@github.com:{username}/{projectname}.git HEAD:{branchname}</code></p>
+
+<p>Also, you don&#8217;t need to type out the whole url each time you want to push. <br/>
+When you ran the clone, git saved that URL as <code>origin</code>, <br/>
+that&#8217;s why you can run something like &#8216;merge origin/test&#8217; - <br/>
+it means the <code>test</code> branch on your <code>origin</code> server. <br/>
+So, the simplest way to push to your server in that case would be:<br/>
+<code>git push origin my_test:test</code><br/>
+That will push your local <code>my_test</code> branch to the <code>test</code> branch on your <code>origin</code> server. <br/>
+If you had named your local branch the same as the branch on the server, <br/>
+then the colon is not neccesary, you can simply do:<br/>
+<code>git push origin test</code><br/>
+<a href="http://stackoverflow.com/questions/959477/error-when-git-push-to-github">Error when “git push” to github</a></p>
+
+<h2>#</h2>
 ]]></content>
   </entry>
   

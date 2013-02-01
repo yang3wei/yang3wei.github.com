@@ -8,7 +8,7 @@ subtitle: Fight for better life!
 author: yang3wei
 simple_search: http://google.com/search
 description: yang3wei的专栏, yang3wei
-keywords: cocos2d, mac, objective-c, c/c++, game develop, java, OpenGL, shell, box2d, git, python
+keywords: yang3wei, cocos2d, mac, objective-c, c/c++, game develop, java, OpenGL, shell, box2d, git, python
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
@@ -95,7 +95,7 @@ disqus_short_name: yang3wei
 disqus_show_comment_count: true
 
 # Google Analytics
-google_analytics_tracking_id:
+google_analytics_tracking_id: UA-38160149-1
 
 # Facebook Like
 facebook_like: false

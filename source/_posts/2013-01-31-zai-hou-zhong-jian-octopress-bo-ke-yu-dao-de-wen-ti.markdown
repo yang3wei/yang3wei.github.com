@@ -44,7 +44,7 @@ ok，就这么多！
 之后我规规矩矩地执行下列命令：`cd octopress`、`rake install`，  
 
 然后我点击 `Next Steps` 下面的 `Set up deployment` 链接进入到创建 `github` 博客仓库的环节。  
-按照 `octopress` 给出的提示，我在 `github` 里面创建了一个名为 `yang3wei.github.com` 的仓库。
+按照 `octopress` 给出的提示，我在 `github` 里面创建了一个名为 `yang3wei.github.com` 的仓库。  
 之后我复制好 `github` 所生成的命令文本：
 <pre><code>touch README.md
 git init
@@ -75,14 +75,14 @@ git push origin source
 问题再次降临，本地提交的数据死活推不进 `github` 服务器。  
 我用 `git status` 和 `git branch -a` 命令查看了一下当前的分支状态和所有的分支条目，  
 发现 `source` 分支根本就不存在，当前所处的也只是 `master` 分支。  
-我感到非常的不可思议，因为在我之前顺利搭建好 octopress 博客的时候，  
+我感到非常的不可思议，因为在我之前顺利搭建 `otopress` 博客的时候，  
 我是一直都工作在 `source` 分支下面的，现在却仅仅只有一个 `master` 分支！  
 我重复删除创建实践了很多次，最终却都只得到上述的结局。  
-有几次我忍不住按照 git 给出的提示执行了 `git pull` 命令，结果一下就完蛋了：  
-静态页的数据直接被拉到 `octopress` 根目录，把根目录弄得混乱的一塌糊涂。   
+有几次我忍不住按照 `git` 给出的提示执行了 `git pull` 命令，结果一下就完蛋了：  
+静态页数据直接被拉到本地的 `octopress` 根目录，把根目录弄得一团乱麻。   
 
 ###真相在哪里？
-聪明的看官可能已经发现问题的所在了！  
+熟悉 git 运作机制的看官可能已经发现问题的所在了！  
 我不明所以地将 `yang3wei.github.com` 仓库的本地目录和 `~/octopress` 目录重叠了起来。  
 正是因为这一点导致了我 `n + 1` 次的重建失败！正确的处理方法：  
 __使用除 `~/octopress` 目录之外的其他目录作为 `yang3wei.github.com` 的本地目录。__  

@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: mac | yang3wei的专栏]]></title>
   <link href="http://yang3wei.github.com/tags/mac/atom.xml" rel="self"/>
   <link href="http://yang3wei.github.com/"/>
-  <updated>2013-02-01T23:30:40+08:00</updated>
+  <updated>2013-02-02T00:25:12+08:00</updated>
   <id>http://yang3wei.github.com/</id>
   <author>
     <name><![CDATA[yang3wei]]></name>
@@ -21,12 +21,13 @@
     <content type="html"><![CDATA[<p>原帖链接：<a href="http://segmentfault.com/q/1010000000095119">http://segmentfault.com/q/1010000000095119</a><br/>
 <code>Mac OS X Lion</code> 下使用 <code>which git</code> 查看 <code>git</code>，<br/>
 发现当前所使用的 <code>git</code> 位于 <code>/usr/bin/git</code> 目录下，<br/>
-可能是安装 <code>XCode</code> 时一起安装上来的，执行 <code>git --version</code> 得到当前版本为：<code>1.7.5.4</code>。</p>
+可能是安装 <code>XCode</code> 时一起安装上来的，执行 <code>git --version</code> 得到当前版本为：<code>1.7.5.4</code>。<br/>
+想升级到最新版本，下载 <code>git-osx-installer</code> 安装完成后，在命令行里查看却仍是旧版本。<br/>
+查阅资料发现这个安装包是将 <code>git</code> 安装在 <code>/usr/local/git</code> 目录下的。<br/>
+<strong>我想使用这个新版本的 <code>git</code>，该如何进行设置？</strong></p>
 
-<p>想升级到最新版本，下载 <code>git-osx-installer</code> 安装完成后，在命令行里查看却仍是旧版本。<br/>
-查阅资料发现这个安装包是将 <code>git</code> 安装在 <code>/usr/local/git</code> 目录下的。</p>
+<!-- more -->
 
-<p>我想使用这个新版本的 <code>git</code>，该如何进行设置？</p>
 
 <h3>解决方案：</h3>
 

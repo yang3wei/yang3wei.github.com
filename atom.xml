@@ -4,7 +4,7 @@
   <title><![CDATA[yang3wei的专栏]]></title>
   <link href="http://yang3wei.github.com/atom.xml" rel="self"/>
   <link href="http://yang3wei.github.com/"/>
-  <updated>2013-02-01T23:30:40+08:00</updated>
+  <updated>2013-02-02T00:25:12+08:00</updated>
   <id>http://yang3wei.github.com/</id>
   <author>
     <name><![CDATA[yang3wei]]></name>
@@ -14,13 +14,110 @@
 
   
   <entry>
+    <title type="html"><![CDATA[(转载)很好的一篇 git 入门文章]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/02/zhuan-zai-hen-hao-de-%5B%3F%5D-pian-git-ru-men-wen-zhang/"/>
+    <updated>2013-02-02T00:00:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/02/zhuan-zai-hen-hao-de-[?]-pian-git-ru-men-wen-zhang</id>
+    <content type="html"><![CDATA[<p>原文链接：<br/>
+<a href="http://blog.csdn.net/ylm23_24/article/details/8561527">http://blog.csdn.net/ylm23_24/article/details/8561527</a><br/>
+用了几次 git 了，一直没总结，还是不太熟。<br/>
+下载和安装什么的就不说了。<br/>
+Windows 下推荐 git 和 tortoise git。Linux 下的 gitk 貌似还不错。</p>
+
+<!-- more -->
+
+
+<h3>1.本地创建新仓库</h3>
+
+<p>创建新文件夹，打开终端执行<br/>
+<code>git init</code></p>
+
+<p>这样就创建了一个新的 git 仓库</p>
+
+<h3>2.复制仓库</h3>
+
+<p>本地复制，创建一个本地仓库的克隆版本。<br/>
+<code>git clone /path/to/repository</code></p>
+
+<p>将远端服务器上的仓库复制到本地，就跟下载差不多，如下例<br/>
+<code>git clone git@github.com:linus-young/depot.git</code></p>
+
+<h3>3.添加与提交</h3>
+
+<p><code>git add filename</code><br/>
+<code>git commit -m "代码提交信息"</code></p>
+
+<h3>4.推送到远端服务器</h3>
+
+<p>在 github 上申请一个帐号，create a new repo，<br/>
+创建之后其实 github 上有提示要执行哪些命令，注意两个邮箱需一致。<br/>
+至于本地的配置详见 <a href="http://blog.csdn.net/ylm23_24/article/details/8297362">http://blog.csdn.net/ylm23_24/article/details/8297362</a><br/>
+在当前本地文件夹下执行：<br/>
+<code>git remote add origin git@github.com:linus-young/depot.git</code><br/>
+<code>git push origin master</code></p>
+
+<p>第一行代码是确定添加到 github 的哪个仓库，作为第一次提交。<br/>
+第二行是将本地的所有文件上传到远端服务器上。<br/>
+master 是默认分支，可改为其他分支。本地创建的其他分支默认是不可见的。</p>
+
+<h3>5.分支</h3>
+
+<p>master 是默认的。在其他分支上进行开发，完成后再合并到主分支上，有利于多人共同开发。<br/>
+在当前本地仓库新建一个分支 test<br/>
+<code>git branch test</code><br/>
+若此时运行<br/>
+<code>git branch</code></p>
+
+<p>可以看到所有当前存在的分支<br/>
+test<br/>
+*master</p>
+
+<p>切换到 test 分支<br/>
+<code>git checkout test</code><br/>
+现在来随便更改一些文件，并且提交，然后切换到 master<br/>
+<strong>(edit file)</strong><br/>
+<code>git commit -a -m "try branch"</code><br/>
+<code>git checkout master</code></p>
+
+<p>切换之后你打开刚刚修改过的文件，神奇的是貌似这些文件都没有被修改过！<br/>
+原因是你此时处于 master 分支，test 分支里面所作的改动是不起作用的，不信的话可以用<br/>
+<code>git checkout test</code><br/>
+然后看看文件是否被修改了</p>
+
+<p>然后你可以修改 master 分支下的一些文件并且提交<br/>
+<strong>(edit file)</strong><br/>
+<code>git commit -a -m "i just edit some file on master"</code></p>
+
+<p>然后我们来合并 test 分支上的改动到 master 下<br/>
+<code>git merge test</code></p>
+
+<p>报错的话可以用 git diff 查看冲突<br/>
+然后提交<br/>
+<code>git commit -a -m "i have merged test to master"</code></p>
+
+<p>下面这行可以删除 test 分支：<br/>
+<code>git branch -d test</code></p>
+
+<h3>6.其他常见命令</h3>
+
+<p><code>git status</code> 查看文件状态<br/>
+<code>git log</code>   查看提交的历史记录<br/>
+<code>git pull</code> 和 <code>git push</code> 相反</p>
+
+<h3>7.gitk</h3>
+
+<p><code>gitk</code> 可以用图形化的方式很清楚地显示改动</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[(转载)Git: Why 'Everything up-to-date' when pushing]]></title>
     <link href="http://yang3wei.github.com/blog/2013/02/01/git-why-everything-up-to-date-when-pushing/"/>
     <updated>2013-02-01T23:22:00+08:00</updated>
     <id>http://yang3wei.github.com/blog/2013/02/01/git-why-everything-up-to-date-when-pushing</id>
     <content type="html"><![CDATA[<p>原文链接：<br/>
 <a href="http://blog.rexzhao.com/2011/11/28/google-code-git-everything-up-to-date-when-push.html">http://blog.rexzhao.com/2011/11/28/google-code-git-everything-up-to-date-when-push.html</a><br/>
-第一次在 Google Code 上弄项目，注册完毕后，<br/>
+第一次在 <code>Google Code</code> 上弄项目，注册完毕后，<br/>
 尝试增加一个新文件用以测试 Git 是否好好工作。<br/>
 结果在 <code>Push</code> 时却显示 <code>Every up-to-date</code>，检查文件时却发现实际上一个都没更新上去。</p>
 
@@ -29,7 +126,7 @@
 
 <p>因为对 <code>Git</code> 不够熟悉，因此只好 <code>Googling</code>，进行一番搜索后找到原因如下：</p>
 
-<p><strong>Why does Git refuse to push, saying &#8220;everything up to date&#8221;?
+<p><strong>Why does Git refuse to push, saying &#8220;everything up to date&#8221;?<br/>
 git push with no additional arguments only pushes branches that exist in the remote already. <br/>
 If the remote repository is empty, nothing will be pushed. <br/>
 In this case, explicitly specify a branch to push, e.g. <code>git push master</code>.</strong></p>
@@ -47,7 +144,7 @@ origin  https://code.google.com/p/micolog2 (push)
 <p>执行 <code>git branch</code> 后看到自己当下用的分支是 <code>master</code>:</p>
 
 <pre><code>$ git branch 
-\* master
+* master
 </code></pre>
 
 
@@ -63,12 +160,13 @@ origin  https://code.google.com/p/micolog2 (push)
     <content type="html"><![CDATA[<p>原帖链接：<a href="http://segmentfault.com/q/1010000000095119">http://segmentfault.com/q/1010000000095119</a><br/>
 <code>Mac OS X Lion</code> 下使用 <code>which git</code> 查看 <code>git</code>，<br/>
 发现当前所使用的 <code>git</code> 位于 <code>/usr/bin/git</code> 目录下，<br/>
-可能是安装 <code>XCode</code> 时一起安装上来的，执行 <code>git --version</code> 得到当前版本为：<code>1.7.5.4</code>。</p>
+可能是安装 <code>XCode</code> 时一起安装上来的，执行 <code>git --version</code> 得到当前版本为：<code>1.7.5.4</code>。<br/>
+想升级到最新版本，下载 <code>git-osx-installer</code> 安装完成后，在命令行里查看却仍是旧版本。<br/>
+查阅资料发现这个安装包是将 <code>git</code> 安装在 <code>/usr/local/git</code> 目录下的。<br/>
+<strong>我想使用这个新版本的 <code>git</code>，该如何进行设置？</strong></p>
 
-<p>想升级到最新版本，下载 <code>git-osx-installer</code> 安装完成后，在命令行里查看却仍是旧版本。<br/>
-查阅资料发现这个安装包是将 <code>git</code> 安装在 <code>/usr/local/git</code> 目录下的。</p>
+<!-- more -->
 
-<p>我想使用这个新版本的 <code>git</code>，该如何进行设置？</p>
 
 <h3>解决方案：</h3>
 

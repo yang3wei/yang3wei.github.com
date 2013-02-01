@@ -5,14 +5,15 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>(转载)初次运行 Git 前的配置 - yang3wei的专栏</title>
+  <title>(转载)很好的一篇 git 入门文章 - yang3wei的专栏</title>
   <meta name="author" content="yang3wei">
 
   
   <meta name="description" content="原文链接：
-http://wuzongbin2008.blog.163.com/blog/static/214687332010111992437496/
-http://progit.org/book/zh/ch1-5.html
-一般在新的系统上，我们都需要先配置下自己的 Git 工作环境。 &hellip;">
+http://blog.csdn.net/ylm23_24/article/details/8561527
+用了几次 git 了，一直没总结，还是不太熟。
+下载和安装什么的就不说了。
+Windows 下推荐 git 和 tortoise git。Linux 下的 gitk 貌似还不错 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -26,7 +27,7 @@ http://progit.org/book/zh/ch1-5.html
   <meta name="keywords" content="yang3wei, cocos2d, mac, objective-c, c/c++, game develop, java, OpenGL, shell, box2d, git, python">
 
   
-  <link rel="canonical" href="http://yang3wei.github.com/blog/2013/01/31/zhuan-zai-chu-ci-yun-xing-git-qian-de-pei-zhi/">
+  <link rel="canonical" href="http://yang3wei.github.com/blog/2013/02/02/zhuan-zai-hen-hao-de-%5B%3F%5D-pian-git-ru-men-wen-zhang/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -87,7 +88,7 @@ http://progit.org/book/zh/ch1-5.html
   
   <header>
     
-      <h1 class="entry-title">(转载)初次运行 Git 前的配置</h1>
+      <h1 class="entry-title">(转载)很好的一篇 git 入门文章</h1>
     
     
       <p class="meta">
@@ -103,7 +104,7 @@ http://progit.org/book/zh/ch1-5.html
   
 
 
-<time datetime="2013-01-31T00:29:00+08:00" pubdate data-updated="true">Jan 31<span>st</span>, 2013</time>
+<time datetime="2013-02-02T00:00:00+08:00" pubdate data-updated="true">Feb 2<span>nd</span>, 2013</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -113,95 +114,94 @@ http://progit.org/book/zh/ch1-5.html
 
 
 <div class="entry-content"><p>原文链接：<br/>
-<a href="http://wuzongbin2008.blog.163.com/blog/static/214687332010111992437496/" title="人生、梦想、炼狱、天堂">http://wuzongbin2008.blog.163.com/blog/static/214687332010111992437496/</a><br/>
-<a href="http://progit.org/book/zh/ch1-5.html">http://progit.org/book/zh/ch1-5.html</a><br/>
-一般在新的系统上，我们都需要先配置下自己的 Git 工作环境。<br/>
-配置工作只需一次，以后升级时还会沿用现在的配置。<br/>
-当然，如果需要，你随时可以用相同的命令修改已有的配置。</p>
+<a href="http://blog.csdn.net/ylm23_24/article/details/8561527">http://blog.csdn.net/ylm23_24/article/details/8561527</a><br/>
+用了几次 git 了，一直没总结，还是不太熟。<br/>
+下载和安装什么的就不说了。<br/>
+Windows 下推荐 git 和 tortoise git。Linux 下的 gitk 貌似还不错。</p>
 
 <!-- more -->
 
 
-<p>Git 提供了一个叫做 <code>git config</code> 的工具<br/>
-（译注：实际是 <code>git-config</code> 命令，只不过可以通过 git 加一个名字来呼叫此命令），<br/>
-专门用来配置或读取相应的工作环境变量。<br/>
-而正是由这些环境变量，决定了 Git 在各个环节的具体工作方式和行为。<br/>
-这些变量可以存放在以下三个不同的地方：</p>
+<h3>1.本地创建新仓库</h3>
 
-<h3>1.<code>/etc/gitconfig</code> 文件</h3>
+<p>创建新文件夹，打开终端执行<br/>
+<code>git init</code></p>
 
-<p>系统中对所有用户都普遍适用的配置。<br/>
-若使用 <code>git config</code> 时用 <code>--system</code> 选项，读写的就是这个文件。</p>
+<p>这样就创建了一个新的 git 仓库</p>
 
-<h3>2.<code>~/.gitconfig</code> 文件</h3>
+<h3>2.复制仓库</h3>
 
-<p>用户目录下的配置文件只适用于该用户。<br/>
-若使用 <code>git config</code> 时用 <code>--global</code> 选项，读写的就是这个文件。</p>
+<p>本地复制，创建一个本地仓库的克隆版本。<br/>
+<code>git clone /path/to/repository</code></p>
 
-<h3>3.当前项目 <code>.git</code> 隐藏目录下的 config 文件</h3>
+<p>将远端服务器上的仓库复制到本地，就跟下载差不多，如下例<br/>
+<code>git clone git@github.com:linus-young/depot.git</code></p>
 
-<p>这里的配置仅仅针对当前项目有效。<br/>
-每一个级别的配置都会覆盖上层的相同配置，<br/>
-所以 <code>.git/config</code> 里的配置会覆盖 <code>/etc/gitconfig</code> 中的同名变量。</p>
+<h3>3.添加与提交</h3>
 
-<p>在 <code>Windows</code> 系统上，Git 会找寻用户主目录下的 <code>.gitconfig</code> 文件。<br/>
-主目录即 <code>$HOME</code> 变量指定的目录，一般都是 <code>C:\Documents and Settings\$USER</code>。<br/>
-此外，Git 还会尝试找寻 <code>/etc/gitconfig</code> 文件，<br/>
-只不过看当初 Git 装在什么目录，就以此作为根目录来定位。</p>
+<p><code>git add filename</code><br/>
+<code>git commit -m "代码提交信息"</code></p>
 
-<h2>用户信息</h2>
+<h3>4.推送到远端服务器</h3>
 
-<p>第一个要配置的是你个人的用户名称和电子邮件地址。<br/>
-这两条配置很重要，每次 Git 提交时都会引用这两条信息，<br/>
-说明是谁提交了更新，所以会随更新内容一起被永久纳入历史记录：</p>
+<p>在 github 上申请一个帐号，create a new repo，<br/>
+创建之后其实 github 上有提示要执行哪些命令，注意两个邮箱需一致。<br/>
+至于本地的配置详见 <a href="http://blog.csdn.net/ylm23_24/article/details/8297362">http://blog.csdn.net/ylm23_24/article/details/8297362</a><br/>
+在当前本地文件夹下执行：<br/>
+<code>git remote add origin git@github.com:linus-young/depot.git</code><br/>
+<code>git push origin master</code></p>
 
-<pre><code>git config --global user.name "John Doe"
-git config --global user.email johndoe@example.com
-</code></pre>
+<p>第一行代码是确定添加到 github 的哪个仓库，作为第一次提交。<br/>
+第二行是将本地的所有文件上传到远端服务器上。<br/>
+master 是默认分支，可改为其他分支。本地创建的其他分支默认是不可见的。</p>
 
+<h3>5.分支</h3>
 
-<p>如果用了 <code>--global</code> 选项，那么更改的配置文件就是位于你用户主目录下的那个，<br/>
-以后你所有的项目都会默认使用这里配置的用户信息。<br/>
-如果要在某个特定的项目中使用其他名字或者电邮，只要去掉 <code>--global</code> 选项重新配置即可，<br/>
-新的设定保存在当前项目的 <code>.git/config</code> 文件里。</p>
+<p>master 是默认的。在其他分支上进行开发，完成后再合并到主分支上，有利于多人共同开发。<br/>
+在当前本地仓库新建一个分支 test<br/>
+<code>git branch test</code><br/>
+若此时运行<br/>
+<code>git branch</code></p>
 
-<h2>文本编辑器</h2>
+<p>可以看到所有当前存在的分支<br/>
+test<br/>
+*master</p>
 
-<p>接下来要设置的是默认使用的文本编辑器。<br/>
-Git 需要你输入一些额外消息的时候，会自动调用一个外部文本编辑器给你用。<br/>
-默认会使用操作系统指定的默认编辑器，一般可能会是 <code>Vi</code> 或者 <code>Vim</code>。<br/>
-如果你有其他偏好，比如 <code>Emacs</code> 的话，可以重新设置：</p>
+<p>切换到 test 分支<br/>
+<code>git checkout test</code><br/>
+现在来随便更改一些文件，并且提交，然后切换到 master<br/>
+<strong>(edit file)</strong><br/>
+<code>git commit -a -m "try branch"</code><br/>
+<code>git checkout master</code></p>
 
-<pre><code>git config --global core.editor emacs</code></pre>
+<p>切换之后你打开刚刚修改过的文件，神奇的是貌似这些文件都没有被修改过！<br/>
+原因是你此时处于 master 分支，test 分支里面所作的改动是不起作用的，不信的话可以用<br/>
+<code>git checkout test</code><br/>
+然后看看文件是否被修改了</p>
 
+<p>然后你可以修改 master 分支下的一些文件并且提交<br/>
+<strong>(edit file)</strong><br/>
+<code>git commit -a -m "i just edit some file on master"</code></p>
 
-<h2>差异分析工具</h2>
+<p>然后我们来合并 test 分支上的改动到 master 下<br/>
+<code>git merge test</code></p>
 
-<p>还有一个比较常用的是，在解决合并冲突时使用哪种差异分析工具。比如要改用 vimdiff 的话：</p>
+<p>报错的话可以用 git diff 查看冲突<br/>
+然后提交<br/>
+<code>git commit -a -m "i have merged test to master"</code></p>
 
-<pre><code>git config --global merge.tool vimdiff</code></pre>
+<p>下面这行可以删除 test 分支：<br/>
+<code>git branch -d test</code></p>
 
+<h3>6.其他常见命令</h3>
 
-<p>Git 可以理解 <code>kdiff3</code>，<code>tkdiff</code>，<code>meld</code>，<code>xxdiff</code>，<code>emerge</code>，<br/>
-<code>vimdiff</code>，<code>gvimdiff</code>，<code>ecmerge</code>，<code>opendiff</code> 等合并工具的输出信息。<br/>
-当然，你也可以指定使用自己开发的工具，具体怎么做可以参阅第七章。</p>
+<p><code>git status</code> 查看文件状态<br/>
+<code>git log</code>   查看提交的历史记录<br/>
+<code>git pull</code> 和 <code>git push</code> 相反</p>
 
-<h2>查看配置信息</h2>
+<h3>7.gitk</h3>
 
-<p>要检查已有的配置信息，可以使用 git config &#8211;list 命令：</p>
-
-<pre><code>git config --list user.name=Scott Chacon user.email=schacon@gmail.com color.status=auto color.branch=auto color.interactive=auto color.diff=auto ...</code></pre>
-
-
-<p>有时候会看到重复的变量名，那就说明它们来自不同的配置文件<br/>
-（比如 <code>/etc/gitconfig</code> 和 <code>~/.gitconfig</code>），不过最终 Git 实际采用的是最后一个。</p>
-
-<p>也可以直接查阅某个环境变量的设定，只要把特定的名字跟在后面即可，像这样：</p>
-
-<pre><code>git config user.name Scott Chacon</code></pre>
-
-
-
+<p><code>gitk</code> 可以用图形化的方式很清楚地显示改动</p>
 </div>
 
 
@@ -224,7 +224,7 @@ Git 需要你输入一些额外消息的时候，会自动调用一个外部文�
   
 
 
-<time datetime="2013-01-31T00:29:00+08:00" pubdate data-updated="true">Jan 31<span>st</span>, 2013</time>
+<time datetime="2013-02-02T00:00:00+08:00" pubdate data-updated="true">Feb 2<span>nd</span>, 2013</time>
       
 
 <span class="categories">
@@ -245,10 +245,8 @@ Git 需要你输入一些额外消息的时候，会自动调用一个外部文�
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/01/30/zhuan-zai-octopress-zen-yao-kai-qi-ping-lun-gong-neng/" title="Previous Post: (扩充)Octopress 怎么开启评论功能">&laquo; (扩充)Octopress 怎么开启评论功能</a>
+        <a class="basic-alignment left" href="/blog/2013/02/01/git-why-everything-up-to-date-when-pushing/" title="Previous Post: (转载)Git: Why 'Everything up-to-date' when pushing">&laquo; (转载)Git: Why 'Everything up-to-date' when pushing</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/01/31/zai-hou-zhong-jian-octopress-bo-ke-yu-dao-de-wen-ti/" title="Next Post: 灾后重建 octopress 博客遇到的问题">灾后重建 octopress 博客遇到的问题 &raquo;</a>
       
     </p>
   </footer>
@@ -339,8 +337,8 @@ Git 需要你输入一些额外消息的时候，会自动调用一个外部文�
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://yang3wei.github.com/blog/2013/01/31/zhuan-zai-chu-ci-yun-xing-git-qian-de-pei-zhi/';
-        var disqus_url = 'http://yang3wei.github.com/blog/2013/01/31/zhuan-zai-chu-ci-yun-xing-git-qian-de-pei-zhi/';
+        var disqus_identifier = 'http://yang3wei.github.com/blog/2013/02/02/zhuan-zai-hen-hao-de-%5B%3F%5D-pian-git-ru-men-wen-zhang/';
+        var disqus_url = 'http://yang3wei.github.com/blog/2013/02/02/zhuan-zai-hen-hao-de-%5B%3F%5D-pian-git-ru-men-wen-zhang/';
         var disqus_script = 'embed.js';
       
     (function () {

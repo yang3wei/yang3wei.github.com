@@ -5,11 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: 伟少手札 - yang3wei的专栏</title>
+  <title>(转载)How to edit your path environment variables on Mac OS X - yang3wei的专栏</title>
   <meta name="author" content="yang3wei">
 
   
-  <meta name="description" content="Category: 伟少手札">
+  <meta name="description" content="原文链接：
+http://hathaway.cc/2008/06/how-to-edit-your-path-environment-variables-on-mac-os-x/
+If you are new to Mac OS X, you may need to know how to &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,11 +21,11 @@
   
   <meta name="author" content="yang3wei">
   
-  <meta name="description" content="Category: 伟少手札">
+  <meta name="description" content="yang3wei的专栏, yang3wei">
   <meta name="keywords" content="yang3wei, cocos2d, mac, objective-c, c/c++, game develop, java, OpenGL, shell, box2d, git, python">
 
   
-  <link rel="canonical" href="http://yang3wei.github.comblog/categories/伟少手札/">
+  <link rel="canonical" href="http://yang3wei.github.com/blog/2013/02/01/zhuan-zai-how-to-edit-your-path-environment-variables-on-mac-os-x/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -80,36 +82,133 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: 伟少手札</h1>
+    
+      <h1 class="entry-title">(转载)How to edit your path environment variables on Mac OS X</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-01T22:38:00+08:00" pubdate data-updated="true">Feb 1<span>st</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>原文链接：<br/>
+<a href="http://hathaway.cc/2008/06/how-to-edit-your-path-environment-variables-on-mac-os-x/">http://hathaway.cc/2008/06/how-to-edit-your-path-environment-variables-on-mac-os-x/</a><br/>
+If you are new to Mac OS X, you may need to know how to edit your PATH.<br/>
+The good news is that this is an easy task on Mac OS X.</p>
 
-  
-  <h2>2013</h2>
+<p>The recommended way is by editing your <code>.bash_profile</code> file. <br/>
+This file is read and the commands in it executed by Bash every time you log in to the system. <br/>
+The best part is that this file is specific to your user <br/>
+so you won’t affect other users on the same system by changing it.</p>
 
-<article>
-  
-<h1><a href="/blog/2013/01/28/bu-wen-guo-qu-ji-duo-she-mi-dan-yuan-qian-lu-liao-wu-yi-han/">不问过去几多奢靡 但愿前路了无遗憾</a></h1>
-<time datetime="2013-01-28T23:55:00+08:00" pubdate><span class='month'>Jan</span> <span class='day'>28</span> <span class='year'>2013</span></time>
+<h3>Step 1: Open up a Terminal window(this is in your Applications/Utilites folder by default)</h3>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/伟少手札/'>伟少手札</a></span>
-</footer>
+<h3>Step 2: Enter the follow commands:</h3>
 
+<p><code>touch ~/.bash_profile; open ~/.bash_profile</code><br/>
+This will open the <code>.bash_profile</code> file in Text Edit (the default text editor included on your system). <br/>
+The file allows you to customize the environment your user runs in.</p>
 
-</article>
+<h3>Step 3: Add the following line to the end of the file adding whatever additional directory you want in your path:</h3>
 
+<p><code>export PATH="$HOME/.rbenv/bin:$PATH"</code><br/>
+That example would add <code>~/.rbenv</code> to the PATH. The <code>$PATH</code> part is important,<br/>
+as it appends the existing PATH to preserve it in the new value.</p>
+
+<h3>Step 4: Save the .bash_profile file and Quit (Command + Q) Text Edit.</h3>
+
+<h3>Step 5: Force the .bash_profile to execute.</h3>
+
+<p>This loads the values immediately without having to reboot. <br/>
+In your Terminal window, run the following command.
+<code>source ~/.bash_profile</code><br/>
+That’s it!</p>
+
+<p>Now you know how to edit the PATH on your Mac OS X computer system. <br/>
+You can confirm the new path by opening a new Terminal windows and running:<br/>
+<code>echo $PATH</code></p>
+
+<p>You should now see the values you want in your PATH.</p>
+
+<p>[Updated 2/10/2012]<br/>
+The instructions now use the <code>.bash_profile</code> method of editing your PATH.<br/>
+This is preferred as it keeps the changes specific to your user. <br/>
+I also updated the instructions to use <code>TextEdit</code> instead of <code>vim</code> so it is easier for a beginner.</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">yang3wei</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-01T22:38:00+08:00" pubdate data-updated="true">Feb 1<span>st</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/mac相关/'>Mac相关</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/01/31/zai-hou-zhong-jian-octopress-bo-ke-yu-dao-de-wen-ti/" title="Previous Post: 灾后重建 octopress 博客遇到的问题">&laquo; 灾后重建 octopress 博客遇到的问题</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -189,7 +288,10 @@
       var disqus_shortname = 'yang3wei';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://yang3wei.github.com/blog/2013/02/01/zhuan-zai-how-to-edit-your-path-environment-variables-on-mac-os-x/';
+        var disqus_url = 'http://yang3wei.github.com/blog/2013/02/01/zhuan-zai-how-to-edit-your-path-environment-variables-on-mac-os-x/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

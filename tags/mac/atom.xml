@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Tag: mac | yang3wei的专栏]]></title>
+  <link href="http://yang3wei.github.com/tags/mac/atom.xml" rel="self"/>
+  <link href="http://yang3wei.github.com/"/>
+  <updated>2013-02-01T22:50:18+08:00</updated>
+  <id>http://yang3wei.github.com/</id>
+  <author>
+    <name><![CDATA[yang3wei]]></name>
+    <email><![CDATA[88480585@qq.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[(转载)How to edit your path environment variables on Mac OS X]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/01/zhuan-zai-how-to-edit-your-path-environment-variables-on-mac-os-x/"/>
+    <updated>2013-02-01T22:38:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/01/zhuan-zai-how-to-edit-your-path-environment-variables-on-mac-os-x</id>
+    <content type="html"><![CDATA[<p>原文链接：<br/>
+<a href="http://hathaway.cc/2008/06/how-to-edit-your-path-environment-variables-on-mac-os-x/">http://hathaway.cc/2008/06/how-to-edit-your-path-environment-variables-on-mac-os-x/</a><br/>
+If you are new to Mac OS X, you may need to know how to edit your PATH.<br/>
+The good news is that this is an easy task on Mac OS X.</p>
+
+<p>The recommended way is by editing your <code>.bash_profile</code> file. <br/>
+This file is read and the commands in it executed by Bash every time you log in to the system. <br/>
+The best part is that this file is specific to your user <br/>
+so you won’t affect other users on the same system by changing it.</p>
+
+<h3>Step 1: Open up a Terminal window(this is in your Applications/Utilites folder by default)</h3>
+
+<h3>Step 2: Enter the follow commands:</h3>
+
+<p><code>touch ~/.bash_profile; open ~/.bash_profile</code><br/>
+This will open the <code>.bash_profile</code> file in Text Edit (the default text editor included on your system). <br/>
+The file allows you to customize the environment your user runs in.</p>
+
+<h3>Step 3: Add the following line to the end of the file adding whatever additional directory you want in your path:</h3>
+
+<p><code>export PATH="$HOME/.rbenv/bin:$PATH"</code><br/>
+That example would add <code>~/.rbenv</code> to the PATH. The <code>$PATH</code> part is important,<br/>
+as it appends the existing PATH to preserve it in the new value.</p>
+
+<h3>Step 4: Save the .bash_profile file and Quit (Command + Q) Text Edit.</h3>
+
+<h3>Step 5: Force the .bash_profile to execute.</h3>
+
+<p>This loads the values immediately without having to reboot. <br/>
+In your Terminal window, run the following command.
+<code>source ~/.bash_profile</code><br/>
+That’s it!</p>
+
+<p>Now you know how to edit the PATH on your Mac OS X computer system. <br/>
+You can confirm the new path by opening a new Terminal windows and running:<br/>
+<code>echo $PATH</code></p>
+
+<p>You should now see the values you want in your PATH.</p>
+
+<p>[Updated 2/10/2012]<br/>
+The instructions now use the <code>.bash_profile</code> method of editing your PATH.<br/>
+This is preferred as it keeps the changes specific to your user. <br/>
+I also updated the instructions to use <code>TextEdit</code> instead of <code>vim</code> so it is easier for a beginner.</p>
+]]></content>
+  </entry>
+  
+</feed>

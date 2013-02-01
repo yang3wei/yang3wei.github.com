@@ -10,7 +10,7 @@ tags: [mac]
 [http://hathaway.cc/2008/06/how-to-edit-your-path-environment-variables-on-mac-os-x/](http://hathaway.cc/2008/06/how-to-edit-your-path-environment-variables-on-mac-os-x/)  
 If you are new to Mac OS X, you may need to know how to edit your PATH.  
 The good news is that this is an easy task on Mac OS X.
-
+<!-- more -->
 The recommended way is by editing your `.bash_profile` file.   
 This file is read and the commands in it executed by Bash every time you log in to the system.   
 The best part is that this file is specific to your user   

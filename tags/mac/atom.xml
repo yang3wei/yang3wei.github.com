@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: mac | yang3wei的专栏]]></title>
   <link href="http://yang3wei.github.com/tags/mac/atom.xml" rel="self"/>
   <link href="http://yang3wei.github.com/"/>
-  <updated>2013-02-01T22:50:18+08:00</updated>
+  <updated>2013-02-01T23:30:40+08:00</updated>
   <id>http://yang3wei.github.com/</id>
   <author>
     <name><![CDATA[yang3wei]]></name>
@@ -12,6 +12,34 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Mac OS X 下 git 如何升级]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/01/mac-os-x-xia-git-ru-he-sheng-ji/"/>
+    <updated>2013-02-01T22:58:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/01/mac-os-x-xia-git-ru-he-sheng-ji</id>
+    <content type="html"><![CDATA[<p>原帖链接：<a href="http://segmentfault.com/q/1010000000095119">http://segmentfault.com/q/1010000000095119</a><br/>
+<code>Mac OS X Lion</code> 下使用 <code>which git</code> 查看 <code>git</code>，<br/>
+发现当前所使用的 <code>git</code> 位于 <code>/usr/bin/git</code> 目录下，<br/>
+可能是安装 <code>XCode</code> 时一起安装上来的，执行 <code>git --version</code> 得到当前版本为：<code>1.7.5.4</code>。</p>
+
+<p>想升级到最新版本，下载 <code>git-osx-installer</code> 安装完成后，在命令行里查看却仍是旧版本。<br/>
+查阅资料发现这个安装包是将 <code>git</code> 安装在 <code>/usr/local/git</code> 目录下的。</p>
+
+<p>我想使用这个新版本的 <code>git</code>，该如何进行设置？</p>
+
+<h3>解决方案：</h3>
+
+<p>其实是两个问题，第一个问题是高版本的 <code>git</code> 如何安装？<br/>
+用 <code>git-osx-installer</code> 也好，用 <code>brew</code> 也好，都可以。<br/>
+建议用 <code>brew</code> 安装：<code>brew install git</code></p>
+
+<p>另一个问题是：如何让新安装的 <code>git</code> 覆盖老版本的 <code>git</code>？<br/>
+建议用 <code>~/.bash_profile</code>，加入以下的内容：<br/>
+<code>export PATH=/usr/local/git/bin:${PATH}</code><br/>
+这样就可以让 <code>bash</code> 优先搜索 <code>/usr/local/git/bin</code> 下的指令，而且不会覆盖老文件，比较安全。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[(转载)How to edit your path environment variables on Mac OS X]]></title>
@@ -22,6 +50,9 @@
 <a href="http://hathaway.cc/2008/06/how-to-edit-your-path-environment-variables-on-mac-os-x/">http://hathaway.cc/2008/06/how-to-edit-your-path-environment-variables-on-mac-os-x/</a><br/>
 If you are new to Mac OS X, you may need to know how to edit your PATH.<br/>
 The good news is that this is an easy task on Mac OS X.</p>
+
+<!-- more -->
+
 
 <p>The recommended way is by editing your <code>.bash_profile</code> file. <br/>
 This file is read and the commands in it executed by Bash every time you log in to the system. <br/>

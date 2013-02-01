@@ -10,8 +10,9 @@
 
   
   <meta name="description" content="原文链接：
-http://hathaway.cc/2008/06/how-to-edit-your-path-environment-variables-on-mac-os-x/
-If you are new to Mac OS X, you may need to know how to &hellip;">
+http://blog.rexzhao.com/2011/11/28/google-code-git-everything-up-to-date-when-push.html
+第一次在 Google Code 上弄项目，注册完毕后，
+尝试增加一个新文件用以测试 Git 是否好好工作。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -89,6 +90,110 @@ If you are new to Mac OS X, you may need to know how to &hellip;">
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2013/02/01/git-why-everything-up-to-date-when-pushing/">(转载)Git: Why &#8216;Everything up-to-date&#8217; when pushing</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-01T23:22:00+08:00" pubdate data-updated="true">Feb 1<span>st</span>, 2013</time>
+        
+         | <a href="/blog/2013/02/01/git-why-everything-up-to-date-when-pushing/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>原文链接：<br/>
+<a href="http://blog.rexzhao.com/2011/11/28/google-code-git-everything-up-to-date-when-push.html">http://blog.rexzhao.com/2011/11/28/google-code-git-everything-up-to-date-when-push.html</a><br/>
+第一次在 Google Code 上弄项目，注册完毕后，<br/>
+尝试增加一个新文件用以测试 Git 是否好好工作。<br/>
+结果在 <code>Push</code> 时却显示 <code>Every up-to-date</code>，检查文件时却发现实际上一个都没更新上去。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/02/01/git-why-everything-up-to-date-when-pushing/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/02/01/mac-os-x-xia-git-ru-he-sheng-ji/">Mac OS X 下 git 如何升级</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-01T22:58:00+08:00" pubdate data-updated="true">Feb 1<span>st</span>, 2013</time>
+        
+         | <a href="/blog/2013/02/01/mac-os-x-xia-git-ru-he-sheng-ji/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>原帖链接：<a href="http://segmentfault.com/q/1010000000095119">http://segmentfault.com/q/1010000000095119</a><br/>
+<code>Mac OS X Lion</code> 下使用 <code>which git</code> 查看 <code>git</code>，<br/>
+发现当前所使用的 <code>git</code> 位于 <code>/usr/bin/git</code> 目录下，<br/>
+可能是安装 <code>XCode</code> 时一起安装上来的，执行 <code>git --version</code> 得到当前版本为：<code>1.7.5.4</code>。</p>
+
+<p>想升级到最新版本，下载 <code>git-osx-installer</code> 安装完成后，在命令行里查看却仍是旧版本。<br/>
+查阅资料发现这个安装包是将 <code>git</code> 安装在 <code>/usr/local/git</code> 目录下的。</p>
+
+<p>我想使用这个新版本的 <code>git</code>，该如何进行设置？</p>
+
+<h3>解决方案：</h3>
+
+<p>其实是两个问题，第一个问题是高版本的 <code>git</code> 如何安装？<br/>
+用 <code>git-osx-installer</code> 也好，用 <code>brew</code> 也好，都可以。<br/>
+建议用 <code>brew</code> 安装：<code>brew install git</code></p>
+
+<p>另一个问题是：如何让新安装的 <code>git</code> 覆盖老版本的 <code>git</code>？<br/>
+建议用 <code>~/.bash_profile</code>，加入以下的内容：<br/>
+<code>export PATH=/usr/local/git/bin:${PATH}</code><br/>
+这样就可以让 <code>bash</code> 优先搜索 <code>/usr/local/git/bin</code> 下的指令，而且不会覆盖老文件，比较安全。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2013/02/01/zhuan-zai-how-to-edit-your-path-environment-variables-on-mac-os-x/">(转载)How to edit your path environment variables on Mac OS X</a></h1>
     
     
@@ -119,46 +224,12 @@ If you are new to Mac OS X, you may need to know how to &hellip;">
 If you are new to Mac OS X, you may need to know how to edit your PATH.<br/>
 The good news is that this is an easy task on Mac OS X.</p>
 
-<p>The recommended way is by editing your <code>.bash_profile</code> file. <br/>
-This file is read and the commands in it executed by Bash every time you log in to the system. <br/>
-The best part is that this file is specific to your user <br/>
-so you won’t affect other users on the same system by changing it.</p>
-
-<h3>Step 1: Open up a Terminal window(this is in your Applications/Utilites folder by default)</h3>
-
-<h3>Step 2: Enter the follow commands:</h3>
-
-<p><code>touch ~/.bash_profile; open ~/.bash_profile</code><br/>
-This will open the <code>.bash_profile</code> file in Text Edit (the default text editor included on your system). <br/>
-The file allows you to customize the environment your user runs in.</p>
-
-<h3>Step 3: Add the following line to the end of the file adding whatever additional directory you want in your path:</h3>
-
-<p><code>export PATH="$HOME/.rbenv/bin:$PATH"</code><br/>
-That example would add <code>~/.rbenv</code> to the PATH. The <code>$PATH</code> part is important,<br/>
-as it appends the existing PATH to preserve it in the new value.</p>
-
-<h3>Step 4: Save the .bash_profile file and Quit (Command + Q) Text Edit.</h3>
-
-<h3>Step 5: Force the .bash_profile to execute.</h3>
-
-<p>This loads the values immediately without having to reboot. <br/>
-In your Terminal window, run the following command.
-<code>source ~/.bash_profile</code><br/>
-That’s it!</p>
-
-<p>Now you know how to edit the PATH on your Mac OS X computer system. <br/>
-You can confirm the new path by opening a new Terminal windows and running:<br/>
-<code>echo $PATH</code></p>
-
-<p>You should now see the values you want in your PATH.</p>
-
-<p>[Updated 2/10/2012]<br/>
-The instructions now use the <code>.bash_profile</code> method of editing your PATH.<br/>
-This is preferred as it keeps the changes specific to your user. <br/>
-I also updated the instructions to use <code>TextEdit</code> instead of <code>vim</code> so it is easier for a beginner.</p>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/02/01/zhuan-zai-how-to-edit-your-path-environment-variables-on-mac-os-x/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -500,113 +571,6 @@ https://github.com/robbyedwards/octopress-tag-cloudclone
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/29/nerdtree-kuai-jie-jian-ji-lu/">NERDTree 快捷键辑录</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-29T13:45:00+08:00" pubdate data-updated="true">Jan 29<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/01/29/nerdtree-kuai-jie-jian-ji-lu/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>参看连接：<a href="http://www.cnblogs.com/lexus/archive/2012/11/04/2753187.html" title="朗志工作室(Langzhi Studio)">http://www.cnblogs.com/lexus/archive/2012/11/04/2753187.html</a></p>
-
-<h3>切换工作台和目录</h3>
-
-<pre><code>ctrl + w + h    光标 focus 左侧树形目录
-ctrl + w + l    光标 focus 右侧文件显示窗口
-ctrl + w + w    光标自动在左右侧窗口切换
-ctrl + w + r    移动当前窗口的布局位置
-</code></pre>
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/01/29/nerdtree-kuai-jie-jian-ji-lu/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/28/bu-wen-guo-qu-ji-duo-she-mi-dan-yuan-qian-lu-liao-wu-yi-han/">不问过去几多奢靡 但愿前路了无遗憾</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-28T23:55:00+08:00" pubdate data-updated="true">Jan 28<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/01/28/bu-wen-guo-qu-ji-duo-she-mi-dan-yuan-qian-lu-liao-wu-yi-han/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>用着 MacVim 作为 octopress 新增博文的编辑器~<br/>
-此刻，我终于明白子龙山人兄台说的话了，能使用本地应用程序作为博文的编辑器，<br/>
-甚至还是功能强大、扩展随心的 vim 来撰写博文，怎么会不爽歪歪~</p>
-
-<p>对比产生幸福，我最开始接触的博客是 csdn，<br/>
-csdn 的博文编辑器是嵌在网页里面的，而且我有幸得知这个编辑器插件的名字叫 xhEditor~<br/>
-不做太多评论，这个编辑器其实也还是挺不错的，能满足我的大部分需求了~<br/>
-不过有一点我是非常不满意的：这个编辑器将会产生大量重复 html 代码，<br/>
-如果你使用过 csdn 的博文编辑器，你应该会认同我的说法，<br/>
-如果你还没有体会到这一点，<br/>
-那么我建议你通过编辑区顶部的小按钮切换到源代码模式下看一看，<br/>
-说实在的，要多丑陋有多丑陋，大量垃圾标签混杂其中，<br/>
-要想把博文数据干净的分离出来真不是一件轻松事儿~</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/01/28/bu-wen-guo-qu-ji-duo-she-mi-dan-yuan-qian-lu-liao-wu-yi-han/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -622,6 +586,14 @@ csdn 的博文编辑器是嵌在网页里面的，而且我有幸得知这个编
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/02/01/git-why-everything-up-to-date-when-pushing/">(转载)Git: Why &#8216;Everything up-to-date&#8217; when pushing</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/01/mac-os-x-xia-git-ru-he-sheng-ji/">Mac OS X 下 git 如何升级</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/02/01/zhuan-zai-how-to-edit-your-path-environment-variables-on-mac-os-x/">(转载)How to edit your path environment variables on Mac OS X</a>
       </li>
     
@@ -633,30 +605,22 @@ csdn 的博文编辑器是嵌在网页里面的，而且我有幸得知这个编
         <a href="/blog/2013/01/31/zhuan-zai-chu-ci-yun-xing-git-qian-de-pei-zhi/">(转载)初次运行 Git 前的配置</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2013/01/30/zhuan-zai-octopress-zen-yao-kai-qi-ping-lun-gong-neng/">(扩充)Octopress 怎么开启评论功能</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/01/30/macvim-yong-mvim-ming-ling-da-kai-wen-jian-dao-xin-de-biao-qian-ye/">MacVim 用 mvim 命令打开文件到新的标签页</a>
-      </li>
-    
   </ul>
 </section>
 <section>
     <h1>Tags</h1>
     <ul class="tag-cloud">
-        <a style="font-size: 199%" href="/tags/git/">git</a>
-<a style="font-size: 100%" href="/tags/mac/">mac</a>
-<a style="font-size: 210%" href="/tags/octopress/">octopress</a>
-<a style="font-size: 185%" href="/tags/vim/">vim</a>
+        <a style="font-size: 210%" href="/tags/git/">git</a>
+<a style="font-size: 139%" href="/tags/mac/">mac</a>
+<a style="font-size: 201%" href="/tags/octopress/">octopress</a>
+<a style="font-size: 178%" href="/tags/vim/">vim</a>
 <a style="font-size: 100%" href="/tags/伟少手札/">伟少手札</a>
 
     </ul>
 </section>
 <section>
     <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/git相关'>git相关 (5)</a></li><li><a href='/blog/categories/mac相关'>Mac相关 (1)</a></li><li><a href='/blog/categories/octopress相关'>octopress相关 (5)</a></li><li><a href='/blog/categories/vim相关'>vim相关 (4)</a></li><li><a href='/blog/categories/伟少手札'>伟少手札 (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/git相关'>git相关 (7)</a></li><li><a href='/blog/categories/mac相关'>Mac相关 (1)</a></li><li><a href='/blog/categories/octopress相关'>octopress相关 (5)</a></li><li><a href='/blog/categories/vim相关'>vim相关 (4)</a></li><li><a href='/blog/categories/伟少手札'>伟少手札 (1)</a></li></ul>
 </section>
 
 

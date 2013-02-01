@@ -5,11 +5,14 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: 伟少手札 - yang3wei的专栏</title>
+  <title>(转载)Git: Why 'Everything up-to-date' when pushing - yang3wei的专栏</title>
   <meta name="author" content="yang3wei">
 
   
-  <meta name="description" content="Category: 伟少手札">
+  <meta name="description" content="原文链接：
+http://blog.rexzhao.com/2011/11/28/google-code-git-everything-up-to-date-when-push.html
+第一次在 Google Code 上弄项目，注册完毕后，
+尝试增加一个新文件用以测试 Git 是否好好工作。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,11 +22,11 @@
   
   <meta name="author" content="yang3wei">
   
-  <meta name="description" content="Category: 伟少手札">
+  <meta name="description" content="yang3wei的专栏, yang3wei">
   <meta name="keywords" content="yang3wei, cocos2d, mac, objective-c, c/c++, game develop, java, OpenGL, shell, box2d, git, python">
 
   
-  <link rel="canonical" href="http://yang3wei.github.comblog/categories/伟少手札/">
+  <link rel="canonical" href="http://yang3wei.github.com/blog/2013/02/01/git-why-everything-up-to-date-when-pushing/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -80,36 +83,124 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: 伟少手札</h1>
+    
+      <h1 class="entry-title">(转载)Git: Why 'Everything up-to-date' when pushing</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-01T23:22:00+08:00" pubdate data-updated="true">Feb 1<span>st</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>原文链接：<br/>
+<a href="http://blog.rexzhao.com/2011/11/28/google-code-git-everything-up-to-date-when-push.html">http://blog.rexzhao.com/2011/11/28/google-code-git-everything-up-to-date-when-push.html</a><br/>
+第一次在 Google Code 上弄项目，注册完毕后，<br/>
+尝试增加一个新文件用以测试 Git 是否好好工作。<br/>
+结果在 <code>Push</code> 时却显示 <code>Every up-to-date</code>，检查文件时却发现实际上一个都没更新上去。</p>
 
-  
-  <h2>2013</h2>
-
-<article>
-  
-<h1><a href="/blog/2013/01/28/bu-wen-guo-qu-ji-duo-she-mi-dan-yuan-qian-lu-liao-wu-yi-han/">不问过去几多奢靡 但愿前路了无遗憾</a></h1>
-<time datetime="2013-01-28T23:55:00+08:00" pubdate><span class='month'>Jan</span> <span class='day'>28</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/伟少手札/'>伟少手札</a></span>
-</footer>
+<!-- more -->
 
 
-</article>
+<p>因为对 <code>Git</code> 不够熟悉，因此只好 <code>Googling</code>，进行一番搜索后找到原因如下：</p>
 
+<p><strong>Why does Git refuse to push, saying &#8220;everything up to date&#8221;?
+git push with no additional arguments only pushes branches that exist in the remote already. <br/>
+If the remote repository is empty, nothing will be pushed. <br/>
+In this case, explicitly specify a branch to push, e.g. <code>git push master</code>.</strong></p>
+
+<p>也就是说一开始 <code>git</code> 服务器仓库是完全空的，<br/>
+不包含任何一个分支(<code>branch</code>)，因此刚开始 <code>Push</code> 时需要指定一个。<br/>
+执行 <code>git remote -v</code> 后看到自己的 <code>remote</code> 端名字为 <code>origin</code>:</p>
+
+<pre><code>$ git remote -v
+origin  https://code.google.com/p/micolog2 (fetch) 
+origin  https://code.google.com/p/micolog2 (push)
+</code></pre>
+
+
+<p>执行 <code>git branch</code> 后看到自己当下用的分支是 <code>master</code>:</p>
+
+<pre><code>$ git branch 
+\* master
+</code></pre>
+
+
+<p>因此在本地 <code>commit</code> 后，再执行 <code>git push origin master</code> 即可。</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">yang3wei</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-01T23:22:00+08:00" pubdate data-updated="true">Feb 1<span>st</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/git相关/'>git相关</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/02/01/mac-os-x-xia-git-ru-he-sheng-ji/" title="Previous Post: Mac OS X 下 git 如何升级">&laquo; Mac OS X 下 git 如何升级</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -189,7 +280,10 @@
       var disqus_shortname = 'yang3wei';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://yang3wei.github.com/blog/2013/02/01/git-why-everything-up-to-date-when-pushing/';
+        var disqus_url = 'http://yang3wei.github.com/blog/2013/02/01/git-why-everything-up-to-date-when-pushing/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

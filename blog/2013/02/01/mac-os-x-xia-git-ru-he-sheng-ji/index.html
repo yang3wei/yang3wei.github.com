@@ -5,11 +5,14 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: 伟少手札 - yang3wei的专栏</title>
+  <title>Mac OS X 下 git 如何升级 - yang3wei的专栏</title>
   <meta name="author" content="yang3wei">
 
   
-  <meta name="description" content="Category: 伟少手札">
+  <meta name="description" content="原帖链接：http://segmentfault.com/q/1010000000095119
+Mac OS X Lion 下使用 which git 查看 git，
+发现当前所使用的 git 位于 /usr/bin/git 目录下，
+可能是安装 XCode 时一起安装上来的，执行 git -- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,11 +22,11 @@
   
   <meta name="author" content="yang3wei">
   
-  <meta name="description" content="Category: 伟少手札">
+  <meta name="description" content="yang3wei的专栏, yang3wei">
   <meta name="keywords" content="yang3wei, cocos2d, mac, objective-c, c/c++, game develop, java, OpenGL, shell, box2d, git, python">
 
   
-  <link rel="canonical" href="http://yang3wei.github.comblog/categories/伟少手札/">
+  <link rel="canonical" href="http://yang3wei.github.com/blog/2013/02/01/mac-os-x-xia-git-ru-he-sheng-ji/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -80,36 +83,112 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: 伟少手札</h1>
+    
+      <h1 class="entry-title">Mac OS X 下 git 如何升级</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-01T22:58:00+08:00" pubdate data-updated="true">Feb 1<span>st</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>原帖链接：<a href="http://segmentfault.com/q/1010000000095119">http://segmentfault.com/q/1010000000095119</a><br/>
+<code>Mac OS X Lion</code> 下使用 <code>which git</code> 查看 <code>git</code>，<br/>
+发现当前所使用的 <code>git</code> 位于 <code>/usr/bin/git</code> 目录下，<br/>
+可能是安装 <code>XCode</code> 时一起安装上来的，执行 <code>git --version</code> 得到当前版本为：<code>1.7.5.4</code>。</p>
 
-  
-  <h2>2013</h2>
+<p>想升级到最新版本，下载 <code>git-osx-installer</code> 安装完成后，在命令行里查看却仍是旧版本。<br/>
+查阅资料发现这个安装包是将 <code>git</code> 安装在 <code>/usr/local/git</code> 目录下的。</p>
 
-<article>
-  
-<h1><a href="/blog/2013/01/28/bu-wen-guo-qu-ji-duo-she-mi-dan-yuan-qian-lu-liao-wu-yi-han/">不问过去几多奢靡 但愿前路了无遗憾</a></h1>
-<time datetime="2013-01-28T23:55:00+08:00" pubdate><span class='month'>Jan</span> <span class='day'>28</span> <span class='year'>2013</span></time>
+<p>我想使用这个新版本的 <code>git</code>，该如何进行设置？</p>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/伟少手札/'>伟少手札</a></span>
-</footer>
+<h3>解决方案：</h3>
 
+<p>其实是两个问题，第一个问题是高版本的 <code>git</code> 如何安装？<br/>
+用 <code>git-osx-installer</code> 也好，用 <code>brew</code> 也好，都可以。<br/>
+建议用 <code>brew</code> 安装：<code>brew install git</code></p>
 
-</article>
-
+<p>另一个问题是：如何让新安装的 <code>git</code> 覆盖老版本的 <code>git</code>？<br/>
+建议用 <code>~/.bash_profile</code>，加入以下的内容：<br/>
+<code>export PATH=/usr/local/git/bin:${PATH}</code><br/>
+这样就可以让 <code>bash</code> 优先搜索 <code>/usr/local/git/bin</code> 下的指令，而且不会覆盖老文件，比较安全。</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">yang3wei</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-01T22:58:00+08:00" pubdate data-updated="true">Feb 1<span>st</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/git相关/'>git相关</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/02/01/zhuan-zai-how-to-edit-your-path-environment-variables-on-mac-os-x/" title="Previous Post: (转载)How to edit your path environment variables on Mac OS X">&laquo; (转载)How to edit your path environment variables on Mac OS X</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/02/01/git-why-everything-up-to-date-when-pushing/" title="Next Post: (转载)Git: Why 'Everything up-to-date' when pushing">(转载)Git: Why 'Everything up-to-date' when pushing &raquo;</a>
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -189,7 +268,10 @@
       var disqus_shortname = 'yang3wei';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://yang3wei.github.com/blog/2013/02/01/mac-os-x-xia-git-ru-he-sheng-ji/';
+        var disqus_url = 'http://yang3wei.github.com/blog/2013/02/01/mac-os-x-xia-git-ru-he-sheng-ji/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

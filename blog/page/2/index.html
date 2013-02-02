@@ -271,9 +271,9 @@ csdn 的博文编辑器是嵌在网页里面的，而且我有幸得知这个编
 切记要将 MacVim 正在编辑的 markdown 博文文件保存并关闭掉~<br/>
 因为在 deploy 的时候会对 source/_posts 目录下的文件执行 cp 操作~<br/>
 如果 MacVim 当前正在编辑博文的 markdown 文件的话，<br/>
-很有可能在执行 rake deploy 的时候给予失败的提示~<br/>
+很有可能在执行 <code>rake deploy</code> 的时候给予失败的提示~<br/>
 究其根源就是因为 MacVim 锁定了某个文件（swp 格式的），<br/>
-然后对 rake deploy 命令的执行造成了阻碍~</p>
+然后对 <code>rake deploy</code> 命令的执行造成了阻碍~</p>
 
 </div>
   

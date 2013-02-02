@@ -4,7 +4,7 @@
   <title><![CDATA[Category: octopress相关 | yang3wei的专栏]]></title>
   <link href="http://yang3wei.github.com/blog/categories/octopress相关/atom.xml" rel="self"/>
   <link href="http://yang3wei.github.com/"/>
-  <updated>2013-02-02T00:25:12+08:00</updated>
+  <updated>2013-02-02T11:06:48+08:00</updated>
   <id>http://yang3wei.github.com/</id>
   <author>
     <name><![CDATA[yang3wei]]></name>
@@ -252,9 +252,9 @@ octopress 毕竟还是没能达到我心目中理想的高度，此次就是不�
 切记要将 MacVim 正在编辑的 markdown 博文文件保存并关闭掉~<br/>
 因为在 deploy 的时候会对 source/_posts 目录下的文件执行 cp 操作~<br/>
 如果 MacVim 当前正在编辑博文的 markdown 文件的话，<br/>
-很有可能在执行 rake deploy 的时候给予失败的提示~<br/>
+很有可能在执行 <code>rake deploy</code> 的时候给予失败的提示~<br/>
 究其根源就是因为 MacVim 锁定了某个文件（swp 格式的），<br/>
-然后对 rake deploy 命令的执行造成了阻碍~</p>
+然后对 <code>rake deploy</code> 命令的执行造成了阻碍~</p>
 
 <!-- more -->
 
@@ -265,12 +265,12 @@ octopress 毕竟还是没能达到我心目中理想的高度，此次就是不�
 能够解决掉这个问题还是占了很大的运气成分的，<br/>
 刚开始我还误以为是 markdown、md 后缀带来的这个问题~<br/>
 因为在我将 source/_posts 目录下的所有博文文件后缀由 markdown 改为 md 以后，<br/>
-发现又能正常的执行 rake deploy 命令了~</p>
+发现又能正常的执行 <code>rake deploy</code> 命令了~</p>
 
 <h2>关于 swp 文件</h2>
 
 <p>1.swp 文件是 vim 防止终端崩溃后恢复文件用的。<br/>
-每次当文件内容被修改而没有用 :w 保存的时候，都会有这么一个文件，<br/>
+每次当文件内容被修改而没有用 <code>:w</code> 保存的时候，都会有这么一个文件，<br/>
 这样可以解决多个用户编辑同一个文件，或忘记存盘而先关了终端的情况</p>
 
 <p>2.兄弟，那可是一个好东东啊，你还嫌它？<br/>
@@ -290,7 +290,7 @@ octopress 毕竟还是没能达到我心目中理想的高度，此次就是不�
 由 markdown 文件生成静态 html 页面，<br/>
 开启本地服务器提供预览（访问 <code>http://localhost:4000</code>），<br/>
 将静态页面部署到 github 博客服务器供他人访问。<br/>
-其中，rake preview 命令是否执行是可选的，<br/>
+其中，<code>rake preview</code> 命令是否执行是可选的，<br/>
 如果你足够自信的话，完全可以跳过这一步直接进行部署~</p>
 
 <p>这种流程是没有问题的，不过效率比较低！<br/>
@@ -313,7 +313,7 @@ octopress 毕竟还是没能达到我心目中理想的高度，此次就是不�
 
 <p>怎么解决这个问题呢？<br/>
 打开 octopress 所在的目录，编辑 _config.yml 文件，<br/>
-将 <code>twitter_follow_button</code> 和 <code>twitter_tweet_button</code> 的值设置为 false 即可！</p>
+将 <strong>twitter_follow_button</strong> 和 <strong>twitter_tweet_button</strong> 的值设置为 false 即可！</p>
 
 <h2>谈一下自己对 markdown 格式的感受：</h2>
 

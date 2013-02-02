@@ -1,0 +1,403 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>git-credential-osxkeychain died of signal 11 解决方案 - yang3wei的专栏</title>
+  <meta name="author" content="yang3wei">
+
+  
+  <meta name="description" content="相关帖子链接：
+&#8230;osxkeychain-died-of-signal-11@stackoverflow.com
+前两天在执行 git push origin master 命令的时候突然发现不灵光了，
+死活都推不进 GitHub 服务器，给出的提示如下：
+error: git- &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="author" content="yang3wei">
+  
+  <meta name="description" content="yang3wei的专栏, yang3wei">
+  <meta name="keywords" content="yang3wei, cocos2d, mac, objective-c, c/c++, game develop, java, OpenGL, shell, box2d, git, python">
+
+  
+  <link rel="canonical" href="http://yang3wei.github.com/blog/2013/02/03/git-credential-osxkeychain-died-of-signal-11-jie-jue-fang-an/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="yang3wei的专栏" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-38160149-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">yang3wei的专栏</a></h1>
+  
+    <h2>Fight for better life!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:yang3wei.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">git-credential-osxkeychain died of signal 11 解决方案</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-03T00:30:00+08:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>相关帖子链接：<br/>
+<a href="http://stackoverflow.com/questions/14272634/error-git-credential-osxkeychain-died-of-signal-11/14663780#14663780">&#8230;osxkeychain-died-of-signal-11@stackoverflow.com</a><br/>
+前两天在执行 <code>git push origin master</code> 命令的时候突然发现不灵光了，<br/>
+死活都推不进 GitHub 服务器，给出的提示如下：<br/>
+<code>error: git-credential-osxkeychain died of signal 11</code><br/>
+<code>error: git-credential-osxkeychain died of signal 11</code></p>
+
+<!-- more -->
+
+
+<p>我没有弄错，给出了两行一模一样的提示。<br/>
+遇到这个问题以后我的第一反应就是 googling，<br/>
+直接就找到了文首给出的那个 stackoverflow 的帖子。</p>
+
+<p>不过这个帖子并没有帮我解决掉这个问题，然后我又继续 googling，<br/>
+没有太大的收获，涉及到相关问题的链接不是很多。。<br/>
+我一度多次打开 stackoverflow 的这个帖子，仔细的搜寻，<br/>
+想看一看我是否遗忘了什么重要的步骤，不过很可惜，没有发现有价值的情报。</p>
+
+<p>后来我计上心头，想到了一个好办法，<br/>
+去试一试另外一个本地目录的 work copy 能否推到 GitHub 服务器里面去。<br/>
+我做了一些变更并且提交过以后，就执行 “git push origin master” 命令，<br/>
+很奇葩的没有出错，也没有向我询问用户名和密码~</p>
+
+<p>到这里我就有点儿纳闷儿了，凭什么这里可以那儿却不行？！<br/>
+纠结了好几天了，今天突然又想到一个办法，<br/>
+怎么不对比一下两个 work copy 的 .git/config 文件呢，说不定有有所收获！<br/>
+果不其然，经我对比过后我发现两个 work copy 所采用的配置有所不同。<br/>
+区别在哪里呢？下面我给出来对比一下吧：<br/>
+<strong>这里是 push 时抛错的那个 work copy 的 .git/config 文件的部分配置</strong></p>
+
+<pre><code>...
+[remote "origin"]
+    url = https://github.com/yang3wei/octopress-3-in-one.git
+    fetch = +refs/heads/*:refs/remotes/origin/*
+...
+</code></pre>
+
+
+<p><strong>这里是 push 时没问题的 work copy 的 .git/config 文件对应的部分配置</strong></p>
+
+<pre><code>...
+[remote "origin"]
+    url = git@github.com:yang3wei/game-development-tools
+    fetch = +refs/heads/*:refs/remotes/master/*
+...
+</code></pre>
+
+
+<p>对比后我就多少有些念想了，何不试着把有问题的照着没问题的改弄一翻？<br/>
+说干就干，于是我就将有问题的那块儿配置改成了如下这番：</p>
+
+<pre><code>
+[remote "origin"]
+    url = git@github.com/yang3wei/octopress-3-in-one
+    fetch = +refs/heads/*:refs/remotes/origin/*
+...
+</code></pre>
+
+
+<p>然后再执行 <code>git push origin master</code> 命令，发现那该死的错误已经悄然遁去~</p>
+
+<h3>总结一下</h3>
+
+<p>一言以蔽之，就是更换了一下 .git/config 中 url 的写法而已，<br/>
+将 <code>url = https://github.com/yang3wei/octopress-3-in-one.git</code><br/>
+改为 <code>url = git@github.com:yang3wei/octopress-3-in-one</code><br/>
+说到这里，我隐约想起好像看到过一句话：<br/>
+ssh 加密传输好像是非后面那种 url 格式不可的，<br/>
+那么从这点来看的话，<br/>
+<code>git-credential-osxkeychain</code> 在 https 传输模式下出错也就情有可原了~<br/>
+最后，创建属于自己的 repo 的时候，<br/>
+最好还是能以 <code>git@github.com...</code> 这种 url 的写法来初始化仓库，<br/>
+以避免当前讨论这种问题的出现~</p>
+
+<h3>另外</h3>
+
+<p>其间也试了下将<br/>
+<code>fetch = +refs/heads/*:refs/remotes/origin/*</code><br/>
+改为<br/>
+<code>fetch = +refs/heads/*:refs/remotes/master/*</code><br/>
+如此这般以后我执行 <code>git push origin master</code> 也没有出现错误~<br/>
+不过后来在我查看的时候发现竟然多出了一个分支：<br/>
+<code>* master</code><br/>
+<code> remotes/master/master/</code><br/>
+<code> remotes/origin/master/</code><br/>
+显而易见，那里我不该将 fetch 里面的 origin 改成 master，<br/>
+这里直接导致我远程那边多出了一个无用的分支来~<br/>
+话说这里该如何将这个多余的远程分支 <code>remotes/master/master</code> 给干掉呢？<br/>
+记得删除远程服务器上面的分支可以用这条命令：<code>git push origin :branchname</code><br/>
+不过这里比较特殊，这条多余分支的名字也是 <code>master</code> 呢！<br/>
+搜寻良久，stackoverflow 再次帮了我一把，实在是给力啊！下面是相关链接：<br/>
+<a href="http://stackoverflow.com/questions/1072171/how-do-you-remove-an-invalid-remote-branch-reference-from-git">How do you Remove an Invalid Remote Branch Reference from Git?</a><br/>
+罗列出我所尝试的删除分支的命令：<br/>
+<code>git branch -d remotes/master/master</code> 报错<br/>
+<code>git push master :master</code> 报错<br/>
+<code>git push origin :/remotes/master/master</code> 报错
+<code>git gc --prune=now</code> 无效<br/>
+<code>git remote rm master</code> 报错<br/>
+<code>git branch -rd master/master</code> 删除成功！</p>
+
+<h3>最后附带一点儿刚学到的知识</h3>
+
+<p>当执行 <code>git rm ...</code> 删掉一些东西的时候，<br/>
+在 <code>git commit</code> 的时候最好用<br/>
+<code>git commit -am "some comments"</code><br/>
+来替代<br/>
+<code>git commit -m "some comments"</code><br/>
+为什么？因为在执行 <code>git commit ...</code> 前一味地执行 <code>git add .</code> 不是万能的，<br/>
+<code>git commit</code> 加上一个 <code>-a</code> 参数能保证删除性质的改动也能被提交上去而不产生遗漏~</p>
+
+<h3>执行 git status 命令后出现如下提示的涵义</h3>
+
+<pre><code># On branch master
+# Your branch is ahead of 'origin/master' by 1 commit.
+#   (use "git push" to publish your local commits)
+#
+nothing to commit, working directory clean
+</code></pre>
+
+
+<p>回忆起前几天对 git 不熟悉时因为老是看到这几行提示而感到心里不舒服的情景，<br/>
+才发现我真是傻得可爱，这些提示的意思不就是说：<br/>
+<strong>你当前有 1 个已完成的提交还没推到远程服务器，执行 push 命令来推出已完成的提交</strong><br/>
+哎，那天也不知道是怎么了，肯定是发现和平时不一样却没有仔细看就匆忙下了定论，<br/>
+今后得把这种粗细大意的毛病给改掉~</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">yang3wei</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-03T00:30:00+08:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/git相关/'>Git相关</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/02/02/git-yu-svn-zhi-jian-de-wu-ge-ji-ben-qu-bie/" title="Previous Post: Git 与 SVN 之间的五个基本区别">&laquo; Git 与 SVN 之间的五个基本区别</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/03/git-credential-osxkeychain-died-of-signal-11-jie-jue-fang-an/">git-credential-osxkeychain died of signal 11 解决方案</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/git-yu-svn-zhi-jian-de-wu-ge-ji-ben-qu-bie/">Git 与 SVN 之间的五个基本区别</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/qing-cai-dou-fu-bao-ping-an/">青菜豆腐保平安</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/ru-shou-ji-jie-jian-pan-plu-ml-87/">入手机械键盘 PLU ML 87</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/xiang-ji-xuan-gou-ji-shi-yong-chang-shi/">相机选购及使用常识</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+    <h1>Tags</h1>
+    <ul class="tag-cloud">
+        <a style="font-size: 100%" href="/tags/c-c-/">C/C++</a>
+<a style="font-size: 100%" href="/tags/algorithm/">algorithm</a>
+<a style="font-size: 210%" href="/tags/git/">git</a>
+<a style="font-size: 133%" href="/tags/hardware/">hardware</a>
+<a style="font-size: 152%" href="/tags/mac/">mac</a>
+<a style="font-size: 186%" href="/tags/octopress/">octopress</a>
+<a style="font-size: 166%" href="/tags/vim/">vim</a>
+<a style="font-size: 100%" href="/tags/伟少手札/">伟少手札</a>
+<a style="font-size: 133%" href="/tags/养生/">养生</a>
+
+    </ul>
+</section>
+<section>
+    <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/blog/categories/git相关'>Git相关 (10)</a></li><li><a href='/blog/categories/mac相关'>Mac相关 (2)</a></li><li><a href='/blog/categories/octopress相关'>Octopress相关 (5)</a></li><li><a href='/blog/categories/vim相关'>Vim相关 (4)</a></li><li><a href='/blog/categories/伟少手札'>伟少手札 (1)</a></li><li><a href='/blog/categories/养生相关'>养生相关 (2)</a></li><li><a href='/blog/categories/硬件相关'>硬件相关 (2)</a></li><li><a href='/blog/categories/算法相关'>算法相关 (1)</a></li></ul>
+</section>
+
+
+<section>
+    <h1>Recent Comments</h1>
+    <div id="recentcomments" class="dsq-widget"><script type="text/javascript" src="http://yang3wei.disqus.com/recent_comments_widget.js?num_items=5&hide_avatars=0&avatar_size=48&excerpt_length=200"></script></div><a href="http://disqus.com/">Powered by Disqus</a>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/yang3wei?count=10&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/yang3wei">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - yang3wei -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'yang3wei';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://yang3wei.github.com/blog/2013/02/03/git-credential-osxkeychain-died-of-signal-11-jie-jue-fang-an/';
+        var disqus_url = 'http://yang3wei.github.com/blog/2013/02/03/git-credential-osxkeychain-died-of-signal-11-jie-jue-fang-an/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

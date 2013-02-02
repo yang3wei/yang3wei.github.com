@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Git相关 | yang3wei的专栏]]></title>
   <link href="http://yang3wei.github.com/blog/categories/git相关/atom.xml" rel="self"/>
   <link href="http://yang3wei.github.com/"/>
-  <updated>2013-02-02T18:38:06+08:00</updated>
+  <updated>2013-02-03T02:32:29+08:00</updated>
   <id>http://yang3wei.github.com/</id>
   <author>
     <name><![CDATA[yang3wei]]></name>
@@ -12,6 +12,140 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[git-credential-osxkeychain died of signal 11 解决方案]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/03/git-credential-osxkeychain-died-of-signal-11-jie-jue-fang-an/"/>
+    <updated>2013-02-03T00:30:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/03/git-credential-osxkeychain-died-of-signal-11-jie-jue-fang-an</id>
+    <content type="html"><![CDATA[<p>相关帖子链接：<br/>
+<a href="http://stackoverflow.com/questions/14272634/error-git-credential-osxkeychain-died-of-signal-11/14663780#14663780">...osxkeychain-died-of-signal-11@stackoverflow.com</a><br/>
+前两天在执行 <code>git push origin master</code> 命令的时候突然发现不灵光了，<br/>
+死活都推不进 GitHub 服务器，给出的提示如下：<br/>
+<code>error: git-credential-osxkeychain died of signal 11</code><br/>
+<code>error: git-credential-osxkeychain died of signal 11</code></p>
+
+<!-- more -->
+
+
+<p>我没有弄错，给出了两行一模一样的提示。<br/>
+遇到这个问题以后我的第一反应就是 googling，<br/>
+直接就找到了文首给出的那个 stackoverflow 的帖子。</p>
+
+<p>不过这个帖子并没有帮我解决掉这个问题，然后我又继续 googling，<br/>
+没有太大的收获，涉及到相关问题的链接不是很多。。<br/>
+我一度多次打开 stackoverflow 的这个帖子，仔细的搜寻，<br/>
+想看一看我是否遗忘了什么重要的步骤，不过很可惜，没有发现有价值的情报。</p>
+
+<p>后来我计上心头，想到了一个好办法，<br/>
+去试一试另外一个本地目录的 work copy 能否推到 GitHub 服务器里面去。<br/>
+我做了一些变更并且提交过以后，就执行 “git push origin master” 命令，<br/>
+很奇葩的没有出错，也没有向我询问用户名和密码~</p>
+
+<p>到这里我就有点儿纳闷儿了，凭什么这里可以那儿却不行？！<br/>
+纠结了好几天了，今天突然又想到一个办法，<br/>
+怎么不对比一下两个 work copy 的 .git/config 文件呢，说不定有有所收获！<br/>
+果不其然，经我对比过后我发现两个 work copy 所采用的配置有所不同。<br/>
+区别在哪里呢？下面我给出来对比一下吧：<br/>
+<strong>这里是 push 时抛错的那个 work copy 的 .git/config 文件的部分配置</strong></p>
+
+<pre><code>...
+[remote "origin"]
+    url = https://github.com/yang3wei/octopress-3-in-one.git
+    fetch = +refs/heads/*:refs/remotes/origin/*
+...
+</code></pre>
+
+
+<p><strong>这里是 push 时没问题的 work copy 的 .git/config 文件对应的部分配置</strong></p>
+
+<pre><code>...
+[remote "origin"]
+    url = git@github.com:yang3wei/game-development-tools
+    fetch = +refs/heads/*:refs/remotes/master/*
+...
+</code></pre>
+
+
+<p>对比后我就多少有些念想了，何不试着把有问题的照着没问题的改弄一翻？<br/>
+说干就干，于是我就将有问题的那块儿配置改成了如下这番：</p>
+
+<pre><code>
+[remote "origin"]
+    url = git@github.com/yang3wei/octopress-3-in-one
+    fetch = +refs/heads/*:refs/remotes/origin/*
+...
+</code></pre>
+
+
+<p>然后再执行 <code>git push origin master</code> 命令，发现那该死的错误已经悄然遁去~</p>
+
+<h3>总结一下</h3>
+
+<p>一言以蔽之，就是更换了一下 .git/config 中 url 的写法而已，<br/>
+将 <code>url = https://github.com/yang3wei/octopress-3-in-one.git</code><br/>
+改为 <code>url = git@github.com:yang3wei/octopress-3-in-one</code><br/>
+说到这里，我隐约想起好像看到过一句话：<br/>
+ssh 加密传输好像是非后面那种 url 格式不可的，<br/>
+那么从这点来看的话，<br/>
+<code>git-credential-osxkeychain</code> 在 https 传输模式下出错也就情有可原了~<br/>
+最后，创建属于自己的 repo 的时候，<br/>
+最好还是能以 <code>git@github.com...</code> 这种 url 的写法来初始化仓库，<br/>
+以避免当前讨论这种问题的出现~</p>
+
+<h3>另外</h3>
+
+<p>其间也试了下将<br/>
+<code>fetch = +refs/heads/*:refs/remotes/origin/*</code><br/>
+改为<br/>
+<code>fetch = +refs/heads/*:refs/remotes/master/*</code><br/>
+如此这般以后我执行 <code>git push origin master</code> 也没有出现错误~<br/>
+不过后来在我查看的时候发现竟然多出了一个分支：<br/>
+<code>* master</code><br/>
+<code> remotes/master/master/</code><br/>
+<code> remotes/origin/master/</code><br/>
+显而易见，那里我不该将 fetch 里面的 origin 改成 master，<br/>
+这里直接导致我远程那边多出了一个无用的分支来~<br/>
+话说这里该如何将这个多余的远程分支 <code>remotes/master/master</code> 给干掉呢？<br/>
+记得删除远程服务器上面的分支可以用这条命令：<code>git push origin :branchname</code><br/>
+不过这里比较特殊，这条多余分支的名字也是 <code>master</code> 呢！<br/>
+搜寻良久，stackoverflow 再次帮了我一把，实在是给力啊！下面是相关链接：<br/>
+<a href="http://stackoverflow.com/questions/1072171/how-do-you-remove-an-invalid-remote-branch-reference-from-git">How do you Remove an Invalid Remote Branch Reference from Git?</a><br/>
+罗列出我所尝试的删除分支的命令：<br/>
+<code>git branch -d remotes/master/master</code> 报错<br/>
+<code>git push master :master</code> 报错<br/>
+<code>git push origin :/remotes/master/master</code> 报错
+<code>git gc --prune=now</code> 无效<br/>
+<code>git remote rm master</code> 报错<br/>
+<code>git branch -rd master/master</code> 删除成功！</p>
+
+<h3>最后附带一点儿刚学到的知识</h3>
+
+<p>当执行 <code>git rm ...</code> 删掉一些东西的时候，<br/>
+在 <code>git commit</code> 的时候最好用<br/>
+<code>git commit -am "some comments"</code><br/>
+来替代<br/>
+<code>git commit -m "some comments"</code><br/>
+为什么？因为在执行 <code>git commit ...</code> 前一味地执行 <code>git add .</code> 不是万能的，<br/>
+<code>git commit</code> 加上一个 <code>-a</code> 参数能保证删除性质的改动也能被提交上去而不产生遗漏~</p>
+
+<h3>执行 git status 命令后出现如下提示的涵义</h3>
+
+<pre><code># On branch master
+# Your branch is ahead of 'origin/master' by 1 commit.
+#   (use "git push" to publish your local commits)
+#
+nothing to commit, working directory clean
+</code></pre>
+
+
+<p>回忆起前几天对 git 不熟悉时因为老是看到这几行提示而感到心里不舒服的情景，<br/>
+才发现我真是傻得可爱，这些提示的意思不就是说：<br/>
+<strong>你当前有 1 个已完成的提交还没推到远程服务器，执行 push 命令来推出已完成的提交</strong><br/>
+哎，那天也不知道是怎么了，肯定是发现和平时不一样却没有仔细看就匆忙下了定论，<br/>
+今后得把这种粗细大意的毛病给改掉~</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Git 与 SVN 之间的五个基本区别]]></title>
@@ -264,104 +398,6 @@ origin  https://code.google.com/p/micolog2 (push)
 建议用 <code>~/.bash_profile</code>，加入以下的内容：<br/>
 <code>export PATH=/usr/local/git/bin:${PATH}</code><br/>
 这样就可以让 <code>bash</code> 优先搜索 <code>/usr/local/git/bin</code> 下的指令，而且不会覆盖老文件，比较安全。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[(转载)初次运行 Git 前的配置]]></title>
-    <link href="http://yang3wei.github.com/blog/2013/01/31/zhuan-zai-chu-ci-yun-xing-git-qian-de-pei-zhi/"/>
-    <updated>2013-01-31T00:29:00+08:00</updated>
-    <id>http://yang3wei.github.com/blog/2013/01/31/zhuan-zai-chu-ci-yun-xing-git-qian-de-pei-zhi</id>
-    <content type="html"><![CDATA[<p>原文链接：<br/>
-<a href="http://wuzongbin2008.blog.163.com/blog/static/214687332010111992437496/" title="人生、梦想、炼狱、天堂">http://wuzongbin2008.blog.163.com/blog/static/214687332010111992437496/</a><br/>
-<a href="http://progit.org/book/zh/ch1-5.html">http://progit.org/book/zh/ch1-5.html</a><br/>
-一般在新的系统上，我们都需要先配置下自己的 Git 工作环境。<br/>
-配置工作只需一次，以后升级时还会沿用现在的配置。<br/>
-当然，如果需要，你随时可以用相同的命令修改已有的配置。</p>
-
-<!-- more -->
-
-
-<p>Git 提供了一个叫做 <code>git config</code> 的工具<br/>
-（译注：实际是 <code>git-config</code> 命令，只不过可以通过 git 加一个名字来呼叫此命令），<br/>
-专门用来配置或读取相应的工作环境变量。<br/>
-而正是由这些环境变量，决定了 Git 在各个环节的具体工作方式和行为。<br/>
-这些变量可以存放在以下三个不同的地方：</p>
-
-<h3>1.<code>/etc/gitconfig</code> 文件</h3>
-
-<p>系统中对所有用户都普遍适用的配置。<br/>
-若使用 <code>git config</code> 时用 <code>--system</code> 选项，读写的就是这个文件。</p>
-
-<h3>2.<code>~/.gitconfig</code> 文件</h3>
-
-<p>用户目录下的配置文件只适用于该用户。<br/>
-若使用 <code>git config</code> 时用 <code>--global</code> 选项，读写的就是这个文件。</p>
-
-<h3>3.当前项目 <code>.git</code> 隐藏目录下的 config 文件</h3>
-
-<p>这里的配置仅仅针对当前项目有效。<br/>
-每一个级别的配置都会覆盖上层的相同配置，<br/>
-所以 <code>.git/config</code> 里的配置会覆盖 <code>/etc/gitconfig</code> 中的同名变量。</p>
-
-<p>在 <code>Windows</code> 系统上，Git 会找寻用户主目录下的 <code>.gitconfig</code> 文件。<br/>
-主目录即 <code>$HOME</code> 变量指定的目录，一般都是 <code>C:\Documents and Settings\$USER</code>。<br/>
-此外，Git 还会尝试找寻 <code>/etc/gitconfig</code> 文件，<br/>
-只不过看当初 Git 装在什么目录，就以此作为根目录来定位。</p>
-
-<h2>用户信息</h2>
-
-<p>第一个要配置的是你个人的用户名称和电子邮件地址。<br/>
-这两条配置很重要，每次 Git 提交时都会引用这两条信息，<br/>
-说明是谁提交了更新，所以会随更新内容一起被永久纳入历史记录：</p>
-
-<pre><code>git config --global user.name "John Doe"
-git config --global user.email johndoe@example.com
-</code></pre>
-
-
-<p>如果用了 <code>--global</code> 选项，那么更改的配置文件就是位于你用户主目录下的那个，<br/>
-以后你所有的项目都会默认使用这里配置的用户信息。<br/>
-如果要在某个特定的项目中使用其他名字或者电邮，只要去掉 <code>--global</code> 选项重新配置即可，<br/>
-新的设定保存在当前项目的 <code>.git/config</code> 文件里。</p>
-
-<h2>文本编辑器</h2>
-
-<p>接下来要设置的是默认使用的文本编辑器。<br/>
-Git 需要你输入一些额外消息的时候，会自动调用一个外部文本编辑器给你用。<br/>
-默认会使用操作系统指定的默认编辑器，一般可能会是 <code>Vi</code> 或者 <code>Vim</code>。<br/>
-如果你有其他偏好，比如 <code>Emacs</code> 的话，可以重新设置：</p>
-
-<pre><code>git config --global core.editor emacs</code></pre>
-
-
-<h2>差异分析工具</h2>
-
-<p>还有一个比较常用的是，在解决合并冲突时使用哪种差异分析工具。比如要改用 vimdiff 的话：</p>
-
-<pre><code>git config --global merge.tool vimdiff</code></pre>
-
-
-<p>Git 可以理解 <code>kdiff3</code>，<code>tkdiff</code>，<code>meld</code>，<code>xxdiff</code>，<code>emerge</code>，<br/>
-<code>vimdiff</code>，<code>gvimdiff</code>，<code>ecmerge</code>，<code>opendiff</code> 等合并工具的输出信息。<br/>
-当然，你也可以指定使用自己开发的工具，具体怎么做可以参阅第七章。</p>
-
-<h2>查看配置信息</h2>
-
-<p>要检查已有的配置信息，可以使用 git config --list 命令：</p>
-
-<pre><code>git config --list user.name=Scott Chacon user.email=schacon@gmail.com color.status=auto color.branch=auto color.interactive=auto color.diff=auto ...</code></pre>
-
-
-<p>有时候会看到重复的变量名，那就说明它们来自不同的配置文件<br/>
-（比如 <code>/etc/gitconfig</code> 和 <code>~/.gitconfig</code>），不过最终 Git 实际采用的是最后一个。</p>
-
-<p>也可以直接查阅某个环境变量的设定，只要把特定的名字跟在后面即可，像这样：</p>
-
-<pre><code>git config user.name Scott Chacon</code></pre>
-
-
-
 ]]></content>
   </entry>
   

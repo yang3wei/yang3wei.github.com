@@ -3,7 +3,7 @@ layout: post
 title: "(扩充)为 octopress 添加标签云"
 date: 2013-01-30 02:54
 comments: true
-categories: octopress相关
+categories: Octopress相关
 tags: [octopress]
 ---
 原文链接：[http://codemacro.com/2012/07/18/add-tag-to-octopress/](http://codemacro.com/2012/07/18/add-tag-to-octopress/ "loop in codes")  

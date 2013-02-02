@@ -3,7 +3,7 @@ layout: post
 title: "git 笔记概览"
 date: 2013-01-29 16:12
 comments: true
-categories: git相关
+categories: Git相关
 tags: [git]
 ---
 <!-- more -->

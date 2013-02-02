@@ -3,7 +3,7 @@ layout: post
 title: "(转载)Git 分支管理策略"
 date: 2013-01-29 15:21
 comments: true
-categories: git相关
+categories: Git相关
 tags: [git]
 ---
 原文链接：[http://www.ruanyifeng.com/blog/2012/07/git.html](http://www.ruanyifeng.com/blog/2012/07/git.html "阮一峰的网络日志")  

@@ -3,7 +3,7 @@ layout: post
 title: "Mac OS X 下 git 如何升级"
 date: 2013-02-01 22:58
 comments: true
-categories: git相关
+categories: Git相关
 tags: [git, mac]
 ---
 原帖链接：[http://segmentfault.com/q/1010000000095119](http://segmentfault.com/q/1010000000095119)  

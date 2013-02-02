@@ -3,7 +3,7 @@ layout: post
 title: "设置 vim 默认编码为 utf-8"
 date: 2013-01-28 14:00
 comments: true
-categories: vim相关
+categories: Vim相关
 tags: [vim]
 ---
 

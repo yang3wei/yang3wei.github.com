@@ -3,7 +3,7 @@ layout: post
 title: "(扩充)Octopress 怎么开启评论功能"
 date: 2013-01-30 18:09
 comments: true
-categories: octopress相关
+categories: Octopress相关
 tags: [octopress]
 ---
 原文链接：  

@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "(转载)打造属于自己的Vim神器"
+title: "(转载)打造属于自己的 Vim 神器"
 date: 2013-01-15 13:39
 comments: true
-categories: vim相关
+categories: Vim相关
 tags: [vim]
 ---
 转载自：[http://zilongshanren.com/blog/2013/01/15/vim-the-killer/](http://zilongshanren.com/blog/2013/01/15/vim-the-killer/ "子龙山人")

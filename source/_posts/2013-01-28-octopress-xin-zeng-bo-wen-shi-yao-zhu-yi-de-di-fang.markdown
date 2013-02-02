@@ -3,7 +3,7 @@ layout: post
 title: "Octopress 新增博文时要注意的地方"
 date: 2013-01-28 22:11
 comments: true
-categories: octopress相关
+categories: Octopress相关
 tags: [octopress]
 ---
 用 MacVim 的请注意，执行 rake deploy 的时候，  

@@ -3,7 +3,7 @@ layout: post
 title: "(转载)很好的一篇 git 入门文章"
 date: 2013-02-02 00:00
 comments: true
-categories: git相关
+categories: Git相关
 tags: [git]
 ---
 原文链接：  

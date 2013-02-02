@@ -3,7 +3,7 @@ layout: post
 title: "(转载)在 github 上使用 octopress"
 date: 2013-01-28 14:46
 comments: true
-categories: git相关
+categories: Git相关
 tags: [git, octopress]
 ---
 

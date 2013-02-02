@@ -3,7 +3,7 @@ layout: post
 title: "MacVim 用 mvim 命令打开文件到新的标签页"
 date: 2013-01-30 15:22
 comments: true
-categories: vim相关
+categories: Vim相关
 tags: [vim]
 ---
 原文链接：  

@@ -3,7 +3,7 @@ layout: post
 title: "(转载)初次运行 Git 前的配置"
 date: 2013-01-31 00:29
 comments: true
-categories: git相关
+categories: Git相关
 tags: [git]
 ---
 原文链接：  

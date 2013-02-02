@@ -3,7 +3,7 @@ layout: post
 title: "(转载)Git: Why 'Everything up-to-date' when pushing"
 date: 2013-02-01 23:22
 comments: true
-categories: git相关
+categories: Git相关
 tags: [git]
 ---
 原文链接：  

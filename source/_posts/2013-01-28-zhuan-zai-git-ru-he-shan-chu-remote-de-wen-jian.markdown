@@ -3,7 +3,7 @@ layout: post
 title: "(转载)Git 如何删除 Remote 的文件"
 date: 2013-01-28 17:25
 comments: true
-categories: git相关
+categories: Git相关
 tags: [git]
 ---
 原文链接：[http://hi.baidu.com/zairl23/item/4a34c60084108fd01ef0464d](http://hi.baidu.com/zairl23/item/4a34c60084108fd01ef0464d "The Way")  

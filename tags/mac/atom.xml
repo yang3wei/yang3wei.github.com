@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: mac | yang3wei的专栏]]></title>
   <link href="http://yang3wei.github.com/tags/mac/atom.xml" rel="self"/>
   <link href="http://yang3wei.github.com/"/>
-  <updated>2013-02-02T11:06:48+08:00</updated>
+  <updated>2013-02-02T18:38:06+08:00</updated>
   <id>http://yang3wei.github.com/</id>
   <author>
     <name><![CDATA[yang3wei]]></name>
@@ -12,6 +12,30 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[(转载)Mac 终端关机命令]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/02/zhuan-zai-mac-zhong-duan-guan-ji-ming-ling/"/>
+    <updated>2013-02-02T15:00:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/02/zhuan-zai-mac-zhong-duan-guan-ji-ming-ling</id>
+    <content type="html"><![CDATA[<p>原文链接：<br/>
+<a href="http://pulading1988.diandian.com/post/2012-04-22/17392701">http://pulading1988.diandian.com/post/2012-04-22/17392701</a><br/>
+<strong>1.立即关机：</strong><br/>
+<code>sudo halt</code> 或 <code>sudo shutdown -h now</code></p>
+
+<!-- more -->
+
+
+<p><strong>2.10 分钟后关机：</strong><br/>
+<code>sudo shutdown -h +10</code></p>
+
+<p><strong>3.晚上 8 点关机：</strong><br/>
+<code>sudo shutdown -h 20:00</code></p>
+
+<p><strong>4.立即重启：</strong><br/>
+<code>sudo reboot</code> 或者 <code>sudo shutdown -r now</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Mac OS X 下 git 如何升级]]></title>

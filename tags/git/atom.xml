@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: git | yang3wei的专栏]]></title>
   <link href="http://yang3wei.github.com/tags/git/atom.xml" rel="self"/>
   <link href="http://yang3wei.github.com/"/>
-  <updated>2013-02-02T11:06:48+08:00</updated>
+  <updated>2013-02-02T18:38:06+08:00</updated>
   <id>http://yang3wei.github.com/</id>
   <author>
     <name><![CDATA[yang3wei]]></name>
@@ -12,6 +12,92 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Git 与 SVN 之间的五个基本区别]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/02/git-yu-svn-zhi-jian-de-wu-ge-ji-ben-qu-bie/"/>
+    <updated>2013-02-02T18:03:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/02/git-yu-svn-zhi-jian-de-wu-ge-ji-ben-qu-bie</id>
+    <content type="html"><![CDATA[<p>原文链接：<br/>
+<a href="http://blog.csdn.net/dadoneo/article/details/6098540">http://blog.csdn.net/dadoneo/article/details/6098540</a><br/>
+在比较两者之前，可以阅读：<br/>
+<a href="rubynroll.javaeye.com/blog/203133">SVN + GIT = 鱼与熊掌兼得</a><br/>
+<a href="wenku.baidu.com/view/dd6d36eef8c75fbfc77db277.html">开源版本控制 SVN 用户严重的 git</a><br/>
+<a href="www.robinlu.com/blog/archives/194">如何在 SVN 系统中使用 git</a></p>
+
+<!-- more -->
+
+
+<p>如果你在读这篇文章，说明你跟大多数开发者一样对 GIT 感兴趣，<br/>
+如果你还没有机会来试一试 GIT，我想现在你就要了解它了。</p>
+
+<p>GIT 不仅仅是个版本控制系统，它也是个内容管理系统(CMS)，工作管理系统等。<br/>
+如果你是一个具有使用 SVN 背景的人，<br/>
+你需要做一定的思想转换，来适应 GIT 提供的一些概念和特征。<br/>
+所以，这篇文章的主要目的就是通过介绍 GIT 能做什么、<br/>
+它和 SVN 在深层次上究竟有什么不同来帮助你认识它。</p>
+
+<p>那好，这就开始吧...</p>
+
+<h2>1.GIT 是分布式的，SVN 不是：</h2>
+
+<p>这是 GIT 和其它非分布式的版本控制系统，例如SVN，CVS等，最核心的区别。<br/>
+如果你能理解这个概念，那么你就已经上手一半了。<br/>
+需要做一点声明，GIT 并不是目前第一个或唯一的分布式版本控制系统。<br/>
+还有一些系统，例如 Bitkeeper, Mercurial 等，也是运行在分布式模式上的。<br/>
+但 GIT 在这方面做的更好，而且有更多强大的功能特征。</p>
+
+<p>GIT 跟 SVN 一样有自己的集中式版本库或服务器。<br/>
+但，GIT 更倾向于被使用于分布式模式，也就是每个开发人员从中心<br/>
+版本库/服务器上 chect out 代码后会在自己的机器上克隆一个自己的版本库。<br/>
+可以这样说，如果你被困在一个不能连接网络的地方时，就像在飞机上，地下室，<br/>
+电梯里等，你仍然能够提 交文件，查看历史版本记录，创建项目分支，等。<br/>
+对一些人来说，这好像没多大用处，但当你突然遇到没有网络的环境时，这个将解决你的大麻烦。</p>
+
+<p>同样，这种分布式的操作模式对于开源软件社区的开发来说也是个巨大的恩赐，你不必再像以前那样做出补丁包，<br/>
+通过 email 方式发送出去，你只需要创建一个分支，向项目团队发送一个推请求。<br/>
+这能让你的代码保持最新，而且不会在传输过程中丢失。GitHub.com 就是一个这样的优秀案例。</p>
+
+<p>有些谣言传出来说 Subversion 将来的版本也会基于分布式模式。但至少目前还看不出来。</p>
+
+<h2>2.GIT 把内容按元数据方式存储，而 SVN 是按文件：</h2>
+
+<p>所有的资源控制系统都是把文件的元信息隐藏在一个类似 <code>.svn</code>，<code>.cvs</code> 等的文件夹里。<br/>
+如果你把 <code>.git</code> 目录的体积大小跟 <code>.svn</code> 比较，你会发现它们差距很大。<br/>
+因为，<code>.git</code> 目录是处于你的机器上的一个克隆版的版本库，<br/>
+它拥有中心版本库上所有的东西，例如标签，分支，版本记录等。</p>
+
+<h2>3.GIT 分支和 SVN 的分支不同：</h2>
+
+<p>分支在 SVN 中一点不特别，就是版本库中的另外的一个目录。如果你想知道是否合并了一个分支，<br/>
+你需要手工运行像这样的命令 svn propget svn:mergeinfo，来确认代码是否被合并。<br/>
+感谢 Ben 同学指出这个特征。所以，经常会发生有些分支被遗漏的情况。<br/>
+然而，处理 GIT 的分支却是相当的简单和有趣。你可以从同一个工作目录下快速的在几个分支间切换。<br/>
+你很容易发现未被合并的分支，你能简单而快捷的合并这些文件。</p>
+
+<h2>4.GIT 没有一个全局的版本号，而 SVN 有：</h2>
+
+<p>目前为止这是跟 SVN 相比 GIT 缺少的最大的一个特征。<br/>
+你也知道，SVN 的版本号实际是任何一个相应时间的源代码快照。<br/>
+我认为它是从 CVS 进化到 SVN 的最大的一个突破。<br/>
+因为 GIT 和 SVN 从概念上就不同，我不知道 GIT 里是什么特征与之对应。<br/>
+如果你有任何的线索，请在评论里奉献出来与大家共享。<br/>
+更新：有些读者指出，我们可以使用 GIT 的 SHA-1 来唯一的标识一个代码快照。<br/>
+这个并不能完全的代替 SVN 里容易阅读的数字版本号。但，用途应该是相同的。</p>
+
+<h2>5.GIT 的内容完整性要优于 SVN：</h2>
+
+<p>GIT 的内容存储使用的是 SHA-1 哈希算法。<br/>
+这能确保代码内容的完整性，确保在遇到磁盘故障和网络问题时降低对版本库的破坏。<br/>
+这里有一个很好的关于 GIT 内容完整性的讨论 – <br/>
+<a href="http://stackoverflow.com/questions/964331/git-file-integrity">http://stackoverflow.com/questions/964331/git-file-integrity</a></p>
+
+<h2>GIT 和 SVN 之间只有这五处不同吗？</h2>
+
+<p>当然不是。我想这五个只是 “最基本的” 和 “最吸引人” 的，我只想到这五点。<br/>
+如果你发现有比这五点更有趣的，请共享出来，欢迎。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[(转载)很好的一篇 git 入门文章]]></title>
@@ -276,102 +362,6 @@ Git 需要你输入一些额外消息的时候，会自动调用一个外部文�
 
 
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[git 笔记概览]]></title>
-    <link href="http://yang3wei.github.com/blog/2013/01/29/git-bi-ji-gai-lan/"/>
-    <updated>2013-01-29T16:12:00+08:00</updated>
-    <id>http://yang3wei.github.com/blog/2013/01/29/git-bi-ji-gai-lan</id>
-    <content type="html"><![CDATA[<!-- more -->
-
-
-<h3>Git 如何删除 Remote 的文件</h3>
-
-<p><a href="http://yang3wei.github.com/blog/2013/01/28/zhuan-zai-git-ru-he-shan-chu-remote-de-wen-jian/" title="(转载)Git 如何删除 Remote 的文件">Git 如何删除 Remote 的文件</a></p>
-
-<h3>git - 简易指南</h3>
-
-<p><a href="http://rogerdudler.github.com/git-guide/index.zh.html" title="git - 简易指南">助你开始使用 git 的简易指南，木有高深内容，;)</a></p>
-
-<h3>git 删除远程分支的命令</h3>
-
-<p>如果通过命令 <code>git branch -b feature_x source</code> 建立了 source 的一个分支 feature_x，<br/>
-而且还将 feature_x 这个分支提交到 github 服务器上面去了，<br/>
-此时由 feature_x 切换回 source 分支后执行 <code>git branch -d feature_x</code> 命令只能删除本地分支，<br/>
-怎么将 github 服务器上面的 feature_x 分支给干掉呢？<br/>
-执行 <code>git push origin :feature\_x</code> 命令即可！</p>
-
-<h3>Git 分支管理策略</h3>
-
-<p><a href="http://yang3wei.github.com/blog/2013/01/29/zhuan-zai-git-fen-zhi-guan-li-ce-lue/" title="Git 分支管理策略">Git 分支管理策略</a></p>
-
-<h3>Git 怎么为 github 生成 ssh 密钥</h3>
-
-<p><a href="https://help.github.com/articles/generating-ssh-keys" title="Generating SSH Keys">github:help - Generating SSH Keys</a></p>
-
-<h3>Git 恢复删掉的一个文件</h3>
-
-<p>删除一个文件：<br/>
-<code>git rm 5.c</code><br/>
-现在要恢复：<br/>
-<code>git reset HEAD 5.c</code><br/>
-<code>git checkout 5.c</code><br/>
-完成（HEAD 似乎表示当前分支的当前版本）</p>
-
-<h3>Git 在各版本之间自由穿梭</h3>
-
-<p>恢复到上一个提交的版本<br/>
-<code>git reset --hard HEAD^</code><br/>
-恢复到某一个提交的版本<br/>
-<code>git reset --hard e0dea1a7eaca4b9325e36fdbdf0909d02a067d43</code><br/>
-<strong>注：各版本的 <code>hash</code> 可以去 <code>github</code> 查看，也可以使用 <code>git log</code> 命令查看。</strong></p>
-
-<h3>Git 怎么忽略某个文件</h3>
-
-<p>仓库的 <code>.gitignore</code> 或 <code>git/info/exclude</code>，<code>exclude</code> 本身不被 <code>git</code> 管理。<br/>
-一般情况下不要使用第一种方法，因为 <code>.gitignore</code> 本身是被 <code>git</code> 管理的，是大家共用的。<br/>
-所以，不要随便修改 <code>.gitignore</code> 文件！</p>
-
-<h3>Yasin Lee 的 git 学习笔记</h3>
-
-<p><a href="http://blog.csdn.net/coder_jack/article/details/5975070#">http://blog.csdn.net/coder_jack/article/details/5975070#</a></p>
-
-<h3>Problem with "git remote add origin git@github.com:yang3wei/test.git"？</h3>
-
-<p>试着先执行一下 <code>git remote rm origin</code> 命令。<br/>
-<a href="http://stackoverflow.com/questions/10904339/github-fatal-remote-origin-already-exists">github-fatal-remote-origin-already-exists</a></p>
-
-<h3>fatal: ... did you run git update-server-info on the server?</h3>
-
-<p>You have to carefully look after your spelling. <br/>
-According to Github's guide, your username is nalgene, <br/>
-hence the URL is <code>https://github.com/nalgene/MultiView.git</code>. <br/>
-The error message hints that you added the remote as <br/>
-<code>https://github.com/naglene/MultiView.git</code> <br/>
-which is not the same username, as you swapped the <code>l</code> and <code>g</code>.<br/>
-Also, the default branch is called <code>master</code>, not <code>maaster</code> or <code>mater</code>.<br/>
-<a href="http://stackoverflow.com/questions/11094547/fatal-https-github-com-user-repo-git-info-refs-not-found-did-you-run-git-upd">original link</a></p>
-
-<h3>What does "origin" mean in "git push origin master"?</h3>
-
-<p><code>git push origin master</code> 的完整命令如下：<br/>
-<code>git push git@github.com:{username}/{projectname}.git HEAD:{branchname}</code></p>
-
-<p>Also, you don't need to type out the whole url each time you want to push. <br/>
-When you ran the clone, git saved that URL as <code>origin</code>, <br/>
-that's why you can run something like 'merge origin/test' - <br/>
-it means the <code>test</code> branch on your <code>origin</code> server. <br/>
-So, the simplest way to push to your server in that case would be:<br/>
-<code>git push origin my_test:test</code><br/>
-That will push your local <code>my_test</code> branch to the <code>test</code> branch on your <code>origin</code> server. <br/>
-If you had named your local branch the same as the branch on the server, <br/>
-then the colon is not neccesary, you can simply do:<br/>
-<code>git push origin test</code><br/>
-<a href="http://stackoverflow.com/questions/959477/error-when-git-push-to-github">Error when “git push” to github</a></p>
-
-<h2>#</h2>
 ]]></content>
   </entry>
   

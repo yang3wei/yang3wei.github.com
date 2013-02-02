@@ -1,0 +1,501 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>yang3wei的专栏</title>
+  <meta name="author" content="yang3wei">
+
+  
+  <meta name="description" content="用 MacVim 的请注意，执行 rake deploy 的时候，
+切记要将 MacVim 正在编辑的 markdown 博文文件保存并关闭掉~
+因为在 deploy 的时候会对 source/_posts 目录下的文件执行 cp 操作~
+如果 MacVim 当前正在编辑博文的 markdown &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="author" content="yang3wei">
+  
+  <meta name="description" content="yang3wei的专栏, yang3wei">
+  <meta name="keywords" content="yang3wei, cocos2d, mac, objective-c, c/c++, game develop, java, OpenGL, shell, box2d, git, python">
+
+  
+  <link rel="canonical" href="http://yang3wei.github.com/blog/page/3/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="yang3wei的专栏" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-38160149-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">yang3wei的专栏</a></h1>
+  
+    <h2>Fight for better life!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:yang3wei.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/28/octopress-xin-zeng-bo-wen-shi-yao-zhu-yi-de-di-fang/">Octopress 新增博文时要注意的地方</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-28T22:11:00+08:00" pubdate data-updated="true">Jan 28<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/01/28/octopress-xin-zeng-bo-wen-shi-yao-zhu-yi-de-di-fang/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>用 MacVim 的请注意，执行 rake deploy 的时候，<br/>
+切记要将 MacVim 正在编辑的 markdown 博文文件保存并关闭掉~<br/>
+因为在 deploy 的时候会对 source/_posts 目录下的文件执行 cp 操作~<br/>
+如果 MacVim 当前正在编辑博文的 markdown 文件的话，<br/>
+很有可能在执行 <code>rake deploy</code> 的时候给予失败的提示~<br/>
+究其根源就是因为 MacVim 锁定了某个文件（swp 格式的），<br/>
+然后对 <code>rake deploy</code> 命令的执行造成了阻碍~</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/01/28/octopress-xin-zeng-bo-wen-shi-yao-zhu-yi-de-di-fang/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/28/zhuan-zai-git-ru-he-shan-chu-remote-de-wen-jian/">(转载)Git 如何删除 Remote 的文件</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-28T17:25:00+08:00" pubdate data-updated="true">Jan 28<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/01/28/zhuan-zai-git-ru-he-shan-chu-remote-de-wen-jian/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>原文链接：<a href="http://hi.baidu.com/zairl23/item/4a34c60084108fd01ef0464d" title="The Way">http://hi.baidu.com/zairl23/item/4a34c60084108fd01ef0464d</a><br/>
+使用 toto 做了个博客挂着 heroku 上。<br/>
+使用 git push 的方法发布博客确实有点cool。<br/>
+可是发现以前删除的测试文件仍然在, 如何将他们通过 git 的方式删除呢?<br/>
+不止是 heroku, 我发现 github 上也保留有我删除掉的文件.<br/>
+由于某些原因，git 远程的文件与本地文件产生了不一致，现在需要删除远程的一个文件：</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/01/28/zhuan-zai-git-ru-he-shan-chu-remote-de-wen-jian/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/28/zhuan-zai-zai-github-shang-shi-yong-octopress/">(转载)在 github 上使用 octopress</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-28T14:46:00+08:00" pubdate data-updated="true">Jan 28<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/01/28/zhuan-zai-zai-github-shang-shi-yong-octopress/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>原文链接：<a href="http://huanggang.me/archives/654" title="海阔天空">http://huanggang.me/archives/654</a></p>
+
+<h2>一、Octopress 简介</h2>
+
+<p>Octopress 是使用 ruby 语言编写的一套建立在 jekyll 之上的博客系统，它有一些很独特的特点：</p>
+
+<pre><code>1. 使用静态页面；
+2. 不使用数据库；
+3. 使用 markdown 标记语言编写文章；
+4. 可以与 git 紧密集成，方便地进行博客的版本管理；
+5. 可以于 Github Pages 集成，不需要单独的 web hosting，只要你有 github 帐号即可。
+</pre>
+
+
+<p></code>
+这些特点中的第三点到第五点尤其吸引我（第一点和第二点也很酷），于是我花了些时间研究。<br/>
+以下是相关的步骤和心得。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/01/28/zhuan-zai-zai-github-shang-shi-yong-octopress/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/28/she-zhi-vim-mo-ren-bian-ma-wei-utf-8/">设置 vim 默认编码为 utf-8</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-28T14:00:00+08:00" pubdate data-updated="true">Jan 28<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/01/28/she-zhi-vim-mo-ren-bian-ma-wei-utf-8/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>花了不少功夫来学习 vim，这不终于有机会用 vim 来写博文了<br/>
+结果发现 vim 里面对编码格式的支持出了问题，<br/>
+输入的中文在再次打开的时候都玩变形记，- -、<br/>
+不过肯定是有解决办法的，谁让 vim 这么强大呢！<br/>
+遂 googling，即刻便找到了解决方案：</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/01/28/she-zhi-vim-mo-ren-bian-ma-wei-utf-8/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/15/zhuan-zai-da-zao-shu-yu-zi-ji-de-vim-shen-qi/">(转载)打造属于自己的 Vim 神器</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-15T13:39:00+08:00" pubdate data-updated="true">Jan 15<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/01/15/zhuan-zai-da-zao-shu-yu-zi-ji-de-vim-shen-qi/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>转载自：<a href="http://zilongshanren.com/blog/2013/01/15/vim-the-killer/" title="子龙山人">http://zilongshanren.com/blog/2013/01/15/vim-the-killer/</a></p>
+
+<h2>Why Vim?</h2>
+
+<p>为什么要使用Vim？</p>
+
+<p>我们先看看其他人怎么说：</p>
+
+<blockquote><p>Vim or Emacs就好比倚天和屠龙，得一可得天下。 &#8211; By vimer.cn</p>
+
+<p>Vim就像学钢琴一样，一旦学会，终身受益无穷。   &#8211;By Practical Vim</p></blockquote>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/01/15/zhuan-zai-da-zao-shu-yu-zi-ji-de-vim-shen-qi/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/03/zhuan-zai-wo-wei-shi-yao-yao-cong-wordpress-zhuan-dao-octopress/">(转载)我为什么要从wordpress转到octopress</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-03T13:44:00+08:00" pubdate data-updated="true">Jan 3<span>rd</span>, 2013</time>
+        
+         | <a href="/blog/2013/01/03/zhuan-zai-wo-wei-shi-yao-yao-cong-wordpress-zhuan-dao-octopress/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>原文链接：<a href="http://zilongshanren.com/blog/2013/01/03/migrate-to-octopress/" title="子龙山人">http://zilongshanren.com/blog/2013/01/03/migrate-to-octopress/</a>
+<img class="right" src="/images/posts/octpress-logo.png" width="300" height="300"></p>
+
+<h2>我的博客写作历史</h2>
+
+<p>我是从2011年3月开始写博客的，博客主要是分享学习cocos2d、以及iOS游戏开发的一些内容。目前，该博客已经超过80万的访问量了。Amazing!</p>
+
+<p>其实我最早开始写博客可能是07年了。那时候刚开始学c语言，为了锻炼自己的c语言能力，在百度知道里面回答各种c语言基础题，为了一个所谓的“专家”称号而乐此不疲。后来，由于找我做“学生成绩管理系统”的人实在是太多了，我就在百度开设了自己的第一个博客。当然，主要的内容就是c语言制作XX管理系统，还有一些算法题的解法以及一些百度知道的问题的答案。后来由于学习的压力，加上疏于打理，渐渐的我也不准备写博客了。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/01/03/zhuan-zai-wo-wei-shi-yao-yao-cong-wordpress-zhuan-dao-octopress/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/2/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/git-yu-svn-zhi-jian-de-wu-ge-ji-ben-qu-bie/">Git 与 SVN 之间的五个基本区别</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/qing-cai-dou-fu-bao-ping-an/">青菜豆腐保平安</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/ru-shou-ji-jie-jian-pan-plu-ml-87/">入手机械键盘 PLU ML 87</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/xiang-ji-xuan-gou-ji-shi-yong-chang-shi/">相机选购及使用常识</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/xiao-hai-er-he-ka-pei-hao-ma/">小孩儿喝咖啡好吗</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+    <h1>Tags</h1>
+    <ul class="tag-cloud">
+        <a style="font-size: 100%" href="/tags/c-c-/">C/C++</a>
+<a style="font-size: 100%" href="/tags/algorithm/">algorithm</a>
+<a style="font-size: 210%" href="/tags/git/">git</a>
+<a style="font-size: 135%" href="/tags/hardware/">hardware</a>
+<a style="font-size: 155%" href="/tags/mac/">mac</a>
+<a style="font-size: 190%" href="/tags/octopress/">octopress</a>
+<a style="font-size: 169%" href="/tags/vim/">vim</a>
+<a style="font-size: 100%" href="/tags/伟少手札/">伟少手札</a>
+<a style="font-size: 135%" href="/tags/养生/">养生</a>
+
+    </ul>
+</section>
+<section>
+    <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/blog/categories/git相关'>Git相关 (9)</a></li><li><a href='/blog/categories/mac相关'>Mac相关 (2)</a></li><li><a href='/blog/categories/octopress相关'>Octopress相关 (5)</a></li><li><a href='/blog/categories/vim相关'>Vim相关 (4)</a></li><li><a href='/blog/categories/伟少手札'>伟少手札 (1)</a></li><li><a href='/blog/categories/养生相关'>养生相关 (2)</a></li><li><a href='/blog/categories/硬件相关'>硬件相关 (2)</a></li><li><a href='/blog/categories/算法相关'>算法相关 (1)</a></li></ul>
+</section>
+
+
+<section>
+    <h1>Recent Comments</h1>
+    <div id="recentcomments" class="dsq-widget"><script type="text/javascript" src="http://yang3wei.disqus.com/recent_comments_widget.js?num_items=5&hide_avatars=0&avatar_size=48&excerpt_length=200"></script></div><a href="http://disqus.com/">Powered by Disqus</a>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/yang3wei?count=10&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/yang3wei">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - yang3wei -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'yang3wei';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

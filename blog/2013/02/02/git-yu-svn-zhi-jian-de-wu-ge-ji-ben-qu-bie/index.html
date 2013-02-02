@@ -1,0 +1,356 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Git 与 SVN 之间的五个基本区别 - yang3wei的专栏</title>
+  <meta name="author" content="yang3wei">
+
+  
+  <meta name="description" content="原文链接：
+http://blog.csdn.net/dadoneo/article/details/6098540
+在比较两者之前，可以阅读：
+SVN + GIT = 鱼与熊掌兼得
+开源版本控制 SVN 用户严重的 git
+如何在 SVN 系统中使用 git 如果你在读这篇文章， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="author" content="yang3wei">
+  
+  <meta name="description" content="yang3wei的专栏, yang3wei">
+  <meta name="keywords" content="yang3wei, cocos2d, mac, objective-c, c/c++, game develop, java, OpenGL, shell, box2d, git, python">
+
+  
+  <link rel="canonical" href="http://yang3wei.github.com/blog/2013/02/02/git-yu-svn-zhi-jian-de-wu-ge-ji-ben-qu-bie/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="yang3wei的专栏" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-38160149-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">yang3wei的专栏</a></h1>
+  
+    <h2>Fight for better life!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:yang3wei.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Git 与 SVN 之间的五个基本区别</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-02T18:03:00+08:00" pubdate data-updated="true">Feb 2<span>nd</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>原文链接：<br/>
+<a href="http://blog.csdn.net/dadoneo/article/details/6098540">http://blog.csdn.net/dadoneo/article/details/6098540</a><br/>
+在比较两者之前，可以阅读：<br/>
+<a href="rubynroll.javaeye.com/blog/203133">SVN + GIT = 鱼与熊掌兼得</a><br/>
+<a href="wenku.baidu.com/view/dd6d36eef8c75fbfc77db277.html">开源版本控制 SVN 用户严重的 git</a><br/>
+<a href="www.robinlu.com/blog/archives/194">如何在 SVN 系统中使用 git</a></p>
+
+<!-- more -->
+
+
+<p>如果你在读这篇文章，说明你跟大多数开发者一样对 GIT 感兴趣，<br/>
+如果你还没有机会来试一试 GIT，我想现在你就要了解它了。</p>
+
+<p>GIT 不仅仅是个版本控制系统，它也是个内容管理系统(CMS)，工作管理系统等。<br/>
+如果你是一个具有使用 SVN 背景的人，<br/>
+你需要做一定的思想转换，来适应 GIT 提供的一些概念和特征。<br/>
+所以，这篇文章的主要目的就是通过介绍 GIT 能做什么、<br/>
+它和 SVN 在深层次上究竟有什么不同来帮助你认识它。</p>
+
+<p>那好，这就开始吧&#8230;</p>
+
+<h2>1.GIT 是分布式的，SVN 不是：</h2>
+
+<p>这是 GIT 和其它非分布式的版本控制系统，例如SVN，CVS等，最核心的区别。<br/>
+如果你能理解这个概念，那么你就已经上手一半了。<br/>
+需要做一点声明，GIT 并不是目前第一个或唯一的分布式版本控制系统。<br/>
+还有一些系统，例如 Bitkeeper, Mercurial 等，也是运行在分布式模式上的。<br/>
+但 GIT 在这方面做的更好，而且有更多强大的功能特征。</p>
+
+<p>GIT 跟 SVN 一样有自己的集中式版本库或服务器。<br/>
+但，GIT 更倾向于被使用于分布式模式，也就是每个开发人员从中心<br/>
+版本库/服务器上 chect out 代码后会在自己的机器上克隆一个自己的版本库。<br/>
+可以这样说，如果你被困在一个不能连接网络的地方时，就像在飞机上，地下室，<br/>
+电梯里等，你仍然能够提 交文件，查看历史版本记录，创建项目分支，等。<br/>
+对一些人来说，这好像没多大用处，但当你突然遇到没有网络的环境时，这个将解决你的大麻烦。</p>
+
+<p>同样，这种分布式的操作模式对于开源软件社区的开发来说也是个巨大的恩赐，你不必再像以前那样做出补丁包，<br/>
+通过 email 方式发送出去，你只需要创建一个分支，向项目团队发送一个推请求。<br/>
+这能让你的代码保持最新，而且不会在传输过程中丢失。GitHub.com 就是一个这样的优秀案例。</p>
+
+<p>有些谣言传出来说 Subversion 将来的版本也会基于分布式模式。但至少目前还看不出来。</p>
+
+<h2>2.GIT 把内容按元数据方式存储，而 SVN 是按文件：</h2>
+
+<p>所有的资源控制系统都是把文件的元信息隐藏在一个类似 <code>.svn</code>，<code>.cvs</code> 等的文件夹里。<br/>
+如果你把 <code>.git</code> 目录的体积大小跟 <code>.svn</code> 比较，你会发现它们差距很大。<br/>
+因为，<code>.git</code> 目录是处于你的机器上的一个克隆版的版本库，<br/>
+它拥有中心版本库上所有的东西，例如标签，分支，版本记录等。</p>
+
+<h2>3.GIT 分支和 SVN 的分支不同：</h2>
+
+<p>分支在 SVN 中一点不特别，就是版本库中的另外的一个目录。如果你想知道是否合并了一个分支，<br/>
+你需要手工运行像这样的命令 svn propget svn:mergeinfo，来确认代码是否被合并。<br/>
+感谢 Ben 同学指出这个特征。所以，经常会发生有些分支被遗漏的情况。<br/>
+然而，处理 GIT 的分支却是相当的简单和有趣。你可以从同一个工作目录下快速的在几个分支间切换。<br/>
+你很容易发现未被合并的分支，你能简单而快捷的合并这些文件。</p>
+
+<h2>4.GIT 没有一个全局的版本号，而 SVN 有：</h2>
+
+<p>目前为止这是跟 SVN 相比 GIT 缺少的最大的一个特征。<br/>
+你也知道，SVN 的版本号实际是任何一个相应时间的源代码快照。<br/>
+我认为它是从 CVS 进化到 SVN 的最大的一个突破。<br/>
+因为 GIT 和 SVN 从概念上就不同，我不知道 GIT 里是什么特征与之对应。<br/>
+如果你有任何的线索，请在评论里奉献出来与大家共享。<br/>
+更新：有些读者指出，我们可以使用 GIT 的 SHA-1 来唯一的标识一个代码快照。<br/>
+这个并不能完全的代替 SVN 里容易阅读的数字版本号。但，用途应该是相同的。</p>
+
+<h2>5.GIT 的内容完整性要优于 SVN：</h2>
+
+<p>GIT 的内容存储使用的是 SHA-1 哈希算法。<br/>
+这能确保代码内容的完整性，确保在遇到磁盘故障和网络问题时降低对版本库的破坏。<br/>
+这里有一个很好的关于 GIT 内容完整性的讨论 – <br/>
+<a href="http://stackoverflow.com/questions/964331/git-file-integrity">http://stackoverflow.com/questions/964331/git-file-integrity</a></p>
+
+<h2>GIT 和 SVN 之间只有这五处不同吗？</h2>
+
+<p>当然不是。我想这五个只是 “最基本的” 和 “最吸引人” 的，我只想到这五点。<br/>
+如果你发现有比这五点更有趣的，请共享出来，欢迎。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">yang3wei</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-02T18:03:00+08:00" pubdate data-updated="true">Feb 2<span>nd</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/git相关/'>Git相关</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/02/02/qing-cai-dou-fu-bao-ping-an/" title="Previous Post: 青菜豆腐保平安">&laquo; 青菜豆腐保平安</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/git-yu-svn-zhi-jian-de-wu-ge-ji-ben-qu-bie/">Git 与 SVN 之间的五个基本区别</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/qing-cai-dou-fu-bao-ping-an/">青菜豆腐保平安</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/ru-shou-ji-jie-jian-pan-plu-ml-87/">入手机械键盘 PLU ML 87</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/xiang-ji-xuan-gou-ji-shi-yong-chang-shi/">相机选购及使用常识</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/xiao-hai-er-he-ka-pei-hao-ma/">小孩儿喝咖啡好吗</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+    <h1>Tags</h1>
+    <ul class="tag-cloud">
+        <a style="font-size: 100%" href="/tags/c-c-/">C/C++</a>
+<a style="font-size: 100%" href="/tags/algorithm/">algorithm</a>
+<a style="font-size: 210%" href="/tags/git/">git</a>
+<a style="font-size: 135%" href="/tags/hardware/">hardware</a>
+<a style="font-size: 155%" href="/tags/mac/">mac</a>
+<a style="font-size: 190%" href="/tags/octopress/">octopress</a>
+<a style="font-size: 169%" href="/tags/vim/">vim</a>
+<a style="font-size: 100%" href="/tags/伟少手札/">伟少手札</a>
+<a style="font-size: 135%" href="/tags/养生/">养生</a>
+
+    </ul>
+</section>
+<section>
+    <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/blog/categories/git相关'>Git相关 (9)</a></li><li><a href='/blog/categories/mac相关'>Mac相关 (2)</a></li><li><a href='/blog/categories/octopress相关'>Octopress相关 (5)</a></li><li><a href='/blog/categories/vim相关'>Vim相关 (4)</a></li><li><a href='/blog/categories/伟少手札'>伟少手札 (1)</a></li><li><a href='/blog/categories/养生相关'>养生相关 (2)</a></li><li><a href='/blog/categories/硬件相关'>硬件相关 (2)</a></li><li><a href='/blog/categories/算法相关'>算法相关 (1)</a></li></ul>
+</section>
+
+
+<section>
+    <h1>Recent Comments</h1>
+    <div id="recentcomments" class="dsq-widget"><script type="text/javascript" src="http://yang3wei.disqus.com/recent_comments_widget.js?num_items=5&hide_avatars=0&avatar_size=48&excerpt_length=200"></script></div><a href="http://disqus.com/">Powered by Disqus</a>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/yang3wei?count=10&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/yang3wei">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - yang3wei -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'yang3wei';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://yang3wei.github.com/blog/2013/02/02/git-yu-svn-zhi-jian-de-wu-ge-ji-ben-qu-bie/';
+        var disqus_url = 'http://yang3wei.github.com/blog/2013/02/02/git-yu-svn-zhi-jian-de-wu-ge-ji-ben-qu-bie/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

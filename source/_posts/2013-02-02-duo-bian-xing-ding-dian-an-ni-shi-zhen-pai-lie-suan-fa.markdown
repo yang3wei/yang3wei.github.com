@@ -9,7 +9,8 @@ tags: [algorithm, C/C++]
 原文链接：  
 [http://www.myexception.cn/program/776883.html](http://www.myexception.cn/program/776883.html)  
 <!-- more -->
-<pre><code>const double eps = 1e-8;
+``` cpp 
+const double eps = 1e-8;
 int sign(double d){
 	return d < -eps ? -1 : (d > eps);
 }
@@ -57,4 +58,4 @@ void makeAntclockwise(poly& org) {
 		reverse(org.ps, org.ps + org.pn);
 	}
 }
-</code></pre>
+```

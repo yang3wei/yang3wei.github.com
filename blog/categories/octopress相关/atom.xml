@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress相关 | yang3wei的专栏]]></title>
   <link href="http://yang3wei.github.com/blog/categories/octopress相关/atom.xml" rel="self"/>
   <link href="http://yang3wei.github.com/"/>
-  <updated>2013-02-03T15:03:00+08:00</updated>
+  <updated>2013-02-03T18:06:42+08:00</updated>
   <id>http://yang3wei.github.com/</id>
   <author>
     <name><![CDATA[yang3wei]]></name>
@@ -12,6 +12,277 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Octopress 代码高亮]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/03/octopress-dai-ma-gao-liang/"/>
+    <updated>2013-02-03T17:43:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/03/octopress-dai-ma-gao-liang</id>
+    <content type="html"><![CDATA[<p>原文链接：<br/>
+<a href="http://xiongbupt.github.com/blog/2012/06/08/octopressdai-ma-gao-liang/">http://xiongbupt.github.com/blog/2012/06/08/octopressdai-ma-gao-liang/</a><br/>
+现在博客已经基本搭建完毕，下面对从<code>jekyll bootstrap</code>搬迁到做一个基本介绍。首先是代码高亮部分，下面的文章主要来自于<a href="http://octopress.org/docs/blogging/code/" title="Octopress代码高亮">Octopress关于代码高亮部分</a>。文章主要是对上面的内容进行一个简单的翻译，以及简单介绍从<code>jekyll bootstrap</code>上面的代码移动到<code>Octopress</code>上面做一个简单的介绍。</p>
+
+<!-- more -->
+
+
+<h2>共享代码片段</h2>
+
+<p>在博客上共享代码片段应该是简单的，并且代码应该具有简单的高亮功能。Octopress也具有这种功能，在<code>jekyll</code>上，其使用的是<code>pygment</code>来实现代码高亮的功能，Octopress实现的更好。在Octopress上面有下面几种选择：</p>
+
+<ul>
+<li>使用<a href="http://ethanschoonover.com/solarized" title="Solarized高亮">Solarized高亮</a>主题来实现（该方法未尝试，实际上不知道怎么弄，只是凭借个人的猜测）。</li>
+<li>使用Gist的代码内嵌。</li>
+<li>从自己的文件系统中插入代码片段，该代码具有下载链接。</li>
+<li>简单的内嵌代码块带有<code>&lt;figure&gt;</code>和<code>&lt;figcaption&gt;</code>和可选的下载链接。</li>
+<li>Pygments caching（似乎还是使用Pygnment来实现代码高亮）。</li>
+<li>通过javascript脚本使得代码具有行号。</li>
+</ul>
+
+
+<h3>Solarized高亮</h3>
+
+<p>这部分内容自己没有尝试，待更新。</p>
+
+<h3>反引号的代码块</h3>
+
+<p>同时使用<code>backtick_codelock</code>过滤器，可以使用Github的最适用的代码高亮块。使用三个反引号开始，后面跟着一个空格，接下来是高亮语言，具体语法如下所示：</p>
+
+<pre><code>  ``` [language] [title] [url] [link text]
+  code snippet
+  ```
+</code></pre>
+
+<p>按照上述方式便可以对相应的代码块进行高亮，如下面的例子。</p>
+
+<h4>example1（原文)</h4>
+
+<pre><code> ```
+ $sudo give me a hug
+ ```
+</code></pre>
+
+<p>按照上面的方式在文本中输入之后，产生的效果如下：
+<code>
+$sudo give me a hug
+</code></p>
+
+<h4>example2带有说明和连接</h4>
+
+<pre><code> ``` ruby Discover if a number is prime http://www.noulakaz.net/weblog/2007/03/18/a-regular-expression-to-check-for-prime-numbers/ Source Article
+ class Fixnum
+   def prime?
+     ('1' * self) !~ /^1?$|^(11+?)\1+$/
+   end
+ end
+ ```
+</code></pre>
+
+<p>产生的代码片段如下：
+``` ruby Discover if a number is prime http://www.noulakaz.net/weblog/2007/03/18/a-regular-expression-to-check-for-prime-numbers/ Source Article
+class Fixnum
+  def prime?</p>
+
+<pre><code>('1' * self) !~ /^1?$|^(11+?)\1+$/
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<h3>Gist代码内嵌</h3>
+
+<p>当使用这种方式的代码高亮时，仅仅需要的是gist的id，对gist不了解的可以上google搜索下，个人的理解是，gist对每段用户上传的代码段都会有一个对应的id，当用户给出对应的代码的id后，将会从gist上面下载对应的已经高亮的html文件，最终在用户的页面上显示出来。</p>
+
+<h4>语法</h4>
+
+<pre><code> { % gist gist_id [filename] %}
+</code></pre>
+
+<h4>example</h4>
+
+<pre><code> { % gist 996818 %}
+</code></pre>
+
+<p>上述代码的片段在Octopress中的markdown文件中输入之后，得到的效果如下：</p>
+
+<p><div><script src='https://gist.github.com/996818.js'></script>
+<noscript><pre><code>@@ -590,7 +590,7 @@ class SpritesTest &lt; Test::Unit::TestCase
+  it &quot;should generate a sprite from nested folders&quot; do
+    css = render &lt;&lt;-SCSS
+-     @import &quot;nested/*.png&quot;;
++     @import &quot;nested/**/*.png&quot;;
+      @include all-nested-sprites;
+    SCSS
+    assert_correct css, &lt;&lt;-CSS</code></pre></noscript></div>
+</p>
+
+<p>如果一个gist的id对应有多个文件，这时需要对想要高亮的文件添加文件名，具体语法如下所示：</p>
+
+<pre><code>  { % gist 1059334 svg_bullets.rb %}
+  { % gist 1059334 usage.scss %}
+</code></pre>
+
+<p>总体来说，gist代码高亮是很简单的，只是需要将代码上传到<a href="https://gist.github.com/">gist</a>，然后获取相应的id然后按照上面的语法进行设置即可。只是每次在写博客时，都需要对博客文章中的代码拷贝到网址上生成，在没有网时，代码高亮比较麻烦。</p>
+
+<h3>从本地文件中引入代码</h3>
+
+<p>这种方式在Arch上面有个小问题，在Arch上的报错如下所示：<br/>
+``` bash Arch error
+Building site: source -> public
+  File "<string>", line 1</p>
+
+<pre><code>import sys; print sys.executable
+                    ^
+</code></pre>
+
+<p>SyntaxError: invalid syntax
+<code>``
+上网搜索之后在[该网址][lab4]发现解决方法。   
+这种方式需要使用python2来完成代码高亮的操作，由于Arch的python指向的是python3，而python3无法完成该功能，因此需要在</code>plugin<code>文件夹中再添加一个新文件，指定在</code>Octopress<code>运行时使用的是python2，具体增加的文件内容如下所示，文件的名字为</code>ruby_python_arch_linux_fix.rb`<br/>
+File /Users/user/octopress/source/downloads/code/ruby/ruby_python_arch_linux_fix.rb could not be found</p>
+
+<p>在完成该操作之后，仍然报错，得到如下错误：<br/>
+<code>bash Error message
+LoadError: Could not open library 'lib.so': lib.so: cannot open shared object file: No such file or directory
+</code>
+参考<a href="https://github.com/tmm1/pygments.rb/issues/10">该网址</a>的由<code>elidos</code>提出的解决方法可以知道是<code>rubypython</code>自身的bug，需要修复，具体修改文件在Arch上面为<code>/usr/lib/ruby/gems/1.9.1/gems/rubypython-0.5.3/lib/rubypython/pythonexec.rb</code>，修改位置大概在126行左右，修改后的内容如下所示：
+<code>diff fix the rubypython bug
+--126 %x(#{@python} -c "#{command}").chomp if @python
+++126 %x("#{@python} -c #{command}").chomp if @python
+</code>
+完成该修改之后，便可以使用这种包含代码的方式来进行代码高亮。 <br/>
+使用这种方式的语法也参见<a href="http://octopress.org/docs/blogging/code/" title="Octopress代码高亮">octopress手册</a>，此处不再进行详细说明，这种方式的代码是单独存放成一个文件保存在本地系统下，当代码长度较长，又不想放在博客的正文中时，使用该方法比较好。<br/>
+简单记录下这种方式的语法如下所示：（目前不知道为什么，在octopress中输入{ %的方式都会进行代码解析，所以上面的{ %都进行了添加了<code></code>来取消，在实际文章中输入的时候，将<code></code>取消掉）</p>
+
+<pre><code>{ % include_code [title] [lang:language] path/to/file %}
+</code></pre>
+
+<p>其中的中括号的内容是可选的，具体语言便是这种方式，当需要强制高亮时，需要指定<code>lang:</code>这个参数，很好用。</p>
+
+<h3>使用Code Block的方式</h3>
+
+<p>目前自己的博客这种方式用的比较多，前面写的文章目前全部修改成为了这种方式，感觉这种方式和<code>pygnment</code>的方式差不多，之前全部采用的是<code>pygnment</code>的方式，利用正则表达式把所有文章的代码高亮全部改成了使用<code>code block</code>。它的具体语法如下所示：（与<code>pygnment</code>很相似，指定语言即可）</p>
+
+<pre><code>  { % codeblock [title] [lang:language] [url] [link text] %}
+  code snippet
+  { % endcodeblock %}
+</code></pre>
+
+<p>和之前描述的类似，中括号的内容是可选的。</p>
+
+<h4>使用正则表达式替换</h4>
+
+<p>这种方式可以替换博客内容，使得博客中所有文章的代码高亮使用<code>Code Block</code>。自己使用的是<code>sed</code>来完成的操作，似乎都没有用到正则表达式，只是简单的替换，做个简单的记录吧。</p>
+
+<h5>替换方法</h5>
+
+<p>进入到<code>source/_posts</code>目录下，在终端输入如下代码：
+<code>bash Sed查看文章代码
+sed -n 's/\(\ highlight\ \)/\1/p' *
+</code>
+上面将会把当前目录下的含有{\% highlight的文件的那行都显示出来，中间会将含有该特殊字符的行都打印出来，中间可以看到自己的博客内容都用到了哪些类型文件的语法高亮，将对应的代码高亮进行替换即可。<br/>
+其实这种方式就是简单的搜索替换，应该算不上使用正则表达式了，只是写下来做下笔记了，防止以后再用具体操作如下所示：
+<code>bash Sed替换文件内容
+sed -i 's/\(\ highlight\ bash %}\)/\ codeblock\ lang:bash\ %}/' *
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Octopress 中的 SEO]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/03/octopress-zhong-de-seo/"/>
+    <updated>2013-02-03T16:12:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/03/octopress-zhong-de-seo</id>
+    <content type="html"><![CDATA[<p>原文链接：<br/>
+<a href="http://codemacro.com/2012/09/06/octopress-seo/">loop in codes -- Kevin Lynx BLOG</a><br/>
+Octopress 默认为每个页面添加 meta description，其内容为当前文章的前150个字符，<br/>
+如果是首页就会是第一篇文章的前 150 个字符。这里主要通过增加 meta keywords 来提高 SEO。</p>
+
+<!-- more -->
+
+
+<h2>为每篇文章增加 keywors 和 description</h2>
+
+<p>就像我的这篇博客，这下文章头得填很多数据了，有点麻烦：<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>code snippet 1 </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>---
+</span><span class='line'>layout: post
+</span><span class='line'>title: "Octopress中的SEO"
+</span><span class='line'>date: 2012-09-06 19:02
+</span><span class='line'>comments: true
+</span><span class='line'>categories: tips
+</span><span class='line'>tags: [tips, octopress]
+</span><span class='line'>keywords: seo, octopress&lt;/p>
+</span><span class='line'>
+</span><span class='line'>&lt;h2>description: Octopress默认为每个页面添加&lt;code>meta description&lt;/code>，其内容为当前文章的前150个字符，如果是首页就会是第一篇文章的前150个字符。这里主要通过增加&lt;code>meta keywords&lt;/code>来提高SEO。&lt;/h2>
+</span><span class='line'>
+</span><span class='line'>&lt;p></span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>这样，每篇文章页面头就会自动增加 meta keywords 项，description也会使用这里填的，<br/>
+而不是自动为文章前若干个字符。这个功能的实现在 <code>_includes/head.html</code> 中。
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>code snippet 2  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;author&quot;</span> <span class="na">content=</span><span class="s">&quot;Kevin Lynx&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;description&quot;</span> <span class="na">content=</span><span class="s">&quot;Octopress默认为每个页面添加`meta description`，其内容为当前文章的前150个字符，如果是首页就会是第一篇文章的前150个字符。这里主要通过增加`meta keywords`来提高SEO。 &quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;keywords&quot;</span> <span class="na">content=</span><span class="s">&quot;seo, octopress&quot;</span><span class="nt">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>为页面 (Page) 增加 keywords</h2>
+
+<p>上面只是修正了每篇博客页面的 meta 信息，octopress 中还有几个页面需要修正，例如首页，<br/>
+这个可以通过修改 <code>_includes/head.html</code> 来完成。替换相关内容为以下：
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>code snippet 3  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;author&quot;</span> <span class="na">content=</span><span class="s">&quot;{{ site.author }}&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>{% capture description %}{% if page.description %}{{ page.description }}{% elsif site.description %}{{ site.description }}{%else%}{{ content | raw_content }}{% endif %}{% endcapture %}
+</span><span class='line'><span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;description&quot;</span> <span class="na">content=</span><span class="s">&quot;{{ description | strip_html | condense_spaces | truncate:150 }}&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>{% if page.keywords %}<span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;keywords&quot;</span> <span class="na">content=</span><span class="s">&quot;{{ page.keywords }}&quot;</span><span class="nt">&gt;</span>{%else%}<span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;keywords&quot;</span> <span class="na">content=</span><span class="s">&quot;{{ site.keywords }}&quot;</span><span class="nt">&gt;</span>{% endif %}
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+如果页面没有提供 keywords 或者 description 的话，<br/>
+就使用 site 里的设置，也就需要修改 <code>_config.yml</code>：
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>code snippet 4 </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>description: loop in codes, Kevin Lynx blog
+</span><span class='line'>keywords: c/c++, mmo, game develop, lisp, ruby, lua, web development</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[为 Octopress 添加查看访问量的功能]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/03/wei-octopress-tian-jia-cha-kan-fang-wen-liang-de-gong-neng/"/>
+    <updated>2013-02-03T16:03:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/03/wei-octopress-tian-jia-cha-kan-fang-wen-liang-de-gong-neng</id>
+    <content type="html"><![CDATA[<p>原文链接：<a href="http://colors4.us/blog/2012/01/08/octopressbo-ke-cong-ling-kai-shi-iii/">sourrabbit &amp; linpx</a><br/>
+我在看了<a href="http://www.whatwherewhy.me/colophon/">这个</a>网页后，发现我还可以添加网站分析，毕竟是自己努力出来的东西，<br/>
+看看大伙是否有兴趣访问还是不错的，不过很多情况是远逊于预期。:)</p>
+
+<!--  more -->
+
+
+<p>先于 <code>Google Analytics</code> 开通和自己网站相关的服务，<br/>
+比如登记自己的网址，取得 GA 的 <code>Track ID</code>，应该如该样式 <code>UA-28584XXX-X</code>.
+修改 <code>_config.yml</code> 最后部分，将 ID 置于 <code>google_analytics_tracking_id:</code>项目之后，rake一下就行了。<br/>
+之后进入 GA 网站看 report 吧，你就会知道何时多少人访问过你的网站。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[灾后重建 octopress 博客遇到的问题]]></title>
@@ -159,264 +430,6 @@ disqus_show_comment_count: true</code></pre>
 下面两者有很大的区别，后者多加了一个斜杠将直接导致看不见 disqus 的评论内容！
 <strong><code>url: http://yang3wei.github.com</code>  <br/>
 <code>url: http://yang3wei.github.com/</code></strong></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[(扩充)为 octopress 添加标签云]]></title>
-    <link href="http://yang3wei.github.com/blog/2013/01/30/zhuan-zai-wei-octopress-tian-jia-biao-qian-yun/"/>
-    <updated>2013-01-30T02:54:00+08:00</updated>
-    <id>http://yang3wei.github.com/blog/2013/01/30/zhuan-zai-wei-octopress-tian-jia-biao-qian-yun</id>
-    <content type="html"><![CDATA[<p>原文链接：<a href="http://codemacro.com/2012/07/18/add-tag-to-octopress/" title="loop in codes">http://codemacro.com/2012/07/18/add-tag-to-octopress/</a><br/>
-同添加 <code>category list</code> 一样，网络上有很多方法，这里列举一种。<br/>
-首先将以下两个项目克隆到本地：</p>
-
-<pre><code>https://github.com/robbyedwards/octopress-tag-pages 
-https://github.com/robbyedwards/octopress-tag-cloudclone
-</code></pre>
-
-
-<p>这两个项目分别用于产生 <code>tag page</code> 和 <code>tag cloud</code>。<br/>
-针对这两个插件，需要手工复制一些文件到你的 octopress 目录。</p>
-
-<!-- more -->
-
-
-<h3>1.octopress-tag-pages</h3>
-
-<p>复制 <code>tag_generator.rb</code> 到 <code>/plugins</code> 目录。<br/>
-复制 <code>tag_index.html</code> 到 <code>/source/_layouts</code> 目录。<br/>
-复制 <code>tag_feed.xml</code> 到 <code>/source/_includes/custom/</code> 目录。<br/>
-其他文件就不需要复制了，都是些例子。</p>
-
-<h3>2.octopress-tag-cloud</h3>
-
-<p>复制 <code>tag_cloud.rb</code> 到 <code>/plugins</code> 目录。<br/>
-复制以下代码到 <code>/source/_includes/custom/asides/tags.html</code>。<br/>
-<strong>注意：先去掉 % 前面的反斜杠</strong></p>
-
-<pre><code>&lt;section&gt;
-    &lt;h1&gt;Tags&lt;/h1&gt;
-    &lt;ul class="tag-cloud"&gt;
-        {\% tag_cloud font-size: 100-210%, limit: 49, style: para \%}
-    &lt;/ul&gt;
-&lt;/section&gt;
-</code></pre>
-
-
-<p><code>tag_cloud</code> 的参数中：<br/>
-<code>style: para</code> 指定不使用 <code>li</code> 来分割；<br/>
-<code>limit</code> 限定 10 个 tag；<br/>
-<code>font-size</code> 指定 tag 的大小范围，具体参数参看官方文档。</p>
-
-<p>最后，当然是在 <code>_config.yml</code> 的 <code>default_asides</code> 中添加这个 <code>tag cloud</code> 到导航栏，例如：</p>
-
-<pre><code>default_asides: [asides/category_list.html, asides/recent_posts.html, custom/asides/tags.html]</code></pre>
-
-
-<h3>3.本人扩充: 有一个要注意的地方</h3>
-
-<p>结合自身经历，我按照前文所述操作且核对了很多次，<br/>
-发现在 <code>rake generate</code> 和 <code>rake preview</code> 以后，<br/>
-在预览页面却依然无法得到正常的结果，具体表现如下：<br/>
-标签云确实是出现在了右栏里面，不过当我点击某个 tag 的时候，<br/>
-跳转到的却不是有效的地址，而仅仅只是一个 tag 关键词！<br/>
-灰常地荒谬，灰常地震惊，我甚至一度思忖，作者是不是故意在和我开玩笑。<br/>
-经历了艰辛地排查，终于我在 <code>firebug</code> 下面发现了一些蛛丝马迹：<br/>
-常规情况下 tag 对应的地址应该是 <code>/tags/关键字</code>，<br/>
-但是我发现在我的站点上面却不是这样的，仅仅只有 <code>//关键字</code>，<br/>
-体现在浏览器里面就仅仅是一个 tag 关键字了，因为两个斜杠都被滤掉了~<br/>
-发现了问题的症结以后，我就跑到 _config.yml 配置文件去中查看，<br/>
-并且拿自己的配置文件和其他正常人的配置文件作对比，果然发现了一些猫腻：<br/>
-我的配置文件中少了一行配置：<code>tag_dir: tags</code>，也算是歪打正着了，<br/>
-把这一行配置加进去之后，执行 <code>rake generate</code> 和 <code>rake preview</code> 命令，<br/>
-转到浏览器里面键入 <code>localhost:4000</code> 进行查看，标签云的功能总算是回归正常了~</p>
-
-<p>谈一谈我对此的感受吧：<br/>
-之前我也没有删掉过 tag_dir 这一行配置，也就是说 octopress 本身就没有包含这一行配置~<br/>
-我很奇怪为什么其他人竟然都没有提出甚至谈及这个问题，<br/>
-难道是 octopress 在升级的过程中刚才将这一行配置去掉？<br/>
-不论如何，此次经历还是让我相当的不愉快，我花了至少五个小时来解决这个问题！！<br/>
-这让我难以接受，要知道此时此刻我本该已经躺在床上呼呼大睡了！<br/>
-直言不讳吧，虽然拿 MacVim 写 markdown 很舒服，但我不得不承认：<br/>
-octopress 毕竟还是没能达到我心目中理想的高度，此次就是不成熟的一个典型体现~</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Octopress 新增博文时要注意的地方]]></title>
-    <link href="http://yang3wei.github.com/blog/2013/01/28/octopress-xin-zeng-bo-wen-shi-yao-zhu-yi-de-di-fang/"/>
-    <updated>2013-01-28T22:11:00+08:00</updated>
-    <id>http://yang3wei.github.com/blog/2013/01/28/octopress-xin-zeng-bo-wen-shi-yao-zhu-yi-de-di-fang</id>
-    <content type="html"><![CDATA[<p>用 MacVim 的请注意，执行 rake deploy 的时候，<br/>
-切记要将 MacVim 正在编辑的 markdown 博文文件保存并关闭掉~<br/>
-因为在 deploy 的时候会对 source/_posts 目录下的文件执行 cp 操作~<br/>
-如果 MacVim 当前正在编辑博文的 markdown 文件的话，<br/>
-很有可能在执行 <code>rake deploy</code> 的时候给予失败的提示~<br/>
-究其根源就是因为 MacVim 锁定了某个文件（swp 格式的），<br/>
-然后对 <code>rake deploy</code> 命令的执行造成了阻碍~</p>
-
-<!-- more -->
-
-
-<p>
-不知道其他的版本的 vim（vim、gvim，etc） 会不会也受到这个问题的影响~<br/>
-我在 google 上面搜寻了一下这个问题，没有找到什么有用的资料~<br/>
-能够解决掉这个问题还是占了很大的运气成分的，<br/>
-刚开始我还误以为是 markdown、md 后缀带来的这个问题~<br/>
-因为在我将 source/_posts 目录下的所有博文文件后缀由 markdown 改为 md 以后，<br/>
-发现又能正常的执行 <code>rake deploy</code> 命令了~</p>
-
-<h2>关于 swp 文件</h2>
-
-<p>1.swp 文件是 vim 防止终端崩溃后恢复文件用的。<br/>
-每次当文件内容被修改而没有用 <code>:w</code> 保存的时候，都会有这么一个文件，<br/>
-这样可以解决多个用户编辑同一个文件，或忘记存盘而先关了终端的情况</p>
-
-<p>2.兄弟，那可是一个好东东啊，你还嫌它？<br/>
-我在 solaris 中误删了刚写的 shell 脚本，只有哭的份！</p>
-
-<h2>octopress 发布博文的常规流程</h2>
-
-<p>作为一个过来人，我觉得这是一个非常有必要记录一下的问题！<br/>
-发布第一篇博文时该怎么弄我是咨询过 google 的~<br/>
-我最初的认识是这样的：<br/>
-在 Terminal 里面，通过 <code>cd ~/octopress</code> 命令切换到 octopress 的默认目录~<br/>
-然后，执行 <code>rake new_post["博文标题"]</code> 命令，<br/>
-它的作用是在 ~/octopress/source/_posts 目录下新建一个 “日期_时间_博文标题.markdown” 文件~<br/>
-接下来，通过 MacVim 等编辑器按照 markdown 的语法在上述新建的文件中撰写博文~<br/>
-撰写完毕之后再依次执行 <code>rake generate</code>、<code>rake preview</code>、<code>rake deploy</code> 命令<br/>
-它们的作用分别是：<br/>
-由 markdown 文件生成静态 html 页面，<br/>
-开启本地服务器提供预览（访问 <code>http://localhost:4000</code>），<br/>
-将静态页面部署到 github 博客服务器供他人访问。<br/>
-其中，<code>rake preview</code> 命令是否执行是可选的，<br/>
-如果你足够自信的话，完全可以跳过这一步直接进行部署~</p>
-
-<p>这种流程是没有问题的，不过效率比较低！<br/>
-假如在 _posts 目录中有 800 个 markdown 文件，<br/>
-那么在执行 rake generate 命令时，会重新解析所有的 markdown 文件~<br/>
-这是对生命和电能的巨大浪费，可以使用如下步骤来提升效率：<br/>
-在撰写博文伊始就在 Terminal 中执行 rake preview 命令开启本地预览功能，<br/>
-它会实时监控 _posts 目录，你的新增、保存动作都会被捕捉到，<br/>
-最最重要的一点是，你每执行一次保存操作，更新的内容都能在浏览器中有所反映，<br/>
-待工作完毕之后，你只需要部署、提交源文件一次就行了，大大地提高了撰写博文的效率！</p>
-
-<h2>twitter 被屏蔽导致持续请求的问题</h2>
-
-<p>国内用 octopress 架设好博客以后，<br/>
-因为天朝屏蔽了 twitter，而 octopress 又默认启用了 twitter，<br/>
-所以会导致一个问题（我用的是 mac 平台的 chrome 浏览器）：<br/>
-博客页面打开时，标签页里面的圆圈要转动很久才停止，<br/>
-浏览器左下角呈现字样：<br/>
-<strong>Waiting for platform.twitter.com...</strong></p>
-
-<p>怎么解决这个问题呢？<br/>
-打开 octopress 所在的目录，编辑 _config.yml 文件，<br/>
-将 <strong>twitter_follow_button</strong> 和 <strong>twitter_tweet_button</strong> 的值设置为 false 即可！</p>
-
-<h2>谈一下自己对 markdown 格式的感受：</h2>
-
-<p>markdown 格式用来写博文真的挺好的，没有糊里花哨的颜色料理，<br/>
-可以很好的区分开代码和文字，加粗样式什么的用起来也挺方便灵活的~<br/>
-给我的感觉就是：方便实用，精炼简洁，没有一丝冗余之感~<br/>
-另外，我非常喜欢 octopress 的默认主题，简洁而大气，<br/>
-我想我应该不会为了避免撞衫而去寻找其他的主题了，有了这个我就已经感到非常满足了~<br/>
-此刻我用 MacVim 写着 markdown 格式的博文，这感觉真是爽透了~<br/>
-从未曾想象此刻能如此轻松惬意地书写着博文，这美妙的初体验我将铭记于心！<br/>
-最后的最后，此种方式的博文书写，本地机器和 github 服务器人手一份拷贝，<br/>
-再也不用担心数据丢失的问题了~</p>
-
-<h2>后记：  </h2>
-
-<p>历经磨难终于在 github 上面架好了自己的 blog，灰常开心啊~</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[(转载)我为什么要从wordpress转到octopress]]></title>
-    <link href="http://yang3wei.github.com/blog/2013/01/03/zhuan-zai-wo-wei-shi-yao-yao-cong-wordpress-zhuan-dao-octopress/"/>
-    <updated>2013-01-03T13:44:00+08:00</updated>
-    <id>http://yang3wei.github.com/blog/2013/01/03/zhuan-zai-wo-wei-shi-yao-yao-cong-wordpress-zhuan-dao-octopress</id>
-    <content type="html"><![CDATA[<p>原文链接：<a href="http://zilongshanren.com/blog/2013/01/03/migrate-to-octopress/" title="子龙山人">http://zilongshanren.com/blog/2013/01/03/migrate-to-octopress/</a>
-<img class="right" src="/images/posts/octpress-logo.png" width="300" height="300"></p>
-
-<h2>我的博客写作历史</h2>
-
-<p>我是从2011年3月开始写博客的，博客主要是分享学习cocos2d、以及iOS游戏开发的一些内容。目前，该博客已经超过80万的访问量了。Amazing!</p>
-
-<p>其实我最早开始写博客可能是07年了。那时候刚开始学c语言，为了锻炼自己的c语言能力，在百度知道里面回答各种c语言基础题，为了一个所谓的“专家”称号而乐此不疲。后来，由于找我做“学生成绩管理系统”的人实在是太多了，我就在百度开设了自己的第一个博客。当然，主要的内容就是c语言制作XX管理系统，还有一些算法题的解法以及一些百度知道的问题的答案。后来由于学习的压力，加上疏于打理，渐渐的我也不准备写博客了。</p>
-
-<!-- more -->
-
-
-<p>再到后来，我又在csdn开始过博客。因为我很喜欢看书，很多牛人都主张要写博客。因为书写确实可以整理自己的思路，同时可以和别人分享自己的idea，这本身也是很有乐趣的一件事情。可是好景不长，没有坚持多久，这个博客又荒废了。纠其原因，我总结了如下三点：</p>
-
-<ul>
-<li><p>  自己还处在学习基础知识的阶段，写的大都是读书笔记类的东西，没有读者，也没有反馈，写起来没劲</p></li>
-<li><p>  写博客还是不方便，排版困难，写一篇博客通常要花费几个小时的时间</p></li>
-<li><p>   积累不够，没有东西写，而且没有一个好的规划，不能坚持。我现在打算是每周一篇blog，这样的时间目前还算能接受</p></li>
-</ul>
-
-
-<p>再后来，自己保送了研究生，开始关注前沿的技术和行业发展了。特别是10年，我开始接触iOS游戏开发,开始接触了Git、Cocos2d、Github和Vim等。一切都开始朝着良性的方向发展了。</p>
-
-<p>在刚开始学习Cocos2D的时候，国内那时候中文资料特别少，唯一的资料就是知易的。但是，我通过google，我发现国外还是有许多优秀的cocos2d教程的。当时，我也看到有一些人在翻译教程。但是质量不是很高，包括准确度和阅读体验都不是很好。恰好那时候，我对博客园也产生了浓厚的兴趣，于是乎便产生了要在博客园开始一个专门介绍Cocos2D游戏开发的博客。</p>
-
-<p>由于当时移动互联网被炒得很火，同时很多小公司需要Cocos2D，这个博客凭着天时也火起来了。一旦开始火起来，我的压力就大了。我当时还在兼职，工作压力还蛮大的，学校事情也多，手上还有一个游戏项目，而且全部只能靠我自己。但是，每每我不想翻译的时候，只要想到还有那么多读者在等着我发文章，我就又有动力了。为此，那段时间，我晚上写代码一度到2、3点。时间确实是不够。</p>
-
-<p>后面我便萌生念头，让热心网友和我一起来做翻译的事情。果然，程序员社区还是有很多热心人士的，Iven、小狼、北方、skingTree，Benna，糖炒小虾、u0u0、无敌葫芦娃、蓝羽、大侠自来也等等。这些人给我的博客贡献了不少文章，再次感谢你们！</p>
-
-<p>后来，由于读者数量越来越多。我又建了相应的QQ群，由于QQ群讨论的很多东西都流失了。同样的问题被反复问及，有时候不回答，别人还以为你不友好。所以，也导致我和Iven后来一起创办“泰然论坛”的想法。</p>
-
-<p>讲了这么多，其实我觉得写博客并没有那么难。看到国外好的文章，我们可以举手之劳翻译之。自己花了几个小时解决某个问题的方案也可以用博客来记录之。这样做不仅可以方便以后查阅，还可以帮助到他人，交到很多朋友，何乐而不为呢？</p>
-
-<p>再后来，我又自己申请域名，建立了自己的wordpress博客。到现在，我放弃了自己花了200块大洋买的空间，回归开源的怀抱，我采用Github来托管我的博客。</p>
-
-<p>为什么我要这样折腾呢？</p>
-
-<h2>为什么转到wordpress</h2>
-
-<p>其实我完全可以在博客园上面一直写博客，而且免费，平台大，人气足，往首页随便发一篇文章都有好几百的pv。但是，我想拥有自己的域名，拥有自己的主机空间。说白了，我想折腾了。</p>
-
-<p>当然，折腾是有代价的。除了经济上的开销以外，更多的是新平台，新环境的适应。我在wordpress平台上面大概花了2-3个月，也发表了10几篇文章。（有中文的，也有英文的，现在都转到octopress博客平台上来了。）</p>
-
-<p>wordpress给我的感觉是很成熟，很傻瓜化，很容易上手，安装过程只要1分钟。然后选择一个合适的主题，装上一堆插件就可以马上写博客了。作为一个非常成熟的CMS系统，wordpress真的很强大，而且速度很快。作为个人博客来讲，真的够用了。</p>
-
-<p>但是，我不喜欢它的编辑器，太简陋了，没有博客园的好用。其实博客园的也不太好用，因为我习惯了博客园的编辑器，所以会觉得wordpress更烂。当然，我也有尝试使用百度开发的ueditor编辑器。虽然功能强大了，但是，有时候容易把好不容易排好版的文章的样式给搞乱。这个实在是让人抓狂。(后面我发现，我不是不喜欢wordpress的编辑器，而是不喜欢那样写博客的方式，我希望写博客和写代码一样方便)</p>
-
-<p>而且wordpress采用php开发，php我不熟悉，所以，有些定制功能，我可能不会。如果全部是带着问题到处google，我也觉得累。为了写一篇博客，何苦这么麻烦了。更何况我对php开发web应用也没多大兴趣。（其实我一直就不太喜欢web开发，不管是任何平台的。不过最近我对django和ruby
-on rails有了一点兴趣了。）</p>
-
-<p>我冲着wordpress更多的控制权，我投奔了她的怀抱。但是，由于我不喜欢她的编辑文章和发布博客的方式，我最终还是决定离开她了。</p>
-
-<h2>为什么我转到octopress</h2>
-
-<p>在转到<a href="http://octopress.org/">octopress</a>之前，先讲一个小插曲。我以前学习过vim，不过没有认真对待它。前段时间为了使用cocos2d-x的lua和jsbinding来写点东西。发现没有好用的编辑器，textMate和sublime text2都不错，可是它们离我心目中的IDE还差不少。由于，我google之，我发现vim满足我的要求。于是乎，我重拾vim。这一次，我学习得非常快。我采用github和pathogen来管理我的vim插件和配置。而且由于practical Vim这本书的出现，让我对vim的认识更多了。</p>
-
-<blockquote><p>Vim真是无所不能!</p></blockquote>
-
-<p>由于我疯狂地学习vim、实践vim，现在我已经对它爱不释手了。真的不想再换编辑器了，呵呵。要充分发挥vim的能力，首先你得是一个TouchTypist。意味着你至少要能够盲打，同时，你要彻底说服自己不再用鼠标。我是怎么从一个windows用户，天天用鼠标+现代IDE来开发程序的程序员转向vim的呢？答案其实很简单：自从我接触mac以后，自从我接触mac的touch板以后。鼠标对我来说就是多余的，除了打dota的时候可能需要使用。mac系统的手势太好用了。</p>
-
-<p>用了vim以后，我就开始尝试用markdown语法+vim编辑器来向wordpress平台发博客。但是，它对图片和代码支持不好。wordpress本身也没有提供太好的markdown语法的支持。于是乎，我就找到了octopress。</p>
-
-<blockquote><p>Octopress: A blogging framework for hackers.</p></blockquote>
-
-<p>这是octopress的首页说明，酷吧！使用octopress，你可以像写代码一样写博客。同时，它与vim完美结合，并且让我的coding、blogging、git工作流程顺畅无比。我从未如此开心，原来博客还可以这样写的。当然，这里我不是推销员，我只是介绍一下我喜欢的菜。具体用什么工具和博客平台，是大家的选择，萝卜白菜各有所爱嘛。而且最重要的不是平台，而是博文，要坚持写博客才是最重要的。但是，octopress让我有想写博客的欲望。：）</p>
-
-<p>最后，octopress采用Html5+css3构建，同时支持<a href="http://liquidmarkup.org/">liquid</a>和ruby。（其实python也有类似的博客系统，不过貌似octopress社区更活跃一点）我可以通过此博客慢慢过渡到Ruby on Rails.</p>
-
-<p>关于octopress博客的搭建，大家可以google之。网上有大量的文章可供参考，其实官方的文档就足够了，非常详尽。如果大家想折腾的，可以去尝试一下。如果遇到什么问题，可以在本文下方留言。如果问题我也遇到了，我会跟大家分享滴～</p>
-
-<p>最后，贴几篇文章，讲老外为什么从wordpress转到jekyll的（octopress基于jekyll，但是，更容易使用，推荐像我一样的新手使用）</p>
-
-<p><a href="http://vitobotta.com/migrating-from-wordpress-to-jekyll-part-one-why-I-gave-up-on-wordpress/">why I migrate from wordpress to jekyll</a></p>
-
-<p><a href="http://vitobotta.com/how-to-migrate-from-wordpress-to-jekyll/">How to migrate from wordpress to jekyll</a></p>
-
-<p>最后，我贴出本文的vim中markdown编辑的一个截图吧,秀一下，呵呵：）</p>
-
-<p><img class="left" src="/images/posts/vimoctopress.png" width="750" height="300"></p>
 ]]></content>
   </entry>
   

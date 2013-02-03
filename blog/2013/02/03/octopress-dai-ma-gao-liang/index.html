@@ -1,0 +1,460 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Octopress 代码高亮 - yang3wei的专栏</title>
+  <meta name="author" content="yang3wei">
+
+  
+  <meta name="description" content="原文链接：
+http://xiongbupt.github.com/blog/2012/06/08/octopressdai-ma-gao-liang/
+现在博客已经基本搭建完毕，下面对从jekyll bootstrap搬迁到做一个基本介绍。首先是代码高亮部分， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="author" content="yang3wei">
+  
+  <meta name="description" content="yang3wei的专栏, yang3wei">
+  <meta name="keywords" content="yang3wei, cocos2d, mac, objective-c, c/c++, game develop, java, OpenGL, shell, box2d, git, python">
+
+  
+  <link rel="canonical" href="http://yang3wei.github.com/blog/2013/02/03/octopress-dai-ma-gao-liang/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="yang3wei的专栏" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-38160149-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">yang3wei的专栏</a></h1>
+  
+    <h2>Fight for better life!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:yang3wei.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Octopress 代码高亮</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-03T17:43:00+08:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>原文链接：<br/>
+<a href="http://xiongbupt.github.com/blog/2012/06/08/octopressdai-ma-gao-liang/">http://xiongbupt.github.com/blog/2012/06/08/octopressdai-ma-gao-liang/</a><br/>
+现在博客已经基本搭建完毕，下面对从<code>jekyll bootstrap</code>搬迁到做一个基本介绍。首先是代码高亮部分，下面的文章主要来自于<a href="http://octopress.org/docs/blogging/code/" title="Octopress代码高亮">Octopress关于代码高亮部分</a>。文章主要是对上面的内容进行一个简单的翻译，以及简单介绍从<code>jekyll bootstrap</code>上面的代码移动到<code>Octopress</code>上面做一个简单的介绍。</p>
+
+<!-- more -->
+
+
+<h2>共享代码片段</h2>
+
+<p>在博客上共享代码片段应该是简单的，并且代码应该具有简单的高亮功能。Octopress也具有这种功能，在<code>jekyll</code>上，其使用的是<code>pygment</code>来实现代码高亮的功能，Octopress实现的更好。在Octopress上面有下面几种选择：</p>
+
+<ul>
+<li>使用<a href="http://ethanschoonover.com/solarized" title="Solarized高亮">Solarized高亮</a>主题来实现（该方法未尝试，实际上不知道怎么弄，只是凭借个人的猜测）。</li>
+<li>使用Gist的代码内嵌。</li>
+<li>从自己的文件系统中插入代码片段，该代码具有下载链接。</li>
+<li>简单的内嵌代码块带有<code>&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure&gt;</code>和<code>&lt;figcaption&gt;</code>和可选的下载链接。</li>
+<li>Pygments caching（似乎还是使用Pygnment来实现代码高亮）。</li>
+<li>通过javascript脚本使得代码具有行号。</li>
+</ul>
+
+
+<h3>Solarized高亮</h3>
+
+<p>这部分内容自己没有尝试，待更新。</p>
+
+<h3>反引号的代码块</h3>
+
+<p>同时使用<code>backtick_codelock</code>过滤器，可以使用Github的最适用的代码高亮块。使用三个反引号开始，后面跟着一个空格，接下来是高亮语言，具体语法如下所示：</p>
+
+<pre><code>  ``` [language] [title] [url] [link text]
+  code snippet
+  ```
+</code></pre>
+
+<p>按照上述方式便可以对相应的代码块进行高亮，如下面的例子。</p>
+
+<h4>example1（原文)</h4>
+
+<pre><code> ```
+ $sudo give me a hug
+ ```
+</code></pre>
+
+<p>按照上面的方式在文本中输入之后，产生的效果如下：
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$sudo give me a hug</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h4>example2带有说明和连接</h4>
+
+<pre><code> ``` ruby Discover if a number is prime http://www.noulakaz.net/weblog/2007/03/18/a-regular-expression-to-check-for-prime-numbers/ Source Article
+ class Fixnum
+   def prime?
+     ('1' * self) !~ /^1?$|^(11+?)\1+$/
+   end
+ end
+ ```
+</code></pre>
+
+<p>产生的代码片段如下：</p>
+
+<figure class='code'><figcaption><span>Discover if a number is prime</span><a href='http://www.noulakaz.net/weblog/2007/03/18/a-regular-expression-to-check-for-prime-numbers/'>Source Article</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Fixnum</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">prime?</span>
+</span><span class='line'>    <span class="p">(</span><span class="s1">&#39;1&#39;</span> <span class="o">*</span> <span class="nb">self</span><span class="p">)</span> <span class="o">!~</span> <span class="sr">/^1?$|^(11+?)\1+$/</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Gist代码内嵌</h3>
+
+<p>当使用这种方式的代码高亮时，仅仅需要的是gist的id，对gist不了解的可以上google搜索下，个人的理解是，gist对每段用户上传的代码段都会有一个对应的id，当用户给出对应的代码的id后，将会从gist上面下载对应的已经高亮的html文件，最终在用户的页面上显示出来。</p>
+
+<h4>语法</h4>
+
+<pre><code> { % gist gist_id [filename] %}
+</code></pre>
+
+<h4>example</h4>
+
+<pre><code> { % gist 996818 %}
+</code></pre>
+
+<p>上述代码的片段在Octopress中的markdown文件中输入之后，得到的效果如下：</p>
+
+<div><script src='https://gist.github.com/996818.js'></script>
+<noscript><pre><code>@@ -590,7 +590,7 @@ class SpritesTest &lt; Test::Unit::TestCase
+  it &quot;should generate a sprite from nested folders&quot; do
+    css = render &lt;&lt;-SCSS
+-     @import &quot;nested/*.png&quot;;
++     @import &quot;nested/**/*.png&quot;;
+      @include all-nested-sprites;
+    SCSS
+    assert_correct css, &lt;&lt;-CSS</code></pre></noscript></div>
+
+
+<p>如果一个gist的id对应有多个文件，这时需要对想要高亮的文件添加文件名，具体语法如下所示：</p>
+
+<pre><code>  { % gist 1059334 svg_bullets.rb %}
+  { % gist 1059334 usage.scss %}
+</code></pre>
+
+<p>总体来说，gist代码高亮是很简单的，只是需要将代码上传到<a href="https://gist.github.com/">gist</a>，然后获取相应的id然后按照上面的语法进行设置即可。只是每次在写博客时，都需要对博客文章中的代码拷贝到网址上生成，在没有网时，代码高亮比较麻烦。</p>
+
+<h3>从本地文件中引入代码</h3>
+
+<p>这种方式在Arch上面有个小问题，在Arch上的报错如下所示：</p>
+
+<figure class='code'><figcaption><span>Arch error</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Building site: <span class="nb">source</span> -&gt; public
+</span><span class='line'>  File <span class="s2">&quot;&lt;string&gt;&quot;</span>, line 1
+</span><span class='line'>    import sys; print sys.executable
+</span><span class='line'>                        ^
+</span><span class='line'>SyntaxError: invalid syntax
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上网搜索之后在<a href="http://blog.gonzih.org/blog/2011/09/21/fix-octopress-pygments-error-on-arch-linux/">该网址</a>发现解决方法。 <br/>
+这种方式需要使用python2来完成代码高亮的操作，由于Arch的python指向的是python3，而python3无法完成该功能，因此需要在<code>plugin</code>文件夹中再添加一个新文件，指定在<code>Octopress</code>运行时使用的是python2，具体增加的文件内容如下所示，文件的名字为<code>ruby_python_arch_linux_fix.rb</code><br/>
+File /Users/user/octopress/source/downloads/code/ruby/ruby_python_arch_linux_fix.rb could not be found</p>
+
+<p>在完成该操作之后，仍然报错，得到如下错误：</p>
+
+<figure class='code'><figcaption><span>Error message</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>LoadError: Could not open library <span class="s1">&#39;lib.so&#39;</span>: lib.so: cannot open shared object file: No such file or directory
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>参考<a href="https://github.com/tmm1/pygments.rb/issues/10">该网址</a>的由<code>elidos</code>提出的解决方法可以知道是<code>rubypython</code>自身的bug，需要修复，具体修改文件在Arch上面为<code>/usr/lib/ruby/gems/1.9.1/gems/rubypython-0.5.3/lib/rubypython/pythonexec.rb</code>，修改位置大概在126行左右，修改后的内容如下所示：</p>
+
+<figure class='code'><figcaption><span>fix the rubypython bug</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='diff'><span class='line'><span class="gd">--126 %x(#{@python} -c &quot;#{command}&quot;).chomp if @python</span>
+</span><span class='line'><span class="gi">++126 %x(&quot;#{@python} -c #{command}&quot;).chomp if @python</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>完成该修改之后，便可以使用这种包含代码的方式来进行代码高亮。 <br/>
+使用这种方式的语法也参见<a href="http://octopress.org/docs/blogging/code/" title="Octopress代码高亮">octopress手册</a>，此处不再进行详细说明，这种方式的代码是单独存放成一个文件保存在本地系统下，当代码长度较长，又不想放在博客的正文中时，使用该方法比较好。<br/>
+简单记录下这种方式的语法如下所示：（目前不知道为什么，在octopress中输入{ %的方式都会进行代码解析，所以上面的{ %都进行了添加了<code></code>来取消，在实际文章中输入的时候，将<code></code>取消掉）</p>
+
+<pre><code>{ % include_code [title] [lang:language] path/to/file %}
+</code></pre>
+
+<p>其中的中括号的内容是可选的，具体语言便是这种方式，当需要强制高亮时，需要指定<code>lang:</code>这个参数，很好用。</p>
+
+<h3>使用Code Block的方式</h3>
+
+<p>目前自己的博客这种方式用的比较多，前面写的文章目前全部修改成为了这种方式，感觉这种方式和<code>pygnment</code>的方式差不多，之前全部采用的是<code>pygnment</code>的方式，利用正则表达式把所有文章的代码高亮全部改成了使用<code>code block</code>。它的具体语法如下所示：（与<code>pygnment</code>很相似，指定语言即可）</p>
+
+<pre><code>  { % codeblock [title] [lang:language] [url] [link text] %}
+  code snippet
+  { % endcodeblock %}
+</code></pre>
+
+<p>和之前描述的类似，中括号的内容是可选的。</p>
+
+<h4>使用正则表达式替换</h4>
+
+<p>这种方式可以替换博客内容，使得博客中所有文章的代码高亮使用<code>Code Block</code>。自己使用的是<code>sed</code>来完成的操作，似乎都没有用到正则表达式，只是简单的替换，做个简单的记录吧。</p>
+
+<h5>替换方法</h5>
+
+<p>进入到<code>source/_posts</code>目录下，在终端输入如下代码：</p>
+
+<figure class='code'><figcaption><span>Sed查看文章代码</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sed -n <span class="s1">&#39;s/\(\ highlight\ \)/\1/p&#39;</span> *
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上面将会把当前目录下的含有{\% highlight的文件的那行都显示出来，中间会将含有该特殊字符的行都打印出来，中间可以看到自己的博客内容都用到了哪些类型文件的语法高亮，将对应的代码高亮进行替换即可。<br/>
+其实这种方式就是简单的搜索替换，应该算不上使用正则表达式了，只是写下来做下笔记了，防止以后再用具体操作如下所示：</p>
+
+<figure class='code'><figcaption><span>Sed替换文件内容</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sed -i <span class="s1">&#39;s/\(\ highlight\ bash %}\)/\ codeblock\ lang:bash\ %}/&#39;</span> *
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">yang3wei</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-03T17:43:00+08:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/octopress相关/'>Octopress相关</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/02/03/octopress-zhong-de-seo/" title="Previous Post: Octopress 中的 SEO">&laquo; Octopress 中的 SEO</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/03/octopress-dai-ma-gao-liang/">Octopress 代码高亮</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/03/octopress-zhong-de-seo/">Octopress 中的 SEO</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/03/wei-octopress-tian-jia-cha-kan-fang-wen-liang-de-gong-neng/">为 Octopress 添加查看访问量的功能</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/03/git-rm-he-rm-de-qu-bie/">"git rm" 和 "rm" 的区别</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/03/git-credential-osxkeychain-died-of-signal-11-jie-jue-fang-an/">git-credential-osxkeychain died of signal 11 解决方案</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+    <h1>Tags</h1>
+    <ul class="tag-cloud">
+        <a style="font-size: 100%" href="/tags/c-c-/">C/C++</a>
+<a style="font-size: 100%" href="/tags/algorithm/">algorithm</a>
+<a style="font-size: 210%" href="/tags/git/">git</a>
+<a style="font-size: 132%" href="/tags/hardware/">hardware</a>
+<a style="font-size: 150%" href="/tags/mac/">mac</a>
+<a style="font-size: 201%" href="/tags/octopress/">octopress</a>
+<a style="font-size: 164%" href="/tags/vim/">vim</a>
+<a style="font-size: 100%" href="/tags/伟少手札/">伟少手札</a>
+<a style="font-size: 132%" href="/tags/养生/">养生</a>
+
+    </ul>
+</section>
+<section>
+    <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/blog/categories/git相关'>Git相关 (11)</a></li><li><a href='/blog/categories/mac相关'>Mac相关 (2)</a></li><li><a href='/blog/categories/octopress相关'>Octopress相关 (8)</a></li><li><a href='/blog/categories/vim相关'>Vim相关 (4)</a></li><li><a href='/blog/categories/伟少手札'>伟少手札 (1)</a></li><li><a href='/blog/categories/养生相关'>养生相关 (2)</a></li><li><a href='/blog/categories/硬件相关'>硬件相关 (2)</a></li><li><a href='/blog/categories/算法相关'>算法相关 (1)</a></li></ul>
+</section>
+
+
+<section>
+    <h1>Recent Comments</h1>
+    <div id="recentcomments" class="dsq-widget"><script type="text/javascript" src="http://yang3wei.disqus.com/recent_comments_widget.js?num_items=5&hide_avatars=0&avatar_size=48&excerpt_length=200"></script></div><a href="http://disqus.com/">Powered by Disqus</a>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/yang3wei?count=10&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/yang3wei">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - yang3wei -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'yang3wei';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://yang3wei.github.com/blog/2013/02/03/octopress-dai-ma-gao-liang/';
+        var disqus_url = 'http://yang3wei.github.com/blog/2013/02/03/octopress-dai-ma-gao-liang/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

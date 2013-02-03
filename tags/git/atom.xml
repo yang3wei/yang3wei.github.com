@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: git | yang3wei的专栏]]></title>
   <link href="http://yang3wei.github.com/tags/git/atom.xml" rel="self"/>
   <link href="http://yang3wei.github.com/"/>
-  <updated>2013-02-03T02:32:29+08:00</updated>
+  <updated>2013-02-03T14:49:22+08:00</updated>
   <id>http://yang3wei.github.com/</id>
   <author>
     <name><![CDATA[yang3wei]]></name>
@@ -12,6 +12,53 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA["git rm" 和 "rm" 的区别]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/03/git-rm-he-rm-de-qu-bie/"/>
+    <updated>2013-02-03T14:01:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/03/git-rm-he-rm-de-qu-bie</id>
+    <content type="html"><![CDATA[<p>这是一个比较肤浅的问题，但对于 git 初学者来说，还是有必要提一下的。</p>
+
+<!-- more -->
+
+
+<p>用 <code>git rm</code> 来删除文件，同时还会将这个删除操作记录下来；<br/>
+用 <code>rm</code> 来删除文件，仅仅是删除了物理文件，没有将其从 git 的记录中剔除。</p>
+
+<p>直观的来讲，<code>git rm</code> 删除过的文件，执行 <code>git commit -m "abc"</code> 提交时，<br/>
+会自动将删除该文件的操作提交上去。</p>
+
+<p>而对于用 <code>rm</code> 命令直接删除的文件，执行 <code>git commit -m "abc"</code> 提交时，<br/>
+则不会将删除该文件的操作提交上去。<br/>
+不过不要紧，即使你已经通过 <code>rm</code> 将某个文件删除掉了，<br/>
+也可以再通过 <code>git rm</code> 命令重新将该文件从 git 的记录中删除掉，<br/>
+这样的话，在执行 <code>git commit -m "abc"</code> 以后，也能将这个删除操作提交上去。</p>
+
+<p>如果之前不小心用 <code>rm</code> 命令删除了一大批文件呢？<br/>
+是的，此时用 <code>git rm</code> 逐个地再删除一次就显得相当蛋疼了。<br/>
+所幸还有更方便的处理方案，用如下的方式做提交就没有问题了：
+<code>git commit -am "abc"</code></p>
+
+<h3>总结一下：</h3>
+
+<p>在被 git 管理的目录中删除文件时，可以选择如下两种方式来记录删除动作：<br/>
+一、<code>rm</code> + <code>git commit -am "abc"</code><br/>
+二、<code>git rm</code> + <code>git commit -m "abc"</code><br/>
+另外，<code>git add .</code> 仅能记录添加、改动的动作，删除的动作需靠 <code>git rm</code> 来完成。<br/>
+最后，<code>rm</code> 删除的文件是处于 <code>not staged</code> 状态的，<br/>
+也就是一种介于 “未改动” 和 “已提交过” 之间的状态。</p>
+
+<h3>下面是测试图</h3>
+
+<p>一、<code>git add .</code> 无法记录 <code>rm</code> 删除动作<br/>
+<img class="center" src="/images/posts/add_dot_make_no_use.png">
+二、<code>git commit -m "abc"</code> 无法提交 <code>rm</code> 删除动作<br/>
+<img class="center" src="/images/posts/git_rm_better_than_rm.png">
+三、<code>git commit -am "abc"</code> 中参数 a 的作用<br/>
+<img class="center" src="/images/posts/usage_of_flag_a.png"></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[git-credential-osxkeychain died of signal 11 解决方案]]></title>
@@ -118,16 +165,6 @@ ssh 加密传输好像是非后面那种 url 格式不可的，<br/>
 <code>git gc --prune=now</code> 无效<br/>
 <code>git remote rm master</code> 报错<br/>
 <code>git branch -rd master/master</code> 删除成功！</p>
-
-<h3>最后附带一点儿刚学到的知识</h3>
-
-<p>当执行 <code>git rm ...</code> 删掉一些东西的时候，<br/>
-在 <code>git commit</code> 的时候最好用<br/>
-<code>git commit -am "some comments"</code><br/>
-来替代<br/>
-<code>git commit -m "some comments"</code><br/>
-为什么？因为在执行 <code>git commit ...</code> 前一味地执行 <code>git add .</code> 不是万能的，<br/>
-<code>git commit</code> 加上一个 <code>-a</code> 参数能保证删除性质的改动也能被提交上去而不产生遗漏~</p>
 
 <h3>执行 git status 命令后出现如下提示的涵义</h3>
 
@@ -369,35 +406,6 @@ origin  https://code.google.com/p/micolog2 (push)
 
 
 <p>因此在本地 <code>commit</code> 后，再执行 <code>git push origin master</code> 即可。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Mac OS X 下 git 如何升级]]></title>
-    <link href="http://yang3wei.github.com/blog/2013/02/01/mac-os-x-xia-git-ru-he-sheng-ji/"/>
-    <updated>2013-02-01T22:58:00+08:00</updated>
-    <id>http://yang3wei.github.com/blog/2013/02/01/mac-os-x-xia-git-ru-he-sheng-ji</id>
-    <content type="html"><![CDATA[<p>原帖链接：<a href="http://segmentfault.com/q/1010000000095119">http://segmentfault.com/q/1010000000095119</a><br/>
-<code>Mac OS X Lion</code> 下使用 <code>which git</code> 查看 <code>git</code>，<br/>
-发现当前所使用的 <code>git</code> 位于 <code>/usr/bin/git</code> 目录下，<br/>
-可能是安装 <code>XCode</code> 时一起安装上来的，执行 <code>git --version</code> 得到当前版本为：<code>1.7.5.4</code>。<br/>
-想升级到最新版本，下载 <code>git-osx-installer</code> 安装完成后，在命令行里查看却仍是旧版本。<br/>
-查阅资料发现这个安装包是将 <code>git</code> 安装在 <code>/usr/local/git</code> 目录下的。<br/>
-<strong>我想使用这个新版本的 <code>git</code>，该如何进行设置？</strong></p>
-
-<!-- more -->
-
-
-<h3>解决方案：</h3>
-
-<p>其实是两个问题，第一个问题是高版本的 <code>git</code> 如何安装？<br/>
-用 <code>git-osx-installer</code> 也好，用 <code>brew</code> 也好，都可以。<br/>
-建议用 <code>brew</code> 安装：<code>brew install git</code></p>
-
-<p>另一个问题是：如何让新安装的 <code>git</code> 覆盖老版本的 <code>git</code>？<br/>
-建议用 <code>~/.bash_profile</code>，加入以下的内容：<br/>
-<code>export PATH=/usr/local/git/bin:${PATH}</code><br/>
-这样就可以让 <code>bash</code> 优先搜索 <code>/usr/local/git/bin</code> 下的指令，而且不会覆盖老文件，比较安全。</p>
 ]]></content>
   </entry>
   

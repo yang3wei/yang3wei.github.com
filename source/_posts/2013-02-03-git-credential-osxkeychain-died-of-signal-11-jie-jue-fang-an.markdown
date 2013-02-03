@@ -94,15 +94,6 @@ ssh 加密传输好像是非后面那种 url 格式不可的，
 `git remote rm master` 报错  
 `git branch -rd master/master` 删除成功！  
 
-###最后附带一点儿刚学到的知识
-当执行 `git rm ...` 删掉一些东西的时候，  
-在 `git commit` 的时候最好用  
-`git commit -am "some comments"`  
-来替代  
-`git commit -m "some comments"`  
-为什么？因为在执行 `git commit ...` 前一味地执行 `git add .` 不是万能的，  
-`git commit` 加上一个 `-a` 参数能保证删除性质的改动也能被提交上去而不产生遗漏~  
-
 ###执行 git status 命令后出现如下提示的涵义  
 <pre><code># On branch master
 # Your branch is ahead of 'origin/master' by 1 commit.

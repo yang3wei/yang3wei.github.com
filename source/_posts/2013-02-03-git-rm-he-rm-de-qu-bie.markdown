@@ -34,9 +34,12 @@ tags: [git]
 也就是一种介于 “未改动” 和 “已提交过” 之间的状态。  
 
 ###下面是测试图
-一、`git add .` 无法记录 `rm` 删除动作  
+一、`git rm` 与 `rm` 之间的区别
+{% img center /images/posts/differences_btw_git_rm_and_rm.png %}
+二、`git add .` 无法记录 `rm` 删除动作  
 {% img center /images/posts/add_dot_make_no_use.png %}
-二、`git commit -m "abc"` 无法提交 `rm` 删除动作  
+三、`git commit -m "abc"` 无法提交 `rm` 删除动作  
 {% img center /images/posts/git_rm_better_than_rm.png %}
-三、`git commit -am "abc"` 中参数 a 的作用  
+四、`git commit -am "abc"` 中参数 a 的作用  
 {% img center /images/posts/usage_of_flag_a.png %}
+

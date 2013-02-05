@@ -1,0 +1,998 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Tag: java | yang3wei的专栏]]></title>
+  <link href="http://yang3wei.github.com/tags/java/atom.xml" rel="self"/>
+  <link href="http://yang3wei.github.com/"/>
+  <updated>2013-02-05T13:45:09+08:00</updated>
+  <id>http://yang3wei.github.com/</id>
+  <author>
+    <name><![CDATA[yang3wei]]></name>
+    <email><![CDATA[88480585@qq.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Ant 自动构建 build.xml]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/05/ant-zi-dong-gou-jian-build-dot-xml/"/>
+    <updated>2013-02-05T13:10:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/05/ant-zi-dong-gou-jian-build-dot-xml</id>
+    <content type="html"><![CDATA[<p>直接上文件：</p>
+
+<!-- more -->
+
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>build.xml  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;project</span> <span class="na">name=</span><span class="s">&quot;JavaDynamicCompile&quot;</span> <span class="na">default=</span><span class="s">&quot;execute.class&quot;</span> <span class="na">basedir=</span><span class="s">&quot;.&quot;</span><span class="nt">&gt;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>echo message=&quot;1.define variables~&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;name&quot; value=&quot;JavaDynamicCompile&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;version&quot; value=&quot;1.0&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;author&quot; value=&quot;yang3wei&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;src&quot; value=&quot;${basedir}/src&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;libs&quot; value=&quot;${basedir}/libs&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;build&quot; value=&quot;${basedir}/build&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;dist&quot; value=&quot;${basedir}/dist&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;desktop&quot; value=&quot;/Users/user/Desktop&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;res.pkg&quot; value=&quot;org/bruce/pocket/tools/res&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;entry.class&quot; value=&quot;org.bruce.pocket.tools.entry.Main&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>echo message=&quot;2.define external.jars.path&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>path id=&quot;external.jars.path&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>fileset dir=&quot;${libs}&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>include name=&quot;**/*.jar&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>/fileset<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/path<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;prepare&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>echo message=&quot;3.prepare&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>mkdir dir=&quot;${build}&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>mkdir dir=&quot;${dist}&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;compile&quot; depends=&quot;prepare&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>echo message=&quot;5.compile&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>description<span class="ni">&amp;gt;</span>将src目录下的资源文件复制到 build目录下面(保留包结构)<span class="ni">&amp;lt;</span>/description<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>delete dir=&quot;${build}/${res.pkg}&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>copy todir=&quot;${build}/${res.pkg}&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>fileset dir=&quot;${src}/${res.pkg}&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>include name=&quot;**/*.jpg&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>include name=&quot;**/*.png&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>include name=&quot;**/*.gif&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>include name=&quot;**/*.prop&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>include name=&quot;**/*.properties&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>/fileset<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>/copy<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>javac srcdir=&quot;${src}&quot; destdir=&quot;${build}&quot; encoding=&quot;UTF-8&quot; deprecation=&quot;true&quot; listfiles=&quot;off&quot; fork=&quot;true&quot; target=&quot;1.6&quot; debug=&quot;false&quot; failonerror=&quot;false&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>!--给编译器指定编码，防止出现：&quot;警告： 编码 GBK 的不可映射字符&quot;--<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>compilerarg line=&quot;-encoding UTF-8 &quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>classpath refid=&quot;external.jars.path&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>/javac<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>echo message=&quot;compile finished!&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;execute.class&quot; depends=&quot;compile&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>echo message=&quot;${name}.execute&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>java classname=&quot;${entry.class}&quot; classpath=&quot;${build}&quot; fork=&quot;true&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>sysproperty key=&quot;file.encoding&quot; value=&quot;UTF-8&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>classpath refid=&quot;external.jars.path&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>/java<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;package2jar&quot; depends=&quot;compile&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>echo message=&quot;${name}.package2jar&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>jar destfile=&quot;${dist}/${name}${version}.jar&quot; basedir=&quot;${build}&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>manifest<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>attribute name=&quot;Created-By&quot; value=&quot;${author}&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>attribute name=&quot;Main-Class&quot; value=&quot;${entry.class}&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>/manifest<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>zipfileset excludes=&quot;META-INF/*.SF&quot; src=&quot;./libs/antlr-2.7.4.jar&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>zipfileset excludes=&quot;META-INF/*.SF&quot; src=&quot;./libs/chardet-1.0.jar&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>zipfileset excludes=&quot;META-INF/*.SF&quot; src=&quot;./libs/cpdetector_1.0.10.jar&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>zipfileset excludes=&quot;META-INF/*.SF&quot; src=&quot;./libs/jdom.jar&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>zipfileset excludes=&quot;META-INF/*.SF&quot; src=&quot;./libs/pdfbox-1.6.0.jar&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>zipfileset excludes=&quot;META-INF/*.SF&quot; src=&quot;./libs/PDFRenderer-0.9.1.jar&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>/jar<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;execute.jar&quot; depends=&quot;package2jar&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>echo message=&quot;${name}.jar.execute&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>java fork=&quot;true&quot; failonerror=&quot;true&quot; jar=&quot;${dist}/${name}${version}.jar&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>sysproperty key=&quot;file.encoding&quot; value=&quot;UTF-8&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>/java<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;copy2desktop&quot; depends=&quot;package2jar&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>echo message=&quot;${name}.copy2desktop&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>copy file=&quot;${dist}/${name}${version}.jar&quot; tofile=&quot;${desktop}/${name}${version}.jar&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;clean&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>delete dir=&quot;${build}&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>delete file=&quot;${dist}/${name}${version}.jar&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>delete dir=&quot;${dist}&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;rerun&quot; depends=&quot;clean&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>ant antfile=&quot;build.xml&quot; target=&quot;execute.class&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;&lt;/project&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Java 图片缩放工具类]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/05/java-tu-pian-suo-fang-gong-ju-lei/"/>
+    <updated>2013-02-05T12:48:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/05/java-tu-pian-suo-fang-gong-ju-lei</id>
+    <content type="html"><![CDATA[<p>直接上代码：</p>
+
+<!-- more -->
+
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>ImageResizer.java  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+<span class='line-number'>132</span>
+<span class='line-number'>133</span>
+<span class='line-number'>134</span>
+<span class='line-number'>135</span>
+<span class='line-number'>136</span>
+<span class='line-number'>137</span>
+<span class='line-number'>138</span>
+<span class='line-number'>139</span>
+<span class='line-number'>140</span>
+<span class='line-number'>141</span>
+<span class='line-number'>142</span>
+<span class='line-number'>143</span>
+<span class='line-number'>144</span>
+<span class='line-number'>145</span>
+<span class='line-number'>146</span>
+<span class='line-number'>147</span>
+<span class='line-number'>148</span>
+<span class='line-number'>149</span>
+<span class='line-number'>150</span>
+<span class='line-number'>151</span>
+<span class='line-number'>152</span>
+<span class='line-number'>153</span>
+<span class='line-number'>154</span>
+<span class='line-number'>155</span>
+<span class='line-number'>156</span>
+<span class='line-number'>157</span>
+<span class='line-number'>158</span>
+<span class='line-number'>159</span>
+<span class='line-number'>160</span>
+<span class='line-number'>161</span>
+<span class='line-number'>162</span>
+<span class='line-number'>163</span>
+<span class='line-number'>164</span>
+<span class='line-number'>165</span>
+<span class='line-number'>166</span>
+<span class='line-number'>167</span>
+<span class='line-number'>168</span>
+<span class='line-number'>169</span>
+<span class='line-number'>170</span>
+<span class='line-number'>171</span>
+<span class='line-number'>172</span>
+<span class='line-number'>173</span>
+<span class='line-number'>174</span>
+<span class='line-number'>175</span>
+<span class='line-number'>176</span>
+<span class='line-number'>177</span>
+<span class='line-number'>178</span>
+<span class='line-number'>179</span>
+<span class='line-number'>180</span>
+<span class='line-number'>181</span>
+<span class='line-number'>182</span>
+<span class='line-number'>183</span>
+<span class='line-number'>184</span>
+<span class='line-number'>185</span>
+<span class='line-number'>186</span>
+<span class='line-number'>187</span>
+<span class='line-number'>188</span>
+<span class='line-number'>189</span>
+<span class='line-number'>190</span>
+<span class='line-number'>191</span>
+<span class='line-number'>192</span>
+<span class='line-number'>193</span>
+<span class='line-number'>194</span>
+<span class='line-number'>195</span>
+<span class='line-number'>196</span>
+<span class='line-number'>197</span>
+<span class='line-number'>198</span>
+<span class='line-number'>199</span>
+<span class='line-number'>200</span>
+<span class='line-number'>201</span>
+<span class='line-number'>202</span>
+<span class='line-number'>203</span>
+<span class='line-number'>204</span>
+<span class='line-number'>205</span>
+<span class='line-number'>206</span>
+<span class='line-number'>207</span>
+<span class='line-number'>208</span>
+<span class='line-number'>209</span>
+<span class='line-number'>210</span>
+<span class='line-number'>211</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">package</span> <span class="n">org</span><span class="o">.</span><span class="na">bruce</span><span class="o">.</span><span class="na">pocket</span><span class="o">.</span><span class="na">tools</span><span class="o">.</span><span class="na">utils</span><span class="o">;&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kn">import</span> <span class="nn">java.awt.Image</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.awt.image.BufferedImage</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.awt.image.RenderedImage</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.File</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.FileOutputStream</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kn">import</span> <span class="nn">javax.imageio.ImageIO</span><span class="o">;&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kn">import</span> <span class="nn">com.sun.image.codec.jpeg.JPEGCodec</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">com.sun.image.codec.jpeg.JPEGImageEncoder</span><span class="o">;&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;/&lt;</span><span class="n">em</span><span class="o">&gt;*</span>
+</span><span class='line'> <span class="o">*</span> <span class="nd">@author</span> <span class="n">Bruce</span> <span class="n">Yang</span>
+</span><span class='line'> <span class="o">*</span> <span class="err">调整图片大小</span><span class="o">~</span>
+</span><span class='line'> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;/</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ImageResizer</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="n">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">ImageResizer</span><span class="o">.</span><span class="na">resizeJpgImage</span><span class="o">(</span><span class="s">&quot;c:/test.JPG&quot;</span><span class="o">,</span> <span class="s">&quot;c:/test4.jpg&quot;</span><span class="o">,</span> <span class="mi">400</span><span class="o">,</span> <span class="mi">300</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * 图像缩放 png 格式~</span>
+</span><span class='line'><span class="cm"> * @param srcImgPath 原图片文件路径</span>
+</span><span class='line'><span class="cm"> * @param destImgPath 生成的缩略图片文件路径</span>
+</span><span class='line'><span class="cm"> * @param destWidth 生成图片的宽度</span>
+</span><span class='line'><span class="cm"> * @param destHeight 生成图片的高度</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">resizePngImage</span><span class="o">(</span><span class="n">String</span> <span class="n">srcImgPath</span><span class="o">,</span> <span class="n">String</span> <span class="n">destImgPath</span><span class="o">,</span> <span class="kt">int</span> <span class="n">destWidth</span><span class="o">,</span> <span class="kt">int</span> <span class="n">destHeight</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">resizePngImage</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">srcImgPath</span><span class="o">),</span> <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">destImgPath</span><span class="o">),</span> <span class="n">destWidth</span><span class="o">,</span> <span class="n">destHeight</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">resizePngImage</span><span class="o">(</span><span class="n">File</span> <span class="n">srcFile</span><span class="o">,</span> <span class="n">File</span> <span class="n">destFile</span><span class="o">,</span> <span class="kt">int</span> <span class="n">destWidth</span><span class="o">,</span> <span class="kt">int</span> <span class="n">destHeight</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(!</span><span class="n">srcFile</span><span class="o">.</span><span class="na">exists</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>            <span class="k">return</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1">// .DS_Store 这个文件害我调了半天，主要是 这个方法里面不包含文件名判断的逻辑，直接就给报错中断执行了~</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">//          System.err.println(srcFile.getAbsolutePath());&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>        <span class="n">BufferedImage</span> <span class="n">srcBi</span> <span class="o">=</span> <span class="n">ImageIO</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="n">srcFile</span><span class="o">);</span>
+</span><span class='line'>        <span class="c1">// Image.SCALE_SMOOTH 的缩略算法 生成缩略图片的平滑度的 优先级比速度高 生成的图片质量比较好 但速度慢~</span>
+</span><span class='line'>        <span class="n">Image</span> <span class="n">img</span> <span class="o">=</span> <span class="n">srcBi</span><span class="o">.</span><span class="na">getScaledInstance</span><span class="o">(</span><span class="n">destWidth</span><span class="o">,</span> <span class="n">destHeight</span><span class="o">,</span> <span class="n">Image</span><span class="o">.</span><span class="na">SCALE_SMOOTH</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">BufferedImage</span> <span class="n">targetBi</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedImage</span><span class="o">(</span><span class="n">destWidth</span><span class="o">,</span> <span class="n">destHeight</span><span class="o">,</span> <span class="n">BufferedImage</span><span class="o">.</span><span class="na">TYPE_INT_RGB</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">targetBi</span><span class="o">.</span><span class="na">getGraphics</span><span class="o">().</span><span class="na">drawImage</span><span class="o">(</span><span class="n">img</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">writePNGImage</span><span class="o">(</span><span class="n">targetBi</span><span class="o">,</span> <span class="n">destFile</span><span class="o">.</span><span class="na">getAbsolutePath</span><span class="o">());</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">ex</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * 图像缩放 jpg 格式~</span>
+</span><span class='line'><span class="cm"> * @param srcImgPath 原图片文件路径</span>
+</span><span class='line'><span class="cm"> * @param destImgPath 生成的缩略图片文件路径</span>
+</span><span class='line'><span class="cm"> * @param destWidth 生成图片的宽度</span>
+</span><span class='line'><span class="cm"> * @param destHeight 生成图片的高度</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">resizeJpgImage</span><span class="o">(</span><span class="n">String</span> <span class="n">srcImgPath</span><span class="o">,</span> <span class="n">String</span> <span class="n">destImgPath</span><span class="o">,</span> <span class="kt">int</span> <span class="n">destWidth</span><span class="o">,</span> <span class="kt">int</span> <span class="n">destHeight</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">resizeJpgImage</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">srcImgPath</span><span class="o">),</span> <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">destImgPath</span><span class="o">),</span> <span class="n">destWidth</span><span class="o">,</span> <span class="n">destHeight</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">resizeJpgImage</span><span class="o">(</span><span class="n">File</span> <span class="n">srcFile</span><span class="o">,</span> <span class="n">File</span> <span class="n">destFile</span><span class="o">,</span> <span class="kt">int</span> <span class="n">destWidth</span><span class="o">,</span> <span class="kt">int</span> <span class="n">destHeight</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(!</span><span class="n">srcFile</span><span class="o">.</span><span class="na">exists</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>            <span class="k">return</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="n">Image</span> <span class="n">srcImg</span> <span class="o">=</span> <span class="n">ImageIO</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="n">srcFile</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">BufferedImage</span> <span class="n">targetBi</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedImage</span><span class="o">(</span><span class="n">destWidth</span><span class="o">,</span> <span class="n">destHeight</span><span class="o">,</span> <span class="n">BufferedImage</span><span class="o">.</span><span class="na">TYPE_INT_RGB</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1">// Image.SCALE_SMOOTH 的缩略算法 生成缩略图片的平滑度的 优先级比速度高 生成的图片质量比较好 但速度慢~</span>
+</span><span class='line'>        <span class="n">Image</span> <span class="n">img</span> <span class="o">=</span> <span class="n">srcImg</span><span class="o">.</span><span class="na">getScaledInstance</span><span class="o">(</span><span class="n">destWidth</span><span class="o">,</span> <span class="n">destHeight</span><span class="o">,</span> <span class="n">Image</span><span class="o">.</span><span class="na">SCALE_SMOOTH</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">targetBi</span><span class="o">.</span><span class="na">getGraphics</span><span class="o">().</span><span class="na">drawImage</span><span class="o">(</span><span class="n">img</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">FileOutputStream</span> <span class="n">fos</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileOutputStream</span><span class="o">(</span><span class="n">destFile</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">JPEGImageEncoder</span> <span class="n">encoder</span> <span class="o">=</span> <span class="n">JPEGCodec</span><span class="o">.</span><span class="na">createJPEGEncoder</span><span class="o">(</span><span class="n">fos</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">encoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="n">targetBi</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">fos</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">ex</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * 由高清背景图片生成 ipad 所用背景图片~</span>
+</span><span class='line'><span class="cm"> * 将 2560 * 3840 的图片截除上下两部分，缩放为原来的 0.3 倍（得到的图片的大小为 768 * 1024）~</span>
+</span><span class='line'><span class="cm"> * @param imgsrc</span>
+</span><span class='line'><span class="cm"> * @param imgdist</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">genIpadBg</span><span class="o">(</span><span class="n">String</span> <span class="n">srcImgPath</span><span class="o">,</span> <span class="n">String</span> <span class="n">destImgPath</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">File</span> <span class="n">srcImgFile</span> <span class="o">=</span> <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">srcImgPath</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">File</span> <span class="n">destImgFile</span> <span class="o">=</span> <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">destImgPath</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">genIpadBg</span><span class="o">(</span><span class="n">srcImgFile</span><span class="o">,</span> <span class="n">destImgFile</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">genIpadBg</span><span class="o">(</span><span class="n">File</span> <span class="n">srcImgFile</span><span class="o">,</span> <span class="n">File</span> <span class="n">destImgFile</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(!</span><span class="n">srcImgFile</span><span class="o">.</span><span class="na">exists</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>            <span class="k">return</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="n">BufferedImage</span> <span class="n">srcBi</span> <span class="o">=</span> <span class="n">ImageIO</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="n">srcImgFile</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">srcBi</span> <span class="o">=</span> <span class="n">srcBi</span><span class="o">.</span><span class="na">getSubimage</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">213</span><span class="o">,</span> <span class="n">srcBi</span><span class="o">.</span><span class="na">getWidth</span><span class="o">(),</span> <span class="mi">3414</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">Image</span> <span class="n">img</span> <span class="o">=</span> <span class="n">srcBi</span><span class="o">.</span><span class="na">getScaledInstance</span><span class="o">(</span><span class="mi">768</span><span class="o">,</span> <span class="mi">1024</span><span class="o">,</span> <span class="n">Image</span><span class="o">.</span><span class="na">SCALE_SMOOTH</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">BufferedImage</span> <span class="n">destBi</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedImage</span><span class="o">(</span><span class="mi">768</span><span class="o">,</span> <span class="mi">1024</span><span class="o">,</span> <span class="n">BufferedImage</span><span class="o">.</span><span class="na">TYPE_4BYTE_ABGR</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">destBi</span><span class="o">.</span><span class="na">getGraphics</span><span class="o">().</span><span class="na">drawImage</span><span class="o">(</span><span class="n">img</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">ImageIO</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">destBi</span><span class="o">,</span> <span class="s">&quot;png&quot;</span><span class="o">,</span> <span class="n">destImgFile</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * 根据图片路径 读取图片文件</span>
+</span><span class='line'><span class="cm"> * @param fileName</span>
+</span><span class='line'><span class="cm"> * @return</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">BufferedImage</span> <span class="nf">readImage</span><span class="o">(</span><span class="n">String</span> <span class="n">fileName</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">BufferedImage</span> <span class="n">bi</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>        <span class="n">bi</span> <span class="o">=</span> <span class="n">ImageIO</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">fileName</span><span class="o">));</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">bi</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * 生成新的图片文件</span>
+</span><span class='line'><span class="cm"> * @param im</span>
+</span><span class='line'><span class="cm"> * @param formatName</span>
+</span><span class='line'><span class="cm"> * @param fileName</span>
+</span><span class='line'><span class="cm"> * @return</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">writeImage</span><span class="o">(</span><span class="n">RenderedImage</span> <span class="n">ri</span><span class="o">,</span> <span class="n">String</span> <span class="n">fileformat</span><span class="o">,</span> <span class="n">String</span> <span class="n">fileName</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kt">boolean</span> <span class="n">result</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">result</span> <span class="o">=</span> <span class="n">ImageIO</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">ri</span><span class="o">,</span> <span class="n">fileformat</span><span class="o">,</span> <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">fileName</span><span class="o">));</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * 转换图片格式 到 PNG</span>
+</span><span class='line'><span class="cm"> * @param im</span>
+</span><span class='line'><span class="cm"> * @param fileName</span>
+</span><span class='line'><span class="cm"> * @return</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">writePNGImage</span><span class="o">(</span><span class="n">RenderedImage</span> <span class="n">ri</span><span class="o">,</span> <span class="n">String</span> <span class="n">fileName</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nf">writeImage</span><span class="o">(</span><span class="n">ri</span><span class="o">,</span> <span class="s">&quot;PNG&quot;</span><span class="o">,</span> <span class="n">fileName</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * 转换图片格式 到 jpg</span>
+</span><span class='line'><span class="cm"> * @param im</span>
+</span><span class='line'><span class="cm"> * @param fileName</span>
+</span><span class='line'><span class="cm"> * @return</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">writeJPEGImage</span><span class="o">(</span><span class="n">RenderedImage</span> <span class="n">ri</span><span class="o">,</span> <span class="n">String</span> <span class="n">fileName</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nf">writeImage</span><span class="o">(</span><span class="n">ri</span><span class="o">,</span> <span class="s">&quot;JPEG&quot;</span><span class="o">,</span> <span class="n">fileName</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * @param bi</span>
+</span><span class='line'><span class="cm"> * @param destFile</span>
+</span><span class='line'><span class="cm"> * @return</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">writeJPEGImage</span><span class="o">(</span><span class="n">BufferedImage</span> <span class="n">bi</span><span class="o">,</span> <span class="n">File</span> <span class="n">destFile</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">FileOutputStream</span> <span class="n">fos</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileOutputStream</span><span class="o">(</span><span class="n">destFile</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">JPEGImageEncoder</span> <span class="n">encoder</span> <span class="o">=</span> <span class="n">JPEGCodec</span><span class="o">.</span><span class="na">createJPEGEncoder</span><span class="o">(</span><span class="n">fos</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">encoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="n">bi</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">fos</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</span><span class='line'>        <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * 转换图片格式 到 gif 不知到好用不</span>
+</span><span class='line'><span class="cm"> * @param im</span>
+</span><span class='line'><span class="cm"> * @param fileName</span>
+</span><span class='line'><span class="cm"> * @return</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">writeGIFImage</span><span class="o">(</span><span class="n">RenderedImage</span> <span class="n">ri</span><span class="o">,</span> <span class="n">String</span> <span class="n">fileName</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nf">writeImage</span><span class="o">(</span><span class="n">ri</span><span class="o">,</span> <span class="s">&quot;GIF&quot;</span><span class="o">,</span> <span class="n">fileName</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * 转换图片格式 到 BMP</span>
+</span><span class='line'><span class="cm"> * @param im</span>
+</span><span class='line'><span class="cm"> * @param fileName</span>
+</span><span class='line'><span class="cm"> * @return</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">writeBMPImage</span><span class="o">(</span><span class="n">RenderedImage</span> <span class="n">ri</span><span class="o">,</span> <span class="n">String</span> <span class="n">fileName</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nf">writeImage</span><span class="o">(</span><span class="n">ri</span><span class="o">,</span> <span class="s">&quot;BMP&quot;</span><span class="o">,</span> <span class="n">fileName</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Java 执行 Mac(Unix) 脚本命令]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/05/java-zhi-xing-mac-unix-jiao-ben-ming-ling/"/>
+    <updated>2013-02-05T12:44:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/05/java-zhi-xing-mac-unix-jiao-ben-ming-ling</id>
+    <content type="html"><![CDATA[<p>直接上代码：</p>
+
+<!-- more -->
+
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>UnixScript.java  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">package</span> <span class="n">org</span><span class="o">.</span><span class="na">bruce</span><span class="o">.</span><span class="na">pocket</span><span class="o">.</span><span class="na">tools</span><span class="o">.</span><span class="na">utils</span><span class="o">;&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kn">import</span> <span class="nn">java.io.BufferedReader</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.BufferedWriter</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.InputStream</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.InputStreamReader</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.OutputStream</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.OutputStreamWriter</span><span class="o">;&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;/&lt;</span><span class="n">em</span><span class="o">&gt;*</span>
+</span><span class='line'> <span class="o">*</span> <span class="nd">@author</span> <span class="n">Bruce</span> <span class="n">Yang</span>
+</span><span class='line'> <span class="o">*</span>
+</span><span class='line'> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;/</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">UnixScript</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * 执行 mac(unix) 脚本命令~</span>
+</span><span class='line'><span class="cm"> * @param command</span>
+</span><span class='line'><span class="cm"> * @return</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">execute</span><span class="o">(</span><span class="n">String</span> <span class="n">command</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">String</span><span class="o">[]</span> <span class="n">cmd</span> <span class="o">=</span> <span class="o">{</span><span class="s">&quot;/bin/bash&quot;</span><span class="o">};</span>
+</span><span class='line'>    <span class="n">Runtime</span> <span class="n">rt</span> <span class="o">=</span> <span class="n">Runtime</span><span class="o">.</span><span class="na">getRuntime</span><span class="o">();</span>
+</span><span class='line'>    <span class="n">Process</span> <span class="n">proc</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">proc</span> <span class="o">=</span> <span class="n">rt</span><span class="o">.</span><span class="na">exec</span><span class="o">(</span><span class="n">cmd</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// 打开流</span>
+</span><span class='line'>    <span class="n">OutputStream</span> <span class="n">os</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="na">getOutputStream</span><span class="o">();</span>
+</span><span class='line'>    <span class="n">BufferedWriter</span> <span class="n">bw</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedWriter</span><span class="o">(</span><span class="k">new</span> <span class="n">OutputStreamWriter</span><span class="o">(</span><span class="n">os</span><span class="o">));</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">bw</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">command</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">bw</span><span class="o">.</span><span class="na">flush</span><span class="o">();</span>
+</span><span class='line'>        <span class="n">bw</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="cm">/** 真奇怪，把控制台的输出打印一遍之后竟然能正常终止了~ */</span>
+</span><span class='line'>        <span class="n">readConsole</span><span class="o">(</span><span class="n">proc</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="cm">/** waitFor() 的作用在于 java 程序是否等待 Terminal 执行脚本完毕~ */</span>
+</span><span class='line'>        <span class="n">proc</span><span class="o">.</span><span class="na">waitFor</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">retCode</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="na">exitValue</span><span class="o">();</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">//      System.err.println(&quot;unix script retCode = &quot; + retCode);&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="k">if</span> <span class="o">(</span><span class="n">retCode</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">readConsole</span><span class="o">(</span><span class="n">proc</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;UnixScriptUil.execute 出错了!!&quot;</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">retCode</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * 读取控制命令的输出结果</span>
+</span><span class='line'><span class="cm"> * 原文链接：http://lavasoft.blog.51cto.com/62575/15599</span>
+</span><span class='line'><span class="cm"> * @param cmd 命令</span>
+</span><span class='line'><span class="cm"> * @return 控制命令的输出结果</span>
+</span><span class='line'><span class="cm"> * @throws IOException</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">readConsole</span><span class="o">(</span><span class="n">Process</span> <span class="n">process</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">StringBuffer</span> <span class="n">cmdOut</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="o">();</span>
+</span><span class='line'>    <span class="n">InputStream</span> <span class="n">fis</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">();</span>
+</span><span class='line'>    <span class="n">BufferedReader</span> <span class="n">br</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="n">InputStreamReader</span><span class="o">(</span><span class="n">fis</span><span class="o">));</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">String</span> <span class="n">line</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">while</span> <span class="o">((</span><span class="n">line</span> <span class="o">=</span> <span class="n">br</span><span class="o">.</span><span class="na">readLine</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">cmdOut</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">line</span><span class="o">).</span><span class="na">append</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">&quot;line.separator&quot;</span><span class="o">));</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">//      System.out.println(&quot;执行系统命令后的控制台输出为：\n&quot; + cmdOut.toString());&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="k">return</span> <span class="n">cmdOut</span><span class="o">.</span><span class="na">toString</span><span class="o">().</span><span class="na">trim</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Java Get classes In Package]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/05/java-get-classes-in-package/"/>
+    <updated>2013-02-05T12:30:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/05/java-get-classes-in-package</id>
+    <content type="html"><![CDATA[<p>直接上代码：</p>
+
+<!-- more -->
+
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>GetClassesInPackage.java  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">package</span> <span class="n">org</span><span class="o">.</span><span class="na">bruce</span><span class="o">.</span><span class="na">pocket</span><span class="o">.</span><span class="na">tools</span><span class="o">.</span><span class="na">utils</span><span class="o">;&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kn">import</span> <span class="nn">java.io.FileInputStream</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.jar.JarEntry</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.jar.JarInputStream</span><span class="o">;&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;/&lt;</span><span class="n">em</span><span class="o">&gt;*</span>
+</span><span class='line'> <span class="o">*</span> <span class="nd">@author</span> <span class="n">Bruce</span> <span class="n">Yang</span>
+</span><span class='line'> <span class="o">*</span> <span class="nl">http:</span><span class="c1">//www.roseindia.net/java/java-get-example/get-classes-package.shtml</span>
+</span><span class='line'> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;/</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">GetClassesInPackage</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="n">getJar</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">List</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">String</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">getClasseNamesInPackage</span><span class="o">(</span><span class="n">String</span> <span class="n">jarName</span><span class="o">,</span> <span class="n">String</span> <span class="n">packageName</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">getJar</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Jar \&quot;&quot;</span> <span class="o">+</span> <span class="n">jarName</span> <span class="o">+</span> <span class="s">&quot;\&quot; for \&quot;&quot;</span> <span class="o">+</span> <span class="n">packageName</span> <span class="o">+</span> <span class="sc">&#39;\&quot;&#39;</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">ArrayList</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">String</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">arrayList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">String</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;();</span>
+</span><span class='line'>    <span class="c1">// replaceAll 第一个参数是正则字符串，第二个参数是普通的替换字符串，不需要对正则进行转义~</span>
+</span><span class='line'>    <span class="n">packageName</span> <span class="o">=</span> <span class="n">packageName</span><span class="o">.</span><span class="na">replaceAll</span><span class="o">(</span><span class="s">&quot;\\.&quot;</span><span class="o">,</span> <span class="s">&quot;/&quot;</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">JarInputStream</span> <span class="n">jarFile</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JarInputStream</span><span class="o">(</span><span class="k">new</span> <span class="n">FileInputStream</span><span class="o">(</span><span class="n">jarName</span><span class="o">));</span>
+</span><span class='line'>        <span class="n">JarEntry</span> <span class="n">jarEntry</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">jarEntry</span> <span class="o">=</span> <span class="n">jarFile</span><span class="o">.</span><span class="na">getNextJarEntry</span><span class="o">();</span>
+</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">jarEntry</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                <span class="k">break</span><span class="o">;</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>            <span class="k">if</span> <span class="o">((</span><span class="n">jarEntry</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">startsWith</span><span class="o">(</span><span class="n">packageName</span><span class="o">))</span>
+</span><span class='line'>                    <span class="o">&amp;</span><span class="n">amp</span><span class="o">;&amp;</span><span class="n">amp</span><span class="o">;</span> <span class="o">(</span><span class="n">jarEntry</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">endsWith</span><span class="o">(</span><span class="s">&quot;.class&quot;</span><span class="o">)))</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">arrayList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">jarEntry</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">replaceAll</span><span class="o">(</span><span class="s">&quot;/&quot;</span><span class="o">,</span> <span class="s">&quot;.&quot;</span><span class="o">));</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">arrayList</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">String</span> <span class="n">jarPath</span> <span class="o">=</span> <span class="s">&quot;/Users/user/Desktop/JavaDynamicComiple.jar&quot;</span><span class="o">;</span>
+</span><span class='line'>    <span class="n">String</span> <span class="n">pkgPath</span> <span class="o">=</span> <span class="s">&quot;org.bruce.pocket.tools.items&quot;</span><span class="o">;</span>
+</span><span class='line'>    <span class="n">List</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">String</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">list</span> <span class="o">=</span> <span class="n">GetClassesInPackage</span><span class="o">.</span><span class="na">getClasseNamesInPackage</span><span class="o">(</span><span class="n">jarPath</span><span class="o">,</span> <span class="n">pkgPath</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Found: &quot;</span><span class="o">);</span>
+</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">item</span> <span class="o">:</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">item</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+]]></content>
+  </entry>
+  
+</feed>

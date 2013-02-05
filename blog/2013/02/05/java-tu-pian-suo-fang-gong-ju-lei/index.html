@@ -1,0 +1,746 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Java 图片缩放工具类 - yang3wei的专栏</title>
+  <meta name="author" content="yang3wei">
+
+  
+  <meta name="description" content="直接上代码： ImageResizer.java 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="author" content="yang3wei">
+  
+  <meta name="description" content="yang3wei的专栏, yang3wei">
+  <meta name="keywords" content="yang3wei, cocos2d, mac, objective-c, c/c++, game develop, java, OpenGL, shell, box2d, git, python">
+
+  
+  <link rel="canonical" href="http://yang3wei.github.com/blog/2013/02/05/java-tu-pian-suo-fang-gong-ju-lei/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="yang3wei的专栏" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-38160149-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">yang3wei的专栏</a></h1>
+  
+    <h2>Fight for better life!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:yang3wei.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Java 图片缩放工具类</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-05T12:48:00+08:00" pubdate data-updated="true">Feb 5<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>直接上代码：</p>
+
+<!-- more -->
+
+
+
+
+<figure class='code'><figcaption><span>ImageResizer.java  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+<span class='line-number'>132</span>
+<span class='line-number'>133</span>
+<span class='line-number'>134</span>
+<span class='line-number'>135</span>
+<span class='line-number'>136</span>
+<span class='line-number'>137</span>
+<span class='line-number'>138</span>
+<span class='line-number'>139</span>
+<span class='line-number'>140</span>
+<span class='line-number'>141</span>
+<span class='line-number'>142</span>
+<span class='line-number'>143</span>
+<span class='line-number'>144</span>
+<span class='line-number'>145</span>
+<span class='line-number'>146</span>
+<span class='line-number'>147</span>
+<span class='line-number'>148</span>
+<span class='line-number'>149</span>
+<span class='line-number'>150</span>
+<span class='line-number'>151</span>
+<span class='line-number'>152</span>
+<span class='line-number'>153</span>
+<span class='line-number'>154</span>
+<span class='line-number'>155</span>
+<span class='line-number'>156</span>
+<span class='line-number'>157</span>
+<span class='line-number'>158</span>
+<span class='line-number'>159</span>
+<span class='line-number'>160</span>
+<span class='line-number'>161</span>
+<span class='line-number'>162</span>
+<span class='line-number'>163</span>
+<span class='line-number'>164</span>
+<span class='line-number'>165</span>
+<span class='line-number'>166</span>
+<span class='line-number'>167</span>
+<span class='line-number'>168</span>
+<span class='line-number'>169</span>
+<span class='line-number'>170</span>
+<span class='line-number'>171</span>
+<span class='line-number'>172</span>
+<span class='line-number'>173</span>
+<span class='line-number'>174</span>
+<span class='line-number'>175</span>
+<span class='line-number'>176</span>
+<span class='line-number'>177</span>
+<span class='line-number'>178</span>
+<span class='line-number'>179</span>
+<span class='line-number'>180</span>
+<span class='line-number'>181</span>
+<span class='line-number'>182</span>
+<span class='line-number'>183</span>
+<span class='line-number'>184</span>
+<span class='line-number'>185</span>
+<span class='line-number'>186</span>
+<span class='line-number'>187</span>
+<span class='line-number'>188</span>
+<span class='line-number'>189</span>
+<span class='line-number'>190</span>
+<span class='line-number'>191</span>
+<span class='line-number'>192</span>
+<span class='line-number'>193</span>
+<span class='line-number'>194</span>
+<span class='line-number'>195</span>
+<span class='line-number'>196</span>
+<span class='line-number'>197</span>
+<span class='line-number'>198</span>
+<span class='line-number'>199</span>
+<span class='line-number'>200</span>
+<span class='line-number'>201</span>
+<span class='line-number'>202</span>
+<span class='line-number'>203</span>
+<span class='line-number'>204</span>
+<span class='line-number'>205</span>
+<span class='line-number'>206</span>
+<span class='line-number'>207</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">package</span> <span class="n">org</span><span class="o">.</span><span class="na">bruce</span><span class="o">.</span><span class="na">pocket</span><span class="o">.</span><span class="na">tools</span><span class="o">.</span><span class="na">utils</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.awt.Image</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.awt.image.BufferedImage</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.awt.image.RenderedImage</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.File</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.FileOutputStream</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">javax.imageio.ImageIO</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">com.sun.image.codec.jpeg.JPEGCodec</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">com.sun.image.codec.jpeg.JPEGImageEncoder</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * @author Bruce Yang</span>
+</span><span class='line'><span class="cm"> * 调整图片大小~</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ImageResizer</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">ImageResizer</span><span class="o">.</span><span class="na">resizeJpgImage</span><span class="o">(</span><span class="s">&quot;c:/test.JPG&quot;</span><span class="o">,</span> <span class="s">&quot;c:/test4.jpg&quot;</span><span class="o">,</span> <span class="mi">400</span><span class="o">,</span> <span class="mi">300</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="cm">/**</span>
+</span><span class='line'><span class="cm">  * 图像缩放 png 格式~</span>
+</span><span class='line'><span class="cm">  * @param srcImgPath 原图片文件路径</span>
+</span><span class='line'><span class="cm">  * @param destImgPath 生成的缩略图片文件路径</span>
+</span><span class='line'><span class="cm">  * @param destWidth 生成图片的宽度</span>
+</span><span class='line'><span class="cm">  * @param destHeight 生成图片的高度</span>
+</span><span class='line'><span class="cm">  */</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">resizePngImage</span><span class="o">(</span><span class="n">String</span> <span class="n">srcImgPath</span><span class="o">,</span> <span class="n">String</span> <span class="n">destImgPath</span><span class="o">,</span> <span class="kt">int</span> <span class="n">destWidth</span><span class="o">,</span> <span class="kt">int</span> <span class="n">destHeight</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">resizePngImage</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">srcImgPath</span><span class="o">),</span> <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">destImgPath</span><span class="o">),</span> <span class="n">destWidth</span><span class="o">,</span> <span class="n">destHeight</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">resizePngImage</span><span class="o">(</span><span class="n">File</span> <span class="n">srcFile</span><span class="o">,</span> <span class="n">File</span> <span class="n">destFile</span><span class="o">,</span> <span class="kt">int</span> <span class="n">destWidth</span><span class="o">,</span> <span class="kt">int</span> <span class="n">destHeight</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>          <span class="k">if</span> <span class="o">(!</span><span class="n">srcFile</span><span class="o">.</span><span class="na">exists</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>              <span class="k">return</span><span class="o">;</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>          
+</span><span class='line'>          <span class="c1">// .DS_Store 这个文件害我调了半天，主要是 这个方法里面不包含文件名判断的逻辑，直接就给报错中断执行了~</span>
+</span><span class='line'><span class="c1">//           System.err.println(srcFile.getAbsolutePath());</span>
+</span><span class='line'>          
+</span><span class='line'>          <span class="n">BufferedImage</span> <span class="n">srcBi</span> <span class="o">=</span> <span class="n">ImageIO</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="n">srcFile</span><span class="o">);</span>
+</span><span class='line'>          <span class="c1">// Image.SCALE_SMOOTH 的缩略算法 生成缩略图片的平滑度的 优先级比速度高 生成的图片质量比较好 但速度慢~</span>
+</span><span class='line'>          <span class="n">Image</span> <span class="n">img</span> <span class="o">=</span> <span class="n">srcBi</span><span class="o">.</span><span class="na">getScaledInstance</span><span class="o">(</span><span class="n">destWidth</span><span class="o">,</span> <span class="n">destHeight</span><span class="o">,</span> <span class="n">Image</span><span class="o">.</span><span class="na">SCALE_SMOOTH</span><span class="o">);</span>
+</span><span class='line'>          
+</span><span class='line'>          <span class="n">BufferedImage</span> <span class="n">targetBi</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedImage</span><span class="o">(</span><span class="n">destWidth</span><span class="o">,</span> <span class="n">destHeight</span><span class="o">,</span> <span class="n">BufferedImage</span><span class="o">.</span><span class="na">TYPE_INT_RGB</span><span class="o">);</span>
+</span><span class='line'>          <span class="n">targetBi</span><span class="o">.</span><span class="na">getGraphics</span><span class="o">().</span><span class="na">drawImage</span><span class="o">(</span><span class="n">img</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+</span><span class='line'>          
+</span><span class='line'>          <span class="n">writePNGImage</span><span class="o">(</span><span class="n">targetBi</span><span class="o">,</span> <span class="n">destFile</span><span class="o">.</span><span class="na">getAbsolutePath</span><span class="o">());</span>
+</span><span class='line'>      <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>          <span class="n">ex</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  
+</span><span class='line'>
+</span><span class='line'>  <span class="cm">/**</span>
+</span><span class='line'><span class="cm">  * 图像缩放 jpg 格式~</span>
+</span><span class='line'><span class="cm">  * @param srcImgPath 原图片文件路径</span>
+</span><span class='line'><span class="cm">  * @param destImgPath 生成的缩略图片文件路径</span>
+</span><span class='line'><span class="cm">  * @param destWidth 生成图片的宽度</span>
+</span><span class='line'><span class="cm">  * @param destHeight 生成图片的高度</span>
+</span><span class='line'><span class="cm">  */</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">resizeJpgImage</span><span class="o">(</span><span class="n">String</span> <span class="n">srcImgPath</span><span class="o">,</span> <span class="n">String</span> <span class="n">destImgPath</span><span class="o">,</span> <span class="kt">int</span> <span class="n">destWidth</span><span class="o">,</span> <span class="kt">int</span> <span class="n">destHeight</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">resizeJpgImage</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">srcImgPath</span><span class="o">),</span> <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">destImgPath</span><span class="o">),</span> <span class="n">destWidth</span><span class="o">,</span> <span class="n">destHeight</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">resizeJpgImage</span><span class="o">(</span><span class="n">File</span> <span class="n">srcFile</span><span class="o">,</span> <span class="n">File</span> <span class="n">destFile</span><span class="o">,</span> <span class="kt">int</span> <span class="n">destWidth</span><span class="o">,</span> <span class="kt">int</span> <span class="n">destHeight</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>          <span class="k">if</span> <span class="o">(!</span><span class="n">srcFile</span><span class="o">.</span><span class="na">exists</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>              <span class="k">return</span><span class="o">;</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>          <span class="n">Image</span> <span class="n">srcImg</span> <span class="o">=</span> <span class="n">ImageIO</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="n">srcFile</span><span class="o">);</span>
+</span><span class='line'>          <span class="n">BufferedImage</span> <span class="n">targetBi</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedImage</span><span class="o">(</span><span class="n">destWidth</span><span class="o">,</span> <span class="n">destHeight</span><span class="o">,</span> <span class="n">BufferedImage</span><span class="o">.</span><span class="na">TYPE_INT_RGB</span><span class="o">);</span>
+</span><span class='line'>          
+</span><span class='line'>          <span class="c1">// Image.SCALE_SMOOTH 的缩略算法 生成缩略图片的平滑度的 优先级比速度高 生成的图片质量比较好 但速度慢~</span>
+</span><span class='line'>          <span class="n">Image</span> <span class="n">img</span> <span class="o">=</span> <span class="n">srcImg</span><span class="o">.</span><span class="na">getScaledInstance</span><span class="o">(</span><span class="n">destWidth</span><span class="o">,</span> <span class="n">destHeight</span><span class="o">,</span> <span class="n">Image</span><span class="o">.</span><span class="na">SCALE_SMOOTH</span><span class="o">);</span>
+</span><span class='line'>          <span class="n">targetBi</span><span class="o">.</span><span class="na">getGraphics</span><span class="o">().</span><span class="na">drawImage</span><span class="o">(</span><span class="n">img</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+</span><span class='line'>          
+</span><span class='line'>          <span class="n">FileOutputStream</span> <span class="n">fos</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileOutputStream</span><span class="o">(</span><span class="n">destFile</span><span class="o">);</span>
+</span><span class='line'>          <span class="n">JPEGImageEncoder</span> <span class="n">encoder</span> <span class="o">=</span> <span class="n">JPEGCodec</span><span class="o">.</span><span class="na">createJPEGEncoder</span><span class="o">(</span><span class="n">fos</span><span class="o">);</span>
+</span><span class='line'>          <span class="n">encoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="n">targetBi</span><span class="o">);</span>
+</span><span class='line'>          <span class="n">fos</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</span><span class='line'>      <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>          <span class="n">ex</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="cm">/**</span>
+</span><span class='line'><span class="cm">  * 由高清背景图片生成 ipad 所用背景图片~</span>
+</span><span class='line'><span class="cm">  * 将 2560 * 3840 的图片截除上下两部分，缩放为原来的 0.3 倍（得到的图片的大小为 768 * 1024）~</span>
+</span><span class='line'><span class="cm">  * @param imgsrc</span>
+</span><span class='line'><span class="cm">  * @param imgdist</span>
+</span><span class='line'><span class="cm">  */</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">genIpadBg</span><span class="o">(</span><span class="n">String</span> <span class="n">srcImgPath</span><span class="o">,</span> <span class="n">String</span> <span class="n">destImgPath</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">File</span> <span class="n">srcImgFile</span> <span class="o">=</span> <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">srcImgPath</span><span class="o">);</span>
+</span><span class='line'>      <span class="n">File</span> <span class="n">destImgFile</span> <span class="o">=</span> <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">destImgPath</span><span class="o">);</span>
+</span><span class='line'>      <span class="n">genIpadBg</span><span class="o">(</span><span class="n">srcImgFile</span><span class="o">,</span> <span class="n">destImgFile</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">genIpadBg</span><span class="o">(</span><span class="n">File</span> <span class="n">srcImgFile</span><span class="o">,</span> <span class="n">File</span> <span class="n">destImgFile</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>          <span class="k">if</span> <span class="o">(!</span><span class="n">srcImgFile</span><span class="o">.</span><span class="na">exists</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>              <span class="k">return</span><span class="o">;</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>          <span class="n">BufferedImage</span> <span class="n">srcBi</span> <span class="o">=</span> <span class="n">ImageIO</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="n">srcImgFile</span><span class="o">);</span>
+</span><span class='line'>          <span class="n">srcBi</span> <span class="o">=</span> <span class="n">srcBi</span><span class="o">.</span><span class="na">getSubimage</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">213</span><span class="o">,</span> <span class="n">srcBi</span><span class="o">.</span><span class="na">getWidth</span><span class="o">(),</span> <span class="mi">3414</span><span class="o">);</span>
+</span><span class='line'>          <span class="n">Image</span> <span class="n">img</span> <span class="o">=</span> <span class="n">srcBi</span><span class="o">.</span><span class="na">getScaledInstance</span><span class="o">(</span><span class="mi">768</span><span class="o">,</span> <span class="mi">1024</span><span class="o">,</span> <span class="n">Image</span><span class="o">.</span><span class="na">SCALE_SMOOTH</span><span class="o">);</span>
+</span><span class='line'>          
+</span><span class='line'>          <span class="n">BufferedImage</span> <span class="n">destBi</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedImage</span><span class="o">(</span><span class="mi">768</span><span class="o">,</span> <span class="mi">1024</span><span class="o">,</span> <span class="n">BufferedImage</span><span class="o">.</span><span class="na">TYPE_4BYTE_ABGR</span><span class="o">);</span>
+</span><span class='line'>          <span class="n">destBi</span><span class="o">.</span><span class="na">getGraphics</span><span class="o">().</span><span class="na">drawImage</span><span class="o">(</span><span class="n">img</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+</span><span class='line'>          
+</span><span class='line'>          <span class="n">ImageIO</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">destBi</span><span class="o">,</span> <span class="s">&quot;png&quot;</span><span class="o">,</span> <span class="n">destImgFile</span><span class="o">);</span>
+</span><span class='line'>      <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>          <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="cm">/**</span>
+</span><span class='line'><span class="cm">  * 根据图片路径 读取图片文件</span>
+</span><span class='line'><span class="cm">  * @param fileName</span>
+</span><span class='line'><span class="cm">  * @return</span>
+</span><span class='line'><span class="cm">  */</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="n">BufferedImage</span> <span class="nf">readImage</span><span class="o">(</span><span class="n">String</span> <span class="n">fileName</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>          <span class="n">BufferedImage</span> <span class="n">bi</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>          <span class="n">bi</span> <span class="o">=</span> <span class="n">ImageIO</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">fileName</span><span class="o">));</span>
+</span><span class='line'>          <span class="k">return</span> <span class="n">bi</span><span class="o">;</span>
+</span><span class='line'>      <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>          <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>          <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="cm">/**</span>
+</span><span class='line'><span class="cm">  * 生成新的图片文件</span>
+</span><span class='line'><span class="cm">  * @param im</span>
+</span><span class='line'><span class="cm">  * @param formatName</span>
+</span><span class='line'><span class="cm">  * @param fileName</span>
+</span><span class='line'><span class="cm">  * @return</span>
+</span><span class='line'><span class="cm">  */</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">writeImage</span><span class="o">(</span><span class="n">RenderedImage</span> <span class="n">ri</span><span class="o">,</span> <span class="n">String</span> <span class="n">fileformat</span><span class="o">,</span> <span class="n">String</span> <span class="n">fileName</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="kt">boolean</span> <span class="n">result</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class='line'>      <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>          <span class="n">result</span> <span class="o">=</span> <span class="n">ImageIO</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">ri</span><span class="o">,</span> <span class="n">fileformat</span><span class="o">,</span> <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">fileName</span><span class="o">));</span>
+</span><span class='line'>      <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>          <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>      <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="cm">/**</span>
+</span><span class='line'><span class="cm">  * 转换图片格式 到 PNG</span>
+</span><span class='line'><span class="cm">  * @param im</span>
+</span><span class='line'><span class="cm">  * @param fileName</span>
+</span><span class='line'><span class="cm">  * @return</span>
+</span><span class='line'><span class="cm">  */</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">writePNGImage</span><span class="o">(</span><span class="n">RenderedImage</span> <span class="n">ri</span><span class="o">,</span> <span class="n">String</span> <span class="n">fileName</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="nf">writeImage</span><span class="o">(</span><span class="n">ri</span><span class="o">,</span> <span class="s">&quot;PNG&quot;</span><span class="o">,</span> <span class="n">fileName</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="cm">/**</span>
+</span><span class='line'><span class="cm">  * 转换图片格式 到 jpg</span>
+</span><span class='line'><span class="cm">  * @param im</span>
+</span><span class='line'><span class="cm">  * @param fileName</span>
+</span><span class='line'><span class="cm">  * @return</span>
+</span><span class='line'><span class="cm">  */</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">writeJPEGImage</span><span class="o">(</span><span class="n">RenderedImage</span> <span class="n">ri</span><span class="o">,</span> <span class="n">String</span> <span class="n">fileName</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="nf">writeImage</span><span class="o">(</span><span class="n">ri</span><span class="o">,</span> <span class="s">&quot;JPEG&quot;</span><span class="o">,</span> <span class="n">fileName</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  <span class="cm">/**</span>
+</span><span class='line'><span class="cm">  * @param bi</span>
+</span><span class='line'><span class="cm">  * @param destFile</span>
+</span><span class='line'><span class="cm">  * @return</span>
+</span><span class='line'><span class="cm">  */</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">writeJPEGImage</span><span class="o">(</span><span class="n">BufferedImage</span> <span class="n">bi</span><span class="o">,</span> <span class="n">File</span> <span class="n">destFile</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>          <span class="n">FileOutputStream</span> <span class="n">fos</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileOutputStream</span><span class="o">(</span><span class="n">destFile</span><span class="o">);</span>
+</span><span class='line'>          <span class="n">JPEGImageEncoder</span> <span class="n">encoder</span> <span class="o">=</span> <span class="n">JPEGCodec</span><span class="o">.</span><span class="na">createJPEGEncoder</span><span class="o">(</span><span class="n">fos</span><span class="o">);</span>
+</span><span class='line'>          <span class="n">encoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="n">bi</span><span class="o">);</span>
+</span><span class='line'>          <span class="n">fos</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</span><span class='line'>          <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class='line'>      <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>          <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>          <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="cm">/**</span>
+</span><span class='line'><span class="cm">  * 转换图片格式 到 gif 不知到好用不</span>
+</span><span class='line'><span class="cm">  * @param im</span>
+</span><span class='line'><span class="cm">  * @param fileName</span>
+</span><span class='line'><span class="cm">  * @return</span>
+</span><span class='line'><span class="cm">  */</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">writeGIFImage</span><span class="o">(</span><span class="n">RenderedImage</span> <span class="n">ri</span><span class="o">,</span> <span class="n">String</span> <span class="n">fileName</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="nf">writeImage</span><span class="o">(</span><span class="n">ri</span><span class="o">,</span> <span class="s">&quot;GIF&quot;</span><span class="o">,</span> <span class="n">fileName</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="cm">/**</span>
+</span><span class='line'><span class="cm">  * 转换图片格式 到 BMP</span>
+</span><span class='line'><span class="cm">  * @param im</span>
+</span><span class='line'><span class="cm">  * @param fileName</span>
+</span><span class='line'><span class="cm">  * @return</span>
+</span><span class='line'><span class="cm">  */</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">writeBMPImage</span><span class="o">(</span><span class="n">RenderedImage</span> <span class="n">ri</span><span class="o">,</span> <span class="n">String</span> <span class="n">fileName</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="nf">writeImage</span><span class="o">(</span><span class="n">ri</span><span class="o">,</span> <span class="s">&quot;BMP&quot;</span><span class="o">,</span> <span class="n">fileName</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">yang3wei</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-05T12:48:00+08:00" pubdate data-updated="true">Feb 5<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/java相关/'>Java相关</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/02/05/java-zhi-xing-mac-unix-jiao-ben-ming-ling/" title="Previous Post: Java 执行 Mac(Unix) 脚本命令">&laquo; Java 执行 Mac(Unix) 脚本命令</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/02/05/ant-zi-dong-gou-jian-build-dot-xml/" title="Next Post: Ant 自动构建 build.xml">Ant 自动构建 build.xml &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/05/ant-zi-dong-gou-jian-build-dot-xml/">Ant 自动构建 build.xml</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/05/java-tu-pian-suo-fang-gong-ju-lei/">Java 图片缩放工具类</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/05/java-zhi-xing-mac-unix-jiao-ben-ming-ling/">Java 执行 Mac(Unix) 脚本命令</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/05/java-get-classes-in-package/">Java Get classes In Package</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/03/octopress-dai-ma-gao-liang/">Octopress 代码高亮</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+    <h1>Tags</h1>
+    <ul class="tag-cloud">
+        <a style="font-size: 100%" href="/tags/c-c-/">C/C++</a>
+<a style="font-size: 100%" href="/tags/algorithm/">algorithm</a>
+<a style="font-size: 100%" href="/tags/ant/">ant</a>
+<a style="font-size: 210%" href="/tags/git/">git</a>
+<a style="font-size: 132%" href="/tags/hardware/">hardware</a>
+<a style="font-size: 164%" href="/tags/java/">java</a>
+<a style="font-size: 150%" href="/tags/mac/">mac</a>
+<a style="font-size: 201%" href="/tags/octopress/">octopress</a>
+<a style="font-size: 164%" href="/tags/vim/">vim</a>
+<a style="font-size: 100%" href="/tags/伟少手札/">伟少手札</a>
+<a style="font-size: 132%" href="/tags/养生/">养生</a>
+
+    </ul>
+</section>
+<section>
+    <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/blog/categories/git相关'>Git相关 (11)</a></li><li><a href='/blog/categories/java相关'>Java相关 (4)</a></li><li><a href='/blog/categories/mac相关'>Mac相关 (2)</a></li><li><a href='/blog/categories/octopress相关'>Octopress相关 (8)</a></li><li><a href='/blog/categories/vim相关'>Vim相关 (4)</a></li><li><a href='/blog/categories/伟少手札'>伟少手札 (1)</a></li><li><a href='/blog/categories/养生相关'>养生相关 (2)</a></li><li><a href='/blog/categories/硬件相关'>硬件相关 (2)</a></li><li><a href='/blog/categories/算法相关'>算法相关 (1)</a></li></ul>
+</section>
+
+
+<section>
+    <h1>Recent Comments</h1>
+    <div id="recentcomments" class="dsq-widget"><script type="text/javascript" src="http://yang3wei.disqus.com/recent_comments_widget.js?num_items=5&hide_avatars=0&avatar_size=48&excerpt_length=200"></script></div><a href="http://disqus.com/">Powered by Disqus</a>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/yang3wei?count=10&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/yang3wei">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - yang3wei -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'yang3wei';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://yang3wei.github.com/blog/2013/02/05/java-tu-pian-suo-fang-gong-ju-lei/';
+        var disqus_url = 'http://yang3wei.github.com/blog/2013/02/05/java-tu-pian-suo-fang-gong-ju-lei/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

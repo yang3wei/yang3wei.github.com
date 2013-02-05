@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Tag: ant | yang3wei的专栏]]></title>
+  <link href="http://yang3wei.github.com/tags/ant/atom.xml" rel="self"/>
+  <link href="http://yang3wei.github.com/"/>
+  <updated>2013-02-05T13:45:09+08:00</updated>
+  <id>http://yang3wei.github.com/</id>
+  <author>
+    <name><![CDATA[yang3wei]]></name>
+    <email><![CDATA[88480585@qq.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Ant 自动构建 build.xml]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/05/ant-zi-dong-gou-jian-build-dot-xml/"/>
+    <updated>2013-02-05T13:10:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/05/ant-zi-dong-gou-jian-build-dot-xml</id>
+    <content type="html"><![CDATA[<p>直接上文件：</p>
+
+<!-- more -->
+
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>build.xml  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;project</span> <span class="na">name=</span><span class="s">&quot;JavaDynamicCompile&quot;</span> <span class="na">default=</span><span class="s">&quot;execute.class&quot;</span> <span class="na">basedir=</span><span class="s">&quot;.&quot;</span><span class="nt">&gt;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>echo message=&quot;1.define variables~&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;name&quot; value=&quot;JavaDynamicCompile&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;version&quot; value=&quot;1.0&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;author&quot; value=&quot;yang3wei&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;src&quot; value=&quot;${basedir}/src&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;libs&quot; value=&quot;${basedir}/libs&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;build&quot; value=&quot;${basedir}/build&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;dist&quot; value=&quot;${basedir}/dist&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;desktop&quot; value=&quot;/Users/user/Desktop&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;res.pkg&quot; value=&quot;org/bruce/pocket/tools/res&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;entry.class&quot; value=&quot;org.bruce.pocket.tools.entry.Main&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>echo message=&quot;2.define external.jars.path&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>path id=&quot;external.jars.path&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>fileset dir=&quot;${libs}&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>include name=&quot;**/*.jar&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>/fileset<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/path<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;prepare&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>echo message=&quot;3.prepare&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>mkdir dir=&quot;${build}&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>mkdir dir=&quot;${dist}&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;compile&quot; depends=&quot;prepare&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>echo message=&quot;5.compile&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>description<span class="ni">&amp;gt;</span>将src目录下的资源文件复制到 build目录下面(保留包结构)<span class="ni">&amp;lt;</span>/description<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>delete dir=&quot;${build}/${res.pkg}&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>copy todir=&quot;${build}/${res.pkg}&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>fileset dir=&quot;${src}/${res.pkg}&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>include name=&quot;**/*.jpg&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>include name=&quot;**/*.png&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>include name=&quot;**/*.gif&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>include name=&quot;**/*.prop&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>include name=&quot;**/*.properties&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>/fileset<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>/copy<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>javac srcdir=&quot;${src}&quot; destdir=&quot;${build}&quot; encoding=&quot;UTF-8&quot; deprecation=&quot;true&quot; listfiles=&quot;off&quot; fork=&quot;true&quot; target=&quot;1.6&quot; debug=&quot;false&quot; failonerror=&quot;false&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>!--给编译器指定编码，防止出现：&quot;警告： 编码 GBK 的不可映射字符&quot;--<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>compilerarg line=&quot;-encoding UTF-8 &quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>classpath refid=&quot;external.jars.path&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>/javac<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>echo message=&quot;compile finished!&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;execute.class&quot; depends=&quot;compile&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>echo message=&quot;${name}.execute&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>java classname=&quot;${entry.class}&quot; classpath=&quot;${build}&quot; fork=&quot;true&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>sysproperty key=&quot;file.encoding&quot; value=&quot;UTF-8&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>classpath refid=&quot;external.jars.path&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>/java<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;package2jar&quot; depends=&quot;compile&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>echo message=&quot;${name}.package2jar&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>jar destfile=&quot;${dist}/${name}${version}.jar&quot; basedir=&quot;${build}&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>manifest<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>attribute name=&quot;Created-By&quot; value=&quot;${author}&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>attribute name=&quot;Main-Class&quot; value=&quot;${entry.class}&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>/manifest<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>zipfileset excludes=&quot;META-INF/*.SF&quot; src=&quot;./libs/antlr-2.7.4.jar&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>zipfileset excludes=&quot;META-INF/*.SF&quot; src=&quot;./libs/chardet-1.0.jar&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>zipfileset excludes=&quot;META-INF/*.SF&quot; src=&quot;./libs/cpdetector_1.0.10.jar&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>zipfileset excludes=&quot;META-INF/*.SF&quot; src=&quot;./libs/jdom.jar&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>zipfileset excludes=&quot;META-INF/*.SF&quot; src=&quot;./libs/pdfbox-1.6.0.jar&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>zipfileset excludes=&quot;META-INF/*.SF&quot; src=&quot;./libs/PDFRenderer-0.9.1.jar&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>/jar<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;execute.jar&quot; depends=&quot;package2jar&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>echo message=&quot;${name}.jar.execute&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>java fork=&quot;true&quot; failonerror=&quot;true&quot; jar=&quot;${dist}/${name}${version}.jar&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>sysproperty key=&quot;file.encoding&quot; value=&quot;UTF-8&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>/java<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;copy2desktop&quot; depends=&quot;package2jar&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>echo message=&quot;${name}.copy2desktop&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>copy file=&quot;${dist}/${name}${version}.jar&quot; tofile=&quot;${desktop}/${name}${version}.jar&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;clean&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>delete dir=&quot;${build}&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>delete file=&quot;${dist}/${name}${version}.jar&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>delete dir=&quot;${dist}&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;rerun&quot; depends=&quot;clean&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>ant antfile=&quot;build.xml&quot; target=&quot;execute.class&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;&lt;/project&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,612 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>C盘Windows XP D盘Windows7 双系统安装纪录 - yang3wei的专栏</title>
+  <meta name="author" content="yang3wei">
+
+  
+  <meta name="description" content="最近我的 mac 出了问题，死活都进不去了
+我重启了 n 多次都不管用，一直停在白色背景中央有一个缺苹果的画面。
+以前也出现过这种情况，不过都只要多启动几次就能进去了，而且我总结出一个规律：
+只要在进入上述那个画面的时候，硬盘灯还在一闪一闪的，那么十有八九都是能进入系统的； &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="author" content="yang3wei">
+  
+  <meta name="description" content="yang3wei的专栏, yang3wei">
+  <meta name="keywords" content="yang3wei, cocos2d, mac, objective-c, c/c++, game develop, java, OpenGL, shell, box2d, git, python">
+
+  
+  <link rel="canonical" href="http://yang3wei.github.com/blog/2013/02/08/cpan-windows-xp-dpan-windows7-shuang-xi-tong-an-zhuang-ji-lu/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="yang3wei的专栏" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-38160149-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">yang3wei的专栏</a></h1>
+  
+    <h2>Enjoy my life!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:yang3wei.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">C盘Windows XP D盘Windows7 双系统安装纪录</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-08T01:19:00+08:00" pubdate data-updated="true">Feb 8<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>最近我的 mac 出了问题，死活都进不去了<br/>
+我重启了 n 多次都不管用，一直停在白色背景中央有一个缺苹果的画面。<br/>
+以前也出现过这种情况，不过都只要多启动几次就能进去了，而且我总结出一个规律：<br/>
+只要在进入上述那个画面的时候，硬盘灯还在一闪一闪的，那么十有八九都是能进入系统的；<br/>
+只有在进入上述画面的时候硬盘灯没有闪动起来，就说明进不了勒，无论等多久~</p>
+
+<!-- more -->
+
+
+<p>不过这次我是真的栽了，重启了 n 多次还是老样子。<br/>
+我想了下不能继续重启下去了，于是我在网上查了下，<br/>
+有人说mac 在启动的时候是可以加上一些启动参数的，比如：<br/>
+-x 进入安全模式，此种模式会加载尽可能少的驱动<br/>
+-s 单人模式，大意就是进入系统之后，不能切换用户<br/>
+-f 重建驱动缓存，在硬件发生改变的时候用这个参数<br/>
+-v 有人给起名儿为啰嗦模式，挺合适的，就是在启动的过程中打印出当前正在做一些什么的信息。<br/>
+cpus=1 不知道是什么含义，指定仅适用一个 cpu？<br/>
+npci=0x2000 有人说启动不了的时候键入这个命令能有奇效，不过很可惜也没能帮上我的忙~<br/>
+参数倒是挺多的，刚开始我只知道 -v 能过获得启动时候的具体信息，这样的话就不用一直对着那个白底缺苹果了<br/>
+寻思着终于能明白发生了些什么了~<br/>
+当然这毫无意义，因为还是没能帮我解决问题，<br/>
+之后我试了很多方案，包括以上罗列参数所形成的各种组合，<br/>
+我还拔掉了自行扩展的另一根4GB 的内存条，多次给 cmos 放电，<br/>
+我咨询了卖给我电脑的经销商，他们说可能是少了kext 的驱动文件，但我对这一点很是怀疑，<br/>
+因为我的硬盘里面分了两个区，两个分区里面都装了lion 系统，<br/>
+按理来说，一个系统突然间就没法启动是因为缺少了驱动的话，那么我的第二个恢复系统突然间也启动不了了，<br/>
+总不能说也是少了驱动的吧？这样就太诡异了。<br/>
+而且我思索了一下之前的一些举动，在 mac 无法正常开机之前，<br/>
+我仅仅是忘记拔下连接到电脑的 tf 卡，然后电脑提示 reboot and select proper boot device.</p>
+
+<p>我另一台也是首台电脑上所装的 windows xp 已经用了 4 年左右的时间了，是从电脑城的工作人员配好就一直用着的，<br/>
+当系统出现故障的时候我就用 ghost 一件来恢复，也没遇到什么大的麻烦，<br/>
+不过这就让我一直都没有机会去接触装系统、装驱动什么的东西。<br/>
+于是，当我看见这个提示的时候，第一个想到的便是拔掉 tf 卡读卡器。<br/>
+不过，开机重启了几次还是提示相同的信息， <br/>
+这次我火了，拆开主板就给 cmos 放电了，<br/>
+然后再开机的时候，reboot 的提示没了，<br/>
+悲剧也来了，mac 再也进不去了。。。。</p>
+
+<p>最后一次正常关机的时候我还在 mac  AppStore 上面下载安装了几个游戏，<br/>
+也不排除是这几个游戏的安装给我带来了这次灭顶之灾~</p>
+
+<p>细细想来，我是在 2013  年 1 月 2 日 凌晨 2 点多的时候关的机，<br/>
+当天下午 3~4 点钟从床上爬起来准备大干一场的时候，就出现了这种事情，<br/>
+当时我还觉得挺恶心的，不过让我远远没有想到的是，<br/>
+直到今天我也没能将 mac 系统给弄好。。。。。。<br/>
+我还是觉得，应该是 bios 的错误设置导致了这次的灾厄，具体原因有待进一步挖掘~<br/>
+（后来我就不断的调整 bios 中的设置，然后重启，不过也没起到什么作用，<br/>
+因为 bios 里面的设置实在是太多了。我的一个同事说 bios 里面有一个 ahci 的设置要enable 一下，<br/>
+但我在 索泰 G41 主板里面的 ami bios 里面死活就是没有看到有这么一个选项~）</p>
+
+<p>所幸除了装 mac  的机器，我还有一台 amd cpu 的老机器以及一台做测试的 ipod touch4，都是可以联网查询资料的设备， <br/>
+于是我便寻思着这次怎么也得把重装系统、双系统等的知识给补回来，我不会认栽，<br/>
+如果 mac 系统实在恢复不过来，我情愿自己找资料重新黑一遍。。<br/>
+都说 amd  cpu 的 pc 很难黑苹果（雪豹有人黑成功过，不过狮子黑成功的好像不是很多），<br/>
+我使用惯了狮子系统的，再让我回到雪豹我是很难适应的，就不说用不了较新版本的 xcode 了，<br/>
+就光是 dock 上面的那些 mac  app 就够让我烦的了<br/>
+（狮子里面的 mission control 和 launchpad，用过的就会明白我的意思了）<br/>
+所以当初我才直接购买了一台黑苹果，当时一台主机箱就花了 1850 元，是在 淘宝上面的 xhmend 店铺购买的。<br/>
+而今虽然 mac 不能用了，但是上面的两个分区，我毫不介意把一个分区里面的数据搬出来格掉<br/>
+在上面重新装一次，只要能够装好，那我主分区上面的 mac 系统也就十有八九能够修复回来了<br/>
+（只要在副分区上面能装好 mac 系统，那么就说明问题不是出在 bios 上面，那么还剩下的可能就是驱动了，<br/>
+只要我把正常 lion 系统里面的驱动复制回主分区的 mac 系统就应该没问题了。<br/>
+而且我有一个优势，那就是设备的驱动都是可以直接拿来用的，当然我现在也只是做出一个猜测而已）</p>
+
+<p>接下来我说干就干，首先我要做的便是在 AMD cpu 的老机器上面完成系统的重装过程<br/>
+（mac 机器上面的两个分区里面的两个系统都进不了了，我想操作上面的文件都是一个大难题，<br/>
+当时我是这么来弄的，我把 mac 机器里面的硬盘数据线连接到老机器的主板sata 口上面，<br/>
+然后因为老机器里面的电源只能驱动一块硬盘，我就又只能用 mac 机器的电源来为装 mac 的硬盘供电了，<br/>
+当时就觉得真是他妈的别扭，一新一旧两台电脑牢牢的靠在一起，<br/>
+而其中的一台开着仅仅是为了给区区一块硬盘供电而已。。。。<br/>
+而且出乎我意料的是，老机器开机以后虽然能正常检测到两块硬盘了，<br/>
+但是由于 mac 系统的磁盘格式和 windows 的 NTFS、FAT32 不兼容，竟然毛都看不到一根。。。。<br/>
+后来想到同事使用过的在 win 7 上面操作 mac 磁盘的工具软件 MacDrive，<br/>
+便在网上下载了一个，试了一下果然行了，于是首先便决定吧 mac 上面的重要资料——笔记、项目、资源等， <br/>
+先备份到移动磁盘上面，提前做出最坏的打算，即使装 mac 的硬盘被我做实验做地报废了，也不能伤到我的根本~） <br/>
+还要掌握一些东西的使用，包括 u 盘启动盘的制作，Win PE 的使用，ghost  备份还原等方面的。</p>
+
+<p>一台电脑开着仅仅是为了给一块硬盘供电，挺浪费的~ <br/>
+我思忖着不能老这么下去啊，如果一直修不好，那不是一直都要这么下去？不行啊，要环保节能！！<br/>
+那么，首先我要做的就是给 mac 硬盘上面装一个 windows 系统，方便我对 mac 系统的修复，<br/>
+这个 windows 可以放在副分区里面，这样的话，就能很方便的操作主分区里面 mac 系统的磁盘文件了。<br/>
+不过如前所述，我从来都没有亲手安装过一个系统，不管是 mac 还是 windows，都是买电脑给我的一手包办了的。<br/>
+那么，我要克服的第一个难题便是 —— 在 mac 机器上安装一个全新的系统。</p>
+
+<h2>安装双系统</h2>
+
+<p>目标明确了以后，我就开始了对想法的实践，首先我要能成功地在老机器上面安装一个新系统。 <br/>
+ 我一直使用的 都是 Windows  XP 系统，这次装新系统就来个新鲜点儿的吧，就 Win7~ <br/>
+当然，一方面也是因为我老机器里面已经有一个深度的 Ghost Win7 旗舰版镜像了~<br/>
+（重新下载的话是一件很耗时的事情，说不定下完之后我就没心思再来安装了~）</p>
+
+<p>就在这之前不久，我甚至连 Ghost 都没有具体操作过，备份还原也一直没明白其中的运作机制。<br/>
+碰巧的是，在淘宝上面给我老妈买了一台带加密歌曲 tf 卡的收音机， <br/>
+当时在往上面找到了破解这种 tf 加密卡的方法，<br/>
+用到的便是两个这次要给我派上很大用处的 ghost32.exe 和  ghostxp.exe<br/>
+ghost32.exe 是用来制作和释放 gho 文件的工具，而 ghostxp.exe 仅用来查看和提取 gho 文件中的子项目。<br/>
+当时这两个工具一出手，立马就把加密 tf 卡给破掉了，1368 首老歌曲就这么简单的保存入了我的 mac 机器~<br/>
+而且让我更加高兴的是，让我明白了 ghost 不过就是这么简单的一个东西~ <br/>
+随着后面的使用和学习，我还发现 ghost 分为很多版本，有在 windows 下面跑的，也有在系统还没启动的时候运行的。<br/>
+我很好奇的就是，系统还没启动的时候也有能用的 ghost。<br/>
+当然最让我感慨的却是，ghost 原来也就是一个类似 winrar 的工具。<br/>
+想了一想，ghost 不就相当于把整盘或者是整个分区压缩到一个扩展名为 gho 的东西么？  <br/>
+然后，把 gho 文件释放到某个分区或是某个磁盘，不就相当于执行一个解压缩的过程么？  <br/>
+好吧，ghost 就是这么简单一个东西，不多做讨论了~<br/>
+相关资料连接：<br/>
+<a href="http://wenku.baidu.com/view/c0736cde195f312b3169a57d.html">GHOST图解教程-备份_百度文库</a><br/>
+<a href="http://wenku.baidu.com/view/3a94f73a580216fc700afd13">Ghost使用教程图解_百度文库</a></p>
+
+<p>我做的第一件事情就是把 ghost 备份的 c 盘系统给还原到我的 另一个盘，然后设置成从第二个系统启动。<br/>
+（这里直接用备份 c 盘的 gho 文件也是为了操作演练一下怎么将 gho 文件释放到一个分区，<br/>
+而且因为是同一个机器里面 ghost 备份出来的系统，还原到别的分区里面以后也不用担心出现驱动不兼容的问题~）<br/>
+毫无疑问这还是挺简单的，ghost 一出，谁与争锋？<br/>
+但是问题是我没有空余的分区来承载 ghost  要释放的第二系统！<br/>
+我 AMD 的老机器硬盘里面塞满了各种东西，空间挺不够用的，整理和转移资料就是一个很蛋疼的过程了。</p>
+
+<p>之前我听说过有动态扩展分区的软件，能够在不损坏固有文件的情况下多开辟出一块分区出来。<br/>
+于是我便在网上找了一下，确实打听到一个 叫 Partition Magic 的磁盘分区工具，<br/>
+经过搜寻总算是给我找着了一个不是试用版的 pm，但是竟然在分区的过程中报错，可是整整地让我受了一惊~<br/>
+后来我检查了一下，有一个几G 大小的 rar 文件给损坏掉了，之后我便没敢再去用 pm 了，实在太 tm 的惊险了。。 <br/>
+后来在和我同事讨论的时候，他说这个 pm 都是一把老古董了，最好别去用它了。</p>
+
+<p>动态扩展分区不行的话，那还是得清理出一块空闲的分区来了。<br/>
+我当然还是硬着头皮整理和转移完毕了，我腾出了一个 80GB 的分区来。。<br/>
+然后在这个分区里面又多划分出了 3 个分区，然后，我用ghost 将之前备份的 c 盘系统给释放到其中的一个分区里面<br/>
+相关资料的连接：<br/>
+<a href="http://www.360doc.com/content/09/0226/14/18929_2650563.shtml">如何给移动硬盘分区~图解</a><br/>
+配置了一下 c 盘主系统 的 boot.ini 文件，重启之后如愿以偿的进入了逻辑盘里面的第二个系统里面。</p>
+
+<figure class='code'><figcaption><span>boot.ini </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ini'><span class='line'><span class="k">[boot loader]</span>
+</span><span class='line'><span class="na">timeout</span><span class="o">=</span><span class="s">5</span>
+</span><span class='line'><span class="na">default</span><span class="o">=</span><span class="s">multi(0)disk(0)rdisk(0)partition(3)\WINDOWS</span>
+</span><span class='line'><span class="k">[operating systems]</span>
+</span><span class='line'><span class="na">multi(0)disk(0)rdisk(0)partition(1)\WINDOWS</span><span class="o">=</span><span class="s">&quot;Microsoft Windows XP Professional C:&quot; /noexecute=optin /fastdetect</span>
+</span><span class='line'><span class="na">multi(0)disk(0)rdisk(0)partition(3)\WINDOWS</span><span class="o">=</span><span class="s">&quot;Microsoft Windows XP Professional E:&quot; /noexecute=optin /fastdetect</span>
+</span><span class='line'><span class="na">C:\GRLDR</span><span class="o">=</span><span class="s">&quot;深度一键还原 GHOST V11.0&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>简要的说明一下改动的地方和其作用：<br/>
+[boot loader] 下面的 default= multi(0)disk(0)rdisk(0)partition(3)\windows 表示配置为从第 3 块分区启动。<br/>
+重点看上面一行中的 partition(3)，这个 3 即表示从第 3 块分区启动（一般来说，第一块是 C 盘的话，那么第 3 块就是 E 盘了）~<br/>
+如果是将第二系统装在D 盘的，那么便可以将这个数值改为 2。<br/>
+另外，[operating system] 下面的第二行 multi(0)&#8230;.Professional E: &#8221; /noexecute=optin / fastdetect 是我复制粘贴地上一行，<br/>
+只不过是改了一个地方而已：就是将 1 改成了 3。到这里的话，就算是配置完毕了，<br/>
+重启以后将会读取 c 盘中的 boot.ini 文件，然后再跳到 E 盘里面启动第二个 Windows XP 系统~<br/>
+顺便提一下，怎么返回到从 C 盘的系统启动呢？<br/>
+只要在第二系统里面将 C 盘 boot.ini 文件中的 3 改回原来的 1 就行了。<br/>
+或者是通过老毛桃 WinPE 转到引导的列表那里，选择从 &#8230;XP Professional C: 启动即可<br/>
+（修改过 boot.ini 文件后选择列表会出现一些问题，你会发现键盘的上下键在选择的时候失灵了，<br/>
+不过有专门做这种修复的工具，因为我有老毛桃，所以就有恃无恐了，<br/>
+另外在 WinPE，第二系统里面都是随时可以改回来的，所以不是什么要命的问题~）</p>
+
+<p>OK，总算是看到了一点儿希望了，那么接下来我就要着手深度 Ghost  Win7 旗舰版的安装了<br/>
+于是我照蛇画龙，把装第二个 windows xp 的逻辑分区给快速格式化掉，<br/>
+然后用 ghost 把深度完美Ghost Win7 旗舰版 iso 文件中的 win7.gho 释放到这个分区里面。<br/>
+出乎意料的是这次竟然不行了，在 google 上面搜索了一番，找到了大概的原因： <br/>
+从逻辑盘启动第二系统还是需要以 c 盘的 boot.ini 文件作支撑的，<br/>
+如果逻辑盘里面的第二系统同样是 windows xp 还好，但是如果换成 Windows 7 的话却行不通了。。。</p>
+
+<p>这里要说一下导致这种情况出现的原因：<br/>
+Windows XP 和 Windows 7 是两种差异较大的系统，他们的启动机制是不一样的。<br/>
+首先要介绍的是一个主引导记录存放格式的概念，这里要知道的有两种： nt52  和  nt60。</p>
+
+<p>如果一个分区的主引导记录格式是 nt52，<br/>
+那么它将被判别为 windows xp 系统，将会以 windows  xp 的方式启动。</p>
+
+<p>照我的理解就是：<br/>
+接下来将会用到  ntldr、grldr、boot.ini、NTDETECT.COM 等文件，<br/>
+如果其中的某个文件，比如说 boot.ini 文件，找不到的话，系统就会无法正常启动。</p>
+
+<p>如果一个分区的主引导记录格式是 nt60，那么它将会被判别为 windows 7 系统，将会以 windows 7 的方式启动。<br/>
+这里和 windows  xp 有较大的区别了，因为  windows 7 的启动并不需要上面所说到的那些 boot.ini、ntldr 的文件，<br/>
+它会用到的是一个名为 bootmgr 的文件，还有就是位于分区根目录下 Boot 目录中的 BCD 文件。</p>
+
+<p>逻辑盘里面的第二系统没法正常启动的原因就弄清楚了—— windows xp 和 windows 7 的启动方式有很大的差别~<br/>
+那到底应该怎么办才能让作为第二系统的 Windows7 正常跑起来呢？<br/>
+解决办法也是有的，也挺简单的，只要在磁盘管理里面把 Windows 7 所在的分区设置为 “活动的” 就可以了~<br/>
+（只有主分区才能被设置为活动的，而且再有多个主分区的情况下，只能有一个主分区保持活动的状态~）<br/>
+这样的话在电脑开机的过程中就会自动选择活动分区里面的系统来启动。。。。<br/>
+不过我又遇到问题了 —— 只有主分区才能被设置为活动的分区，扩展分区里面逻辑分区是不能被设置为活动分区的！！</p>
+
+<p>主分区？扩展分区？逻辑分区？<br/>
+新名词挺多的，不过不要害怕，也都是一些不晦涩的概念，<br/>
+受 windows 系统 的限制，一块硬盘的主分区和扩展分区的总数最多只能为 4 块，<br/>
+为了适应要求更多分区的需求，一块扩展分区是能够被划分为 n 多块逻辑分区的。<br/>
+概括来说，主分区最多只能有 4 块，逻辑分区则允许包含很多块~<br/>
+我陈述一下我所遇到的问题吧，我老机器的磁盘仅仅被划分成了一个主分区和一个扩展分区，<br/>
+主分区C 盘 20GB 左右被拿来装系统，扩展分区 280 GB 左右，<br/>
+然后扩展分区又被分成了三个逻辑分区，两个 80GB 的，一个 120 GB 的~<br/>
+明白我我所遇到的问题了吧，我压根儿就拿不出第二个主分区来装 Windows 7 了！<br/>
+然后我又花了很多时间在网上查资料，功夫不负有心人，我误打误撞在学习怎么制作 u 盘启动盘的时候接触到了老毛桃。。<br/>
+老毛桃不是一颗桃子而是一个人，他开发出了一个叫老毛桃的 u 盘启动盘制作工具，<br/>
+名气大得很，我在很早的时候就听说过他的大名了~<br/>
+通过大好人老毛桃前辈开发出来的 u 盘启动盘制作工具，我三下五除二便制作好了一个 u 盘启动盘~<br/>
+U 盘启动盘我不知道别人是不是这么叫的，总之就是一个包含了 WinPE<br/>
+（Windows PotableEdition，便携版 windows）的 u 盘吧~<br/>
+这个 WinPE 到底有多便携呢？经过我的观察，最新版 老毛桃工具中 的 WinPE 应该是小于 80 MB 的，<br/>
+而最新版老毛桃工具中的 Win7PE 的大小好像仅为 86MB，记的不是很清楚，不过大概就这么大小吧~<br/>
+WinPE 的作用还是挺大的，之前没有接触过也就不知道，到实际使用过之后才发现它的重要性。<br/>
+WinPE 在启动的时候只需要将其本身加载到内存中去就可以了，<br/>
+通过它你可以很轻松地给一台裸机划分磁盘、安装系统，<br/>
+当然，在你的系统出现故障你再也无法进入系统的时候，它也能发挥出很大的作用：<br/>
+帮你还原系统，修复系统，操作坏了系统的磁盘里面的文件，<br/>
+当然我没有那个机会去体会他的重要性，但我仅仅只是那么想一想便能够认识到他的重要意义了，<br/>
+问自己一个问题，系统坏了的时候如果没有装好 WinPE 的 u 盘，你该怎么办？<br/>
+我来抛砖引玉给出我能想到的对策吧 —— 取出硬盘，<br/>
+连接到能够正常使用的机器的主板上面，修复系统、ghost还原系统等~<br/>
+而且这里还有一个问题，装系统的时候是要和机器里面的其他硬件相匹配的，<br/>
+这样的话即使连接到能正常使用的机器上面，<br/>
+你也不能在上面重装系统，因为装好了之后你再把硬盘接回自己的机器里面，<br/>
+硬件配置什么的都已经出现了变动，很有可能就会开不了机了（除非两台机器的配置一模一样）~<br/>
+当然我只是列举出一种非常极端的情况，一般情况下c盘系统坏掉的时候，<br/>
+还是能够通过不依赖于具体系统的 ghost 来完成还原动作的，<br/>
+我的老机器的系统能够连续使用 4 年就属于这种情况~</p>
+
+<p>又扯远了，回头~<br/>
+在进入老毛桃老前辈制作的 WinPE 系统之后，<br/>
+我发现了一个比赛门铁克 Partition Magic 好用的多的免费分区工具——DiskGenius。<br/>
+说他好用是因为让我有力无处使的逻辑分区竟然能在这个工具里面轻而易举的转变为主分区！<br/>
+这可真是太好了，两下我便把我老机器里面的磁盘重新调整了一下，之后我得到了如下结构的硬盘分区结构：<br/>
+3 个主分区+ 1 个扩展分区，1 个扩展分区里面再分出 3 个逻辑分区，这样我就有整个 6 块分区了。<br/>
+我分出 3 个主分区是因为除了 win 7 ，我还想体验一下别的系统，诸如 solaries、mac 雪豹、linux、ubuntu 什么的~<br/>
+这些系统里面 mac lion 系统我已经用过了，不过我还是想试一试能不能装一个 雪豹。<br/>
+另外就是  linux 和  ubuntu 也接触不短的时间了，<br/>
+但让我更加期待的是直接将他们安装到硬盘上面的流畅度是怎么样的~<br/>
+（说实话在 虚拟机里面是弄不出什么名堂的，卡呀卡的让人没一点儿心思去畅快地玩儿。。<br/>
+在我的印象里，也就是 windows xp 的虚拟机比较实用一点，<br/>
+一些不放心的 exe 我就丢到里面执行，或者是病毒、木马测试什么的~）</p>
+
+<p>好了，主分区的问题到这里又算是解决了，要提一下的是其间我还尝试了一下备份分区表的操作，<br/>
+以后应该有用到的机会的，有备无患~<br/>
+这样我便成功地将 windows 7  ghost 文件释放到了主分区的一个盘里面，<br/>
+弄好了以后我马上就在管理磁盘里面将包含了 ghost win7 的分区设置为活动分区，接下来就是重启等待着解开 Win7 的面纱~<br/>
+成果不一定是甜蜜的，但道路却是很曲折，我又没能如愿以偿~<br/>
+在重启后进入 Win7 的过程中，竟然爆出 missing operating system 错误~<br/>
+我唯有向可用的网络伸出救援的手，我转到百度百科的词条里面查阅了一下 Ghost win7 的相关资料<br/>
+资料连接：<a href="http://baike.baidu.com.cn/view/4707686.htm">百度百科_ghost win7</a><br/>
+这个词条里面包含了一些 FAQ，FAQ 里面正好有我所遇到的问题，<br/>
+不过我当时并没有按照那么做，也不知道怎么弄的，后来重启了一次，竟然不再显示 missing operating system 了，<br/>
+然而也并没有让我如愿进入 win 7，而是向我提出了第二个问题：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>文件：\Windows\system32\ntkrnlpa.exe  
+</span><span class='line'>状态：0xc0000428  
+</span><span class='line'>信息：Windows 无法验证此文件的数字签名</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我还是挺无助的，继续在网上找解决方案，终于是功夫不负有心人，<br/>
+贴出相关资料的链接：<br/>
+<a href="http://blog.sina.com.cn/s/blog_6fd345430100o07a.html">双系统：XP 上装 GHOST 版 win7 的一些心得</a><br/>
+大意就是D盘里面的 win7 在验证数据签名的时候验证的不是 D 盘里面相关文件的签名， <br/>
+而是错误地跑到 C 盘里面去验证 Windows XP 类似文件的签名了，<br/>
+而 C 盘下 windows XP 相关文件的上面是不包含这种签名的，无怪乎这里就要验证出错了~<br/>
+为什么会这样呢？因为 Ghost Win7 实在 c 盘上面安装好以后所制作出来的，而我用的时候却把它还原回了 D 盘~<br/>
+好了，问题的表层原因和深层原因都算是浮现出来了，怎么来解决这个问题呢？<br/>
+再参看一篇资料的连接：<br/>
+<a href="http://www.360doc.com/content/12/0129/20/1309227_182595344.shtml">【多系统引导启动原理】——WinXP、Win7 和 WinPE 三系统启动的方法</a><br/>
+它的里面提到了一个叫做 bcdtool 的工具，这个工具就是用来操作 Win7 系统 Boot 目录下面的 BCD 文件的，<br/>
+怎么操作呢？这里上面两篇资料里面说地不是很清楚，我得补充一些东西：</p>
+
+<p>bcdTool 1.09.07.21 的使用比较奇葩，有非常要注意的几点：<br/>
+1。你不能选择打开目标 bcd 文件，你只能把你要操作的 bcd 文件放到与 bcdtool.exe 相同目录里面，<br/>
+这样的话你再打开 bcdtool 的时候，就会默认使用同一目录里面的那个 BCD 文件；<br/>
+2。而且 bcdtool 也不能完成保存文件的操作，你只能在修改完毕之后在右边的键值对面板里面单击右键，<br/>
+在弹出的右键菜单中选择“保存”来完成文件的保存~<br/>
+3。你直接在 Windows Boot Manager 对应的右边的键值对里面修改 device 为 partition=D: 是没用的，<br/>
+必须要右键 Windows Boot Manager，新建出一对东西来（[1]Windows Boot Loader  和 [2]Windows Legacy OS Loader）<br/>
+我试着删除这两个其中的一个，发现不能够删除，只能是这两个一起存在。<br/>
+然后需要做的就是在 [1] 和 [2] 里面更改键值对，改完之后一定要记得右键保存~<br/>
+我观察了一下，键值对较多的一个对应的是 Win 7 系统的，键值对较少的对应的才是 Windows XP 系统的。<br/>
+Windows XP 的键值对不用更改，要改的是键值对较多的对应 Win 7 的，<br/>
+那么要改什么？很简单，改两个就行了，一个是 device 键，一个是 osdevice 键，统统改成 partition=D:<br/>
+（这里因为我的 win 7 是装在  d 盘的，所以 partition=D:，这里的 partition 即是分区的意思~）<br/>
+4。修改完了以后还是要记得再保存一下，然后就可以将 bcdtool.exe 所在目录中的 BCD 文件搬回老地方了，<br/>
+这里我 win 7 是装在 D: 盘的，所以我把这个 BCD 文件搬回  D:/Boot/ 目录下面<br/>
+Boot 是个隐藏的文件夹，你需要在文件夹选项中将 显示所有文件、显示系统隐藏文件打开才能看到~</p>
+
+<p>经过了上面一系列的操作，我终于在重启之后进入了 Win 7 的系统安装环节~<br/>
+当 win 7 的四瓣飞出来的时候，我简直觉得美呆了（当然和 Mac 的还是没得比，在我心中 mac 才是真正的 no。1）<br/>
+其实我当时也是挺惊讶的，我还以为直接就能进 win 7 系统了，没想到到头了即使是 ghost 版的 win 7，<br/>
+也还是要经历安装驱动等一些的步骤~<br/>
+令我感到很气恼的是，进去之后就发现系统里面给装了很多软件，<br/>
+这样的系统没法给我干净的感觉，我喜欢的是一个个地把自己需要的软件给装进来，<br/>
+而不是在正常使用之前还要把一些无用的软件给删掉~<br/>
+当然我也只是牢骚一下罢了，想他们弄出这么一个方便的东西来也不容易，预装一些软件盈点儿利也是能够理解的~<br/>
+至此就算是告一段落了，win7 成功安装成 D 盘里面的第二系统~</p>
+
+<p>最后，提出一些还要注意的地方：<br/>
+1。win 7 好不容易装好了，清理干净、卸掉无用软件、装好必用软件、打好补丁以后，记得用 ghost 备份一下，<br/>
+以后再要用到的时候就不用重新来安装一次了~<br/>
+2。Windows XP 里面的一些软件要注意下，不要随随便便地就给安装了，拿我遇到的一段经历来说吧：<br/>
+我在 win 7 里面装了一下在 windows xp 里面适用的一个游戏——《机械迷城》，<br/>
+这之后还运行不到两下，我在用 alt + tab 切换程序的时候，win7 就蓝屏了~ <br/>
+当然也不排除可能由其他原因所致，诸如：<br/>
+win 7 的 bug，不能快速重复的按下 alt + tab，<br/>
+或者是因为我安装了什么不兼容的软件所致，比如我将 flash 升级到最新版，<br/>
+再或者是因为我将主机箱横躺着所导致的（后面我将机箱扶正以后进入了win7系统，不过那是再我第二次安装 win 7 以后），<br/>
+还有可能就是过程中我安装的什么新驱动导致了蓝屏的出现，<br/>
+最后的话就是新软件有嫌疑了，因为我当时确实安装了几个软件，比如：chrome、360安全卫士等~<br/>
+3。我玩老毛桃 Win7 PE 的时候发现有一个修复引导的工具，就用那个东西试了一下，<br/>
+想看一看到底能不能修复好 win7 系统为正常的引导，我还特意将正常的 BCD 文件保存了起来，<br/>
+在 D 盘的 Boot 目录下面换回了以前那个不可用的 BCD 文件，<br/>
+然后我就很猛地开始做修复了。。。。。。。<br/>
+修复完了之后我重启转为硬盘启动到 win 7，这时候大麻烦来了，修复了以后 win7 不但不能用了，<br/>
+在我将修复新增的几个文件比着日期删除掉以后，在将可用的 BCD 文件替换回来以后， <br/>
+Win 7 依然萎着！爆出的错误信息为：boot.ini非法，正从 c:\windows 启动<br/>
+我排查了好几个小时，终于在网上找到了相关问题的解决方案：<br/>
+其实也就是我之前提到的那个 nt52 与 nt60 的问题，
+老毛桃引导修复应该是把 win7 的 nt60 改为 Windows XP 的 nt 52 了，<br/>
+这样的话，Win7 系统盘里面出现找 boot.ini 文件的举动就不难解释了~<br/>
+回头看，怎么将 nt52 修改回 nt60 ？<br/>
+使用 bootsect.exe 工具在命令行下面执行 “bootsect.exe /nt60 d:” 命令即可！<br/>
+相关资料：<a href="http://baike.baidu.com/view/2789343.htm">百度百科_bootsect.exe</a><br/>
+第一个参数是转换为哪种格式，第二个参数是作用在哪个分区，这里我 Win 7 在 D 盘，所以作用在 d: 上面~</p>
+
+<p>OK，安装双系统到这里就算是结束了，这才是第一步，<br/>
+我后面修复 mac 系统的路还是挺漫长的，得做好心理准备~<br/>
+附相关工具的下载连接：<br/>
+<a href="http://download.csdn.net/detail/yang3wei/4963762">系统维护工具辑录（安装Ghost Win7必备）</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">yang3wei</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-08T01:19:00+08:00" pubdate data-updated="true">Feb 8<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/伟少手札/'>伟少手札</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/02/08/zhu-ban-fang-dian-zhi-hou-mac-wu-fa-zheng-chang-qi-dong-zhi-mi/" title="Previous Post: 主板放电之后 mac 无法正常启动之谜">&laquo; 主板放电之后 mac 无法正常启动之谜</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/02/08/i-found-a-bug-with-ccparticlesystem/" title="Next Post: I found a bug with CCParticleSystem">I found a bug with CCParticleSystem &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/08/i-found-a-bug-with-ccparticlesystem/">I found a bug with CCParticleSystem</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/08/cpan-windows-xp-dpan-windows7-shuang-xi-tong-an-zhuang-ji-lu/">C盘Windows XP D盘Windows7 双系统安装纪录</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/08/zhu-ban-fang-dian-zhi-hou-mac-wu-fa-zheng-chang-qi-dong-zhi-mi/">主板放电之后 mac 无法正常启动之谜</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/08/chen-ni-yu-mac-chen-ni-yu-xcode/">沉溺于 Mac，沉溺于 XCode</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/05/ant-zi-dong-gou-jian-build-dot-xml/">Ant 自动构建 build.xml</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+    <h1>Tags</h1>
+    <ul class="tag-cloud">
+        <a style="font-size: 100%" href="/tags/c-c-/">C/C++</a>
+<a style="font-size: 100%" href="/tags/algorithm/">algorithm</a>
+<a style="font-size: 100%" href="/tags/ant/">ant</a>
+<a style="font-size: 100%" href="/tags/cocos2d/">cocos2d</a>
+<a style="font-size: 210%" href="/tags/git/">git</a>
+<a style="font-size: 132%" href="/tags/hardware/">hardware</a>
+<a style="font-size: 100%" href="/tags/ios/">iOS</a>
+<a style="font-size: 164%" href="/tags/java/">java</a>
+<a style="font-size: 174%" href="/tags/mac/">mac</a>
+<a style="font-size: 201%" href="/tags/octopress/">octopress</a>
+<a style="font-size: 164%" href="/tags/vim/">vim</a>
+<a style="font-size: 150%" href="/tags/伟少手札/">伟少手札</a>
+<a style="font-size: 132%" href="/tags/养生/">养生</a>
+
+    </ul>
+</section>
+<section>
+    <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/blog/categories/cocos2d相关'>Cocos2d相关 (1)</a></li><li><a href='/blog/categories/git相关'>Git相关 (11)</a></li><li><a href='/blog/categories/java相关'>Java相关 (4)</a></li><li><a href='/blog/categories/mac相关'>Mac相关 (4)</a></li><li><a href='/blog/categories/octopress相关'>Octopress相关 (8)</a></li><li><a href='/blog/categories/vim相关'>Vim相关 (4)</a></li><li><a href='/blog/categories/伟少手札'>伟少手札 (2)</a></li><li><a href='/blog/categories/养生相关'>养生相关 (2)</a></li><li><a href='/blog/categories/硬件相关'>硬件相关 (2)</a></li><li><a href='/blog/categories/算法相关'>算法相关 (1)</a></li></ul>
+</section>
+
+
+<section>
+    <h1>Recent Comments</h1>
+    <div id="recentcomments" class="dsq-widget"><script type="text/javascript" src="http://yang3wei.disqus.com/recent_comments_widget.js?num_items=5&hide_avatars=0&avatar_size=48&excerpt_length=200"></script></div><a href="http://disqus.com/">Powered by Disqus</a>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/yang3wei?count=10&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/yang3wei">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - yang3wei -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'yang3wei';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://yang3wei.github.com/blog/2013/02/08/cpan-windows-xp-dpan-windows7-shuang-xi-tong-an-zhuang-ji-lu/';
+        var disqus_url = 'http://yang3wei.github.com/blog/2013/02/08/cpan-windows-xp-dpan-windows7-shuang-xi-tong-an-zhuang-ji-lu/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

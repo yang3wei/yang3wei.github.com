@@ -1,0 +1,310 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>I found a bug with CCParticleSystem - yang3wei的专栏</title>
+  <meta name="author" content="yang3wei">
+
+  
+  <meta name="description" content="此次经验对我影响很大，虽然只是一个很小的问题，
+但我还是没有掐掉上报 bug 的想法，于是在论坛上我碰到了一个很友善的老外。
+一念之间，我因为自己的一点小善心而获得了更多的知识，
+了解到了怎么上报 bug，怎么使用 git，还锻炼了英文，
+实乃是一举多得，总结一下，遇到问题还是不要犯懒， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="author" content="yang3wei">
+  
+  <meta name="description" content="yang3wei的专栏, yang3wei">
+  <meta name="keywords" content="yang3wei, cocos2d, mac, objective-c, c/c++, game develop, java, OpenGL, shell, box2d, git, python">
+
+  
+  <link rel="canonical" href="http://yang3wei.github.com/blog/2013/02/08/i-found-a-bug-with-ccparticlesystem/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="yang3wei的专栏" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-38160149-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">yang3wei的专栏</a></h1>
+  
+    <h2>Enjoy my life!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:yang3wei.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">I found a bug with CCParticleSystem</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-08T01:41:00+08:00" pubdate data-updated="true">Feb 8<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>此次经验对我影响很大，虽然只是一个很小的问题，<br/>
+但我还是没有掐掉上报 bug 的想法，于是在论坛上我碰到了一个很友善的老外。<br/>
+一念之间，我因为自己的一点小善心而获得了更多的知识，<br/>
+了解到了怎么上报 bug，怎么使用 git，还锻炼了英文，<br/>
+实乃是一举多得，总结一下，遇到问题还是不要犯懒，稍微较下真儿可能就会受益匪浅！</p>
+
+<!-- more -->
+
+
+<p>帖子链接：<a href="http://www.cocos2d-iphone.org/forum/topic/36963?replies=1#post-174889">I found a bug with CCParticleSystem.m</a><br/>
+发现了一个 cocos2d 粒子系统的bug，<br/>
+怎么说呢，也就是同一份由 Particle Designer 生成的 plist 文件，<br/>
+放到高低清的不同模式下，竟然得到了不同的视觉呈现。</p>
+
+<p>觉得诡异之余我仔细观察了一下，发现该问题可能是由于y方向的重力数据有异所致。<br/>
+于是我切到  <code>CCParticleSysem.m</code> 里面找了一番，发现由 plist 文件里面加载进来的数据，<br/>
+差不多都有做乘以  <code>CC_CONTENT_SCALE_FACTOR()</code> 的操作，<br/>
+但是 gravity 的 x 和 y 却没有。</p>
+
+<p>后来我将低清分辨率所使用的 plist 文件中的 <code>gravity-x</code>，<code>gravity-y</code> 数据都做了下除2处理，<br/>
+再一运行，发现问题已经不再，充分证明这就是问题的症结所在。<br/>
+看了下 cocos2d v1.01 和 v2.0.0 以及最新项目的 CHNAGELOG，<br/>
+都没有发现已经将这个 bug 修正的痕迹、记录，<br/>
+于是便在 cocos2d for iphone 主页申请了一个账号，将这个bug 贴到了论坛里面，<br/>
+希望有人能帮我转告 Riq，将这个 bug 修正掉~</p>
+
+<p>cocos2d 在我看来已经相当不错了，但是世界上很难有绝对完美的事物，<br/>
+经此一役，充分印证了这一点儿，一直以来都使用免费的 cocos2d 做游戏开发，<br/>
+现在终于能为 cocos2d 贡献出自己的一点儿微薄力量来了，甚感欣慰~</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">yang3wei</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-08T01:41:00+08:00" pubdate data-updated="true">Feb 8<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/cocos2d相关/'>Cocos2d相关</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/02/08/cpan-windows-xp-dpan-windows7-shuang-xi-tong-an-zhuang-ji-lu/" title="Previous Post: C盘Windows XP D盘Windows7 双系统安装纪录">&laquo; C盘Windows XP D盘Windows7 双系统安装纪录</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/08/i-found-a-bug-with-ccparticlesystem/">I found a bug with CCParticleSystem</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/08/cpan-windows-xp-dpan-windows7-shuang-xi-tong-an-zhuang-ji-lu/">C盘Windows XP D盘Windows7 双系统安装纪录</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/08/zhu-ban-fang-dian-zhi-hou-mac-wu-fa-zheng-chang-qi-dong-zhi-mi/">主板放电之后 mac 无法正常启动之谜</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/08/chen-ni-yu-mac-chen-ni-yu-xcode/">沉溺于 Mac，沉溺于 XCode</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/05/ant-zi-dong-gou-jian-build-dot-xml/">Ant 自动构建 build.xml</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+    <h1>Tags</h1>
+    <ul class="tag-cloud">
+        <a style="font-size: 100%" href="/tags/c-c-/">C/C++</a>
+<a style="font-size: 100%" href="/tags/algorithm/">algorithm</a>
+<a style="font-size: 100%" href="/tags/ant/">ant</a>
+<a style="font-size: 100%" href="/tags/cocos2d/">cocos2d</a>
+<a style="font-size: 210%" href="/tags/git/">git</a>
+<a style="font-size: 132%" href="/tags/hardware/">hardware</a>
+<a style="font-size: 100%" href="/tags/ios/">iOS</a>
+<a style="font-size: 164%" href="/tags/java/">java</a>
+<a style="font-size: 174%" href="/tags/mac/">mac</a>
+<a style="font-size: 201%" href="/tags/octopress/">octopress</a>
+<a style="font-size: 164%" href="/tags/vim/">vim</a>
+<a style="font-size: 150%" href="/tags/伟少手札/">伟少手札</a>
+<a style="font-size: 132%" href="/tags/养生/">养生</a>
+
+    </ul>
+</section>
+<section>
+    <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/blog/categories/cocos2d相关'>Cocos2d相关 (1)</a></li><li><a href='/blog/categories/git相关'>Git相关 (11)</a></li><li><a href='/blog/categories/java相关'>Java相关 (4)</a></li><li><a href='/blog/categories/mac相关'>Mac相关 (4)</a></li><li><a href='/blog/categories/octopress相关'>Octopress相关 (8)</a></li><li><a href='/blog/categories/vim相关'>Vim相关 (4)</a></li><li><a href='/blog/categories/伟少手札'>伟少手札 (2)</a></li><li><a href='/blog/categories/养生相关'>养生相关 (2)</a></li><li><a href='/blog/categories/硬件相关'>硬件相关 (2)</a></li><li><a href='/blog/categories/算法相关'>算法相关 (1)</a></li></ul>
+</section>
+
+
+<section>
+    <h1>Recent Comments</h1>
+    <div id="recentcomments" class="dsq-widget"><script type="text/javascript" src="http://yang3wei.disqus.com/recent_comments_widget.js?num_items=5&hide_avatars=0&avatar_size=48&excerpt_length=200"></script></div><a href="http://disqus.com/">Powered by Disqus</a>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/yang3wei?count=10&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/yang3wei">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - yang3wei -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'yang3wei';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://yang3wei.github.com/blog/2013/02/08/i-found-a-bug-with-ccparticlesystem/';
+        var disqus_url = 'http://yang3wei.github.com/blog/2013/02/08/i-found-a-bug-with-ccparticlesystem/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

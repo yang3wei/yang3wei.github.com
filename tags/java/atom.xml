@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: java | yang3wei的专栏]]></title>
   <link href="http://yang3wei.github.com/tags/java/atom.xml" rel="self"/>
   <link href="http://yang3wei.github.com/"/>
-  <updated>2013-02-07T16:46:38+08:00</updated>
+  <updated>2013-02-08T00:51:41+08:00</updated>
   <id>http://yang3wei.github.com/</id>
   <author>
     <name><![CDATA[yang3wei]]></name>
@@ -18,7 +18,10 @@
     <link href="http://yang3wei.github.com/blog/2013/02/05/ant-zi-dong-gou-jian-build-dot-xml/"/>
     <updated>2013-02-05T13:10:00+08:00</updated>
     <id>http://yang3wei.github.com/blog/2013/02/05/ant-zi-dong-gou-jian-build-dot-xml</id>
-    <content type="html"><![CDATA[<h2>功能：</h2>
+    <content type="html"><![CDATA[<!-- more -->
+
+
+<h2>功能：</h2>
 
 <p>生成的 <code>build.xml</code> 用来提供自动以 eclipse 执行，<br/>
 自动打 jar 包，自动以 ant 执行，自动执行生成的 jar 等功能~</p>

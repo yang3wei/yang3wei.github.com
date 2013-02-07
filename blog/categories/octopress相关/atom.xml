@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress相关 | yang3wei的专栏]]></title>
   <link href="http://yang3wei.github.com/blog/categories/octopress相关/atom.xml" rel="self"/>
   <link href="http://yang3wei.github.com/"/>
-  <updated>2013-02-07T16:46:38+08:00</updated>
+  <updated>2013-02-08T00:51:41+08:00</updated>
   <id>http://yang3wei.github.com/</id>
   <author>
     <name><![CDATA[yang3wei]]></name>
@@ -139,7 +139,7 @@ Building site: source -> public
 <code>``
 上网搜索之后在[该网址][lab4]发现解决方法。   
 这种方式需要使用python2来完成代码高亮的操作，由于Arch的python指向的是python3，而python3无法完成该功能，因此需要在</code>plugin<code>文件夹中再添加一个新文件，指定在</code>Octopress<code>运行时使用的是python2，具体增加的文件内容如下所示，文件的名字为</code>ruby_python_arch_linux_fix.rb`<br/>
-File /Users/user/octopress/source/downloads/code/ruby/ruby_python_arch_linux_fix.rb could not be found</p>
+File /Users/user/git/Octopress/source/downloads/code/ruby/ruby_python_arch_linux_fix.rb could not be found</p>
 
 <p>在完成该操作之后，仍然报错，得到如下错误：<br/>
 <code>bash Error message

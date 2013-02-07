@@ -238,7 +238,7 @@ http://xiongbupt.github.com/blog/2012/06/08/octopressdai-ma-gao-liang/
 
 <p>上网搜索之后在<a href="http://blog.gonzih.org/blog/2011/09/21/fix-octopress-pygments-error-on-arch-linux/">该网址</a>发现解决方法。 <br/>
 这种方式需要使用python2来完成代码高亮的操作，由于Arch的python指向的是python3，而python3无法完成该功能，因此需要在<code>plugin</code>文件夹中再添加一个新文件，指定在<code>Octopress</code>运行时使用的是python2，具体增加的文件内容如下所示，文件的名字为<code>ruby_python_arch_linux_fix.rb</code><br/>
-File /Users/user/octopress/source/downloads/code/ruby/ruby_python_arch_linux_fix.rb could not be found</p>
+File /Users/user/git/Octopress/source/downloads/code/ruby/ruby_python_arch_linux_fix.rb could not be found</p>
 
 <p>在完成该操作之后，仍然报错，得到如下错误：</p>
 

@@ -9,7 +9,9 @@
   <meta name="author" content="yang3wei">
 
   
-  <meta name="description" content="直接上文件： ">
+  <meta name="description" content="功能： 生成的 build.xml 用来提供自动以 eclipse 执行，
+自动打 jar 包，自动以 ant 执行，自动执行生成的 jar 等功能~ 非常便捷的生成 java 工程的 build.xml ，
+build.xml 常用配置我给抽取到 build.properties 文件里面了。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -112,7 +114,57 @@
   </header>
 
 
-  <div class="entry-content"><p>直接上文件：</p>
+  <div class="entry-content"><h2>功能：</h2>
+
+<p>生成的 <code>build.xml</code> 用来提供自动以 eclipse 执行，<br/>
+自动打 jar 包，自动以 ant 执行，自动执行生成的 jar 等功能~</p>
+
+<p>非常便捷的生成 java 工程的 <code>build.xml</code> ，<br/>
+<code>build.xml</code> 常用配置我给抽取到 <code>build.properties</code> 文件里面了。<br/>
+自此就可以尽可能少的去编辑、查看 <code>build.xml</code> 文件了<br/>
+（新增其他格式的资源文件要改动下）<br/>
+（第一次生成 build.xml 时会从 libs 目录中提取相关的数据）<br/>
+（生成完毕之后新添加的外部 jar 包也要在里面新增下）</p>
+
+<p>PathUtil 提供传入资源文件名称，返回完整包路径的便捷方法 getFullPath()，<br/>
+如，传入 <code>123.png</code>，返回 <code>/org/bruce/pocket/tools/res/123.png</code><br/>
+这种格式的 “包路径” 能够很便利地被 java 程序使用，如：</p>
+
+<figure class='code'><figcaption><span>code snippet  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">InputStream</span> <span class="n">is</span> <span class="o">=</span> <span class="err">类名</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getResourceAsStream</span><span class="o">(</span><span class="s">&quot;/org/bruce/pocket/tools/res/123.png&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="kt">byte</span><span class="o">[]</span> <span class="n">bytes</span> <span class="o">=</span> <span class="n">IOUtils</span><span class="o">.</span><span class="na">toByteArray</span><span class="o">(</span><span class="n">is</span><span class="o">);</span>
+</span><span class='line'><span class="n">IOUtils</span><span class="o">.</span><span class="na">closeQuietly</span><span class="o">(</span><span class="n">is</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这里得到的字节数组可以很方便的转换为字符串、图片对象什么的~<br/>
+转换为字符串：<code>google -》熔岩 51Blog-》StringFileBridge.java</code><br/>
+转换为图片：<code>Image image = ImageIO.read(bytes);</code></p>
+
+<h2>原理：</h2>
+
+<p>把 <code>org.bruce.pocket.tools.res</code> 包里面的<br/>
+<code>ant_template.properties</code> 、<code>ant_template.xml</code> 读取为字符串，<br/>
+做一些简单的文本替换，然后将新生成的字符串<br/>
+写入到 java 工程根目录的 <code>build.properties</code> 、<code>build.xml</code> 文件中，</p>
+
+<p>有一些必须要遵循的要求：<br/>
+资源文件必须放置在以 <code>.res</code> 结尾的 <code>package</code> 里面，<br/>
+对于 <code>PathUtil.java</code>，根据个人喜好来定义 DOMAIN（我的 domain 是 <code>org/bruce/</code>）<br/>
+生成的 <code>build.properties</code>、<code>build.xml</code> 也只是初步的，<br/>
+<code>build.properties</code> 里面的有些属性是必须要写上的，<br/>
+比如说，桌面的路径<br/>
+（这里涉及到将生成的 jar 文件复制到桌面的操作）</p>
+
+<p>还有就是应用程序的作者、当前版本、名称等，<br/>
+程序的名称我做了处理，直接拿工程文件的名称来用。<br/>
+版本、作者虽然不是重点，但规范的来说，<br/>
+最好还是写上，也免得 ant 执行打 jar 包操作的时候出问题。</p>
+
+<h2>上代码：</h2>
 
 </div>
   

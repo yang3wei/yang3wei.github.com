@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Java相关 | yang3wei的专栏]]></title>
   <link href="http://yang3wei.github.com/blog/categories/java相关/atom.xml" rel="self"/>
   <link href="http://yang3wei.github.com/"/>
-  <updated>2013-02-06T08:51:57+08:00</updated>
+  <updated>2013-02-07T16:46:38+08:00</updated>
   <id>http://yang3wei.github.com/</id>
   <author>
     <name><![CDATA[yang3wei]]></name>
@@ -18,12 +18,59 @@
     <link href="http://yang3wei.github.com/blog/2013/02/05/ant-zi-dong-gou-jian-build-dot-xml/"/>
     <updated>2013-02-05T13:10:00+08:00</updated>
     <id>http://yang3wei.github.com/blog/2013/02/05/ant-zi-dong-gou-jian-build-dot-xml</id>
-    <content type="html"><![CDATA[<p>直接上文件：</p>
+    <content type="html"><![CDATA[<h2>功能：</h2>
+
+<p>生成的 <code>build.xml</code> 用来提供自动以 eclipse 执行，<br/>
+自动打 jar 包，自动以 ant 执行，自动执行生成的 jar 等功能~</p>
+
+<p>非常便捷的生成 java 工程的 <code>build.xml</code> ，<br/>
+<code>build.xml</code> 常用配置我给抽取到 <code>build.properties</code> 文件里面了。<br/>
+自此就可以尽可能少的去编辑、查看 <code>build.xml</code> 文件了<br/>
+（新增其他格式的资源文件要改动下）<br/>
+（第一次生成 build.xml 时会从 libs 目录中提取相关的数据）<br/>
+（生成完毕之后新添加的外部 jar 包也要在里面新增下）</p>
+
+<p>PathUtil 提供传入资源文件名称，返回完整包路径的便捷方法 getFullPath()，<br/>
+如，传入 <code>123.png</code>，返回 <code>/org/bruce/pocket/tools/res/123.png</code><br/>
+这种格式的 “包路径” 能够很便利地被 java 程序使用，如：<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>code snippet  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">InputStream</span> <span class="n">is</span> <span class="o">=</span> <span class="err">类名</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getResourceAsStream</span><span class="o">(</span><span class="s">&quot;/org/bruce/pocket/tools/res/123.png&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="kt">byte</span><span class="o">[]</span> <span class="n">bytes</span> <span class="o">=</span> <span class="n">IOUtils</span><span class="o">.</span><span class="na">toByteArray</span><span class="o">(</span><span class="n">is</span><span class="o">);</span>
+</span><span class='line'><span class="n">IOUtils</span><span class="o">.</span><span class="na">closeQuietly</span><span class="o">(</span><span class="n">is</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+这里得到的字节数组可以很方便的转换为字符串、图片对象什么的~<br/>
+转换为字符串：<code>google -》熔岩 51Blog-》StringFileBridge.java</code><br/>
+转换为图片：<code>Image image = ImageIO.read(bytes);</code></p>
+
+<h2>原理：</h2>
+
+<p>把 <code>org.bruce.pocket.tools.res</code> 包里面的<br/>
+<code>ant_template.properties</code> 、<code>ant_template.xml</code> 读取为字符串，<br/>
+做一些简单的文本替换，然后将新生成的字符串<br/>
+写入到 java 工程根目录的 <code>build.properties</code> 、<code>build.xml</code> 文件中，</p>
+
+<p>有一些必须要遵循的要求：<br/>
+资源文件必须放置在以 <code>.res</code> 结尾的 <code>package</code> 里面，<br/>
+对于 <code>PathUtil.java</code>，根据个人喜好来定义 DOMAIN（我的 domain 是 <code>org/bruce/</code>）<br/>
+生成的 <code>build.properties</code>、<code>build.xml</code> 也只是初步的，<br/>
+<code>build.properties</code> 里面的有些属性是必须要写上的，<br/>
+比如说，桌面的路径<br/>
+（这里涉及到将生成的 jar 文件复制到桌面的操作）</p>
+
+<p>还有就是应用程序的作者、当前版本、名称等，<br/>
+程序的名称我做了处理，直接拿工程文件的名称来用。<br/>
+版本、作者虽然不是重点，但规范的来说，<br/>
+最好还是写上，也免得 ant 执行打 jar 包操作的时候出问题。</p>
+
+<h2>上代码：</h2>
 
 <!-- more -->
 
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>build.xml  </span></figcaption>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>GenBuildXml.java  </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -127,22 +174,411 @@
 <span class='line-number'>101</span>
 <span class='line-number'>102</span>
 <span class='line-number'>103</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;project</span> <span class="na">name=</span><span class="s">&quot;JavaDynamicCompile&quot;</span> <span class="na">default=</span><span class="s">&quot;execute.class&quot;</span> <span class="na">basedir=</span><span class="s">&quot;.&quot;</span><span class="nt">&gt;&lt;/p&gt;</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">package</span> <span class="n">org</span><span class="o">.</span><span class="na">bruce</span><span class="o">.</span><span class="na">pocket</span><span class="o">.</span><span class="na">tools</span><span class="o">.</span><span class="na">items</span><span class="o">;&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kn">import</span> <span class="nn">java.io.File</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.InputStream</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kn">import</span> <span class="nn">org.apache.commons.io.IOUtils</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">org.bruce.pocket.tools.gui.Dta</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">org.bruce.pocket.tools.gui.GUI</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">org.bruce.pocket.tools.utils.IOBridge</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">org.bruce.pocket.tools.utils.PathUtil</span><span class="o">;&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;/&lt;</span><span class="n">em</span><span class="o">&gt;*</span>
+</span><span class='line'> <span class="o">*</span> <span class="nd">@author</span> <span class="n">Bruce</span> <span class="n">Yang</span>
+</span><span class='line'> <span class="o">*</span> <span class="err">为</span> <span class="n">eclipse</span> <span class="err">的</span> <span class="n">java</span> <span class="err">工程自动生成</span> <span class="n">build</span><span class="o">.</span><span class="na">xml</span><span class="o">~</span>
+</span><span class='line'> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;/</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">GenBuildXml</span> <span class="kd">extends</span> <span class="n">Dta</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="n">GenBuildXml</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">this</span><span class="o">.</span><span class="na">setTitle</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getSimpleName</span><span class="o">());</span>
+</span><span class='line'>    <span class="k">this</span><span class="o">.</span><span class="na">setTips</span><span class="o">(</span><span class="s">&quot;为 eclipse 工程自动生成 build.xml~&quot;</span><span class="o">);</span>
+</span><span class='line'>    <span class="k">this</span><span class="o">.</span><span class="na">setDesc</span><span class="o">(</span><span class="s">&quot;&amp;lt;html&amp;gt;使用说明：&amp;lt;br/&amp;gt;&quot;</span> <span class="o">+</span>
+</span><span class='line'>            <span class="s">&quot;我做了限制，一次只能拽入一个 java 工程文件夹&amp;lt;br/&amp;gt;&quot;</span> <span class="o">+</span>
+</span><span class='line'>            <span class="s">&quot;而且对拽入的文件夹会执行检查操作，以提高操作安全性&amp;lt;br/&amp;gt;&quot;</span> <span class="o">+</span>
+</span><span class='line'>            <span class="s">&quot;检查：是否存在 .project, .classpath 文件，&amp;lt;br/&amp;gt;&quot;</span> <span class="o">+</span>
+</span><span class='line'>            <span class="s">&quot;是否存在 src 文件夹&amp;lt;/html&amp;gt;&quot;</span><span class="o">);</span>
+</span><span class='line'>    <span class="k">this</span><span class="o">.</span><span class="na">setImgName</span><span class="o">(</span><span class="s">&quot;w400_h300.png&quot;</span><span class="o">);</span>   <span class="c1">// 窗口大小由图片大小所决定~</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">protected</span> <span class="kt">void</span> <span class="nf">handle</span><span class="o">(</span><span class="n">File</span> <span class="n">f</span><span class="o">)</span> <span class="o">{}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">protected</span> <span class="kt">void</span> <span class="nf">handleEntries</span><span class="o">(</span><span class="n">List</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">File</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">listEntries</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">File</span> <span class="n">firstItem</span> <span class="o">=</span> <span class="n">listEntries</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// 一次只能处理一个工程文件，而且仅在拽入的是单个文件夹的时候才有效~</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(!</span><span class="n">firstItem</span><span class="o">.</span><span class="na">isDirectory</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;不是一个工程文件夹（目录）！&quot;</span><span class="o">);</span>
+</span><span class='line'>        <span class="k">return</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">listEntries</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;一次仅处理一个工程文件夹！&quot;</span><span class="o">);</span>
+</span><span class='line'>        <span class="k">return</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kt">boolean</span> <span class="n">bSrcDir</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class='line'>    <span class="kt">boolean</span> <span class="n">bDotProject</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class='line'>    <span class="kt">boolean</span> <span class="n">bDotClasspath</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">File</span><span class="o">[]</span> <span class="n">files</span> <span class="o">=</span> <span class="n">firstItem</span><span class="o">.</span><span class="na">listFiles</span><span class="o">();</span>
+</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="n">File</span> <span class="n">file</span> <span class="o">:</span> <span class="n">files</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">file</span><span class="o">.</span><span class="na">isDirectory</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">file</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;src&quot;</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">bSrcDir</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">file</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;.project&quot;</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">bDotProject</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">file</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;.classpath&quot;</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">bDotClasspath</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// 为确保操作的安全执行，必要的检查是不可忽略的~</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(!</span><span class="n">bSrcDir</span> <span class="o">||</span> <span class="o">!</span><span class="n">bDotProject</span> <span class="o">||</span> <span class="o">!</span><span class="n">bDotClasspath</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;生成 build.xml 失败，该文件夹不具有 .project、.classpath 或 src 目录~&quot;</span><span class="o">);</span>
+</span><span class='line'>        <span class="k">return</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;This is a valid java project directory!&quot;</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// 于根目录生成 build.properties 文件~</span>
+</span><span class='line'>    <span class="n">String</span> <span class="n">propPath</span> <span class="o">=</span> <span class="n">PathUtil</span><span class="o">.</span><span class="na">getFullPath</span><span class="o">(</span><span class="s">&quot;ant_template.properties&quot;</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">InputStream</span> <span class="n">is</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getResourceAsStream</span><span class="o">(</span><span class="n">propPath</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">String</span> <span class="n">strProp</span> <span class="o">=</span> <span class="n">IOBridge</span><span class="o">.</span><span class="na">stream2String</span><span class="o">(</span><span class="n">is</span><span class="o">,</span> <span class="s">&quot;utf-8&quot;</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">IOUtils</span><span class="o">.</span><span class="na">closeQuietly</span><span class="o">(</span><span class="n">is</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">strProp</span> <span class="o">=</span> <span class="n">strProp</span><span class="o">.</span><span class="na">replace</span><span class="o">(</span><span class="s">&quot;__APPLICATION_NAME__&quot;</span><span class="o">,</span> <span class="n">firstItem</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">File</span> <span class="n">buildProp</span> <span class="o">=</span> <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">firstItem</span><span class="o">.</span><span class="na">getAbsolutePath</span><span class="o">()</span> <span class="o">+</span> <span class="n">File</span><span class="o">.</span><span class="na">separator</span> <span class="o">+</span> <span class="s">&quot;build.properties&quot;</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">IOBridge</span><span class="o">.</span><span class="na">string2File</span><span class="o">(</span><span class="n">strProp</span><span class="o">,</span> <span class="n">buildProp</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// 于根目录生成 build.xml 文件~</span>
+</span><span class='line'>    <span class="n">StringBuilder</span> <span class="n">sb</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">();</span>
+</span><span class='line'>    <span class="n">File</span> <span class="n">fLibs</span> <span class="o">=</span> <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">firstItem</span><span class="o">.</span><span class="na">getAbsolutePath</span><span class="o">()</span> <span class="o">+</span> <span class="n">File</span><span class="o">.</span><span class="na">separator</span> <span class="o">+</span> <span class="s">&quot;libs&quot;</span><span class="o">);</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">fLibs</span><span class="o">.</span><span class="na">exists</span><span class="o">()</span> <span class="o">&amp;</span><span class="n">amp</span><span class="o">;&amp;</span><span class="n">amp</span><span class="o">;</span> <span class="n">fLibs</span><span class="o">.</span><span class="na">isDirectory</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">File</span><span class="o">[]</span> <span class="n">jarFiles</span> <span class="o">=</span> <span class="n">fLibs</span><span class="o">.</span><span class="na">listFiles</span><span class="o">();</span>
+</span><span class='line'>        <span class="k">for</span> <span class="o">(</span><span class="n">File</span> <span class="n">jarFile</span> <span class="o">:</span> <span class="n">jarFiles</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">jarFile</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">endsWith</span><span class="o">(</span><span class="s">&quot;.jar&quot;</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;\t\t\t&amp;lt;zipfileset excludes=\&quot;META-INF/*.SF\&quot; src=\&quot;./libs/&quot;</span><span class="o">);</span>
+</span><span class='line'>                <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">jarFile</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+</span><span class='line'>                <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;\&quot; /&amp;gt;\n&quot;</span><span class="o">);</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">String</span> <span class="n">xmlPath</span> <span class="o">=</span> <span class="n">PathUtil</span><span class="o">.</span><span class="na">getFullPath</span><span class="o">(</span><span class="s">&quot;ant_template.xml&quot;</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">is</span> <span class="o">=</span> <span class="n">GenBuildXml</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getResourceAsStream</span><span class="o">(</span><span class="n">xmlPath</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">String</span> <span class="n">strXml</span> <span class="o">=</span> <span class="n">IOBridge</span><span class="o">.</span><span class="na">stream2String</span><span class="o">(</span><span class="n">is</span><span class="o">,</span> <span class="s">&quot;utf-8&quot;</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">IOUtils</span><span class="o">.</span><span class="na">closeQuietly</span><span class="o">(</span><span class="n">is</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">sb</span><span class="o">.</span><span class="na">toString</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;&quot;</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">strXml</span> <span class="o">=</span> <span class="n">strXml</span><span class="o">.</span><span class="na">replace</span><span class="o">(</span><span class="s">&quot;__EXTERNAL_JARS__&quot;</span><span class="o">,</span> <span class="s">&quot;&quot;</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">strXml</span> <span class="o">=</span> <span class="n">strXml</span><span class="o">.</span><span class="na">replace</span><span class="o">(</span><span class="s">&quot;__EXTERNAL_JARS__&quot;</span><span class="o">,</span> <span class="n">sb</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">strXml</span> <span class="o">=</span> <span class="n">strXml</span><span class="o">.</span><span class="na">replace</span><span class="o">(</span><span class="s">&quot;__PROJECT_NAME__&quot;</span><span class="o">,</span> <span class="n">firstItem</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">File</span> <span class="n">buildXml</span> <span class="o">=</span> <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">firstItem</span><span class="o">.</span><span class="na">getAbsolutePath</span><span class="o">()</span> <span class="o">+</span> <span class="n">File</span><span class="o">.</span><span class="na">separator</span> <span class="o">+</span> <span class="s">&quot;build.xml&quot;</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">IOBridge</span><span class="o">.</span><span class="na">string2File</span><span class="o">(</span><span class="n">strXml</span><span class="o">,</span> <span class="n">buildXml</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">new</span> <span class="nf">GUI</span><span class="o">(</span><span class="k">new</span> <span class="n">GenBuildXml</span><span class="o">());</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>ant_template.properties  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">App</span> <span class="nx">name</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">g</span><span class="p">.</span> <span class="s2">&quot;JavaDynamicComiple&quot;</span><span class="p">)</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">name</span><span class="o">=&lt;</span><span class="nx">strong</span><span class="o">&gt;</span><span class="nx">APPLICATION_NAME</span><span class="o">&lt;</span><span class="err">/strong&gt;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">App</span> <span class="nx">version</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">g</span><span class="p">.</span> <span class="s2">&quot;1.0&quot;</span><span class="p">)</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">version</span><span class="o">=</span><span class="mf">1.0</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">App</span> <span class="nx">author</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">g</span><span class="p">.</span> <span class="s2">&quot;yang3wei&quot;</span><span class="p">)</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">author</span><span class="o">=</span><span class="nx">yang3wei</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Desktop</span> <span class="nx">absolute</span> <span class="nx">path</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">g</span><span class="p">.</span> <span class="s2">&quot;/Users/y3w/Desktop&quot;</span><span class="p">)</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">desktop</span><span class="o">=</span><span class="err">/Users/y3w/Desktop&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Resource</span> <span class="kr">package</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">g</span><span class="p">.</span> <span class="s2">&quot;org/bruce/pocket/tools/res&quot;</span><span class="p">)</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">res</span><span class="p">.</span><span class="nx">pkg</span><span class="o">=&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Classpath</span> <span class="nx">of</span> <span class="nx">entry</span> <span class="kr">class</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">g</span><span class="p">.</span> <span class="s2">&quot;org.bruce.test.Main&quot;</span><span class="p">)</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">entry</span><span class="p">.</span><span class="kr">class</span><span class="o">=</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>ant_template.xml  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+<span class='line-number'>132</span>
+<span class='line-number'>133</span>
+<span class='line-number'>134</span>
+<span class='line-number'>135</span>
+<span class='line-number'>136</span>
+<span class='line-number'>137</span>
+<span class='line-number'>138</span>
+<span class='line-number'>139</span>
+<span class='line-number'>140</span>
+<span class='line-number'>141</span>
+<span class='line-number'>142</span>
+<span class='line-number'>143</span>
+<span class='line-number'>144</span>
+<span class='line-number'>145</span>
+<span class='line-number'>146</span>
+<span class='line-number'>147</span>
+<span class='line-number'>148</span>
+<span class='line-number'>149</span>
+<span class='line-number'>150</span>
+<span class='line-number'>151</span>
+<span class='line-number'>152</span>
+<span class='line-number'>153</span>
+<span class='line-number'>154</span>
+<span class='line-number'>155</span>
+<span class='line-number'>156</span>
+<span class='line-number'>157</span>
+<span class='line-number'>158</span>
+<span class='line-number'>159</span>
+<span class='line-number'>160</span>
+<span class='line-number'>161</span>
+<span class='line-number'>162</span>
+<span class='line-number'>163</span>
+<span class='line-number'>164</span>
+<span class='line-number'>165</span>
+<span class='line-number'>166</span>
+<span class='line-number'>167</span>
+<span class='line-number'>168</span>
+<span class='line-number'>169</span>
+<span class='line-number'>170</span>
+<span class='line-number'>171</span>
+<span class='line-number'>172</span>
+<span class='line-number'>173</span>
+<span class='line-number'>174</span>
+<span class='line-number'>175</span>
+<span class='line-number'>176</span>
+<span class='line-number'>177</span>
+<span class='line-number'>178</span>
+<span class='line-number'>179</span>
+<span class='line-number'>180</span>
+<span class='line-number'>181</span>
+<span class='line-number'>182</span>
+<span class='line-number'>183</span>
+<span class='line-number'>184</span>
+<span class='line-number'>185</span>
+<span class='line-number'>186</span>
+<span class='line-number'>187</span>
+<span class='line-number'>188</span>
+<span class='line-number'>189</span>
+<span class='line-number'>190</span>
+<span class='line-number'>191</span>
+<span class='line-number'>192</span>
+<span class='line-number'>193</span>
+<span class='line-number'>194</span>
+<span class='line-number'>195</span>
+<span class='line-number'>196</span>
+<span class='line-number'>197</span>
+<span class='line-number'>198</span>
+<span class='line-number'>199</span>
+<span class='line-number'>200</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;project</span> <span class="na">name=</span><span class="s">&quot;__PROJECT_NAME__&quot;</span> <span class="na">default=</span><span class="s">&quot;execute.class&quot;</span> <span class="na">basedir=</span><span class="s">&quot;.&quot;</span><span class="nt">&gt;&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>echo message=&quot;1.define variables~&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;name&quot; value=&quot;JavaDynamicCompile&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;version&quot; value=&quot;1.0&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;author&quot; value=&quot;yang3wei&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>!--
+</span><span class='line'>也可以从 xml 文件中读取属性：<span class="ni">&amp;lt;</span>xmlproperty file=&quot;config.xml&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>详细请参见：http://blog.csdn.net/jzy23682891/article/details/7063489
+</span><span class='line'>--<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>property file=&quot;build.properties&quot; /<span class="ni">&amp;gt;</span>
 </span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;src&quot; value=&quot;${basedir}/src&quot; /<span class="ni">&amp;gt;</span>
 </span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;libs&quot; value=&quot;${basedir}/libs&quot; /<span class="ni">&amp;gt;</span>
 </span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;build&quot; value=&quot;${basedir}/build&quot; /<span class="ni">&amp;gt;</span>
 </span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;dist&quot; value=&quot;${basedir}/dist&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;desktop&quot; value=&quot;/Users/user/Desktop&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;res.pkg&quot; value=&quot;org/bruce/pocket/tools/res&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;entry.class&quot; value=&quot;org.bruce.pocket.tools.entry.Main&quot; /<span class="ni">&amp;gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="ni">&amp;lt;</span>echo message=&quot;2.define external.jars.path&quot; /<span class="ni">&amp;gt;</span>
 </span><span class='line'><span class="ni">&amp;lt;</span>path id=&quot;external.jars.path&quot;<span class="ni">&amp;gt;</span>
@@ -194,17 +630,111 @@
 </span><span class='line'>    <span class="ni">&amp;lt;</span>echo message=&quot;${name}.package2jar&quot; /<span class="ni">&amp;gt;</span>
 </span><span class='line'>    <span class="ni">&amp;lt;</span>jar destfile=&quot;${dist}/${name}${version}.jar&quot; basedir=&quot;${build}&quot;<span class="ni">&amp;gt;</span>
 </span><span class='line'>        <span class="ni">&amp;lt;</span>manifest<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>attribute name=&quot;App-Name&quot; value=&quot;${name}&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>attribute name=&quot;App-Version&quot; value=&quot;${version}&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>attribute name=&quot;App-Author&quot; value=&quot;${author}&quot; /<span class="ni">&amp;gt;</span>
 </span><span class='line'>            <span class="ni">&amp;lt;</span>attribute name=&quot;Created-By&quot; value=&quot;${author}&quot; /<span class="ni">&amp;gt;</span>
 </span><span class='line'>            <span class="ni">&amp;lt;</span>attribute name=&quot;Main-Class&quot; value=&quot;${entry.class}&quot; /<span class="ni">&amp;gt;</span>
 </span><span class='line'>        <span class="ni">&amp;lt;</span>/manifest<span class="ni">&amp;gt;</span>
-</span><span class='line'>        <span class="ni">&amp;lt;</span>zipfileset excludes=&quot;META-INF/*.SF&quot; src=&quot;./libs/antlr-2.7.4.jar&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>        <span class="ni">&amp;lt;</span>zipfileset excludes=&quot;META-INF/*.SF&quot; src=&quot;./libs/chardet-1.0.jar&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>        <span class="ni">&amp;lt;</span>zipfileset excludes=&quot;META-INF/*.SF&quot; src=&quot;./libs/cpdetector_1.0.10.jar&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>        <span class="ni">&amp;lt;</span>zipfileset excludes=&quot;META-INF/*.SF&quot; src=&quot;./libs/jdom.jar&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>        <span class="ni">&amp;lt;</span>zipfileset excludes=&quot;META-INF/*.SF&quot; src=&quot;./libs/pdfbox-1.6.0.jar&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>        <span class="ni">&amp;lt;</span>zipfileset excludes=&quot;META-INF/*.SF&quot; src=&quot;./libs/PDFRenderer-0.9.1.jar&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>    <span class="ni">&amp;lt;</span>/jar<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;&lt;strong&gt;</span>EXTERNAL_JARS<span class="nt">&lt;/strong&gt;</span>       <span class="nt">&lt;/jar&gt;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;execute.jar&quot; depends=&quot;package2jar&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>echo message=&quot;${name}.jar.execute&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>java fork=&quot;true&quot; failonerror=&quot;true&quot; jar=&quot;${dist}/${name}${version}.jar&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>sysproperty key=&quot;file.encoding&quot; value=&quot;UTF-8&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>/java<span class="ni">&amp;gt;</span>
 </span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;copy2desktop&quot; depends=&quot;package2jar&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>echo message=&quot;${name}.copy2desktop&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>copy file=&quot;${dist}/${name}${version}.jar&quot; tofile=&quot;${desktop}/${name}${version}.jar&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;clean&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>delete dir=&quot;${build}&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>delete file=&quot;${dist}/${name}${version}.jar&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>delete dir=&quot;${dist}&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;&lt;project</span> <span class="na">name=</span><span class="s">&quot;__PROJECT_NAME__&quot;</span> <span class="na">default=</span><span class="s">&quot;execute.class&quot;</span> <span class="na">basedir=</span><span class="s">&quot;.&quot;</span><span class="nt">&gt;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>echo message=&quot;1.define variables~&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>!--
+</span><span class='line'>也可以从 xml 文件中读取属性：<span class="ni">&amp;lt;</span>xmlproperty file=&quot;config.xml&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>详细请参见：http://blog.csdn.net/jzy23682891/article/details/7063489
+</span><span class='line'>--<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>property file=&quot;build.properties&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;src&quot; value=&quot;${basedir}/src&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;libs&quot; value=&quot;${basedir}/libs&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;build&quot; value=&quot;${basedir}/build&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;dist&quot; value=&quot;${basedir}/dist&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>echo message=&quot;2.define external.jars.path&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>path id=&quot;external.jars.path&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>fileset dir=&quot;${libs}&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>include name=&quot;**/*.jar&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>/fileset<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/path<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;prepare&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>echo message=&quot;3.prepare&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>mkdir dir=&quot;${build}&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>mkdir dir=&quot;${dist}&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;compile&quot; depends=&quot;prepare&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>echo message=&quot;5.compile&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>description<span class="ni">&amp;gt;</span>将src目录下的资源文件复制到 build目录下面(保留包结构)<span class="ni">&amp;lt;</span>/description<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>delete dir=&quot;${build}/${res.pkg}&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>copy todir=&quot;${build}/${res.pkg}&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>fileset dir=&quot;${src}/${res.pkg}&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>include name=&quot;**/*.jpg&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>include name=&quot;**/*.png&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>include name=&quot;**/*.gif&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>include name=&quot;**/*.prop&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>include name=&quot;**/*.properties&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>/fileset<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>/copy<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>javac srcdir=&quot;${src}&quot; destdir=&quot;${build}&quot; encoding=&quot;UTF-8&quot; deprecation=&quot;true&quot; listfiles=&quot;off&quot; fork=&quot;true&quot; target=&quot;1.6&quot; debug=&quot;false&quot; failonerror=&quot;false&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>!--给编译器指定编码，防止出现：&quot;警告： 编码 GBK 的不可映射字符&quot;--<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>compilerarg line=&quot;-encoding UTF-8 &quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>classpath refid=&quot;external.jars.path&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>/javac<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>echo message=&quot;compile finished!&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;execute.class&quot; depends=&quot;compile&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>echo message=&quot;${name}.execute&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>java classname=&quot;${entry.class}&quot; classpath=&quot;${build}&quot; fork=&quot;true&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>sysproperty key=&quot;file.encoding&quot; value=&quot;UTF-8&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>classpath refid=&quot;external.jars.path&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>/java<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;package2jar&quot; depends=&quot;compile&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>echo message=&quot;${name}.package2jar&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>jar destfile=&quot;${dist}/${name}${version}.jar&quot; basedir=&quot;${build}&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>manifest<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>attribute name=&quot;App-Name&quot; value=&quot;${name}&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>attribute name=&quot;App-Version&quot; value=&quot;${version}&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>attribute name=&quot;App-Author&quot; value=&quot;${author}&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>attribute name=&quot;Created-By&quot; value=&quot;${author}&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>attribute name=&quot;Main-Class&quot; value=&quot;${entry.class}&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>/manifest<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;&lt;strong&gt;</span>EXTERNAL_JARS<span class="nt">&lt;/strong&gt;</span>       <span class="nt">&lt;/jar&gt;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;execute.jar&quot; depends=&quot;package2jar&quot;<span class="ni">&amp;gt;</span>
 </span><span class='line'>    <span class="ni">&amp;lt;</span>echo message=&quot;${name}.jar.execute&quot; /<span class="ni">&amp;gt;</span>
@@ -225,6 +755,13 @@
 </span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;rerun&quot; depends=&quot;clean&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>ant antfile=&quot;build.xml&quot; target=&quot;execute.class&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;&lt;/project&gt;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>target name=&quot;rerun&quot; depends=&quot;clean&quot;<span class="ni">&amp;gt;</span>
 </span><span class='line'>    <span class="ni">&amp;lt;</span>ant antfile=&quot;build.xml&quot; target=&quot;execute.class&quot; /<span class="ni">&amp;gt;</span>
 </span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
 </span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>

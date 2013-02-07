@@ -6,6 +6,7 @@ comments: true
 categories: Java相关
 tags: [java, ant]
 ---
+<!-- more -->
 ##功能：
 生成的 `build.xml` 用来提供自动以 eclipse 执行，  
 自动打 jar 包，自动以 ant 执行，自动执行生成的 jar 等功能~  

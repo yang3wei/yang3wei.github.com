@@ -4,7 +4,7 @@
   <title><![CDATA[yang3wei的专栏]]></title>
   <link href="http://yang3wei.github.com/atom.xml" rel="self"/>
   <link href="http://yang3wei.github.com/"/>
-  <updated>2013-02-08T17:30:03+08:00</updated>
+  <updated>2013-02-09T02:41:40+08:00</updated>
   <id>http://yang3wei.github.com/</id>
   <author>
     <name><![CDATA[yang3wei]]></name>
@@ -12,6 +12,602 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Java 重用之 PathUtil]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/09/java-zhong-yong-zhi-pathutil/"/>
+    <updated>2013-02-09T01:42:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/09/java-zhong-yong-zhi-pathutil</id>
+    <content type="html"><![CDATA[<p>直接上代码：</p>
+
+<!-- more -->
+
+
+
+
+<figure class='code'><figcaption><span>PathUtil.java  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+<span class='line-number'>132</span>
+<span class='line-number'>133</span>
+<span class='line-number'>134</span>
+<span class='line-number'>135</span>
+<span class='line-number'>136</span>
+<span class='line-number'>137</span>
+<span class='line-number'>138</span>
+<span class='line-number'>139</span>
+<span class='line-number'>140</span>
+<span class='line-number'>141</span>
+<span class='line-number'>142</span>
+<span class='line-number'>143</span>
+<span class='line-number'>144</span>
+<span class='line-number'>145</span>
+<span class='line-number'>146</span>
+<span class='line-number'>147</span>
+<span class='line-number'>148</span>
+<span class='line-number'>149</span>
+<span class='line-number'>150</span>
+<span class='line-number'>151</span>
+<span class='line-number'>152</span>
+<span class='line-number'>153</span>
+<span class='line-number'>154</span>
+<span class='line-number'>155</span>
+<span class='line-number'>156</span>
+<span class='line-number'>157</span>
+<span class='line-number'>158</span>
+<span class='line-number'>159</span>
+<span class='line-number'>160</span>
+<span class='line-number'>161</span>
+<span class='line-number'>162</span>
+<span class='line-number'>163</span>
+<span class='line-number'>164</span>
+<span class='line-number'>165</span>
+<span class='line-number'>166</span>
+<span class='line-number'>167</span>
+<span class='line-number'>168</span>
+<span class='line-number'>169</span>
+<span class='line-number'>170</span>
+<span class='line-number'>171</span>
+<span class='line-number'>172</span>
+<span class='line-number'>173</span>
+<span class='line-number'>174</span>
+<span class='line-number'>175</span>
+<span class='line-number'>176</span>
+<span class='line-number'>177</span>
+<span class='line-number'>178</span>
+<span class='line-number'>179</span>
+<span class='line-number'>180</span>
+<span class='line-number'>181</span>
+<span class='line-number'>182</span>
+<span class='line-number'>183</span>
+<span class='line-number'>184</span>
+<span class='line-number'>185</span>
+<span class='line-number'>186</span>
+<span class='line-number'>187</span>
+<span class='line-number'>188</span>
+<span class='line-number'>189</span>
+<span class='line-number'>190</span>
+<span class='line-number'>191</span>
+<span class='line-number'>192</span>
+<span class='line-number'>193</span>
+<span class='line-number'>194</span>
+<span class='line-number'>195</span>
+<span class='line-number'>196</span>
+<span class='line-number'>197</span>
+<span class='line-number'>198</span>
+<span class='line-number'>199</span>
+<span class='line-number'>200</span>
+<span class='line-number'>201</span>
+<span class='line-number'>202</span>
+<span class='line-number'>203</span>
+<span class='line-number'>204</span>
+<span class='line-number'>205</span>
+<span class='line-number'>206</span>
+<span class='line-number'>207</span>
+<span class='line-number'>208</span>
+<span class='line-number'>209</span>
+<span class='line-number'>210</span>
+<span class='line-number'>211</span>
+<span class='line-number'>212</span>
+<span class='line-number'>213</span>
+<span class='line-number'>214</span>
+<span class='line-number'>215</span>
+<span class='line-number'>216</span>
+<span class='line-number'>217</span>
+<span class='line-number'>218</span>
+<span class='line-number'>219</span>
+<span class='line-number'>220</span>
+<span class='line-number'>221</span>
+<span class='line-number'>222</span>
+<span class='line-number'>223</span>
+<span class='line-number'>224</span>
+<span class='line-number'>225</span>
+<span class='line-number'>226</span>
+<span class='line-number'>227</span>
+<span class='line-number'>228</span>
+<span class='line-number'>229</span>
+<span class='line-number'>230</span>
+<span class='line-number'>231</span>
+<span class='line-number'>232</span>
+<span class='line-number'>233</span>
+<span class='line-number'>234</span>
+<span class='line-number'>235</span>
+<span class='line-number'>236</span>
+<span class='line-number'>237</span>
+<span class='line-number'>238</span>
+<span class='line-number'>239</span>
+<span class='line-number'>240</span>
+<span class='line-number'>241</span>
+<span class='line-number'>242</span>
+<span class='line-number'>243</span>
+<span class='line-number'>244</span>
+<span class='line-number'>245</span>
+<span class='line-number'>246</span>
+<span class='line-number'>247</span>
+<span class='line-number'>248</span>
+<span class='line-number'>249</span>
+<span class='line-number'>250</span>
+<span class='line-number'>251</span>
+<span class='line-number'>252</span>
+<span class='line-number'>253</span>
+<span class='line-number'>254</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">package</span> <span class="n">org</span><span class="o">.</span><span class="na">bruce</span><span class="o">.</span><span class="na">pocket</span><span class="o">.</span><span class="na">tools</span><span class="o">.</span><span class="na">utils</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.File</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.UnsupportedEncodingException</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.net.URL</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.net.URLDecoder</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.security.ProtectionDomain</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.Enumeration</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.LinkedList</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.jar.JarEntry</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.jar.JarFile</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * @author Bruce Yang</span>
+</span><span class='line'><span class="cm"> * 路径工具~</span>
+</span><span class='line'><span class="cm"> * </span>
+</span><span class='line'><span class="cm"> * 1.public static String getRunningPath() {}</span>
+</span><span class='line'><span class="cm"> * &lt;b&gt;功能描述&lt;/b&gt;：</span>
+</span><span class='line'><span class="cm"> * 获取当前正处于执行状态的 java 程序的绝对路径:</span>
+</span><span class='line'><span class="cm"> * 如果是以 jar 的方式执行，则返回该 jar 文件的绝对路径；</span>
+</span><span class='line'><span class="cm"> *   /Users/y3w/Desktop/ChangeIcon1.0.jar</span>
+</span><span class='line'><span class="cm"> * 如果是以 eclipse 或 ant 的方式在目录中执行的，则返回 bin 或 build 目录的绝对路径~</span>
+</span><span class='line'><span class="cm"> *   /Users/y3w/Projects/Eclipse/workspace1/ChangeIcon/bin/</span>
+</span><span class='line'><span class="cm"> *   /Users/y3w/Projects/Eclipse/workspace1/ChangeIcon/build/</span>
+</span><span class='line'><span class="cm"> * </span>
+</span><span class='line'><span class="cm"> * 2.public static String getRunningParentPath() {}</span>
+</span><span class='line'><span class="cm"> * &lt;b&gt;功能描述&lt;/b&gt;：</span>
+</span><span class='line'><span class="cm"> * 获取当前正处于执行状态的 java 程序的父路径（末尾不带 File.seperator）。</span>
+</span><span class='line'><span class="cm"> * </span>
+</span><span class='line'><span class="cm"> * 3.public static String getFullPath(String resFileName) {}</span>
+</span><span class='line'><span class="cm"> * &lt;b&gt;功能描述&lt;/b&gt;：</span>
+</span><span class='line'><span class="cm"> * 在使用 jar 包内资源文件的时候，仅需传入文件名即可获得完整包路径~</span>
+</span><span class='line'><span class="cm"> * 如传入 “ant_template.properties”，就能得到：</span>
+</span><span class='line'><span class="cm"> * “/org/bruce/pocket/tools/res/ant_template.properties”</span>
+</span><span class='line'><span class="cm"> * 优点就是，无论是在 eclipse 中执行，还是在 ant 中执行，甚至是在 jar 包中执行，</span>
+</span><span class='line'><span class="cm"> * 都能表现一致，无障碍地拿到所需要资源文件的数据~</span>
+</span><span class='line'><span class="cm"> * &lt;b&gt;注意事项&lt;/b&gt;：</span>
+</span><span class='line'><span class="cm"> * 须将资源文件放置在以 DOMAIN 开头，以 “res” 结尾的包里面~</span>
+</span><span class='line'><span class="cm"> * &lt;b&gt;注&lt;/b&gt;：</span>
+</span><span class='line'><span class="cm"> * 借鉴了 cocos2d 的资源文件加载机制~</span>
+</span><span class='line'><span class="cm"> * </span>
+</span><span class='line'><span class="cm"> * 4.</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">PathUtil</span> <span class="o">{</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="cm">/**</span>
+</span><span class='line'><span class="cm">  * 在这里设定以哪个包为起始点执行搜索资源文件的操作（避免在导入的其他 jar 包里面做无用功）~</span>
+</span><span class='line'><span class="cm">  */</span>
+</span><span class='line'>  <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">DOMAIN</span> <span class="o">=</span> <span class="s">&quot;org/bruce/&quot;</span><span class="o">;</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="kd">private</span> <span class="kd">static</span> <span class="n">String</span> <span class="n">_runningPath</span><span class="o">;</span>
+</span><span class='line'>  <span class="kd">private</span> <span class="kd">static</span> <span class="n">String</span> <span class="n">_runningParentPath</span><span class="o">;</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">_pathList</span><span class="o">;</span>
+</span><span class='line'>  <span class="kd">static</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">_pathList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;();</span>
+</span><span class='line'>      
+</span><span class='line'>      <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">tempList</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>      <span class="n">String</span> <span class="n">absPath</span> <span class="o">=</span> <span class="n">getRunningPath</span><span class="o">();</span>
+</span><span class='line'>      
+</span><span class='line'>      <span class="c1">// /Users/y3w/Desktop/ChangeIcon1.0.jar</span>
+</span><span class='line'>      <span class="k">if</span> <span class="o">(</span><span class="n">absPath</span><span class="o">.</span><span class="na">endsWith</span><span class="o">(</span><span class="s">&quot;.jar&quot;</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>          <span class="n">JarFile</span> <span class="n">jarFile</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>          <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>              <span class="n">jarFile</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JarFile</span><span class="o">(</span><span class="n">absPath</span><span class="o">);</span>
+</span><span class='line'>          <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>              <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>          <span class="c1">// [org/bruce/, org/, org/bruce/pocket/, ...]</span>
+</span><span class='line'>          <span class="n">tempList</span> <span class="o">=</span> <span class="n">getFilteredFolderPaths</span><span class="o">(</span><span class="n">jarFile</span><span class="o">,</span> <span class="n">DOMAIN</span><span class="o">);</span>
+</span><span class='line'>          
+</span><span class='line'>          <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">item</span> <span class="o">:</span> <span class="n">tempList</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>              <span class="k">if</span> <span class="o">(</span><span class="n">item</span><span class="o">.</span><span class="na">endsWith</span><span class="o">(</span><span class="s">&quot;/res/&quot;</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>                  <span class="n">_pathList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">item</span><span class="o">);</span>
+</span><span class='line'>              <span class="o">}</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>          
+</span><span class='line'>      <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>          <span class="c1">// [~/Projects/eclipse/workspace2/JavaDynamicCompile/org/bruce/pocket/tools/res, ...]</span>
+</span><span class='line'>          <span class="c1">// [C:\java\Projects\JavaDynamicCompile\org\bruce\pocket\tools\res, ...]</span>
+</span><span class='line'>          <span class="n">tempList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;();</span>
+</span><span class='line'>          <span class="n">listFolderPaths</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">absPath</span><span class="o">),</span> <span class="n">tempList</span><span class="o">);</span>    <span class="c1">// 绝对路径~</span>
+</span><span class='line'>
+</span><span class='line'>          <span class="c1">// windows</span>
+</span><span class='line'>          <span class="n">String</span> <span class="n">domain</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>          <span class="kt">boolean</span> <span class="n">bIsWindows</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">&quot;os.name&quot;</span><span class="o">).</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;windows&quot;</span><span class="o">);</span>
+</span><span class='line'>          <span class="k">if</span> <span class="o">(</span><span class="n">bIsWindows</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>              <span class="n">domain</span> <span class="o">=</span> <span class="n">DOMAIN</span><span class="o">.</span><span class="na">replace</span><span class="o">(</span><span class="s">&quot;/&quot;</span><span class="o">,</span> <span class="s">&quot;\\\\&quot;</span><span class="o">);</span>
+</span><span class='line'>          <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>              <span class="n">domain</span> <span class="o">=</span> <span class="n">DOMAIN</span><span class="o">;</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>          
+</span><span class='line'>          <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">item</span> <span class="o">:</span> <span class="n">tempList</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>              <span class="k">if</span> <span class="o">(</span><span class="n">item</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">domain</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">item</span><span class="o">.</span><span class="na">endsWith</span><span class="o">(</span><span class="n">File</span><span class="o">.</span><span class="na">separator</span> <span class="o">+</span> <span class="s">&quot;res&quot;</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>                  <span class="n">item</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="na">replace</span><span class="o">(</span><span class="n">absPath</span><span class="o">,</span> <span class="s">&quot;&quot;</span><span class="o">);</span>
+</span><span class='line'>                  <span class="k">if</span> <span class="o">(</span><span class="n">bIsWindows</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                      <span class="n">_pathList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">item</span><span class="o">.</span><span class="na">replace</span><span class="o">(</span><span class="s">&quot;\\\\&quot;</span><span class="o">,</span> <span class="s">&quot;/&quot;</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span><span class="o">);</span>
+</span><span class='line'>                  <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>                      <span class="n">_pathList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">item</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span><span class="o">);</span>
+</span><span class='line'>                  <span class="o">}</span>
+</span><span class='line'>              <span class="o">}</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'><span class="c1">//       System.out.println(pathList);</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="cm">/**</span>
+</span><span class='line'><span class="cm">  * 由资源文件的文件命获取完整路径~</span>
+</span><span class='line'><span class="cm">  * 须将资源文件放置在以 DOMAIN 开头，以 “res” 结尾的包里面，不然就会找不到~</span>
+</span><span class='line'><span class="cm">  * @param resFileName</span>
+</span><span class='line'><span class="cm">  * @return</span>
+</span><span class='line'><span class="cm">  */</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">getFullPath</span><span class="o">(</span><span class="n">String</span> <span class="n">resFileName</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">String</span> <span class="n">target</span> <span class="o">=</span> <span class="n">resFileName</span> <span class="o">+</span> <span class="s">&quot;_does_Not_Exist&quot;</span><span class="o">;</span>
+</span><span class='line'>      <span class="n">String</span> <span class="n">fullPath</span><span class="o">;</span>
+</span><span class='line'>      <span class="k">if</span> <span class="o">(</span><span class="n">_runningPath</span><span class="o">.</span><span class="na">endsWith</span><span class="o">(</span><span class="s">&quot;.jar&quot;</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>          <span class="n">JarFile</span> <span class="n">jarFile</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>          <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>              <span class="n">jarFile</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JarFile</span><span class="o">(</span><span class="n">_runningPath</span><span class="o">);</span>
+</span><span class='line'>          <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>              <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>          <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">item</span> <span class="o">:</span> <span class="n">_pathList</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>              <span class="n">fullPath</span> <span class="o">=</span> <span class="n">item</span> <span class="o">+</span> <span class="n">resFileName</span><span class="o">;</span>
+</span><span class='line'>              
+</span><span class='line'>              <span class="cm">/**</span>
+</span><span class='line'><span class="cm">              * getJarEntry 的合法参数格式：</span>
+</span><span class='line'><span class="cm">              * org/bruce/pocket/tools/res/w400_h300.png</span>
+</span><span class='line'><span class="cm">              * 须要 target 的第一个斜杠给去掉，纠结了老子半天~</span>
+</span><span class='line'><span class="cm">              */</span>
+</span><span class='line'>              <span class="k">if</span> <span class="o">(</span><span class="n">jarFile</span><span class="o">.</span><span class="na">getJarEntry</span><span class="o">(</span><span class="n">fullPath</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">1</span><span class="o">))</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                  <span class="n">target</span> <span class="o">=</span> <span class="n">fullPath</span><span class="o">;</span>
+</span><span class='line'>                  <span class="k">break</span><span class="o">;</span>
+</span><span class='line'>              <span class="o">}</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>      <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>          <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">item</span> <span class="o">:</span> <span class="n">_pathList</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>              <span class="n">StringBuffer</span> <span class="n">sb</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="o">();</span>
+</span><span class='line'>              <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">_runningPath</span><span class="o">);</span>
+</span><span class='line'>              <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">item</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">1</span><span class="o">));</span>
+</span><span class='line'>              <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">resFileName</span><span class="o">);</span>
+</span><span class='line'>              <span class="k">if</span> <span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">sb</span><span class="o">.</span><span class="na">toString</span><span class="o">().</span><span class="na">replaceAll</span><span class="o">(</span><span class="s">&quot;/&quot;</span><span class="o">,</span> <span class="n">File</span><span class="o">.</span><span class="na">separator</span><span class="o">)).</span><span class="na">exists</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>                  <span class="n">target</span> <span class="o">=</span> <span class="n">item</span> <span class="o">+</span> <span class="n">resFileName</span><span class="o">;</span>
+</span><span class='line'>                  <span class="k">break</span><span class="o">;</span>
+</span><span class='line'>              <span class="o">}</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>      <span class="k">return</span> <span class="n">target</span><span class="o">;</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  <span class="cm">/**</span>
+</span><span class='line'><span class="cm">  * 将 JarFile 中以特定前缀起始的 JarEntry.getName() 存放到列表中返回~</span>
+</span><span class='line'><span class="cm">  * @param jarFile</span>
+</span><span class='line'><span class="cm">  * @param strFilter</span>
+</span><span class='line'><span class="cm">  * @return</span>
+</span><span class='line'><span class="cm">  */</span>
+</span><span class='line'>  <span class="kd">private</span> <span class="kd">static</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="nf">getFilteredFolderPaths</span><span class="o">(</span><span class="n">JarFile</span> <span class="n">jarFile</span><span class="o">,</span> <span class="n">String</span> <span class="n">strFilter</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">target</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;();</span>
+</span><span class='line'>      <span class="n">Enumeration</span><span class="o">&lt;</span><span class="n">JarEntry</span><span class="o">&gt;</span> <span class="n">jarEntries</span> <span class="o">=</span> <span class="n">jarFile</span><span class="o">.</span><span class="na">entries</span><span class="o">();</span>
+</span><span class='line'>      <span class="k">while</span> <span class="o">(</span><span class="n">jarEntries</span><span class="o">.</span><span class="na">hasMoreElements</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>          <span class="n">JarEntry</span> <span class="n">jarEntry</span> <span class="o">=</span> <span class="n">jarEntries</span><span class="o">.</span><span class="na">nextElement</span><span class="o">();</span>
+</span><span class='line'>          <span class="k">if</span> <span class="o">(</span><span class="n">jarEntry</span><span class="o">.</span><span class="na">isDirectory</span><span class="o">()</span> <span class="o">&amp;&amp;</span> <span class="n">jarEntry</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">startsWith</span><span class="o">(</span><span class="n">strFilter</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>              <span class="n">target</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">jarEntry</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>      <span class="k">return</span> <span class="n">target</span><span class="o">;</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  <span class="cm">/**</span>
+</span><span class='line'><span class="cm">  * 将目录中所有的子目录的绝对路径存放到列表中返回~</span>
+</span><span class='line'><span class="cm">  * @param dir</span>
+</span><span class='line'><span class="cm">  * @param pathList</span>
+</span><span class='line'><span class="cm">  */</span>
+</span><span class='line'>  <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">listFolderPaths</span><span class="o">(</span><span class="n">File</span> <span class="n">dir</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">pathList</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="k">for</span> <span class="o">(</span><span class="n">File</span> <span class="n">item</span> <span class="o">:</span> <span class="n">dir</span><span class="o">.</span><span class="na">listFiles</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>          <span class="k">if</span> <span class="o">(</span><span class="n">item</span><span class="o">.</span><span class="na">isDirectory</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>              <span class="n">pathList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">item</span><span class="o">.</span><span class="na">getAbsolutePath</span><span class="o">());</span>
+</span><span class='line'>              <span class="n">listFolderPaths</span><span class="o">(</span><span class="n">item</span><span class="o">,</span> <span class="n">pathList</span><span class="o">);</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="cm">/**</span>
+</span><span class='line'><span class="cm">  * 获取当前正处于执行状态的 java 程序的绝对路径</span>
+</span><span class='line'><span class="cm">  * @return</span>
+</span><span class='line'><span class="cm">  */</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">getRunningPath</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="o">(</span><span class="n">_runningPath</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>          <span class="n">String</span> <span class="n">strTemp</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>          
+</span><span class='line'>          <span class="n">ProtectionDomain</span> <span class="n">pDomain</span> <span class="o">=</span> <span class="n">PathUtil</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getProtectionDomain</span><span class="o">();</span>
+</span><span class='line'>          <span class="n">URL</span> <span class="n">url</span> <span class="o">=</span> <span class="n">pDomain</span><span class="o">.</span><span class="na">getCodeSource</span><span class="o">().</span><span class="na">getLocation</span><span class="o">();</span>
+</span><span class='line'>          
+</span><span class='line'>          <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>              <span class="n">strTemp</span> <span class="o">=</span> <span class="n">URLDecoder</span><span class="o">.</span><span class="na">decode</span><span class="o">(</span><span class="n">url</span><span class="o">.</span><span class="na">getPath</span><span class="o">(),</span> <span class="s">&quot;utf-8&quot;</span><span class="o">);</span>
+</span><span class='line'>          <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">UnsupportedEncodingException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>              <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>          
+</span><span class='line'>          <span class="cm">/**</span>
+</span><span class='line'><span class="cm">          * Windows 下运行时会出现在首部多加一个斜杠，正反斜杠的问题~</span>
+</span><span class='line'><span class="cm">          * C:\&gt;java -jar C:\ChangeFolderIcon\ChangeIcon1.0.jar</span>
+</span><span class='line'><span class="cm">          * PathUtil.getRunningPath() = /C:/ChangeFolderIcon/ChangeIcon1.0.jar</span>
+</span><span class='line'><span class="cm">          * Installer.createContainers() failed! exit!</span>
+</span><span class='line'><span class="cm">          */</span>
+</span><span class='line'>          <span class="k">if</span> <span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">&quot;os.name&quot;</span><span class="o">).</span><span class="na">startsWith</span><span class="o">(</span><span class="s">&quot;Windows&quot;</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>              <span class="c1">// 剔除首部的斜杠~</span>
+</span><span class='line'>              <span class="n">strTemp</span> <span class="o">=</span> <span class="n">strTemp</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>              <span class="c1">// 将斜杠替换为反斜杠~</span>
+</span><span class='line'>              <span class="n">strTemp</span> <span class="o">=</span> <span class="n">strTemp</span><span class="o">.</span><span class="na">replaceAll</span><span class="o">(</span><span class="s">&quot;/&quot;</span><span class="o">,</span> <span class="s">&quot;\\\\&quot;</span><span class="o">);</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>          <span class="n">_runningPath</span> <span class="o">=</span> <span class="n">strTemp</span><span class="o">;</span>
+</span><span class='line'><span class="c1">//           System.out.println(&quot;PathUtil.getRunningPath() = &quot; + runningPath);</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>      <span class="k">return</span> <span class="n">_runningPath</span><span class="o">;</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="cm">/**</span>
+</span><span class='line'><span class="cm">  * 获取父级目录的绝对路径~</span>
+</span><span class='line'><span class="cm">  * @return</span>
+</span><span class='line'><span class="cm">  */</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">getRunningParentPath</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="o">(</span><span class="n">_runningParentPath</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>          <span class="n">String</span> <span class="n">runningPath</span> <span class="o">=</span> <span class="n">PathUtil</span><span class="o">.</span><span class="na">getRunningPath</span><span class="o">();</span>
+</span><span class='line'>          
+</span><span class='line'>          <span class="k">if</span> <span class="o">(!</span><span class="n">runningPath</span><span class="o">.</span><span class="na">endsWith</span><span class="o">(</span><span class="s">&quot;.jar&quot;</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">runningPath</span><span class="o">.</span><span class="na">endsWith</span><span class="o">(</span><span class="n">File</span><span class="o">.</span><span class="na">separator</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>              <span class="c1">// 移除末尾的 “/”</span>
+</span><span class='line'>              <span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="n">runningPath</span><span class="o">.</span><span class="na">lastIndexOf</span><span class="o">(</span><span class="n">File</span><span class="o">.</span><span class="na">separator</span><span class="o">);</span>
+</span><span class='line'>              <span class="n">runningPath</span> <span class="o">=</span> <span class="n">runningPath</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">index</span><span class="o">);</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>          
+</span><span class='line'>          <span class="c1">// 移除最后一个路径元部件~</span>
+</span><span class='line'>          <span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="n">runningPath</span><span class="o">.</span><span class="na">lastIndexOf</span><span class="o">(</span><span class="n">File</span><span class="o">.</span><span class="na">separator</span><span class="o">);</span>
+</span><span class='line'>          <span class="n">_runningParentPath</span> <span class="o">=</span> <span class="n">runningPath</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">index</span><span class="o">);</span>
+</span><span class='line'><span class="c1">//           System.out.println(&quot;PathUtil.getRunningParentPath() = &quot; + runningParentPath);</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>      <span class="k">return</span> <span class="n">_runningParentPath</span><span class="o">;</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="cm">/**</span>
+</span><span class='line'><span class="cm">  * @param args</span>
+</span><span class='line'><span class="cm">  * 输出为：</span>
+</span><span class='line'><span class="cm">  * /Users/y3w/Projects/Eclipse/workspace2/JavaDynamicCompile/bin/</span>
+</span><span class='line'><span class="cm">  * /Users/y3w/Projects/Eclipse/workspace2/JavaDynamicCompile</span>
+</span><span class='line'><span class="cm">  * /org/bruce/pocket/tools/res/w400_h300.png</span>
+</span><span class='line'><span class="cm">  * /org/bruce/pocket/tools/res/BruceYang.jv</span>
+</span><span class='line'><span class="cm">  */</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">getRunningPath</span><span class="o">());</span>
+</span><span class='line'>      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">getRunningParentPath</span><span class="o">());</span>
+</span><span class='line'>      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">getFullPath</span><span class="o">(</span><span class="s">&quot;w400_h300.png&quot;</span><span class="o">));</span>
+</span><span class='line'>      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">getFullPath</span><span class="o">(</span><span class="s">&quot;BruceYang.jv&quot;</span><span class="o">));</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[为 Eclipse for Mac 新增 Show in Finder 的功能]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/08/wei-eclipse-for-mac-xin-zeng-show-in-finder-de-gong-neng/"/>
+    <updated>2013-02-08T22:47:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/08/wei-eclipse-for-mac-xin-zeng-show-in-finder-de-gong-neng</id>
+    <content type="html"><![CDATA[<p>相信各位使用 Mac OS 作为开发平台的同僚都遇到过如下的问题：<br/>
+想在 Finder 中显示 eclipse 工程中的某个文件，挺不容易的！<br/>
+不知道其他人是怎么弄的，这里说一下我是怎么弄的吧：</p>
+
+<!-- more -->
+
+
+<p><strong>1.在工程视图里选中要在 Finder 中显示的文件</strong><br/>
+<strong>2.在弹出的右键菜单中选择 Properties</strong><br/>
+<strong>3.复制该文件父目录的绝对路径</strong><br/>
+<strong>4.打开 Finder</strong><br/>
+<strong>5.Command + Shift + G 弹出快速前往的对话框</strong><br/>
+<strong>6.在路径输入框中粘贴之前复制的父目录绝对路径</strong><br/>
+<strong>7.回车前往目标文件所在的父目录</strong><br/>
+<strong>8.手动在 Finder 的父目录中定位目标文件</strong></p>
+
+<p>不是很难，但由上面的步骤可以看出，操作起来还是挺麻烦的。<br/>
+一次两次可能还不觉得，但如果是经常要执行类似的操作就很烦了~<br/>
+我就一直在为这个问题而感到烦恼！如何来终结这种不利的境况？</p>
+
+<h2>这里介绍一个解决方案</h2>
+
+<p>为 eclipse 扩展一个自定义的功能！<br/>
+<strong>原理很简单，就是以命令行的方式来调用外部的可执行文件来满足自己的需求。</strong></p>
+
+<p>再对上面的需求做一下总结吧：<br/>
+不就是要在 Finder（Mac OS）或者 Explorer（Windows）里面定位出某个文件么，<br/>
+从编写程序的角度来看，文件的绝对路径都能拿到了，定位到该文件还有什么好难的？</p>
+
+<p>摸索过程中我找到了一篇很有用的资料：<br/>
+<a href="http://stackoverflow.com/questions/1161240/in-eclipse-reveal-current-file-in-filesystem">In eclipse, reveal current file in filesystem</a></p>
+
+<p>浓缩的精华：<br/>
+<strong>You can also develop your own external tool to open the file in a Windows explorer</strong><br/>
+<img class="center" src="http://yang3wei.github.com/images/posts/meaningful.gif"></p>
+
+<p>到这里就算是有头绪了，如图所示：<br/>
+仅需对上图中针对 <code>Windows</code> 的配置做更改，适配到 <code>Mac</code> 平台就行了。<br/>
+其实很简单，改几个地方就 ok 了：<br/>
+第一个是 <code>Name</code>，改成你喜欢的名字吧，比如说：<code>show in finder</code><br/>
+第二个是 <code>Location</code>，改成要调用的外部可执行文件的完整路径即可，如：<code>/usr/bin/open</code><br/>
+第三个是 <code>Arguments</code>，涵义是要给外部可执行文件传入的参数。<br/>
+这里可以再次借助 eclipse 提供的功能来简化我们所要做的操作：<br/>
+${resource_loc} 可以拿到当前所选择文件的绝对路径；<br/>
+${container_loc} 可以拿到当前所选择文件父目录的绝对路径。<br/>
+<img class="center" src="http://yang3wei.github.com/images/posts/external_tools_configurations.png">
+<img class="center" src="http://yang3wei.github.com/images/posts/external_tools_configring.png">
+<code>/usr/bin/open</code> 是 <code>Mac</code> 的内置命令，<br/>
+<code>open</code> 命令带 <code>-R</code> 参数表示在 <code>Finder</code> 中呈现出目标文件，<br/>
+（注：不带 <code>-R</code> 参数的话就会选择相关联的程序来打开该文件）<br/>
+这样一来的话，就算是大功告成了~</p>
+
+<h2>如何来执行这个扩展出来的功能呢？</h2>
+
+<p>也很简单，不过先要将名为 <code>show in finder</code> 的扩展功能设置为 <code>favourite</code>：<br/>
+在 <code>Organize Favourites...</code> 里面 <code>add</code> 一下即可！<br/>
+<img class="center" src="http://yang3wei.github.com/images/posts/set_as_favourite.png">
+接下来就开始享受便利的生活吧：<br/>
+首先，选择要在 <code>Finder</code> 中显示的目标文件，<br/>
+然后，按一下工具栏 <code>Run</code> 按钮右边和 <code>Run</code> 按钮长的比较像的那个按钮。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Mac 下的 tree 命令]]></title>
@@ -602,147 +1198,101 @@ mac os x lion 跑起来必须要  ahci 的支持，而我的机器在正常运�
     <content type="html"><![CDATA[<!-- more -->
 
 
+<p></p>
+
 <h2>2012 年的最后一天，唠几句闲话先~</h2>
 
-<p>从 2011 年 6月份开始踏入 iOS 开发行列，如今已经一个半年头了。
-遇到的第一个问题便是对 objective-c 一点都不懂，作为 c 的扩展，oc 和 cpp 可谓是一对亲兄弟。
-现在看来，只是 oc 那种的中缀式语法让我感到比较奇葩，让当时作为菜鸟的我难以理解。
-我在大学的专业学的是软件开发与项目管理，c、数据结构、离散数学什么的都开过课程，
-但作为逃课王的我，每每挂科后于补考时咸鱼翻身总是那么地稀松平常，
-没有细数自己挂过多少门科，但很庆幸的是，没有一门是在补考时没有扳回来的。
-记得逃课最长的一次记录是连续 20 多天没有去上主修专业的课程，
-我的专业老师托与我同寝的兄弟给我传话，再不去就要叫家长了。。。
-当然，我后来还是妥协了，谁也不愿意让老爸老妈来大老远地跑过来视察自己糜烂的大学生活~</p>
+<p>从 2011 年 6月份开始踏入 iOS 开发行列，如今已经一个半年头了。遇到的第一个问题便是对 objective-c 一点都不懂，作为 c 的扩展，oc 和 cpp 可谓是一对亲兄弟。现在看来，只是 oc 那种的中缀式语法让我感到比较奇葩，让当时作为菜鸟的我难以理解。我在大学的专业学的是软件开发与项目管理，c、数据结构、离散数学什么的都开过课程，但作为逃课王的我，每每挂科后于补考时咸鱼翻身总是那么地稀松平常。没有细数自己挂过多少门科，但很庆幸的是，没有一门是在补考时没有扳回来的。记得逃课最长的一次记录是连续 20 多天没有去上主修专业的课程，我的专业老师托与我同寝的兄弟给我传话，再不去就要叫家长了。当然，我后来还是妥协了，谁也不愿意让老爸老妈来大老远地跑过来视察自己糜烂的大学生活~</p>
 
-<p>总的来说吧，虽然我还是挺放任、挺邪恶的，但我还是有一颗向上的心。
-依然能够想起当年我在长沙的寒冬于小树林里学习《计算机网络》的情形，难得我也有认真的时候。
-除此之外，java 的学习我也挺用功的，还写了不少小玩意儿来自娱自乐，
-当初学习 c 语言的时候我就没正儿八经的听过几节课，教 c 语言的老师后来也是果断地就把我给做掉了。
-说来我对自己的专业还是感觉挺恶心的，在我的认识里，软件开发与项目管理 == java | c# web项目
-这和我认识里的软件、项目可差得远了，不过我承认，这确实是我想的有些美了。</p>
+<p>总的来说吧，虽然我还是挺放任、挺邪恶的，但我还是有一颗向上的心。依然能够想起当年我在长沙的寒冬，于小树林里学习《计算机网络》的情形，难得我也有认真的时候。除此之外，java 的学习我也挺用功的，还写了不少小玩意儿来自娱自乐。当初学习 c 语言的时候我就没正儿八经的听过几节课，教 c 语言的老师后来也是果断地就把我给做掉了。说来我对自己的专业还是感觉挺恶心的，专业老师教导我，软件开发与项目管理 == java | c# web项目。这和我认识里的软件、项目可差得远了。不过我承认，这确实是我自己有点儿想地太美了。</p>
 
-<p>PS：
-我之前以为软件开发与项目管理是一个很宽的范畴，其中就包括了游戏的开发，
-也就是说，在前面打好了基础之后，后面自己能够根据爱好自由地选择出口，
-但是我错了，大专里面的专于一点让这成为梦幻的泡沫。</p>
+<p>PS：<br/>
+我之前以为软件开发与项目管理是一个很宽的范畴，其中就包括了游戏的开发。也就是说，在前面打好了基础之后，后面自己能够根据爱好自由地选择出口。但是我错了，大专里面的专于一点让这成为梦幻的泡沫。</p>
 
-<p>2011 年 6 月份我从学院里面毕业了，我始终是不太愿意去找一份 web 相关的工作，
-后来我有在深圳工作的朋友邀我一起做 iOS 开发，于是我便打扮地像蜗牛一样背着重重的壳朝着深圳出发了。
-之后也发生了很多事情，到这里有点儿犯懒了，下次再补上吧。</p>
+<p>2011 年 6 月份我从学院里面毕业了，我始终是不太愿意去找一份 web 相关的工作。后来，我有在深圳工作的朋友邀我一起做 iOS 开发，于是我便打扮地像蜗牛一样背着重重的壳朝着深圳出发了。之后也发生了很多事情，到这里有点儿犯懒了，下次再补上吧。</p>
 
 <h2>接下来进入重点，下面是一些有助于开发的知识：</h2>
 
-<p>关键字：<code>Mac OS X Lion 10.7.2</code>、<code>XCode 4.2</code>、<code>hotkey</code>。
-备注：随着了解的不断深入，我越来越沉溺于 mac 和 xcode 无法自拔，真 tmd 太优秀了。</p>
+<p><strong>关键字：</strong><code>Mac OS X Lion 10.7.2</code>、<code>XCode 4.2</code>、<code>hotkey</code>。<br/>
+<strong>备注：</strong>随着了解的不断深入，我越来越沉溺于 mac 和 xcode 无法自拔，太优秀了！</p>
 
-<p>0。mac 系统通用快捷键（mac 下的应用多数会往这些标准看齐）
-command + w: 关闭当前窗口
-command + q: 退出程序（Google Chrome 有点奇葩，按下之后还需要hold 那么一小会儿才能退出）
-command + m: 最小化当前窗口（怎么不用鼠标将最小化于dock 上的窗口还原？spotlight 或 control + f2->window 菜单项都行）
-command + h: 隐藏当前应用的所有窗口
-command + c: 复制
-command + v: 粘贴
-control + F2：激活菜单栏（这个关机的时候比较好用，手不用脱离键盘了）
-command + f: 寻找
-command + space: 切换输入法
-command + tab：切换程序（这里又要注意的地方，切换过程中最好不要移动鼠标，否则容易出现混乱切换的情况）
-control + space：spotlight</p>
+<h3>mac 系统通用快捷键（mac 下的应用多数会往这些标准看齐）</h3>
 
-<p>spotlight 这东西设计的很精妙，一些人说这没什么用要禁掉乃是因为没有找到正确的使用方法。
-从设计上来看，spotlight 位于屏幕的最右上角，就一个放大镜的小图标，
-可以通过 control + space 快捷键轻松调出，然后就会将焦点转移到搜索框里面，
-在这里可以很便捷地搜索自己想要找的东西，包括各种可用的 Applications，
-这也是我推崇 spotlight 一个很重要的原因，因为有了这个东西，
-手指完全不用脱离键盘你就可以启动任何为你所需要的应用程序。
-不知道一般家庭用的 mac 用户对这点是否有如此严苛的需求，但作为开发人员而言，
-穿梭于各种应用的功能之间，是在平凡不过的事情，这一点给我带来了很大的便利性。
-举例说明：
-在要启动 XCode 开始一天工作的时候，按下 control + space 调出 spotlight 搜索框，
-键入 XCode 后，搜索框下面会列出各种各样的候选条目，可以发现 XCode.app 是放在很前列的，
-只需要配合上下键、回车键，就达到了快捷启动 XCode 的目的。</p>
+<p>command + w: 关闭当前窗口<br/>
+command + q: 退出程序<br/>
+（Google Chrome 有点奇葩，按下之后还需要hold 那么一小会儿才能退出）</p>
 
-<p><strong>现在我已经越来越意识到快捷键所带来的便利</strong>，这是也是有根源、有历史的。
-传说中的代码编辑神器 vi、vim、emacs，无一不在快捷键上面独树一帜。
-它们的理念就是在编码过程中抛弃对鼠标的操作，甚至抛弃对上下左下键的操作。
-以达到最神速、迅捷的编辑目的。
-有些特色所带来的便利性没有体会过是很难以理解的，这就是导致一些很优秀的东西口碑褒贬不一的重要原因之一。</p>
+<p>command + m: 最小化当前窗口<br/>
+（怎么不用鼠标将最小化于dock 上的窗口还原？spotlight 或 control + f2->window 菜单项都行）</p>
 
-<p>最后要说的就是 Dock，你可以通过 command + alt + d 隐藏或者呈现 dock，
-也可以选在把 dock 放在左、下、右任一个方位，你可以把 Applications 文件夹的应用程序拖拽到 Dock上面，方便你的使用，
-也可以在不需要的时候把dock 上面的条目拽出 Dock 从而移除它。
-对比 windows 来看，Dock 还是一个非常舒服的东西，特别是 mac 界面本身就非常精美，
-一个个的应用图标排布在 Dock 上面，再配合Magnification 的放缩效果，可谓是琳琅满目，
-反观windows xp，底部一个系统的任务栏，应用程序的的菜单本本分分的布置在自己窗口的顶部，
-孰好孰坏就不多做评论了，唯一确定的一点是我是更倾向于 mac 的设计风格的（难道是因为我用 windows 那么多年已经厌倦的原因？）
-Dock 上面的两个重量级功能：Mission Control 和 Launchpad。
-Mission Control 让我在单屏显示器上面获得了多屏显示的感受，而 LaunchPad 则让启动想要的程序变地无比简单。
-对比 Windows，LaunchPad 这种模仿 iOS 风格的以面、网格呈现可用条目的方式，无疑比那层层弹出的列表方式更为高效、优秀。</p>
+<p>command + h: 隐藏当前应用的所有窗口<br/>
+command + c: 复制<br/>
+command + v: 粘贴<br/>
+control + F2：激活菜单栏<br/>
+（这个关机的时候比较好用，手不用脱离键盘了）</p>
 
-<p>1。Finder 的最常用快捷键：
-space：预览文件
-command + down：打开文件
-command + backspace：移到废纸篓
-command + ctrl + 0 ~ 7：按各种方式规整地排列子文件
-command + shift + g：前往某个路径
-command + 1 ~ 4：更换呈现方式
-command + shift + f：All my Files
-command + shift + o: 打开文档目录
-command + shift + d: 打开桌面目录
-command + alt + L: 打开下载目录
-command + shift + h: 打开home 目录
-command + shift + C: 打开我的电脑
-command + shift + A: 打开应用程序目录
+<p>command + f: 寻找<br/>
+command + space: 切换输入法<br/>
+command + tab：切换程序<br/>
+（这里又要注意的地方，切换过程中最好不要移动鼠标，否则容易出现混乱切换的情况）</p>
+
+<p>control + space：spotlight</p>
+
+<p>spotlight 这东西设计的很精妙，一些人说这没什么用要禁掉乃是因为没有找到正确的使用方法。从设计上来看，spotlight 位于屏幕的最右上角，就一个放大镜的小图标，可以通过 control + space 快捷键轻松调出，然后就会将焦点转移到搜索框里面，在这里可以很便捷地搜索自己想要找的东西，包括各种可用的 Applications，这也是我推崇 spotlight 一个很重要的原因，因为有了这个东西，手指完全不用脱离键盘你就可以启动任何为你所需要的应用程序。不知道一般家庭用的 mac 用户对这点是否有如此严苛的需求，但作为开发人员而言，穿梭于各种应用的功能之间，是在平凡不过的事情，这一点给我带来了很大的便利性。举例说明：在要启动 XCode 开始一天工作的时候，按下 control + space 调出 spotlight 搜索框，键入 XCode 后，搜索框下面会列出各种各样的候选条目，可以发现 XCode.app 是放在很前列的，只需要配合上下键、回车键，就达到了快捷启动 XCode 的目的。</p>
+
+<p><strong>现在我已经越来越意识到快捷键所带来的便利</strong>，这是也是有根源的。传说中的代码编辑神器 vi、vim、emacs，无一不在快捷键上独树一帜。它们的理念就是在编码过程中抛弃对鼠标的操作，甚至抛弃对上下左下键的操作，以达到最神速、迅捷的编辑目的。有些特色所带来的便利性没有体会过是很难以理解的，这就是导致一些很优秀的东西口碑褒贬不一的重要原因之一。</p>
+
+<p>最后要说的就是 Dock，你可以通过 command + alt + d 隐藏或者呈现 dock，也可以选在把 dock 放在左、下、右任一个方位，你可以把 Applications 文件夹的应用程序拖拽到 Dock上面，方便你的使用，也可以在不需要的时候把dock 上面的条目拽出 Dock 从而移除它。对比 windows 来看，Dock 还是一个非常舒服的东西，特别是 mac 界面本身就非常精美，一个个的应用图标排布在 Dock 上面，再配合 Magnification 的放缩效果，可谓是琳琅满目。反观windows xp，底部一个系统的任务栏，应用程序的的菜单本本分分的布置在自己窗口的顶部。孰好孰坏就不多做评论了，唯一确定的一点是我是更倾向于 mac 的设计风格的（难道是因为我用 windows 那么多年已经厌倦的原因？）Dock 上面的两个重量级功能：Mission Control 和 Launchpad。Mission Control 让我在单屏显示器上面获得了多屏显示的感受，而 LaunchPad 则让启动想要的程序变地无比简单。对比 Windows，LaunchPad 这种模仿 iOS 风格的以面、网格呈现可用条目的方式，无疑比那层层弹出的列表方式更为高效、优秀。</p>
+
+<p>1。Finder 的最常用快捷键：<br/>
+space：预览文件<br/>
+command + down：打开文件<br/>
+command + backspace：移到废纸篓<br/>
+command + ctrl + 0 ~ 7：按各种方式规整地排列子文件<br/>
+command + shift + g：前往某个路径<br/>
+command + 1 ~ 4：更换呈现方式<br/>
+command + shift + f：All my Files<br/>
+command + shift + o: 打开文档目录<br/>
+command + shift + d: 打开桌面目录<br/>
+command + alt + L: 打开下载目录<br/>
+command + shift + h: 打开home 目录<br/>
+command + shift + C: 打开我的电脑<br/>
+command + shift + A: 打开应用程序目录<br/>
 command + shift + U: 打开工具目录</p>
 
-<p>2。编码神器 XCode 最有价值的快捷键
-command + e: 将所选中的文本传递到搜索框（但搜索框不会呈现出来）
-command + f: 寻找
-command + g: 寻找下一个
-command + L: 定位到当前所编辑的代码文件的第多少行
-上面这些快捷键能够很轻松的完成编辑点定位的功能，再次我们心爱的让鼠标被冷落在一旁。
-使用说明：
-有时候报错会报出错误出现在哪一行，诸如opengl es2 check_gl_error，这里 command + L 能发挥出很好的行定位作用。
-再个就是 command + f 与 command + g，
-command +f 键入自己想要定位到的点前面的几个符号进行搜索，
-配合 command + g 寻找下一个，定位到目标点位以后，按下  esc 关闭搜索功能，就完成了编辑点的精确定位。</p>
+<p>2。编码神器 XCode 最有价值的快捷键<br/>
+command + e: 将所选中的文本传递到搜索框（但搜索框不会呈现出来）<br/>
+command + f: 寻找<br/>
+command + g: 寻找下一个<br/>
+command + L: 定位到当前所编辑的代码文件的第多少行<br/>
+上面这些快捷键能够很轻松的完成编辑点定位的功能，再次我们心爱的让鼠标被冷落在一旁。使用说明：有时候报错会报出错误出现在哪一行，诸如opengl es2 check_gl_error，这里 command + L 能发挥出很好的行定位作用。再个就是 command + f 与 command + g，command +f 键入自己想要定位到的点前面的几个符号进行搜索，配合 command + g 寻找下一个，定位到目标点位以后，按下  esc 关闭搜索功能，就完成了编辑点的精确定位。</p>
 
-<p>控制台相关快捷键：
-command + shift + c: 打开控制台视图
-command + shift + y: 关闭控制台视图（这里我觉得不是很好，完全可以和打开使用一组相同的快捷键，易记）
-command + k： 清除控制台输出
-不得不说一下，mac 的界面优化做的实在是太到位了，
-简单说来就是你想要的功能都还在那儿，但是他们所占据的屏幕面积却是非常非常的少，
-一旦你要用到他们的时候，用起来也不会觉得很难找、很难用，
-这就是 mac 界面的精髓所在了（当然这要建立在对 mac 足够了解的基础之上）。</p>
+<p>控制台相关快捷键：<br/>
+command + shift + c: 打开控制台视图<br/>
+command + shift + y: 关闭控制台视图（这里我觉得不是很好，完全可以和打开使用一组相同的快捷键，易记）<br/>
+command + k： 清除控制台输出<br/>
+不得不说一下，mac 的界面优化做的实在是太到位了，简单说来就是你想要的功能都还在那儿，但是他们所占据的屏幕面积却是非常非常的少，一旦你要用到他们的时候，用起来也不会觉得很难找、很难用，这就是 mac 界面的精髓所在了（当然这要建立在对 mac 足够了解的基础之上）。</p>
 
-<p>产品相关的快捷键：
-我相信这是最最常用、最最贴身，人人都要牢记的一块了~
-command + b: 编译、生成
-command + r : 运行
-command + i: profile（找不到一个好的翻译词，用 Instruments 做内存占用的分析是必须走的流程）
-command + shift + b: 分析（这种特殊的编译有助于找到比较明显的泄露的代码）
-command + shift + k: 清理（这也是很常用的功能，不少问题都是通过清理后重新编译的方法来解决的）
-command + q: 退出（之所以放在这里是因为，有时候你的 xcode 出现怪异行为的时候，退出重启无疑是最佳方案）
-举例而言，xcode 4.2 里面编辑签名配置的时候，有时候会出现改不动的情况，这里退出重启就很有用了。
-顺带说一下xcode 界面左上角圆形stop 按钮右侧的矩形条，这个东西用来控制以 debug 还是 release 的模式编译产品。
-debug 模式下会打印出各种各样的 log，这样有助于我们解决遇到的bug，但是执行效率会被降低。
-release 模式下 debug 打印则被禁止掉，如果是真机测试的话，所得到的效果是最接近用户使用的效果的。
-发布产品也必须发布 release 模式下生成的产品。</p>
+<p>产品相关的快捷键：<br/>
+我相信这是最最常用、最最贴身，人人都要牢记的一块了~<br/>
+command + b: 编译、生成<br/>
+command + r : 运行<br/>
+command + i: profile<br/>
+（找不到一个好的翻译词，用 Instruments 做内存占用的分析是必须走的流程）</p>
 
-<p>特别把 xcode 工程浏览视图中的 show in finder 功能拿出来说一下，
-在 xcode 中这个简单实用的功能，你要在 eclipse 里面办到，那可就不容易了。
-在使用 xcode 之前，eclipse 一直是我最忠实、心爱的伙伴，但就这点来说，eclipse 还是让我很失望的。</p>
+<p>command + shift + b: 分析<br/>
+（这种特殊的编译有助于找到比较明显的泄露的代码）</p>
 
-<p>还要说一说 XCode 的视图控制设计，是我见过的最优秀的了
-我一般是把右侧的属性栏视图关掉，仅留下工程结构视图和 代码编辑视图（做游戏对属性栏的需求不是很多）~
-在代码编辑区按下 command + shift + j 在工程目录视图中可以定位到当前编辑文件的所在的位置
-command + 0~ 9 的数字可以在与工程目录视图并列的其他数个视图中快捷切换，
-特别是 command + 0，能够将 XCode 左侧栏完全的隐藏、打开，
-另外，整个过程的过度效果也是非常舒服的，比 eclipse 的最大化编辑器、还原到正常尺寸更优秀，
-隐藏左侧栏在做代码文件的版本对比的时候是非常实用的，
-还有就是做代码移植的时候，让代码编辑区域贴紧窗口左壁能够得到更合适的视角。
-暂时就说这么多，伴随这一年多的使用，积累下来的经验、技巧肯定还有遗漏的地方，
-后面想到了会更新上来，自恋一下，务必让这篇文章成为 mac、iOS 开发者心所向往的神奇篇章~</p>
+<p>command + shift + k: 清理<br/>
+（这也是很常用的功能，不少问题都是通过清理后重新编译的方法来解决的）</p>
+
+<p>command + q: 退出<br/>
+（之所以放在这里是因为，有时候你的 xcode 出现怪异行为的时候，退出重启无疑是最佳方案）<br/>
+举例而言，xcode 4.2 里面编辑签名配置的时候，有时候会出现改不动的情况，这里退出重启就很有用了。顺带说一下xcode 界面左上角圆形stop 按钮右侧的矩形条，这个东西用来控制以 debug 还是 release 的模式编译产品。debug 模式下会打印出各种各样的 log，这样有助于我们解决遇到的bug，但是执行效率会被降低。release 模式下 debug 打印则被禁止掉，如果是真机测试的话，所得到的效果是最接近用户使用的效果的。发布产品也必须发布 release 模式下生成的产品。</p>
+
+<p>特别把 xcode 工程浏览视图中的 show in finder 功能拿出来说一下，在 xcode 中这个简单实用的功能，你要在 eclipse 里面办到，那可就不容易了。在使用 xcode 之前，eclipse 一直是我最忠实、心爱的伙伴，但就这点来说，eclipse 还是让我很失望的。</p>
+
+<p>还要说一说 XCode 的视图控制设计，是我见过的最优秀的了。我一般是把右侧的属性栏视图关掉，仅留下工程结构视图和 代码编辑视图（做游戏对属性栏的需求不是很多）。在代码编辑区按下 command + shift + j 在工程目录视图中可以定位到当前编辑文件的所在的位置。command + 0~ 9 的数字可以在与工程目录视图并列的其他数个视图中快捷切换，特别是 command + 0，能够将 XCode 左侧栏完全的隐藏、打开，另外，整个过程的过度效果也是非常舒服的，比 eclipse 的最大化编辑器、还原到正常尺寸更优秀，隐藏左侧栏在做代码文件的版本对比的时候是非常实用的，还有就是做代码移植的时候，让代码编辑区域贴紧窗口左壁能够得到更合适的视角。暂时就说这么多，伴随这一年多的使用，积累下来的经验、技巧肯定还有遗漏的地方，后面想到了会更新上来，自恋一下，务必让这篇文章成为 mac、iOS 开发者心所向往的神奇篇章~</p>
 ]]></content>
   </entry>
   
@@ -3351,177 +3901,6 @@ PS：<br/>
 这个还有意思一点儿，这个镜头手机是很难超越了。</p>
 
 <p><strong>13。（待续）。。。</strong></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[小孩儿喝咖啡好吗]]></title>
-    <link href="http://yang3wei.github.com/blog/2013/02/02/xiao-hai-er-he-ka-pei-hao-ma/"/>
-    <updated>2013-02-02T15:28:00+08:00</updated>
-    <id>http://yang3wei.github.com/blog/2013/02/02/xiao-hai-er-he-ka-pei-hao-ma</id>
-    <content type="html"><![CDATA[<p>原文链接：<br/>
-<a href="http://zhidao.baidu.com/question/102837946.html">http://zhidao.baidu.com/question/102837946.html</a><br/>
-我今年 14，最近期末，有很多东西要复习，作业也很多。<br/>
-家里妈妈喜欢喝清咖啡，没有咖啡伴侣。<br/>
-昨天晚上困得支持不住，泡了一杯清咖啡，加了牛奶喝。<br/>
-今天早上又喝了一杯提神。今天确实很精神。<br/>
-想问一下每天喝一杯咖啡对身体有害吗？</p>
-
-<!-- more -->
-
-
-<p>不好 影响脑部发育。</p>
-
-<p>饮用禁忌<br/>
-1.铁剂不宜与茶、牛奶、咖啡同服。因牛奶含磷高，可影响铁的吸收。<br/>
-茶和咖啡中的鞣酸可使铁的吸收减少75%。宜用温开水送服。</p>
-
-<p>2.茶叶和咖啡中的单宁酸，会让钙吸收降低。<br/>
-所以，喝茶和喝咖啡的时间，最好是选在两餐当中。</p>
-
-<p>3.含咖啡因的饮料和食品，被孕妇大量饮用后，会出现恶心、呕吐、头痛、心跳加快等症状。<br/>
-咖啡因还会通过胎盘进入胎儿体内，影响胎儿发育。</p>
-
-<p>4.不少医生认为,孕妇每天喝1~2杯(每杯6~8盎司)咖啡、茶或碳酸类饮料,不会对胎儿造成影响。<br/>
-但为慎重起见,孕妇最好禁用。咖啡因可导致流产率上升,所以应喝不含咖啡因的饮料。</p>
-
-<p>5.想减肥的人不要多饮咖啡。<br/>
-常见的咖啡伴侣中含有较多的奶类、糖类和脂肪，咖啡本身可能刺激胃液分泌，<br/>
-增进食物消化和吸收，不但不能瘦腰，还会使人发胖。</p>
-
-<p>6.儿童不宜喝咖啡。<br/>
-咖啡因可以兴奋儿童中枢神经系统,干扰儿童的记忆,造成儿童多动症。</p>
-
-<p>7.浓茶、咖啡、含碳酸盐的饮料也是形成消化道溃疡病的危险因子。</p>
-
-<p>8.紧张时添乱 咖啡因有助于提高警觉性、灵敏性、记忆力及集中力。<br/>
-但饮用超过比你平常所习惯饮用量的咖啡，就会产生类似食用相同剂量的兴奋剂，会造成神经过敏。<br/>
-对于倾向焦虑失调的人而言，咖啡因会导致手心冒汗、心悸、耳鸣这些症状更加恶化。</p>
-
-<p>9.加剧高血压 咖啡因因为本身具有的止痛作用，常与其他简单的止痛剂合成复方，<br/>
-但是，长期大量服用，如果你本身已有高血压时，使用大量咖啡因只会使你的情况更为严重。<br/>
-因为光是咖啡因就能使血压上升，若再加上情绪紧张，就会产生危险性的相乘效果，<br/>
-因此，高血压的危险人群尤其应避免在工作压力大的时候喝含咖啡因的饮料。<br/>
-有些常年有喝咖啡习惯的人，以为他们对咖啡因的效果已经免疫，然而事实并非如此，<br/>
-一项研究显示，喝一杯咖啡后，血压升高的时间可长达12小时。</p>
-
-<p>10.诱发骨质疏松 咖啡因本身具有很好的利尿效果，如果长期且大量喝咖啡，容易造成骨质流失，<br/>
-对骨量的保存会有不利的影响，对于妇女来说，可能会增加骨质疏松的威胁。<br/>
-但前提是，平时食物中本来就缺乏摄取足够的钙，或是不经常动的人，加上更年期后的女性，<br/>
-因缺少雌激素造成的钙质流失，以上这些情况再加上大量的咖啡因，才可能对骨造成威胁。<br/>
-如果能够按照合理的量来享受，你还是可以做到不因噎废食的。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[多边形顶点按逆时针排列算法]]></title>
-    <link href="http://yang3wei.github.com/blog/2013/02/02/duo-bian-xing-ding-dian-an-ni-shi-zhen-pai-lie-suan-fa/"/>
-    <updated>2013-02-02T15:12:00+08:00</updated>
-    <id>http://yang3wei.github.com/blog/2013/02/02/duo-bian-xing-ding-dian-an-ni-shi-zhen-pai-lie-suan-fa</id>
-    <content type="html"><![CDATA[<p>原文链接：<br/>
-<a href="http://www.myexception.cn/program/776883.html">http://www.myexception.cn/program/776883.html</a></p>
-
-<!-- more -->
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="k">const</span> <span class="kt">double</span> <span class="n">eps</span> <span class="o">=</span> <span class="mf">1e-8</span><span class="p">;</span>
-</span><span class='line'><span class="kt">int</span> <span class="n">sign</span><span class="p">(</span><span class="kt">double</span> <span class="n">d</span><span class="p">){</span>
-</span><span class='line'>  <span class="k">return</span> <span class="n">d</span> <span class="o">&lt;</span> <span class="o">-</span><span class="n">eps</span> <span class="o">?</span> <span class="o">-</span><span class="mi">1</span> <span class="o">:</span> <span class="p">(</span><span class="n">d</span> <span class="o">&gt;</span> <span class="n">eps</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// 多边形类</span>
-</span><span class='line'><span class="k">struct</span> <span class="n">poly</span><span class="p">{</span>
-</span><span class='line'>  <span class="k">static</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">1005</span><span class="p">;</span> <span class="c1">// 点数的最大值</span>
-</span><span class='line'>  <span class="n">point</span> <span class="n">ps</span><span class="p">[</span><span class="n">N</span> <span class="o">+</span> <span class="mi">5</span><span class="p">];</span> <span class="c1">// 逆时针存储多边形的点，[0, pn - 1] 存储点</span>
-</span><span class='line'>  <span class="kt">int</span> <span class="n">pn</span><span class="p">;</span>  <span class="c1">// 点数</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">poly</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">pn</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// 加进一个点 </span>
-</span><span class='line'>  <span class="kt">void</span> <span class="n">push</span><span class="p">(</span><span class="n">point</span> <span class="n">tp</span><span class="p">){</span>
-</span><span class='line'>      <span class="n">ps</span><span class="p">[</span><span class="n">pn</span> <span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">tp</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// 第k个位置</span>
-</span><span class='line'>  <span class="kt">int</span> <span class="n">trim</span><span class="p">(</span><span class="kt">int</span> <span class="n">k</span><span class="p">){</span>
-</span><span class='line'>      <span class="k">return</span> <span class="p">(</span><span class="n">k</span> <span class="o">+</span> <span class="n">pn</span><span class="p">)</span> <span class="o">%</span> <span class="n">pn</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kt">void</span> <span class="n">clear</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">pn</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// 多边形 org 的有向面积</span>
-</span><span class='line'><span class="kt">double</span> <span class="n">signArea</span><span class="p">(</span><span class="n">poly</span> <span class="n">org</span><span class="p">){</span>
-</span><span class='line'>  <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">g</span><span class="p">;</span>
-</span><span class='line'>  <span class="kt">double</span> <span class="n">ans</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">point</span><span class="o">*</span> <span class="n">ps</span> <span class="o">=</span> <span class="n">org</span><span class="p">.</span><span class="n">ps</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="n">ans</span> <span class="o">=</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">org</span><span class="p">.</span><span class="n">pn</span><span class="p">;</span> <span class="n">i</span> <span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">g</span> <span class="o">=</span> <span class="n">org</span><span class="p">.</span><span class="n">trim</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
-</span><span class='line'>      <span class="n">ans</span> <span class="o">+=</span> <span class="p">(</span><span class="n">ps</span><span class="p">[</span><span class="n">g</span><span class="p">].</span><span class="n">y</span> <span class="o">*</span> <span class="n">ps</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">x</span> <span class="o">-</span> <span class="n">ps</span><span class="p">[</span><span class="n">g</span><span class="p">].</span><span class="n">x</span> <span class="o">*</span> <span class="n">ps</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">y</span><span class="p">);</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">return</span> <span class="n">ans</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// 如果 org 的点是逆时针的，则调整为逆时针的</span>
-</span><span class='line'><span class="kt">void</span> <span class="n">makeAntclockwise</span><span class="p">(</span><span class="n">poly</span><span class="o">&amp;</span> <span class="n">org</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">sign</span><span class="p">(</span><span class="n">signArea</span><span class="p">(</span><span class="n">org</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">reverse</span><span class="p">(</span><span class="n">org</span><span class="p">.</span><span class="n">ps</span><span class="p">,</span> <span class="n">org</span><span class="p">.</span><span class="n">ps</span> <span class="o">+</span> <span class="n">org</span><span class="p">.</span><span class="n">pn</span><span class="p">);</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
 ]]></content>
   </entry>
   

@@ -1,0 +1,842 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Java 重用之 PathUtil - yang3wei的专栏</title>
+  <meta name="author" content="yang3wei">
+
+  
+  <meta name="description" content="直接上代码： PathUtil.java 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="author" content="yang3wei">
+  
+  <meta name="description" content="yang3wei的专栏, yang3wei">
+  <meta name="keywords" content="yang3wei, cocos2d, mac, objective-c, c/c++, game develop, java, OpenGL, shell, box2d, git, python">
+
+  
+  <link rel="canonical" href="http://yang3wei.github.com/blog/2013/02/09/java-zhong-yong-zhi-pathutil/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="yang3wei的专栏" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-38160149-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">yang3wei的专栏</a></h1>
+  
+    <h2>Enjoy my life!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:yang3wei.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Java 重用之 PathUtil</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-09T01:42:00+08:00" pubdate data-updated="true">Feb 9<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>直接上代码：</p>
+
+<!-- more -->
+
+
+
+
+<figure class='code'><figcaption><span>PathUtil.java  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+<span class='line-number'>132</span>
+<span class='line-number'>133</span>
+<span class='line-number'>134</span>
+<span class='line-number'>135</span>
+<span class='line-number'>136</span>
+<span class='line-number'>137</span>
+<span class='line-number'>138</span>
+<span class='line-number'>139</span>
+<span class='line-number'>140</span>
+<span class='line-number'>141</span>
+<span class='line-number'>142</span>
+<span class='line-number'>143</span>
+<span class='line-number'>144</span>
+<span class='line-number'>145</span>
+<span class='line-number'>146</span>
+<span class='line-number'>147</span>
+<span class='line-number'>148</span>
+<span class='line-number'>149</span>
+<span class='line-number'>150</span>
+<span class='line-number'>151</span>
+<span class='line-number'>152</span>
+<span class='line-number'>153</span>
+<span class='line-number'>154</span>
+<span class='line-number'>155</span>
+<span class='line-number'>156</span>
+<span class='line-number'>157</span>
+<span class='line-number'>158</span>
+<span class='line-number'>159</span>
+<span class='line-number'>160</span>
+<span class='line-number'>161</span>
+<span class='line-number'>162</span>
+<span class='line-number'>163</span>
+<span class='line-number'>164</span>
+<span class='line-number'>165</span>
+<span class='line-number'>166</span>
+<span class='line-number'>167</span>
+<span class='line-number'>168</span>
+<span class='line-number'>169</span>
+<span class='line-number'>170</span>
+<span class='line-number'>171</span>
+<span class='line-number'>172</span>
+<span class='line-number'>173</span>
+<span class='line-number'>174</span>
+<span class='line-number'>175</span>
+<span class='line-number'>176</span>
+<span class='line-number'>177</span>
+<span class='line-number'>178</span>
+<span class='line-number'>179</span>
+<span class='line-number'>180</span>
+<span class='line-number'>181</span>
+<span class='line-number'>182</span>
+<span class='line-number'>183</span>
+<span class='line-number'>184</span>
+<span class='line-number'>185</span>
+<span class='line-number'>186</span>
+<span class='line-number'>187</span>
+<span class='line-number'>188</span>
+<span class='line-number'>189</span>
+<span class='line-number'>190</span>
+<span class='line-number'>191</span>
+<span class='line-number'>192</span>
+<span class='line-number'>193</span>
+<span class='line-number'>194</span>
+<span class='line-number'>195</span>
+<span class='line-number'>196</span>
+<span class='line-number'>197</span>
+<span class='line-number'>198</span>
+<span class='line-number'>199</span>
+<span class='line-number'>200</span>
+<span class='line-number'>201</span>
+<span class='line-number'>202</span>
+<span class='line-number'>203</span>
+<span class='line-number'>204</span>
+<span class='line-number'>205</span>
+<span class='line-number'>206</span>
+<span class='line-number'>207</span>
+<span class='line-number'>208</span>
+<span class='line-number'>209</span>
+<span class='line-number'>210</span>
+<span class='line-number'>211</span>
+<span class='line-number'>212</span>
+<span class='line-number'>213</span>
+<span class='line-number'>214</span>
+<span class='line-number'>215</span>
+<span class='line-number'>216</span>
+<span class='line-number'>217</span>
+<span class='line-number'>218</span>
+<span class='line-number'>219</span>
+<span class='line-number'>220</span>
+<span class='line-number'>221</span>
+<span class='line-number'>222</span>
+<span class='line-number'>223</span>
+<span class='line-number'>224</span>
+<span class='line-number'>225</span>
+<span class='line-number'>226</span>
+<span class='line-number'>227</span>
+<span class='line-number'>228</span>
+<span class='line-number'>229</span>
+<span class='line-number'>230</span>
+<span class='line-number'>231</span>
+<span class='line-number'>232</span>
+<span class='line-number'>233</span>
+<span class='line-number'>234</span>
+<span class='line-number'>235</span>
+<span class='line-number'>236</span>
+<span class='line-number'>237</span>
+<span class='line-number'>238</span>
+<span class='line-number'>239</span>
+<span class='line-number'>240</span>
+<span class='line-number'>241</span>
+<span class='line-number'>242</span>
+<span class='line-number'>243</span>
+<span class='line-number'>244</span>
+<span class='line-number'>245</span>
+<span class='line-number'>246</span>
+<span class='line-number'>247</span>
+<span class='line-number'>248</span>
+<span class='line-number'>249</span>
+<span class='line-number'>250</span>
+<span class='line-number'>251</span>
+<span class='line-number'>252</span>
+<span class='line-number'>253</span>
+<span class='line-number'>254</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">package</span> <span class="n">org</span><span class="o">.</span><span class="na">bruce</span><span class="o">.</span><span class="na">pocket</span><span class="o">.</span><span class="na">tools</span><span class="o">.</span><span class="na">utils</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.File</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.UnsupportedEncodingException</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.net.URL</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.net.URLDecoder</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.security.ProtectionDomain</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.Enumeration</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.LinkedList</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.jar.JarEntry</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.jar.JarFile</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * @author Bruce Yang</span>
+</span><span class='line'><span class="cm"> * 路径工具~</span>
+</span><span class='line'><span class="cm"> * </span>
+</span><span class='line'><span class="cm"> * 1.public static String getRunningPath() {}</span>
+</span><span class='line'><span class="cm"> * &lt;b&gt;功能描述&lt;/b&gt;：</span>
+</span><span class='line'><span class="cm"> * 获取当前正处于执行状态的 java 程序的绝对路径:</span>
+</span><span class='line'><span class="cm"> * 如果是以 jar 的方式执行，则返回该 jar 文件的绝对路径；</span>
+</span><span class='line'><span class="cm"> *   /Users/y3w/Desktop/ChangeIcon1.0.jar</span>
+</span><span class='line'><span class="cm"> * 如果是以 eclipse 或 ant 的方式在目录中执行的，则返回 bin 或 build 目录的绝对路径~</span>
+</span><span class='line'><span class="cm"> *   /Users/y3w/Projects/Eclipse/workspace1/ChangeIcon/bin/</span>
+</span><span class='line'><span class="cm"> *   /Users/y3w/Projects/Eclipse/workspace1/ChangeIcon/build/</span>
+</span><span class='line'><span class="cm"> * </span>
+</span><span class='line'><span class="cm"> * 2.public static String getRunningParentPath() {}</span>
+</span><span class='line'><span class="cm"> * &lt;b&gt;功能描述&lt;/b&gt;：</span>
+</span><span class='line'><span class="cm"> * 获取当前正处于执行状态的 java 程序的父路径（末尾不带 File.seperator）。</span>
+</span><span class='line'><span class="cm"> * </span>
+</span><span class='line'><span class="cm"> * 3.public static String getFullPath(String resFileName) {}</span>
+</span><span class='line'><span class="cm"> * &lt;b&gt;功能描述&lt;/b&gt;：</span>
+</span><span class='line'><span class="cm"> * 在使用 jar 包内资源文件的时候，仅需传入文件名即可获得完整包路径~</span>
+</span><span class='line'><span class="cm"> * 如传入 “ant_template.properties”，就能得到：</span>
+</span><span class='line'><span class="cm"> * “/org/bruce/pocket/tools/res/ant_template.properties”</span>
+</span><span class='line'><span class="cm"> * 优点就是，无论是在 eclipse 中执行，还是在 ant 中执行，甚至是在 jar 包中执行，</span>
+</span><span class='line'><span class="cm"> * 都能表现一致，无障碍地拿到所需要资源文件的数据~</span>
+</span><span class='line'><span class="cm"> * &lt;b&gt;注意事项&lt;/b&gt;：</span>
+</span><span class='line'><span class="cm"> * 须将资源文件放置在以 DOMAIN 开头，以 “res” 结尾的包里面~</span>
+</span><span class='line'><span class="cm"> * &lt;b&gt;注&lt;/b&gt;：</span>
+</span><span class='line'><span class="cm"> * 借鉴了 cocos2d 的资源文件加载机制~</span>
+</span><span class='line'><span class="cm"> * </span>
+</span><span class='line'><span class="cm"> * 4.</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">PathUtil</span> <span class="o">{</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="cm">/**</span>
+</span><span class='line'><span class="cm">  * 在这里设定以哪个包为起始点执行搜索资源文件的操作（避免在导入的其他 jar 包里面做无用功）~</span>
+</span><span class='line'><span class="cm">  */</span>
+</span><span class='line'>  <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">DOMAIN</span> <span class="o">=</span> <span class="s">&quot;org/bruce/&quot;</span><span class="o">;</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="kd">private</span> <span class="kd">static</span> <span class="n">String</span> <span class="n">_runningPath</span><span class="o">;</span>
+</span><span class='line'>  <span class="kd">private</span> <span class="kd">static</span> <span class="n">String</span> <span class="n">_runningParentPath</span><span class="o">;</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">_pathList</span><span class="o">;</span>
+</span><span class='line'>  <span class="kd">static</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">_pathList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;();</span>
+</span><span class='line'>      
+</span><span class='line'>      <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">tempList</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>      <span class="n">String</span> <span class="n">absPath</span> <span class="o">=</span> <span class="n">getRunningPath</span><span class="o">();</span>
+</span><span class='line'>      
+</span><span class='line'>      <span class="c1">// /Users/y3w/Desktop/ChangeIcon1.0.jar</span>
+</span><span class='line'>      <span class="k">if</span> <span class="o">(</span><span class="n">absPath</span><span class="o">.</span><span class="na">endsWith</span><span class="o">(</span><span class="s">&quot;.jar&quot;</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>          <span class="n">JarFile</span> <span class="n">jarFile</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>          <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>              <span class="n">jarFile</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JarFile</span><span class="o">(</span><span class="n">absPath</span><span class="o">);</span>
+</span><span class='line'>          <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>              <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>          <span class="c1">// [org/bruce/, org/, org/bruce/pocket/, ...]</span>
+</span><span class='line'>          <span class="n">tempList</span> <span class="o">=</span> <span class="n">getFilteredFolderPaths</span><span class="o">(</span><span class="n">jarFile</span><span class="o">,</span> <span class="n">DOMAIN</span><span class="o">);</span>
+</span><span class='line'>          
+</span><span class='line'>          <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">item</span> <span class="o">:</span> <span class="n">tempList</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>              <span class="k">if</span> <span class="o">(</span><span class="n">item</span><span class="o">.</span><span class="na">endsWith</span><span class="o">(</span><span class="s">&quot;/res/&quot;</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>                  <span class="n">_pathList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">item</span><span class="o">);</span>
+</span><span class='line'>              <span class="o">}</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>          
+</span><span class='line'>      <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>          <span class="c1">// [~/Projects/eclipse/workspace2/JavaDynamicCompile/org/bruce/pocket/tools/res, ...]</span>
+</span><span class='line'>          <span class="c1">// [C:\java\Projects\JavaDynamicCompile\org\bruce\pocket\tools\res, ...]</span>
+</span><span class='line'>          <span class="n">tempList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;();</span>
+</span><span class='line'>          <span class="n">listFolderPaths</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">absPath</span><span class="o">),</span> <span class="n">tempList</span><span class="o">);</span>    <span class="c1">// 绝对路径~</span>
+</span><span class='line'>
+</span><span class='line'>          <span class="c1">// windows</span>
+</span><span class='line'>          <span class="n">String</span> <span class="n">domain</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>          <span class="kt">boolean</span> <span class="n">bIsWindows</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">&quot;os.name&quot;</span><span class="o">).</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;windows&quot;</span><span class="o">);</span>
+</span><span class='line'>          <span class="k">if</span> <span class="o">(</span><span class="n">bIsWindows</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>              <span class="n">domain</span> <span class="o">=</span> <span class="n">DOMAIN</span><span class="o">.</span><span class="na">replace</span><span class="o">(</span><span class="s">&quot;/&quot;</span><span class="o">,</span> <span class="s">&quot;\\\\&quot;</span><span class="o">);</span>
+</span><span class='line'>          <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>              <span class="n">domain</span> <span class="o">=</span> <span class="n">DOMAIN</span><span class="o">;</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>          
+</span><span class='line'>          <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">item</span> <span class="o">:</span> <span class="n">tempList</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>              <span class="k">if</span> <span class="o">(</span><span class="n">item</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">domain</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">item</span><span class="o">.</span><span class="na">endsWith</span><span class="o">(</span><span class="n">File</span><span class="o">.</span><span class="na">separator</span> <span class="o">+</span> <span class="s">&quot;res&quot;</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>                  <span class="n">item</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="na">replace</span><span class="o">(</span><span class="n">absPath</span><span class="o">,</span> <span class="s">&quot;&quot;</span><span class="o">);</span>
+</span><span class='line'>                  <span class="k">if</span> <span class="o">(</span><span class="n">bIsWindows</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                      <span class="n">_pathList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">item</span><span class="o">.</span><span class="na">replace</span><span class="o">(</span><span class="s">&quot;\\\\&quot;</span><span class="o">,</span> <span class="s">&quot;/&quot;</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span><span class="o">);</span>
+</span><span class='line'>                  <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>                      <span class="n">_pathList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">item</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span><span class="o">);</span>
+</span><span class='line'>                  <span class="o">}</span>
+</span><span class='line'>              <span class="o">}</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'><span class="c1">//       System.out.println(pathList);</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="cm">/**</span>
+</span><span class='line'><span class="cm">  * 由资源文件的文件命获取完整路径~</span>
+</span><span class='line'><span class="cm">  * 须将资源文件放置在以 DOMAIN 开头，以 “res” 结尾的包里面，不然就会找不到~</span>
+</span><span class='line'><span class="cm">  * @param resFileName</span>
+</span><span class='line'><span class="cm">  * @return</span>
+</span><span class='line'><span class="cm">  */</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">getFullPath</span><span class="o">(</span><span class="n">String</span> <span class="n">resFileName</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">String</span> <span class="n">target</span> <span class="o">=</span> <span class="n">resFileName</span> <span class="o">+</span> <span class="s">&quot;_does_Not_Exist&quot;</span><span class="o">;</span>
+</span><span class='line'>      <span class="n">String</span> <span class="n">fullPath</span><span class="o">;</span>
+</span><span class='line'>      <span class="k">if</span> <span class="o">(</span><span class="n">_runningPath</span><span class="o">.</span><span class="na">endsWith</span><span class="o">(</span><span class="s">&quot;.jar&quot;</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>          <span class="n">JarFile</span> <span class="n">jarFile</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>          <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>              <span class="n">jarFile</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JarFile</span><span class="o">(</span><span class="n">_runningPath</span><span class="o">);</span>
+</span><span class='line'>          <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>              <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>          <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">item</span> <span class="o">:</span> <span class="n">_pathList</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>              <span class="n">fullPath</span> <span class="o">=</span> <span class="n">item</span> <span class="o">+</span> <span class="n">resFileName</span><span class="o">;</span>
+</span><span class='line'>              
+</span><span class='line'>              <span class="cm">/**</span>
+</span><span class='line'><span class="cm">              * getJarEntry 的合法参数格式：</span>
+</span><span class='line'><span class="cm">              * org/bruce/pocket/tools/res/w400_h300.png</span>
+</span><span class='line'><span class="cm">              * 须要 target 的第一个斜杠给去掉，纠结了老子半天~</span>
+</span><span class='line'><span class="cm">              */</span>
+</span><span class='line'>              <span class="k">if</span> <span class="o">(</span><span class="n">jarFile</span><span class="o">.</span><span class="na">getJarEntry</span><span class="o">(</span><span class="n">fullPath</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">1</span><span class="o">))</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                  <span class="n">target</span> <span class="o">=</span> <span class="n">fullPath</span><span class="o">;</span>
+</span><span class='line'>                  <span class="k">break</span><span class="o">;</span>
+</span><span class='line'>              <span class="o">}</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>      <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>          <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">item</span> <span class="o">:</span> <span class="n">_pathList</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>              <span class="n">StringBuffer</span> <span class="n">sb</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="o">();</span>
+</span><span class='line'>              <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">_runningPath</span><span class="o">);</span>
+</span><span class='line'>              <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">item</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">1</span><span class="o">));</span>
+</span><span class='line'>              <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">resFileName</span><span class="o">);</span>
+</span><span class='line'>              <span class="k">if</span> <span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">sb</span><span class="o">.</span><span class="na">toString</span><span class="o">().</span><span class="na">replaceAll</span><span class="o">(</span><span class="s">&quot;/&quot;</span><span class="o">,</span> <span class="n">File</span><span class="o">.</span><span class="na">separator</span><span class="o">)).</span><span class="na">exists</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>                  <span class="n">target</span> <span class="o">=</span> <span class="n">item</span> <span class="o">+</span> <span class="n">resFileName</span><span class="o">;</span>
+</span><span class='line'>                  <span class="k">break</span><span class="o">;</span>
+</span><span class='line'>              <span class="o">}</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>      <span class="k">return</span> <span class="n">target</span><span class="o">;</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  <span class="cm">/**</span>
+</span><span class='line'><span class="cm">  * 将 JarFile 中以特定前缀起始的 JarEntry.getName() 存放到列表中返回~</span>
+</span><span class='line'><span class="cm">  * @param jarFile</span>
+</span><span class='line'><span class="cm">  * @param strFilter</span>
+</span><span class='line'><span class="cm">  * @return</span>
+</span><span class='line'><span class="cm">  */</span>
+</span><span class='line'>  <span class="kd">private</span> <span class="kd">static</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="nf">getFilteredFolderPaths</span><span class="o">(</span><span class="n">JarFile</span> <span class="n">jarFile</span><span class="o">,</span> <span class="n">String</span> <span class="n">strFilter</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">target</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;();</span>
+</span><span class='line'>      <span class="n">Enumeration</span><span class="o">&lt;</span><span class="n">JarEntry</span><span class="o">&gt;</span> <span class="n">jarEntries</span> <span class="o">=</span> <span class="n">jarFile</span><span class="o">.</span><span class="na">entries</span><span class="o">();</span>
+</span><span class='line'>      <span class="k">while</span> <span class="o">(</span><span class="n">jarEntries</span><span class="o">.</span><span class="na">hasMoreElements</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>          <span class="n">JarEntry</span> <span class="n">jarEntry</span> <span class="o">=</span> <span class="n">jarEntries</span><span class="o">.</span><span class="na">nextElement</span><span class="o">();</span>
+</span><span class='line'>          <span class="k">if</span> <span class="o">(</span><span class="n">jarEntry</span><span class="o">.</span><span class="na">isDirectory</span><span class="o">()</span> <span class="o">&amp;&amp;</span> <span class="n">jarEntry</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">startsWith</span><span class="o">(</span><span class="n">strFilter</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>              <span class="n">target</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">jarEntry</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>      <span class="k">return</span> <span class="n">target</span><span class="o">;</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  <span class="cm">/**</span>
+</span><span class='line'><span class="cm">  * 将目录中所有的子目录的绝对路径存放到列表中返回~</span>
+</span><span class='line'><span class="cm">  * @param dir</span>
+</span><span class='line'><span class="cm">  * @param pathList</span>
+</span><span class='line'><span class="cm">  */</span>
+</span><span class='line'>  <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">listFolderPaths</span><span class="o">(</span><span class="n">File</span> <span class="n">dir</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">pathList</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="k">for</span> <span class="o">(</span><span class="n">File</span> <span class="n">item</span> <span class="o">:</span> <span class="n">dir</span><span class="o">.</span><span class="na">listFiles</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>          <span class="k">if</span> <span class="o">(</span><span class="n">item</span><span class="o">.</span><span class="na">isDirectory</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>              <span class="n">pathList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">item</span><span class="o">.</span><span class="na">getAbsolutePath</span><span class="o">());</span>
+</span><span class='line'>              <span class="n">listFolderPaths</span><span class="o">(</span><span class="n">item</span><span class="o">,</span> <span class="n">pathList</span><span class="o">);</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="cm">/**</span>
+</span><span class='line'><span class="cm">  * 获取当前正处于执行状态的 java 程序的绝对路径</span>
+</span><span class='line'><span class="cm">  * @return</span>
+</span><span class='line'><span class="cm">  */</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">getRunningPath</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="o">(</span><span class="n">_runningPath</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>          <span class="n">String</span> <span class="n">strTemp</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>          
+</span><span class='line'>          <span class="n">ProtectionDomain</span> <span class="n">pDomain</span> <span class="o">=</span> <span class="n">PathUtil</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getProtectionDomain</span><span class="o">();</span>
+</span><span class='line'>          <span class="n">URL</span> <span class="n">url</span> <span class="o">=</span> <span class="n">pDomain</span><span class="o">.</span><span class="na">getCodeSource</span><span class="o">().</span><span class="na">getLocation</span><span class="o">();</span>
+</span><span class='line'>          
+</span><span class='line'>          <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>              <span class="n">strTemp</span> <span class="o">=</span> <span class="n">URLDecoder</span><span class="o">.</span><span class="na">decode</span><span class="o">(</span><span class="n">url</span><span class="o">.</span><span class="na">getPath</span><span class="o">(),</span> <span class="s">&quot;utf-8&quot;</span><span class="o">);</span>
+</span><span class='line'>          <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">UnsupportedEncodingException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>              <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>          
+</span><span class='line'>          <span class="cm">/**</span>
+</span><span class='line'><span class="cm">          * Windows 下运行时会出现在首部多加一个斜杠，正反斜杠的问题~</span>
+</span><span class='line'><span class="cm">          * C:\&gt;java -jar C:\ChangeFolderIcon\ChangeIcon1.0.jar</span>
+</span><span class='line'><span class="cm">          * PathUtil.getRunningPath() = /C:/ChangeFolderIcon/ChangeIcon1.0.jar</span>
+</span><span class='line'><span class="cm">          * Installer.createContainers() failed! exit!</span>
+</span><span class='line'><span class="cm">          */</span>
+</span><span class='line'>          <span class="k">if</span> <span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">&quot;os.name&quot;</span><span class="o">).</span><span class="na">startsWith</span><span class="o">(</span><span class="s">&quot;Windows&quot;</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>              <span class="c1">// 剔除首部的斜杠~</span>
+</span><span class='line'>              <span class="n">strTemp</span> <span class="o">=</span> <span class="n">strTemp</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>              <span class="c1">// 将斜杠替换为反斜杠~</span>
+</span><span class='line'>              <span class="n">strTemp</span> <span class="o">=</span> <span class="n">strTemp</span><span class="o">.</span><span class="na">replaceAll</span><span class="o">(</span><span class="s">&quot;/&quot;</span><span class="o">,</span> <span class="s">&quot;\\\\&quot;</span><span class="o">);</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>          <span class="n">_runningPath</span> <span class="o">=</span> <span class="n">strTemp</span><span class="o">;</span>
+</span><span class='line'><span class="c1">//           System.out.println(&quot;PathUtil.getRunningPath() = &quot; + runningPath);</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>      <span class="k">return</span> <span class="n">_runningPath</span><span class="o">;</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="cm">/**</span>
+</span><span class='line'><span class="cm">  * 获取父级目录的绝对路径~</span>
+</span><span class='line'><span class="cm">  * @return</span>
+</span><span class='line'><span class="cm">  */</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">getRunningParentPath</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="o">(</span><span class="n">_runningParentPath</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>          <span class="n">String</span> <span class="n">runningPath</span> <span class="o">=</span> <span class="n">PathUtil</span><span class="o">.</span><span class="na">getRunningPath</span><span class="o">();</span>
+</span><span class='line'>          
+</span><span class='line'>          <span class="k">if</span> <span class="o">(!</span><span class="n">runningPath</span><span class="o">.</span><span class="na">endsWith</span><span class="o">(</span><span class="s">&quot;.jar&quot;</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">runningPath</span><span class="o">.</span><span class="na">endsWith</span><span class="o">(</span><span class="n">File</span><span class="o">.</span><span class="na">separator</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>              <span class="c1">// 移除末尾的 “/”</span>
+</span><span class='line'>              <span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="n">runningPath</span><span class="o">.</span><span class="na">lastIndexOf</span><span class="o">(</span><span class="n">File</span><span class="o">.</span><span class="na">separator</span><span class="o">);</span>
+</span><span class='line'>              <span class="n">runningPath</span> <span class="o">=</span> <span class="n">runningPath</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">index</span><span class="o">);</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>          
+</span><span class='line'>          <span class="c1">// 移除最后一个路径元部件~</span>
+</span><span class='line'>          <span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="n">runningPath</span><span class="o">.</span><span class="na">lastIndexOf</span><span class="o">(</span><span class="n">File</span><span class="o">.</span><span class="na">separator</span><span class="o">);</span>
+</span><span class='line'>          <span class="n">_runningParentPath</span> <span class="o">=</span> <span class="n">runningPath</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">index</span><span class="o">);</span>
+</span><span class='line'><span class="c1">//           System.out.println(&quot;PathUtil.getRunningParentPath() = &quot; + runningParentPath);</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>      <span class="k">return</span> <span class="n">_runningParentPath</span><span class="o">;</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="cm">/**</span>
+</span><span class='line'><span class="cm">  * @param args</span>
+</span><span class='line'><span class="cm">  * 输出为：</span>
+</span><span class='line'><span class="cm">  * /Users/y3w/Projects/Eclipse/workspace2/JavaDynamicCompile/bin/</span>
+</span><span class='line'><span class="cm">  * /Users/y3w/Projects/Eclipse/workspace2/JavaDynamicCompile</span>
+</span><span class='line'><span class="cm">  * /org/bruce/pocket/tools/res/w400_h300.png</span>
+</span><span class='line'><span class="cm">  * /org/bruce/pocket/tools/res/BruceYang.jv</span>
+</span><span class='line'><span class="cm">  */</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">getRunningPath</span><span class="o">());</span>
+</span><span class='line'>      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">getRunningParentPath</span><span class="o">());</span>
+</span><span class='line'>      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">getFullPath</span><span class="o">(</span><span class="s">&quot;w400_h300.png&quot;</span><span class="o">));</span>
+</span><span class='line'>      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">getFullPath</span><span class="o">(</span><span class="s">&quot;BruceYang.jv&quot;</span><span class="o">));</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">yang3wei</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-09T01:42:00+08:00" pubdate data-updated="true">Feb 9<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/java相关/'>Java相关</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/02/08/wei-eclipse-for-mac-xin-zeng-show-in-finder-de-gong-neng/" title="Previous Post: 为 Eclipse for Mac 新增 Show in Finder 的功能">&laquo; 为 Eclipse for Mac 新增 Show in Finder 的功能</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/09/java-zhong-yong-zhi-pathutil/">Java 重用之 PathUtil</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/08/wei-eclipse-for-mac-xin-zeng-show-in-finder-de-gong-neng/">为 Eclipse for Mac 新增 Show in Finder 的功能</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/08/mac-xia-de-tree-ming-ling/">Mac 下的 tree 命令</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/08/i-found-a-bug-with-ccparticlesystem/">I found a bug with CCParticleSystem</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/08/cpan-windows-xp-dpan-windows7-shuang-xi-tong-an-zhuang-ji-lu/">C盘Windows XP D盘Windows7 双系统安装纪录</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+    <h1>Tags</h1>
+    <ul class="tag-cloud">
+        <a style="font-size: 100%" href="/tags/c-c-/">C/C++</a>
+<a style="font-size: 100%" href="/tags/algorithm/">algorithm</a>
+<a style="font-size: 100%" href="/tags/ant/">ant</a>
+<a style="font-size: 100%" href="/tags/cocos2d/">cocos2d</a>
+<a style="font-size: 210%" href="/tags/git/">git</a>
+<a style="font-size: 132%" href="/tags/hardware/">hardware</a>
+<a style="font-size: 100%" href="/tags/ios/">iOS</a>
+<a style="font-size: 182%" href="/tags/java/">java</a>
+<a style="font-size: 189%" href="/tags/mac/">mac</a>
+<a style="font-size: 201%" href="/tags/octopress/">octopress</a>
+<a style="font-size: 164%" href="/tags/vim/">vim</a>
+<a style="font-size: 150%" href="/tags/伟少手札/">伟少手札</a>
+<a style="font-size: 132%" href="/tags/养生/">养生</a>
+
+    </ul>
+</section>
+<section>
+    <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/blog/categories/cocos2d相关'>Cocos2d相关 (1)</a></li><li><a href='/blog/categories/git相关'>Git相关 (11)</a></li><li><a href='/blog/categories/java相关'>Java相关 (5)</a></li><li><a href='/blog/categories/mac相关'>Mac相关 (6)</a></li><li><a href='/blog/categories/octopress相关'>Octopress相关 (8)</a></li><li><a href='/blog/categories/vim相关'>Vim相关 (4)</a></li><li><a href='/blog/categories/伟少手札'>伟少手札 (2)</a></li><li><a href='/blog/categories/养生相关'>养生相关 (2)</a></li><li><a href='/blog/categories/硬件相关'>硬件相关 (2)</a></li><li><a href='/blog/categories/算法相关'>算法相关 (1)</a></li></ul>
+</section>
+
+
+<section>
+    <h1>Recent Comments</h1>
+    <div id="recentcomments" class="dsq-widget"><script type="text/javascript" src="http://yang3wei.disqus.com/recent_comments_widget.js?num_items=5&hide_avatars=0&avatar_size=48&excerpt_length=200"></script></div><a href="http://disqus.com/">Powered by Disqus</a>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/yang3wei?count=10&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/yang3wei">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - yang3wei -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'yang3wei';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://yang3wei.github.com/blog/2013/02/09/java-zhong-yong-zhi-pathutil/';
+        var disqus_url = 'http://yang3wei.github.com/blog/2013/02/09/java-zhong-yong-zhi-pathutil/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

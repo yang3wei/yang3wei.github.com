@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Mac相关 | yang3wei的专栏]]></title>
   <link href="http://yang3wei.github.com/blog/categories/mac相关/atom.xml" rel="self"/>
   <link href="http://yang3wei.github.com/"/>
-  <updated>2013-02-08T01:53:32+08:00</updated>
+  <updated>2013-02-08T17:30:03+08:00</updated>
   <id>http://yang3wei.github.com/</id>
   <author>
     <name><![CDATA[yang3wei]]></name>
@@ -12,6 +12,103 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Mac 下的 tree 命令]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/08/mac-xia-de-tree-ming-ling/"/>
+    <updated>2013-02-08T17:19:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/08/mac-xia-de-tree-ming-ling</id>
+    <content type="html"><![CDATA[<p>在默认安装安装的 <code>mac</code> 下没有找到 <code>tree</code> 命令，找了一下原来有个比较流氓的解决办法：</p>
+
+<!-- more -->
+
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>find . -print | sed -e 's;[&lt;sup>/]*/;|&lt;strong>&lt;strong>;g;s;&lt;/strong>&lt;/strong>|;&lt;/sup> |;g'</span></code></pre></td></tr></table></div></figure></notextile></div>
+这个命令行跑起来类似平常<code>tree</code>的效果，比如： <br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>.
+</span><span class='line'>|&lt;strong>&lt;strong>extra
+</span><span class='line'>| |&lt;/strong>&lt;/strong>httpd-autoindex.conf
+</span><span class='line'>| |&lt;strong>&lt;strong>httpd-dav.conf
+</span><span class='line'>| |&lt;/strong>&lt;/strong>httpd-default.conf
+</span><span class='line'>| |&lt;strong>&lt;strong>httpd-info.conf
+</span><span class='line'>| |&lt;/strong>&lt;/strong>httpd-languages.conf
+</span><span class='line'>| |&lt;strong>&lt;strong>httpd-manual.conf
+</span><span class='line'>| |&lt;/strong>&lt;/strong>httpd-mpm.conf
+</span><span class='line'>| |&lt;strong>&lt;strong>httpd-multilang-errordoc.conf
+</span><span class='line'>| |&lt;/strong>&lt;/strong>httpd-ssl.conf
+</span><span class='line'>| |&lt;strong>&lt;strong>httpd-userdir.conf
+</span><span class='line'>| |&lt;/strong>&lt;/strong>httpd-vhosts.conf
+</span><span class='line'>|&lt;strong>&lt;strong>httpd.conf
+</span><span class='line'>|&lt;/strong>&lt;/strong>magic
+</span><span class='line'>|&lt;strong>&lt;strong>mime.types
+</span><span class='line'>|&lt;/strong>&lt;/strong>original
+</span><span class='line'>| |&lt;strong>&lt;strong>extra
+</span><span class='line'>| | |&lt;/strong>&lt;/strong>httpd-autoindex.conf
+</span><span class='line'>| | |&lt;strong>&lt;strong>httpd-dav.conf
+</span><span class='line'>| | |&lt;/strong>&lt;/strong>httpd-default.conf
+</span><span class='line'>| | |&lt;strong>&lt;strong>httpd-info.conf
+</span><span class='line'>| | |&lt;/strong>&lt;/strong>httpd-languages.conf
+</span><span class='line'>| | |&lt;strong>&lt;strong>httpd-manual.conf
+</span><span class='line'>| | |&lt;/strong>&lt;/strong>httpd-mpm.conf
+</span><span class='line'>| | |&lt;strong>&lt;strong>httpd-multilang-errordoc.conf
+</span><span class='line'>| | |&lt;/strong>&lt;/strong>httpd-ssl.conf
+</span><span class='line'>| | |&lt;strong>&lt;strong>httpd-userdir.conf
+</span><span class='line'>| | |&lt;/strong>&lt;/strong>httpd-vhosts.conf
+</span><span class='line'>| |&lt;strong>&lt;strong>httpd.conf
+</span><span class='line'>|&lt;/strong>&lt;/strong>other
+</span><span class='line'>| |&lt;strong>&lt;strong>bonjour.conf
+</span><span class='line'>| |&lt;/strong>&lt;/strong>php5.conf
+</span><span class='line'>|____users</span></code></pre></td></tr></table></div></figure></notextile></div>
+写一个alias到~/.bash_profile里，就更方便了:<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>alias tree="find . -print | sed -e 's;[&lt;sup>/]*/;|&lt;strong>&lt;strong>;g;s;&lt;/strong>&lt;/strong>|;&lt;/sup> |;g'"</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h3>Update</h3>
+
+<p>现在正在用的是 <code>homebrew</code> 安装的 <code>tree</code> 命令行。<br/>
+<code>
+brew install tree
+</code>
+作者: Volcano 发表于November 22, 2010 at 8:34 pm<br/>
+版权信息: 可以任意转载, 转载时请务必以超链接形式标明文章原始出处和作者信息及此声明<br/>
+永久链接 - <a href="http://www.ooso.net/archives/564">http://www.ooso.net/archives/564</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[主板放电之后 mac 无法正常启动之谜]]></title>

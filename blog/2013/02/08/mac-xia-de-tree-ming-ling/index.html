@@ -5,14 +5,21 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>(转载)初次运行 Git 前的配置 - yang3wei的专栏</title>
+  <title>Mac 下的 tree 命令 - yang3wei的专栏</title>
   <meta name="author" content="yang3wei">
 
   
-  <meta name="description" content="原文链接：
-http://wuzongbin2008.blog.163.com/blog/static/214687332010111992437496/
-http://progit.org/book/zh/ch1-5.html
-一般在新的系统上，我们都需要先配置下自己的 Git 工作环境。 &hellip;">
+  <meta name="description" content="在默认安装安装的 mac 下没有找到 tree 命令，找了一下原来有个比较流氓的解决办法： 1
+find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g' 这个命令行跑起来类似平常tree的效果，比如： 1
+2
+3
+4
+5
+6
+7
+8
+9
+10 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -26,7 +33,7 @@ http://progit.org/book/zh/ch1-5.html
   <meta name="keywords" content="yang3wei, cocos2d, mac, objective-c, c/c++, game develop, java, OpenGL, shell, box2d, git, python">
 
   
-  <link rel="canonical" href="http://yang3wei.github.com/blog/2013/01/31/zhuan-zai-chu-ci-yun-xing-git-qian-de-pei-zhi/">
+  <link rel="canonical" href="http://yang3wei.github.com/blog/2013/02/08/mac-xia-de-tree-ming-ling/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -87,7 +94,7 @@ http://progit.org/book/zh/ch1-5.html
   
   <header>
     
-      <h1 class="entry-title">(转载)初次运行 Git 前的配置</h1>
+      <h1 class="entry-title">Mac 下的 tree 命令</h1>
     
     
       <p class="meta">
@@ -103,7 +110,7 @@ http://progit.org/book/zh/ch1-5.html
   
 
 
-<time datetime="2013-01-31T00:29:00+08:00" pubdate data-updated="true">Jan 31<span>st</span>, 2013</time>
+<time datetime="2013-02-08T17:19:00+08:00" pubdate data-updated="true">Feb 8<span>th</span>, 2013</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -112,96 +119,106 @@ http://progit.org/book/zh/ch1-5.html
   </header>
 
 
-<div class="entry-content"><p>原文链接：<br/>
-<a href="http://wuzongbin2008.blog.163.com/blog/static/214687332010111992437496/" title="人生、梦想、炼狱、天堂">http://wuzongbin2008.blog.163.com/blog/static/214687332010111992437496/</a><br/>
-<a href="http://progit.org/book/zh/ch1-5.html">http://progit.org/book/zh/ch1-5.html</a><br/>
-一般在新的系统上，我们都需要先配置下自己的 Git 工作环境。<br/>
-配置工作只需一次，以后升级时还会沿用现在的配置。<br/>
-当然，如果需要，你随时可以用相同的命令修改已有的配置。</p>
+<div class="entry-content"><p>在默认安装安装的 <code>mac</code> 下没有找到 <code>tree</code> 命令，找了一下原来有个比较流氓的解决办法：</p>
 
 <!-- more -->
 
 
-<p>Git 提供了一个叫做 <code>git config</code> 的工具<br/>
-（译注：实际是 <code>git-config</code> 命令，只不过可以通过 git 加一个名字来呼叫此命令），<br/>
-专门用来配置或读取相应的工作环境变量。<br/>
-而正是由这些环境变量，决定了 Git 在各个环节的具体工作方式和行为。<br/>
-这些变量可以存放在以下三个不同的地方：</p>
-
-<h3>1.<code>/etc/gitconfig</code> 文件</h3>
-
-<p>系统中对所有用户都普遍适用的配置。<br/>
-若使用 <code>git config</code> 时用 <code>--system</code> 选项，读写的就是这个文件。</p>
-
-<h3>2.<code>~/.gitconfig</code> 文件</h3>
-
-<p>用户目录下的配置文件只适用于该用户。<br/>
-若使用 <code>git config</code> 时用 <code>--global</code> 选项，读写的就是这个文件。</p>
-
-<h3>3.当前项目 <code>.git</code> 隐藏目录下的 config 文件</h3>
-
-<p>这里的配置仅仅针对当前项目有效。<br/>
-每一个级别的配置都会覆盖上层的相同配置，<br/>
-所以 <code>.git/config</code> 里的配置会覆盖 <code>/etc/gitconfig</code> 中的同名变量。</p>
-
-<p>在 <code>Windows</code> 系统上，Git 会找寻用户主目录下的 <code>.gitconfig</code> 文件。<br/>
-主目录即 <code>$HOME</code> 变量指定的目录，一般都是 <code>C:\Documents and Settings\$USER</code>。<br/>
-此外，Git 还会尝试找寻 <code>/etc/gitconfig</code> 文件，<br/>
-只不过看当初 Git 装在什么目录，就以此作为根目录来定位。</p>
-
-<h2>用户信息</h2>
-
-<p>第一个要配置的是你个人的用户名称和电子邮件地址。<br/>
-这两条配置很重要，每次 Git 提交时都会引用这两条信息，<br/>
-说明是谁提交了更新，所以会随更新内容一起被永久纳入历史记录：</p>
-
-<pre><code>git config --global user.name "John Doe"
-git config --global user.email johndoe@example.com
-</code></pre>
 
 
-<p>如果用了 <code>--global</code> 选项，那么更改的配置文件就是位于你用户主目录下的那个，<br/>
-以后你所有的项目都会默认使用这里配置的用户信息。<br/>
-如果要在某个特定的项目中使用其他名字或者电邮，只要去掉 <code>--global</code> 选项重新配置即可，<br/>
-新的设定保存在当前项目的 <code>.git/config</code> 文件里。</p>
-
-<h2>文本编辑器</h2>
-
-<p>接下来要设置的是默认使用的文本编辑器。<br/>
-Git 需要你输入一些额外消息的时候，会自动调用一个外部文本编辑器给你用。<br/>
-默认会使用操作系统指定的默认编辑器，一般可能会是 <code>Vi</code> 或者 <code>Vim</code>。<br/>
-如果你有其他偏好，比如 <code>Emacs</code> 的话，可以重新设置：</p>
-
-<pre><code>git config --global core.editor emacs</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'</span></code></pre></td></tr></table></div></figure>
 
 
-<h2>差异分析工具</h2>
+<p>这个命令行跑起来类似平常<code>tree</code>的效果，比如：</p>
 
-<p>还有一个比较常用的是，在解决合并冲突时使用哪种差异分析工具。比如要改用 vimdiff 的话：</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>.
+</span><span class='line'>|____extra
+</span><span class='line'>| |____httpd-autoindex.conf
+</span><span class='line'>| |____httpd-dav.conf
+</span><span class='line'>| |____httpd-default.conf
+</span><span class='line'>| |____httpd-info.conf
+</span><span class='line'>| |____httpd-languages.conf
+</span><span class='line'>| |____httpd-manual.conf
+</span><span class='line'>| |____httpd-mpm.conf
+</span><span class='line'>| |____httpd-multilang-errordoc.conf
+</span><span class='line'>| |____httpd-ssl.conf
+</span><span class='line'>| |____httpd-userdir.conf
+</span><span class='line'>| |____httpd-vhosts.conf
+</span><span class='line'>|____httpd.conf
+</span><span class='line'>|____magic
+</span><span class='line'>|____mime.types
+</span><span class='line'>|____original
+</span><span class='line'>| |____extra
+</span><span class='line'>| | |____httpd-autoindex.conf
+</span><span class='line'>| | |____httpd-dav.conf
+</span><span class='line'>| | |____httpd-default.conf
+</span><span class='line'>| | |____httpd-info.conf
+</span><span class='line'>| | |____httpd-languages.conf
+</span><span class='line'>| | |____httpd-manual.conf
+</span><span class='line'>| | |____httpd-mpm.conf
+</span><span class='line'>| | |____httpd-multilang-errordoc.conf
+</span><span class='line'>| | |____httpd-ssl.conf
+</span><span class='line'>| | |____httpd-userdir.conf
+</span><span class='line'>| | |____httpd-vhosts.conf
+</span><span class='line'>| |____httpd.conf
+</span><span class='line'>|____other
+</span><span class='line'>| |____bonjour.conf
+</span><span class='line'>| |____php5.conf
+</span><span class='line'>|____users</span></code></pre></td></tr></table></div></figure>
 
-<pre><code>git config --global merge.tool vimdiff</code></pre>
+
+<p>写一个alias到~/.bash_profile里，就更方便了:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Git 可以理解 <code>kdiff3</code>，<code>tkdiff</code>，<code>meld</code>，<code>xxdiff</code>，<code>emerge</code>，<br/>
-<code>vimdiff</code>，<code>gvimdiff</code>，<code>ecmerge</code>，<code>opendiff</code> 等合并工具的输出信息。<br/>
-当然，你也可以指定使用自己开发的工具，具体怎么做可以参阅第七章。</p>
+<h3>Update</h3>
 
-<h2>查看配置信息</h2>
+<p>现在正在用的是 <code>homebrew</code> 安装的 <code>tree</code> 命令行。</p>
 
-<p>要检查已有的配置信息，可以使用 git config &#8211;list 命令：</p>
-
-<pre><code>git config --list user.name=Scott Chacon user.email=schacon@gmail.com color.status=auto color.branch=auto color.interactive=auto color.diff=auto ...</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>brew install tree</span></code></pre></td></tr></table></div></figure>
 
 
-<p>有时候会看到重复的变量名，那就说明它们来自不同的配置文件<br/>
-（比如 <code>/etc/gitconfig</code> 和 <code>~/.gitconfig</code>），不过最终 Git 实际采用的是最后一个。</p>
-
-<p>也可以直接查阅某个环境变量的设定，只要把特定的名字跟在后面即可，像这样：</p>
-
-<pre><code>git config user.name Scott Chacon</code></pre>
-
-
-
+<p>作者: Volcano 发表于November 22, 2010 at 8:34 pm<br/>
+版权信息: 可以任意转载, 转载时请务必以超链接形式标明文章原始出处和作者信息及此声明<br/>
+永久链接 - <a href="http://www.ooso.net/archives/564">http://www.ooso.net/archives/564</a></p>
 </div>
 
 
@@ -224,12 +241,12 @@ Git 需要你输入一些额外消息的时候，会自动调用一个外部文�
   
 
 
-<time datetime="2013-01-31T00:29:00+08:00" pubdate data-updated="true">Jan 31<span>st</span>, 2013</time>
+<time datetime="2013-02-08T17:19:00+08:00" pubdate data-updated="true">Feb 8<span>th</span>, 2013</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/git相关/'>Git相关</a>
+    <a class='category' href='/blog/categories/mac相关/'>Mac相关</a>
   
 </span>
 
@@ -245,10 +262,8 @@ Git 需要你输入一些额外消息的时候，会自动调用一个外部文�
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/01/30/zhuan-zai-octopress-zen-yao-kai-qi-ping-lun-gong-neng/" title="Previous Post: (扩充)Octopress 怎么开启评论功能">&laquo; (扩充)Octopress 怎么开启评论功能</a>
+        <a class="basic-alignment left" href="/blog/2013/02/08/i-found-a-bug-with-ccparticlesystem/" title="Previous Post: I found a bug with CCParticleSystem">&laquo; I found a bug with CCParticleSystem</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/01/31/zai-hou-zhong-jian-octopress-bo-ke-yu-dao-de-wen-ti/" title="Next Post: 灾后重建 octopress 博客遇到的问题">灾后重建 octopress 博客遇到的问题 &raquo;</a>
       
     </p>
   </footer>
@@ -347,8 +362,8 @@ Git 需要你输入一些额外消息的时候，会自动调用一个外部文�
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://yang3wei.github.com/blog/2013/01/31/zhuan-zai-chu-ci-yun-xing-git-qian-de-pei-zhi/';
-        var disqus_url = 'http://yang3wei.github.com/blog/2013/01/31/zhuan-zai-chu-ci-yun-xing-git-qian-de-pei-zhi/';
+        var disqus_identifier = 'http://yang3wei.github.com/blog/2013/02/08/mac-xia-de-tree-ming-ling/';
+        var disqus_url = 'http://yang3wei.github.com/blog/2013/02/08/mac-xia-de-tree-ming-ling/';
         var disqus_script = 'embed.js';
       
     (function () {

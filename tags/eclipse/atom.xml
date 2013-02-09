@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Tag: eclipse | yang3wei的专栏]]></title>
+  <link href="http://yang3wei.github.com/tags/eclipse/atom.xml" rel="self"/>
+  <link href="http://yang3wei.github.com/"/>
+  <updated>2013-02-10T01:12:38+08:00</updated>
+  <id>http://yang3wei.github.com/</id>
+  <author>
+    <name><![CDATA[yang3wei]]></name>
+    <email><![CDATA[88480585@qq.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[wxPython Undefined variable from import PySimpleApp]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/09/wxpython-undefined-variable-from-import-pysimpleapp/"/>
+    <updated>2013-02-09T23:41:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/09/wxpython-undefined-variable-from-import-pysimpleapp</id>
+    <content type="html"><![CDATA[<p>在 python 里面，将文本文件的内容读取为字符串只需要一行代码：<!-- more -->
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>string = open('/Users/user/Desktop/Test.txt').read()</span></code></pre></td></tr></table></div></figure></notextile></div>
+当然，这还只是 python 众多亮点中的冰山一角。尽管使用 java 已经有好几个年头，足以解决日常开发中遇到的一些小问题了，但我还是希望能拓宽一下视野，掌握一门新的语言。python 简洁实用，难度曲线感觉也不是很陡，所以就成了我的首选。在我的观念中，命令行程序虽然也能做地很强大，但作为方便日常开发的小工具，我还是希望能有一个合体的 GUI 壳子套在它的外面。经过多番查探，我找到了 python 几个比较主流的图形库：TKinter、wxPython、JPython。其中，TKinter 好像是 python 内置的，wxPython 需要自己下载安装包执行安装，JPython 不是很了解，但是在 eclipse 的 Preferences 里看到过它的身影，不知道能不能直接拿来用。</p>
+
+<h4>TKinter 的 HelloWorld 比较简单，下面给一个创建窗口的程序例子：</h4>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>TestTKinter.py  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="err">!</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;-&lt;</span><span class="n">em</span><span class="o">&gt;-</span> <span class="n">coding</span><span class="p">:</span><span class="n">utf</span><span class="o">-</span><span class="mi">8</span> <span class="o">-&lt;/</span><span class="n">em</span><span class="o">&gt;-&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kn">import</span> <span class="nn">Tkinter</span>
+</span><span class='line'><span class="n">top</span> <span class="o">=</span> <span class="n">Tkinter</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">Code</span> <span class="n">to</span> <span class="n">add</span> <span class="n">widgets</span> <span class="n">will</span> <span class="n">go</span> <span class="n">here</span><span class="o">...&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">top</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h4>wxPython 的 HelloWorld 如下：</h4>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>TestWxPython.py  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="err">!</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;-&lt;</span><span class="n">em</span><span class="o">&gt;-</span> <span class="n">coding</span><span class="p">:</span><span class="n">utf</span><span class="o">-</span><span class="mi">8</span> <span class="o">-&lt;/</span><span class="n">em</span><span class="o">&gt;-&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kn">import</span> <span class="nn">wx</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">if</span> <span class="o">&lt;</span><span class="n">strong</span><span class="o">&gt;</span><span class="n">name</span><span class="o">&lt;/</span><span class="n">strong</span><span class="o">&gt;</span> <span class="o">==</span> <span class="s">&#39;&lt;strong&gt;main&lt;/strong&gt;&#39;</span><span class="p">:</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">app</span> <span class="o">=</span> <span class="n">wx</span><span class="o">.</span><span class="n">PySimpleApp</span><span class="p">()</span>
+</span><span class='line'><span class="n">frame</span> <span class="o">=</span> <span class="n">wx</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</span><span class='line'><span class="n">frame</span><span class="o">.</span><span class="n">Show</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">app</span><span class="o">.</span><span class="n">MainLoop</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>不过，在试验 wxPython 的 HelloWorld 之前还得经历下载、安装和配置的步骤。就拿我此次的经历来说吧，下载倒是没遇到什么问题，我的操作系统是 Mac OS X Lion 10.7.2，Python 的版本是 2.7.1，在官网下载了相对应的一个版本：wxPython2.8-osx-unicode-2.8.12.1-universal-py2.7。因为之前也有对 python 的粗浅涉猎，所以在 eclipse 里面早早地就把 PyDev 给装上去了，具体怎么弄地现在也想不起来了，应该不是很麻烦。安装也没什么好说的，一路 next 就是了。至于配置，其实不弄好的话对 wxPython HelloWorld 的执行也没有致命的影响。</p>
+
+<p>不过有一点儿非常不好，你不给配置的话，在<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>app = wx.PySimpleApp()
+</span><span class='line'>frame = wx.Frame(parent=None)</span></code></pre></td></tr></table></div></figure></notextile></div>
+这两行代码的前面就老喜欢显示红叉叉。<br/>
+挺蛋疼的，执行的话又没有影响，非得弄俩红叉恶心你！</p>
+
+<p>那么，怎么终结这种不利的情况呢？<br/>
+Googling 之后找到了一个很有用的链接：<br/>
+<a href="http://bbs.csdn.net/topics/340237664">是配置问题吗？为什么IDE显示undefined variable from import:xxx</a><br/>
+虽然我的平台是 Mac OS，但从帖子中给出的最终解决方案来看，应该也就是找到 wxPython 库相关的路径加到 <code>PyDev</code> -> <code>Interpretor - Python</code> -> <code>Libraries</code> 里面。这个路径在哪儿一时半会儿我也是一头雾水，再加上 wxPython 是否被成功添加到 python 的 System Libs 要在重启 eclipse 之后才能确认（实际表现为配置完毕之后不会立即生效，要在重启 eclipse 以后红叉才会被清除掉），所以还是费了我一些功夫的，这里给出路径：<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/usr/local/lib/wxPython-unicode-2.8.12.1/lib/python2.7/site-packages/wx-2.8-mac-unicode</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[为 Eclipse for Mac 新增 Show in Finder 的功能]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/08/wei-eclipse-for-mac-xin-zeng-show-in-finder-de-gong-neng/"/>
+    <updated>2013-02-08T22:47:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/08/wei-eclipse-for-mac-xin-zeng-show-in-finder-de-gong-neng</id>
+    <content type="html"><![CDATA[<p>相信各位使用 Mac OS 作为开发平台的同僚都遇到过如下的问题：<br/>
+想在 Finder 中显示 eclipse 工程中的某个文件，挺不容易的！<br/>
+不知道其他人是怎么弄的，这里说一下我是怎么弄的吧：</p>
+
+<!-- more -->
+
+
+<p><strong>1.在工程视图里选中要在 Finder 中显示的文件</strong><br/>
+<strong>2.在弹出的右键菜单中选择 Properties</strong><br/>
+<strong>3.复制该文件父目录的绝对路径</strong><br/>
+<strong>4.打开 Finder</strong><br/>
+<strong>5.Command + Shift + G 弹出快速前往的对话框</strong><br/>
+<strong>6.在路径输入框中粘贴之前复制的父目录绝对路径</strong><br/>
+<strong>7.回车前往目标文件所在的父目录</strong><br/>
+<strong>8.手动在 Finder 的父目录中定位目标文件</strong></p>
+
+<p>不是很难，但由上面的步骤可以看出，操作起来还是挺麻烦的。<br/>
+一次两次可能还不觉得，但如果是经常要执行类似的操作就很烦了~<br/>
+我就一直在为这个问题而感到烦恼！如何来终结这种不利的境况？</p>
+
+<h2>这里介绍一个解决方案</h2>
+
+<p>为 eclipse 扩展一个自定义的功能！<br/>
+<strong>原理很简单，就是以命令行的方式来调用外部的可执行文件来满足自己的需求。</strong></p>
+
+<p>再对上面的需求做一下总结吧：<br/>
+不就是要在 Finder（Mac OS）或者 Explorer（Windows）里面定位出某个文件么，<br/>
+从编写程序的角度来看，文件的绝对路径都能拿到了，定位到该文件还有什么好难的？</p>
+
+<p>摸索过程中我找到了一篇很有用的资料：<br/>
+<a href="http://stackoverflow.com/questions/1161240/in-eclipse-reveal-current-file-in-filesystem">In eclipse, reveal current file in filesystem</a></p>
+
+<p>浓缩的精华：<br/>
+<strong>You can also develop your own external tool to open the file in a Windows explorer</strong><br/>
+<img class="center" src="/images/posts/meaningful.gif"></p>
+
+<p>到这里就算是有头绪了，如图所示：<br/>
+仅需对上图中针对 <code>Windows</code> 的配置做更改，适配到 <code>Mac</code> 平台就行了。<br/>
+其实很简单，改几个地方就 ok 了：<br/>
+第一个是 <code>Name</code>，改成你喜欢的名字吧，比如说：<code>show in finder</code><br/>
+第二个是 <code>Location</code>，改成要调用的外部可执行文件的完整路径即可，如：<code>/usr/bin/open</code><br/>
+第三个是 <code>Arguments</code>，涵义是要给外部可执行文件传入的参数。<br/>
+这里可以再次借助 eclipse 提供的功能来简化我们所要做的操作：<br/>
+${resource_loc} 可以拿到当前所选择文件的绝对路径；<br/>
+${container_loc} 可以拿到当前所选择文件父目录的绝对路径。<br/>
+<img class="center" src="/images/posts/external_tools_configurations.png">
+<img class="center" src="/images/posts/external_tools_configring.png">
+<code>/usr/bin/open</code> 是 <code>Mac</code> 的内置命令，<br/>
+<code>open</code> 命令带 <code>-R</code> 参数表示在 <code>Finder</code> 中呈现出目标文件，<br/>
+（注：不带 <code>-R</code> 参数的话就会选择相关联的程序来打开该文件）<br/>
+这样一来的话，就算是大功告成了~</p>
+
+<h2>如何来执行这个扩展出来的功能呢？</h2>
+
+<p>也很简单，不过先要将名为 <code>show in finder</code> 的扩展功能设置为 <code>favourite</code>：<br/>
+在 <code>Organize Favourites...</code> 里面 <code>add</code> 一下即可！<br/>
+<img class="center" src="/images/posts/set_as_favourite.png">
+接下来就开始享受便利的生活吧：<br/>
+首先，选择要在 <code>Finder</code> 中显示的目标文件，<br/>
+然后，按一下工具栏 <code>Run</code> 按钮右边和 <code>Run</code> 按钮长的比较像的那个按钮。</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -9,9 +9,10 @@
   <meta name="author" content="yang3wei">
 
   
-  <meta name="description" content="原文链接：http://huanggang.me/archives/654 一、Octopress 简介 Octopress 是使用 ruby 语言编写的一套建立在 jekyll 之上的博客系统，它有一些很独特的特点： 1. 使用静态页面；
-2. 不使用数据库；
-3. 使用 markdown &hellip;">
+  <meta name="description" content="用 MacVim 的请注意，执行 rake deploy 的时候，
+切记要将 MacVim 正在编辑的 markdown 博文文件保存并关闭掉~
+因为在 deploy 的时候会对 source/_posts 目录下的文件执行 cp 操作~
+如果 MacVim 当前正在编辑博文的 markdown &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -83,6 +84,103 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/28/octopress-xin-zeng-bo-wen-shi-yao-zhu-yi-de-di-fang/">Octopress 新增博文时要注意的地方</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-28T22:11:00+08:00" pubdate data-updated="true">Jan 28<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/01/28/octopress-xin-zeng-bo-wen-shi-yao-zhu-yi-de-di-fang/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>用 MacVim 的请注意，执行 rake deploy 的时候，<br/>
+切记要将 MacVim 正在编辑的 markdown 博文文件保存并关闭掉~<br/>
+因为在 deploy 的时候会对 source/_posts 目录下的文件执行 cp 操作~<br/>
+如果 MacVim 当前正在编辑博文的 markdown 文件的话，<br/>
+很有可能在执行 <code>rake deploy</code> 的时候给予失败的提示~<br/>
+究其根源就是因为 MacVim 锁定了某个文件（swp 格式的），<br/>
+然后对 <code>rake deploy</code> 命令的执行造成了阻碍~</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/01/28/octopress-xin-zeng-bo-wen-shi-yao-zhu-yi-de-di-fang/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/28/zhuan-zai-git-ru-he-shan-chu-remote-de-wen-jian/">(转载)Git 如何删除 Remote 的文件</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-28T17:25:00+08:00" pubdate data-updated="true">Jan 28<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/01/28/zhuan-zai-git-ru-he-shan-chu-remote-de-wen-jian/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>原文链接：<a href="http://hi.baidu.com/zairl23/item/4a34c60084108fd01ef0464d" title="The Way">http://hi.baidu.com/zairl23/item/4a34c60084108fd01ef0464d</a><br/>
+使用 toto 做了个博客挂着 heroku 上。<br/>
+使用 git push 的方法发布博客确实有点cool。<br/>
+可是发现以前删除的测试文件仍然在, 如何将他们通过 git 的方式删除呢?<br/>
+不止是 heroku, 我发现 github 上也保留有我删除掉的文件.<br/>
+由于某些原因，git 远程的文件与本地文件产生了不一致，现在需要删除远程的一个文件：</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/01/28/zhuan-zai-git-ru-he-shan-chu-remote-de-wen-jian/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -308,6 +406,14 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/02/09/wxpython-undefined-variable-from-import-pysimpleapp/">wxPython Undefined variable from import PySimpleApp</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/09/jie-du-hen-qiang-hen-biao-han-de-pythonbiao-zhun-guiku/">解读很强很彪悍的 Python 标准 GUI 库</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/02/09/git-biao-qian-xiang-guan-cao-zuo/">Git 标签相关操作</a>
       </li>
     
@@ -319,14 +425,6 @@
         <a href="/blog/2013/02/09/java-zhong-yong-zhi-pathutil/">Java 重用之 PathUtil</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2013/02/08/wei-eclipse-for-mac-xin-zeng-show-in-finder-de-gong-neng/">为 Eclipse for Mac 新增 Show in Finder 的功能</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/02/08/mac-xia-de-tree-ming-ling/">Mac 下的 tree 命令</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -336,12 +434,14 @@
 <a style="font-size: 100%" href="/tags/algorithm/">algorithm</a>
 <a style="font-size: 100%" href="/tags/ant/">ant</a>
 <a style="font-size: 100%" href="/tags/cocos2d/">cocos2d</a>
+<a style="font-size: 131%" href="/tags/eclipse/">eclipse</a>
 <a style="font-size: 210%" href="/tags/git/">git</a>
 <a style="font-size: 131%" href="/tags/hardware/">hardware</a>
 <a style="font-size: 100%" href="/tags/ios/">iOS</a>
 <a style="font-size: 179%" href="/tags/java/">java</a>
 <a style="font-size: 192%" href="/tags/mac/">mac</a>
 <a style="font-size: 197%" href="/tags/octopress/">octopress</a>
+<a style="font-size: 131%" href="/tags/python/">python</a>
 <a style="font-size: 161%" href="/tags/vim/">vim</a>
 <a style="font-size: 149%" href="/tags/伟少手札/">伟少手札</a>
 <a style="font-size: 131%" href="/tags/养生/">养生</a>
@@ -350,7 +450,7 @@
 </section>
 <section>
     <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/cocos2d相关'>Cocos2d相关 (1)</a></li><li><a href='/blog/categories/git相关'>Git相关 (12)</a></li><li><a href='/blog/categories/java相关'>Java相关 (5)</a></li><li><a href='/blog/categories/mac相关'>Mac相关 (7)</a></li><li><a href='/blog/categories/octopress相关'>Octopress相关 (8)</a></li><li><a href='/blog/categories/vim相关'>Vim相关 (4)</a></li><li><a href='/blog/categories/伟少手札'>伟少手札 (2)</a></li><li><a href='/blog/categories/养生相关'>养生相关 (2)</a></li><li><a href='/blog/categories/硬件相关'>硬件相关 (2)</a></li><li><a href='/blog/categories/算法相关'>算法相关 (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/cocos2d相关'>Cocos2d相关 (1)</a></li><li><a href='/blog/categories/git相关'>Git相关 (12)</a></li><li><a href='/blog/categories/java相关'>Java相关 (5)</a></li><li><a href='/blog/categories/mac相关'>Mac相关 (7)</a></li><li><a href='/blog/categories/octopress相关'>Octopress相关 (8)</a></li><li><a href='/blog/categories/python相关'>Python相关 (2)</a></li><li><a href='/blog/categories/vim相关'>Vim相关 (4)</a></li><li><a href='/blog/categories/伟少手札'>伟少手札 (2)</a></li><li><a href='/blog/categories/养生相关'>养生相关 (2)</a></li><li><a href='/blog/categories/硬件相关'>硬件相关 (2)</a></li><li><a href='/blog/categories/算法相关'>算法相关 (1)</a></li></ul>
 </section>
 
 

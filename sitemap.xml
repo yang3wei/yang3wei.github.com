@@ -214,7 +214,7 @@
         <loc>
             http://yang3wei.github.com/blog/2013/02/08/wei-eclipse-for-mac-xin-zeng-show-in-finder-de-gong-neng/
         </loc>
-        <lastmod>2013-02-09T01:09:48+08:00</lastmod>
+        <lastmod>2013-02-09T23:42:34+08:00</lastmod>
     </url>
     <url>
         <loc>http://yang3wei.github.com/blog/2013/02/09/java-zhong-yong-zhi-pathutil/</loc>
@@ -229,12 +229,24 @@
         <lastmod>2013-02-09T14:24:28+08:00</lastmod>
     </url>
     <url>
+        <loc>
+            http://yang3wei.github.com/blog/2013/02/09/jie-du-hen-qiang-hen-biao-han-de-pythonbiao-zhun-guiku/
+        </loc>
+        <lastmod>2013-02-09T21:37:20+08:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://yang3wei.github.com/blog/2013/02/09/wxpython-undefined-variable-from-import-pysimpleapp/
+        </loc>
+        <lastmod>2013-02-10T01:12:26+08:00</lastmod>
+    </url>
+    <url>
         <loc>http://yang3wei.github.com/blog/archives/</loc>
-        <lastmod>2013-02-09T14:24:28+08:00</lastmod>
+        <lastmod>2013-02-10T01:12:26+08:00</lastmod>
     </url>
     <url>
         <loc>http://yang3wei.github.com/</loc>
-        <lastmod>2013-02-09T14:24:28+08:00</lastmod>
+        <lastmod>2013-02-10T01:12:26+08:00</lastmod>
     </url>
     <url>
         <loc>http://yang3wei.github.com/robots.txt</loc>

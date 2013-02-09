@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Tag: python | yang3wei的专栏]]></title>
+  <link href="http://yang3wei.github.com/tags/python/atom.xml" rel="self"/>
+  <link href="http://yang3wei.github.com/"/>
+  <updated>2013-02-10T01:12:38+08:00</updated>
+  <id>http://yang3wei.github.com/</id>
+  <author>
+    <name><![CDATA[yang3wei]]></name>
+    <email><![CDATA[88480585@qq.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[wxPython Undefined variable from import PySimpleApp]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/09/wxpython-undefined-variable-from-import-pysimpleapp/"/>
+    <updated>2013-02-09T23:41:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/09/wxpython-undefined-variable-from-import-pysimpleapp</id>
+    <content type="html"><![CDATA[<p>在 python 里面，将文本文件的内容读取为字符串只需要一行代码：<!-- more -->
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>string = open('/Users/user/Desktop/Test.txt').read()</span></code></pre></td></tr></table></div></figure></notextile></div>
+当然，这还只是 python 众多亮点中的冰山一角。尽管使用 java 已经有好几个年头，足以解决日常开发中遇到的一些小问题了，但我还是希望能拓宽一下视野，掌握一门新的语言。python 简洁实用，难度曲线感觉也不是很陡，所以就成了我的首选。在我的观念中，命令行程序虽然也能做地很强大，但作为方便日常开发的小工具，我还是希望能有一个合体的 GUI 壳子套在它的外面。经过多番查探，我找到了 python 几个比较主流的图形库：TKinter、wxPython、JPython。其中，TKinter 好像是 python 内置的，wxPython 需要自己下载安装包执行安装，JPython 不是很了解，但是在 eclipse 的 Preferences 里看到过它的身影，不知道能不能直接拿来用。</p>
+
+<h4>TKinter 的 HelloWorld 比较简单，下面给一个创建窗口的程序例子：</h4>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>TestTKinter.py  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="err">!</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;-&lt;</span><span class="n">em</span><span class="o">&gt;-</span> <span class="n">coding</span><span class="p">:</span><span class="n">utf</span><span class="o">-</span><span class="mi">8</span> <span class="o">-&lt;/</span><span class="n">em</span><span class="o">&gt;-&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kn">import</span> <span class="nn">Tkinter</span>
+</span><span class='line'><span class="n">top</span> <span class="o">=</span> <span class="n">Tkinter</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">Code</span> <span class="n">to</span> <span class="n">add</span> <span class="n">widgets</span> <span class="n">will</span> <span class="n">go</span> <span class="n">here</span><span class="o">...&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">top</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h4>wxPython 的 HelloWorld 如下：</h4>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>TestWxPython.py  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="err">!</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;-&lt;</span><span class="n">em</span><span class="o">&gt;-</span> <span class="n">coding</span><span class="p">:</span><span class="n">utf</span><span class="o">-</span><span class="mi">8</span> <span class="o">-&lt;/</span><span class="n">em</span><span class="o">&gt;-&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kn">import</span> <span class="nn">wx</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">if</span> <span class="o">&lt;</span><span class="n">strong</span><span class="o">&gt;</span><span class="n">name</span><span class="o">&lt;/</span><span class="n">strong</span><span class="o">&gt;</span> <span class="o">==</span> <span class="s">&#39;&lt;strong&gt;main&lt;/strong&gt;&#39;</span><span class="p">:</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">app</span> <span class="o">=</span> <span class="n">wx</span><span class="o">.</span><span class="n">PySimpleApp</span><span class="p">()</span>
+</span><span class='line'><span class="n">frame</span> <span class="o">=</span> <span class="n">wx</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</span><span class='line'><span class="n">frame</span><span class="o">.</span><span class="n">Show</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">app</span><span class="o">.</span><span class="n">MainLoop</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>不过，在试验 wxPython 的 HelloWorld 之前还得经历下载、安装和配置的步骤。就拿我此次的经历来说吧，下载倒是没遇到什么问题，我的操作系统是 Mac OS X Lion 10.7.2，Python 的版本是 2.7.1，在官网下载了相对应的一个版本：wxPython2.8-osx-unicode-2.8.12.1-universal-py2.7。因为之前也有对 python 的粗浅涉猎，所以在 eclipse 里面早早地就把 PyDev 给装上去了，具体怎么弄地现在也想不起来了，应该不是很麻烦。安装也没什么好说的，一路 next 就是了。至于配置，其实不弄好的话对 wxPython HelloWorld 的执行也没有致命的影响。</p>
+
+<p>不过有一点儿非常不好，你不给配置的话，在<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>app = wx.PySimpleApp()
+</span><span class='line'>frame = wx.Frame(parent=None)</span></code></pre></td></tr></table></div></figure></notextile></div>
+这两行代码的前面就老喜欢显示红叉叉。<br/>
+挺蛋疼的，执行的话又没有影响，非得弄俩红叉恶心你！</p>
+
+<p>那么，怎么终结这种不利的情况呢？<br/>
+Googling 之后找到了一个很有用的链接：<br/>
+<a href="http://bbs.csdn.net/topics/340237664">是配置问题吗？为什么IDE显示undefined variable from import:xxx</a><br/>
+虽然我的平台是 Mac OS，但从帖子中给出的最终解决方案来看，应该也就是找到 wxPython 库相关的路径加到 <code>PyDev</code> -> <code>Interpretor - Python</code> -> <code>Libraries</code> 里面。这个路径在哪儿一时半会儿我也是一头雾水，再加上 wxPython 是否被成功添加到 python 的 System Libs 要在重启 eclipse 之后才能确认（实际表现为配置完毕之后不会立即生效，要在重启 eclipse 以后红叉才会被清除掉），所以还是费了我一些功夫的，这里给出路径：<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/usr/local/lib/wxPython-unicode-2.8.12.1/lib/python2.7/site-packages/wx-2.8-mac-unicode</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[解读很强很彪悍的 Python 标准 GUI 库]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/09/jie-du-hen-qiang-hen-biao-han-de-pythonbiao-zhun-guiku/"/>
+    <updated>2013-02-09T21:25:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/09/jie-du-hen-qiang-hen-biao-han-de-pythonbiao-zhun-guiku</id>
+    <content type="html"><![CDATA[<p>原文链接：<a href="http://developer.51cto.com/art/201002/184975.htm">解读很强很彪悍的Python标准GUI库</a><br/>
+Python 标准 GUI 库的创始人为 Guido van Rossum。在一个不经意间的时刻决心开发一个新的脚本解释程序，那也就是 Python 语言。</p>
+
+<!-- more -->
+
+
+<p>Python 可以使用户避免过分的语法的羁绊而将精力主要集中到所要实现的程序任务上，GUI 开发方面，既有 Python 标准 GUI 库——TKinter，又有很多强大的第三方 GUI 库，例如 Python 标准 GUI 库。</p>
+
+<h3>1. Guido 简介</h3>
+
+<p>Python 创始人，原居荷兰，1995 年移居美国，2005 年加入 Google。</p>
+
+<h3>2. 为什么叫 Python？</h3>
+
+<p>说来很有趣，选用 Python 这个名字，仅仅是因为 Guido 很喜欢一部叫做《Monty Python 飞行马戏团》的肥皂剧。</p>
+
+<h3>3. Python 是什么？</h3>
+
+<p>是一门可以被应用到很多领域、功能强大、面向对象、跨平台的动态编程语言。1990年至今，Python 经过 17 年的发展，已经成为最流行的编程语言之一。在 Google，Python 语言更是被广泛应用，想在 Google 工作，Python 语言似乎成了一个基本要求。</p>
+
+<p>Python何以有这么大的魅力，受到如此的追捧？笔者结合自己的使用经验，认为 Python 的强大，主要体现在以下几个方面：</p>
+
+<h3>一、简单易学</h3>
+
+<p>Python 世界非常强调 “简单” 二字，一个代码风格良好的 Python 程序，阅读起来，感觉就像是在阅读一段英文。Python 的这种伪代码本质，使得你可以更关注如何解决实际问题，而不是关注语言本身。</p>
+
+<p>Python 的语法也相当简单，并且内置了很多高级数据结构。 Python 的简单易学，很适合作为入门语言。目前，包括麻省理工学院在内的国外很多高校，都已选用 Python 作为教学语言。</p>
+
+<h3>二、代码量小</h3>
+
+<p>实现同样的功能，Python 标准 GUI 库与 Java、C# 这样的“大个头”比起来，明显简约很多。 例如，打印出一个文本文件中的所有内容，用 Python 只需要一句。</p>
+
+<p>如果你仅仅认为用 Python 只能写写 “Hello World”，那你就大错特错了。 Python 可以被应用到网络开发、GUI 开发、图形开发、Web 开发、游戏开发、手机开发、数据库开发等众多领域。</p>
+
+<p>网络开发方面，Python 提供了大量可用的网络编程模块，涉及到 Socket、EMail、FTP 等等；众所周知的豆瓣网（http://www.douban.com/），就是使用了专门用于 Python 的网络开发框架——Twisted；</p>
+
+<p>此外，Python 还支持 Jabber 等等。 GUI 开发方面，既有 Python 标准 GUI 库 —— TKinter，又有很多强大的第三方 GUI 库，例如 Python 标准 GUI 库。Web 开发方面，Python 更显强大。应用服务器，有 zope；CMS 系统，有 plone（基于 zope）。国内，润普科技（http://zopen.cn/），就是做基于 plone 应用的；此外，还有 django —— 一个可以和 RoR 相媲美的快速 web 开发框架、Pylons 等等。 游戏开发方面，Python 也有举足轻重的地位。很多网络游戏脚本，例如账号注册系统、物品交换系统、场地转换系统和攻击防御系统，都是用 Python 写的，与 C++ 相比，Python 更加轻便。</p>
+]]></content>
+  </entry>
+  
+</feed>

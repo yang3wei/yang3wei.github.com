@@ -4,7 +4,7 @@
   <title><![CDATA[yang3wei的专栏]]></title>
   <link href="http://yang3wei.github.com/atom.xml" rel="self"/>
   <link href="http://yang3wei.github.com/"/>
-  <updated>2013-02-09T14:25:40+08:00</updated>
+  <updated>2013-02-10T01:12:38+08:00</updated>
   <id>http://yang3wei.github.com/</id>
   <author>
     <name><![CDATA[yang3wei]]></name>
@@ -12,6 +12,136 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[wxPython Undefined variable from import PySimpleApp]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/09/wxpython-undefined-variable-from-import-pysimpleapp/"/>
+    <updated>2013-02-09T23:41:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/09/wxpython-undefined-variable-from-import-pysimpleapp</id>
+    <content type="html"><![CDATA[<p>在 python 里面，将文本文件的内容读取为字符串只需要一行代码：<!-- more --></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>string = open('/Users/user/Desktop/Test.txt').read()</span></code></pre></td></tr></table></div></figure>
+
+
+<p>当然，这还只是 python 众多亮点中的冰山一角。尽管使用 java 已经有好几个年头，足以解决日常开发中遇到的一些小问题了，但我还是希望能拓宽一下视野，掌握一门新的语言。python 简洁实用，难度曲线感觉也不是很陡，所以就成了我的首选。在我的观念中，命令行程序虽然也能做地很强大，但作为方便日常开发的小工具，我还是希望能有一个合体的 GUI 壳子套在它的外面。经过多番查探，我找到了 python 几个比较主流的图形库：TKinter、wxPython、JPython。其中，TKinter 好像是 python 内置的，wxPython 需要自己下载安装包执行安装，JPython 不是很了解，但是在 eclipse 的 Preferences 里看到过它的身影，不知道能不能直接拿来用。</p>
+
+<h4>TKinter 的 HelloWorld 比较简单，下面给一个创建窗口的程序例子：</h4>
+
+<figure class='code'><figcaption><span>TestTKinter.py  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c">#!/usr/bin/python</span>
+</span><span class='line'><span class="c"># -*- coding:utf-8 -*-</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">Tkinter</span>
+</span><span class='line'><span class="n">top</span> <span class="o">=</span> <span class="n">Tkinter</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+</span><span class='line'><span class="c"># Code to add widgets will go here...</span>
+</span><span class='line'><span class="n">top</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>wxPython 的 HelloWorld 如下：</h4>
+
+<figure class='code'><figcaption><span>TestWxPython.py  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c">#!/usr/bin/python</span>
+</span><span class='line'><span class="c"># -*- coding:utf-8 -*-</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">wx</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">app</span> <span class="o">=</span> <span class="n">wx</span><span class="o">.</span><span class="n">PySimpleApp</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">frame</span> <span class="o">=</span> <span class="n">wx</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">frame</span><span class="o">.</span><span class="n">Show</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+</span><span class='line'><span class="n">app</span><span class="o">.</span><span class="n">MainLoop</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>不过，在试验 wxPython 的 HelloWorld 之前还得经历下载、安装和配置的步骤。就拿我此次的经历来说吧，下载倒是没遇到什么问题，我的操作系统是 Mac OS X Lion 10.7.2，Python 的版本是 2.7.1，在官网下载了相对应的一个版本：wxPython2.8-osx-unicode-2.8.12.1-universal-py2.7。因为之前也有对 python 的粗浅涉猎，所以在 eclipse 里面早早地就把 PyDev 给装上去了，具体怎么弄地现在也想不起来了，应该不是很麻烦。安装也没什么好说的，一路 next 就是了。至于配置，其实不弄好的话对 wxPython HelloWorld 的执行也没有致命的影响。</p>
+
+<p>不过有一点儿非常不好，你不给配置的话，在</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>app = wx.PySimpleApp()
+</span><span class='line'>frame = wx.Frame(parent=None)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这两行代码的前面就老喜欢显示红叉叉。<br/>
+挺蛋疼的，执行的话又没有影响，非得弄俩红叉恶心你！</p>
+
+<p>那么，怎么终结这种不利的情况呢？<br/>
+Googling 之后找到了一个很有用的链接：<br/>
+<a href="http://bbs.csdn.net/topics/340237664">是配置问题吗？为什么IDE显示undefined variable from import:xxx</a><br/>
+虽然我的平台是 Mac OS，但从帖子中给出的最终解决方案来看，应该也就是找到 wxPython 库相关的路径加到 <code>PyDev</code> -> <code>Interpretor - Python</code> -> <code>Libraries</code> 里面。这个路径在哪儿一时半会儿我也是一头雾水，再加上 wxPython 是否被成功添加到 python 的 System Libs 要在重启 eclipse 之后才能确认（实际表现为配置完毕之后不会立即生效，要在重启 eclipse 以后红叉才会被清除掉），所以还是费了我一些功夫的，这里给出路径：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/usr/local/lib/wxPython-unicode-2.8.12.1/lib/python2.7/site-packages/wx-2.8-mac-unicode</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[解读很强很彪悍的 Python 标准 GUI 库]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/09/jie-du-hen-qiang-hen-biao-han-de-pythonbiao-zhun-guiku/"/>
+    <updated>2013-02-09T21:25:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/09/jie-du-hen-qiang-hen-biao-han-de-pythonbiao-zhun-guiku</id>
+    <content type="html"><![CDATA[<p>原文链接：<a href="http://developer.51cto.com/art/201002/184975.htm">解读很强很彪悍的Python标准GUI库</a><br/>
+Python 标准 GUI 库的创始人为 Guido van Rossum。在一个不经意间的时刻决心开发一个新的脚本解释程序，那也就是 Python 语言。</p>
+
+<!-- more -->
+
+
+<p>Python 可以使用户避免过分的语法的羁绊而将精力主要集中到所要实现的程序任务上，GUI 开发方面，既有 Python 标准 GUI 库——TKinter，又有很多强大的第三方 GUI 库，例如 Python 标准 GUI 库。</p>
+
+<h3>1. Guido 简介</h3>
+
+<p>Python 创始人，原居荷兰，1995 年移居美国，2005 年加入 Google。</p>
+
+<h3>2. 为什么叫 Python？</h3>
+
+<p>说来很有趣，选用 Python 这个名字，仅仅是因为 Guido 很喜欢一部叫做《Monty Python 飞行马戏团》的肥皂剧。</p>
+
+<h3>3. Python 是什么？</h3>
+
+<p>是一门可以被应用到很多领域、功能强大、面向对象、跨平台的动态编程语言。1990年至今，Python 经过 17 年的发展，已经成为最流行的编程语言之一。在 Google，Python 语言更是被广泛应用，想在 Google 工作，Python 语言似乎成了一个基本要求。</p>
+
+<p>Python何以有这么大的魅力，受到如此的追捧？笔者结合自己的使用经验，认为 Python 的强大，主要体现在以下几个方面：</p>
+
+<h3>一、简单易学</h3>
+
+<p>Python 世界非常强调 “简单” 二字，一个代码风格良好的 Python 程序，阅读起来，感觉就像是在阅读一段英文。Python 的这种伪代码本质，使得你可以更关注如何解决实际问题，而不是关注语言本身。</p>
+
+<p>Python 的语法也相当简单，并且内置了很多高级数据结构。 Python 的简单易学，很适合作为入门语言。目前，包括麻省理工学院在内的国外很多高校，都已选用 Python 作为教学语言。</p>
+
+<h3>二、代码量小</h3>
+
+<p>实现同样的功能，Python 标准 GUI 库与 Java、C# 这样的“大个头”比起来，明显简约很多。 例如，打印出一个文本文件中的所有内容，用 Python 只需要一句。</p>
+
+<p>如果你仅仅认为用 Python 只能写写 “Hello World”，那你就大错特错了。 Python 可以被应用到网络开发、GUI 开发、图形开发、Web 开发、游戏开发、手机开发、数据库开发等众多领域。</p>
+
+<p>网络开发方面，Python 提供了大量可用的网络编程模块，涉及到 Socket、EMail、FTP 等等；众所周知的豆瓣网（http://www.douban.com/），就是使用了专门用于 Python 的网络开发框架——Twisted；</p>
+
+<p>此外，Python 还支持 Jabber 等等。 GUI 开发方面，既有 Python 标准 GUI 库 —— TKinter，又有很多强大的第三方 GUI 库，例如 Python 标准 GUI 库。Web 开发方面，Python 更显强大。应用服务器，有 zope；CMS 系统，有 plone（基于 zope）。国内，润普科技（http://zopen.cn/），就是做基于 plone 应用的；此外，还有 django —— 一个可以和 RoR 相媲美的快速 web 开发框架、Pylons 等等。 游戏开发方面，Python 也有举足轻重的地位。很多网络游戏脚本，例如账号注册系统、物品交换系统、场地转换系统和攻击防御系统，都是用 Python 写的，与 C++ 相比，Python 更加轻便。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Git 标签相关操作]]></title>
@@ -3340,363 +3470,6 @@ nothing to commit, working directory clean
 <strong>你当前有 1 个已完成的提交还没推到远程服务器，执行 push 命令来推出已完成的提交</strong><br/>
 哎，那天也不知道是怎么了，肯定是发现和平时不一样却没有仔细看就匆忙下了定论，<br/>
 今后得把这种粗细大意的毛病给改掉~</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Git 与 SVN 之间的五个基本区别]]></title>
-    <link href="http://yang3wei.github.com/blog/2013/02/02/git-yu-svn-zhi-jian-de-wu-ge-ji-ben-qu-bie/"/>
-    <updated>2013-02-02T18:03:00+08:00</updated>
-    <id>http://yang3wei.github.com/blog/2013/02/02/git-yu-svn-zhi-jian-de-wu-ge-ji-ben-qu-bie</id>
-    <content type="html"><![CDATA[<p>原文链接：<br/>
-<a href="http://blog.csdn.net/dadoneo/article/details/6098540">http://blog.csdn.net/dadoneo/article/details/6098540</a><br/>
-在比较两者之前，可以阅读：<br/>
-<a href="rubynroll.javaeye.com/blog/203133">SVN + GIT = 鱼与熊掌兼得</a><br/>
-<a href="wenku.baidu.com/view/dd6d36eef8c75fbfc77db277.html">开源版本控制 SVN 用户严重的 git</a><br/>
-<a href="www.robinlu.com/blog/archives/194">如何在 SVN 系统中使用 git</a></p>
-
-<!-- more -->
-
-
-<p>如果你在读这篇文章，说明你跟大多数开发者一样对 GIT 感兴趣，<br/>
-如果你还没有机会来试一试 GIT，我想现在你就要了解它了。</p>
-
-<p>GIT 不仅仅是个版本控制系统，它也是个内容管理系统(CMS)，工作管理系统等。<br/>
-如果你是一个具有使用 SVN 背景的人，<br/>
-你需要做一定的思想转换，来适应 GIT 提供的一些概念和特征。<br/>
-所以，这篇文章的主要目的就是通过介绍 GIT 能做什么、<br/>
-它和 SVN 在深层次上究竟有什么不同来帮助你认识它。</p>
-
-<p>那好，这就开始吧&#8230;</p>
-
-<h2>1.GIT 是分布式的，SVN 不是：</h2>
-
-<p>这是 GIT 和其它非分布式的版本控制系统，例如SVN，CVS等，最核心的区别。<br/>
-如果你能理解这个概念，那么你就已经上手一半了。<br/>
-需要做一点声明，GIT 并不是目前第一个或唯一的分布式版本控制系统。<br/>
-还有一些系统，例如 Bitkeeper, Mercurial 等，也是运行在分布式模式上的。<br/>
-但 GIT 在这方面做的更好，而且有更多强大的功能特征。</p>
-
-<p>GIT 跟 SVN 一样有自己的集中式版本库或服务器。<br/>
-但，GIT 更倾向于被使用于分布式模式，也就是每个开发人员从中心<br/>
-版本库/服务器上 chect out 代码后会在自己的机器上克隆一个自己的版本库。<br/>
-可以这样说，如果你被困在一个不能连接网络的地方时，就像在飞机上，地下室，<br/>
-电梯里等，你仍然能够提 交文件，查看历史版本记录，创建项目分支，等。<br/>
-对一些人来说，这好像没多大用处，但当你突然遇到没有网络的环境时，这个将解决你的大麻烦。</p>
-
-<p>同样，这种分布式的操作模式对于开源软件社区的开发来说也是个巨大的恩赐，你不必再像以前那样做出补丁包，<br/>
-通过 email 方式发送出去，你只需要创建一个分支，向项目团队发送一个推请求。<br/>
-这能让你的代码保持最新，而且不会在传输过程中丢失。GitHub.com 就是一个这样的优秀案例。</p>
-
-<p>有些谣言传出来说 Subversion 将来的版本也会基于分布式模式。但至少目前还看不出来。</p>
-
-<h2>2.GIT 把内容按元数据方式存储，而 SVN 是按文件：</h2>
-
-<p>所有的资源控制系统都是把文件的元信息隐藏在一个类似 <code>.svn</code>，<code>.cvs</code> 等的文件夹里。<br/>
-如果你把 <code>.git</code> 目录的体积大小跟 <code>.svn</code> 比较，你会发现它们差距很大。<br/>
-因为，<code>.git</code> 目录是处于你的机器上的一个克隆版的版本库，<br/>
-它拥有中心版本库上所有的东西，例如标签，分支，版本记录等。</p>
-
-<h2>3.GIT 分支和 SVN 的分支不同：</h2>
-
-<p>分支在 SVN 中一点不特别，就是版本库中的另外的一个目录。如果你想知道是否合并了一个分支，<br/>
-你需要手工运行像这样的命令 svn propget svn:mergeinfo，来确认代码是否被合并。<br/>
-感谢 Ben 同学指出这个特征。所以，经常会发生有些分支被遗漏的情况。<br/>
-然而，处理 GIT 的分支却是相当的简单和有趣。你可以从同一个工作目录下快速的在几个分支间切换。<br/>
-你很容易发现未被合并的分支，你能简单而快捷的合并这些文件。</p>
-
-<h2>4.GIT 没有一个全局的版本号，而 SVN 有：</h2>
-
-<p>目前为止这是跟 SVN 相比 GIT 缺少的最大的一个特征。<br/>
-你也知道，SVN 的版本号实际是任何一个相应时间的源代码快照。<br/>
-我认为它是从 CVS 进化到 SVN 的最大的一个突破。<br/>
-因为 GIT 和 SVN 从概念上就不同，我不知道 GIT 里是什么特征与之对应。<br/>
-如果你有任何的线索，请在评论里奉献出来与大家共享。<br/>
-更新：有些读者指出，我们可以使用 GIT 的 SHA-1 来唯一的标识一个代码快照。<br/>
-这个并不能完全的代替 SVN 里容易阅读的数字版本号。但，用途应该是相同的。</p>
-
-<h2>5.GIT 的内容完整性要优于 SVN：</h2>
-
-<p>GIT 的内容存储使用的是 SHA-1 哈希算法。<br/>
-这能确保代码内容的完整性，确保在遇到磁盘故障和网络问题时降低对版本库的破坏。<br/>
-这里有一个很好的关于 GIT 内容完整性的讨论 – <br/>
-<a href="http://stackoverflow.com/questions/964331/git-file-integrity">http://stackoverflow.com/questions/964331/git-file-integrity</a></p>
-
-<h2>GIT 和 SVN 之间只有这五处不同吗？</h2>
-
-<p>当然不是。我想这五个只是 “最基本的” 和 “最吸引人” 的，我只想到这五点。<br/>
-如果你发现有比这五点更有趣的，请共享出来，欢迎。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[青菜豆腐保平安]]></title>
-    <link href="http://yang3wei.github.com/blog/2013/02/02/qing-cai-dou-fu-bao-ping-an/"/>
-    <updated>2013-02-02T16:50:00+08:00</updated>
-    <id>http://yang3wei.github.com/blog/2013/02/02/qing-cai-dou-fu-bao-ping-an</id>
-    <content type="html"><![CDATA[<p>2000 多年来，随着中外文化的交流，豆腐不但走遍全国，而且走向世界。<br/>
-今天，世界人民都把品尝中国豆腐菜看作一种美妙的艺术享受，<br/>
-它就象中国的茶叶、瓷器、丝绸一样享誉世界。</p>
-
-<!-- more -->
-
-
-<p>说来也许令人难以相信，20 世纪 80 年代，美国著名的《经济展望》杂志竟然宣称：<br/>
-“未来十年，最成功最有市场潜力的并非是汽车、电视机或电子产品，而是中国的豆腐。”</p>
-
-<p>不错，中国的豆腐——不论男女老少，不分民族、宗教，人人皆可享用。<br/>
-这白白嫩嫩、强身健体、延年益寿、价廉物美的豆腐，也引出了一个“豆腐文化”。</p>
-
-<p>豆腐文化中头一个问题就是豆腐的发源地。中国是确信无疑的豆腐之乡，它的老家就在安徽寿县。<br/>
-据五代谢绰《宋拾遗录》载：“豆腐之术，三代前后未闻。此物至汉淮南王亦始传其术于世。”<br/>
-南宋大理学家朱熹也曾在《素食诗》中写道：<br/>
-“种豆豆苗稀，力竭心已腐；早知淮南术，安坐获泉布。” 诗末自注：“世传豆腐本为淮南王术。”</p>
-
-<p>淮南王刘安，是西汉高祖刘邦之孙，公元前164年封为淮南王，<br/>
-都邑设于寿春(即今安徽寿县城关)，名扬古今的八公山正在寿春城边。</p>
-
-<p>刘安雅好道学，欲求长生不老之术，不惜重金广招方术之士，<br/>
-其中较为出名的有苏非、李尚、田由、雷波、伍波、晋昌、毛被、左昊八人，号称“八公”。<br/>
-刘安幽八公相伴，登北山而造炉，炼仙丹以求寿。<br/>
-他们取山中 “珍珠”、“大泉”、“马跑” 三泉清冽之水磨制豆汁，又以豆汁培育丹苗，<br/>
-不料炼丹不成，豆汁与盐卤化合成一片芳香诱人、白白嫩嫩的东西。<br/>
-当地胆大农夫取而食之，竟然美味可口，于是取名“豆腐”。<br/>
-北山从此更名“八公山”，刘安也于无意中成为豆腐的老祖宗。</p>
-
-<p>自刘安发明豆腐之后，八公山方圆数十里的广大村镇，成了名副其实的“豆腐之乡”。</p>
-
-<p>有了豆腐自然会有豆腐菜。八公山人家，甭说一般家庭主妇，<br/>
-就是十四五岁的娃娃也能做出几样风味各异的豆腐菜，<br/>
-比如什么香椿拌豆腐、豆腐鸡蛋、辣酱拌豆腐、炒豆腐等等。<br/>
-改革开放以后，八公山街头的 “豆腐馆” 比比皆是、远近闻名。</p>
-
-<p>他们或煨、或煮、或煎、或炸、或溜……拢丝、雕刻各显身手，不仅引得本地人常来过把瘾，<br/>
-合肥、蚌埠等相邻市县的人们隔三岔五光顾 “豆腐宴”，就连德国、英国、日本、荷兰、捷克、<br/>
-斯洛伐克、香港、台湾等国家和地区的宾客也常常云集八公山下，品尝 “寿桃豆腐”、“琵琶豆腐”、<br/>
-“葡萄豆腐”、“金钱豆腐” 等 400 余款造型逼真、色彩纷呈、鲜美异常、风味独具的豆腐菜。</p>
-
-<p>豆腐文化也逐渐在整个神州大地弘扬。南北朝梁代建康(今南京)人诸葛颖曾著《淮南王食经))130卷，<br/>
-毗邻淮南的江苏显然是“近水楼台先得月”，首先受到豆腐文化的影响。<br/>
-一直到现在，江苏人还把豆腐、面筋、菌蕈、笋芽列为素菜四大金刚。</p>
-
-<p>宋明以后，豆腐文化更加广为流传，许多文人名士也走进传播者的行列。<br/>
-北宋大文豪苏东坡善食豆腐，元佑二年至无佑四年任杭州知府期间，曾亲自动手制作东坡豆腐。<br/>
-南宋诗人陆游也在自编《渭南文集》中记载了豆腐菜的烹调。<br/>
-更有趣的是清代大臣宋荦关于康熙皇帝与豆腐的一段记载。<br/>
-时值康熙南巡苏州，皇帝新赐大臣的不是金玉奇玩，而是颇具人情味、乡土气的豆腐菜。</p>
-
-<p>随着豆腐文化的传播，各地人民依照自己的口味，不断发展和丰富着豆腐菜的制作方法。<br/>
-流传至今的有四川东部的 “口袋豆腐”，以汤汁乳白、状若橄榄、质地柔嫩、味道鲜美为特色；<br/>
-成都一带享誉海内外的 “麻婆豆腐”，独具麻、辣、鲜、嫩、烫五大特点。<br/>
-湖北名食 “荷包豆腐”、杭州名菜 “煨冻豆腐”、无锡“镜豆腐”、扬州“鸡汁煮干丝”、屯溪“霉豆腐”、<br/>
-以及以豆腐衣为原料的“腐乳糟大肠”等等。当豆腐菜走向更遥远的边疆时，独特风味也就更为丰富。<br/>
-譬如，吉林盛行“素鸡豆腐”，色泽美观，五香味浓；<br/>
-又有“蛤蜊杏仁豆腐”，杏仁止咳润肠，雪蛤清头明目，豆腐软嫩细腻，色泽纯洁乳白，菜味甘短期爽口。<br/>
-此外，朝鲜族人民用牛肉、粉条、鸡蛋、豆腐制成“梅云汤”，广西壮族有名菜“清蒸豆腐圆”，<br/>
-云南大理白族有 “腊味螺豆腐”，香嫩麻辣，腊香扑鼻。<br/>
-而“冰糖螺豆腐”，则为滋阴降火，怡疗神经衰弱的民间风味补品……</p>
-
-<p>就这样，在长期的社会发展中，问世于寿县八公山的豆腐，终于传遍神州大地，<br/>
-并逐渐形成中国豆腐的八大系列：<br/>
-一为水豆腐，包括质地粗硬的北豆腐和细嫩的南豆腐；<br/>
-二为半脱水制品，主要有百叶、千张等；<br/>
-三为油炸制品，主要有炸豆腐泡和炸金丝；<br/>
-四为卤制品，主要包括五香豆腐干和五香豆腐丝；<br/>
-五为熏制品，诸如熏素肠、熏素肚；<br/>
-六为冷冻制品，即冻豆腐；<br/>
-七为干燥制品，比如豆腐皮、油皮；<br/>
-八为发酵制品，包括人们熟悉的豆腐乳、臭豆腐等等。<br/>
-这八类制品中，安徽淮南的八公山嫩豆腐，广西的桂林白腐乳，浙江绍兴腐乳，黑龙江的克东腐乳，<br/>
-广东的三边腐竹，北京的王致和臭豆腐，湖北武汉的臭干子等，均已成为名驰中外的豆腐精品。<br/>
-2000 多年来，随着中外文化的交流，豆腐不但走遍全国，而且走向世界。</p>
-
-<p>说起这段历史，就要提起唐代大和尚鉴真。<br/>
-天宝12年(公元757年)，鉴真东渡日本，带去了豆腐制作方法。<br/>
-至今日本的豆腐包装袋上还有 “唐传豆腐干黄檗山御前淮南堂制”的字样，<br/>
-而且许多豆腐菜谱直接采用汉名。如“元月夫妻豆腐”、“二月理宝豆腐”、<br/>
-“三月炸丸豆腐”、“四月烤串豆腐”、“五月团鱼豆腐”等等。</p>
-
-<p>继日本之后，朝鲜、泰国、马来西亚、新加坡、印尼、菲律宾等周边国家也从中国学到了豆腐制作技艺。<br/>
-以后随着大批华人外行的足迹，中国豆腐走到了西欧、北美，<br/>
-世界几乎所有国家都有了大豆食品的生产与销售。</p>
-
-<p>与此同时，世界各国人民也以自己的智慧与习俗丰富着豆腐文化。<br/>
-比如东邻日本以天然色素为原料，生产出红、蓝、绿七彩豆腐；<br/>
-朝鲜人民根据本地资源，制作了风味各异的豆腐汤：豆酱豆腐汤、哈蜊豆腐汤、明太鱼豆腐汤等等；<br/>
-印尼人普遍爱吃“酱拌炸豆腐”；<br/>
-缅甸人越南人则创制了颇具东南亚风格的“酱拌蛋花豆腐”、“什锦盘”。<br/>
-特别值得一提的是新加坡与马来西亚风行的“肉骨茶”，其实也是豆腐菜肴中的一种。<br/>
-在美国，商人们则把豆腐加工成色香味俱全的快餐食品，诸如豆腐色拉、豆腐汉堡包、<br/>
-豆腐冰淇淋、豆腐烤鸭、豆腐结婚蛋糕等等，在市场上十分畅销。<br/>
-20世纪80年代以来，世界饮食营养科学界兴起一股引人瞩目的“豆腐热”，<br/>
-高蛋白、低脂肪的豆腐食品越来越受到世界人民的喜爱，<br/>
-成为科学界一致推崇的美味保健的营养佳品。</p>
-
-<p>豆腐是以黄豆、青豆、黑豆为原料，经浸泡、磨浆、过滤、煮浆、<br/>
-加细、凝固和成型等工序加工而成最广、最大众化的烹饪原料之一。<br/>
-豆腐及豆腐制品的蛋白质含量比大豆高，而且豆腐蛋白属完全蛋白，不仅含有人体必需的八种氨基酸，<br/>
-而且其比例也接近人体需要，营养效价较高。豆腐还含有脂肪、碳水化合物、维生素和矿物质等。<br/>
-中医理论认为，豆腐味甘性凉，入脾、胃、大肠经，具有益气和中、生津润燥、清热解毒的功效，<br/>
-可用以治疗赤眼、消渴，解硫磺、烧酒毒等。可豆腐虽好，多吃也有弊，过量也会危害健康。</p>
-
-<p>问题1：引起消化不良：<br/>
-豆腐中含有极为丰富的蛋白质，一次食用过多不仅阻碍人体对铁的吸收，<br/>
-而且容易引起蛋白质消化不良，出现腹胀、腹泻等不适症状。</p>
-
-<p>问题2：促使肾功能衰退：<br/>
-在正常情况下，人吃进体内的植物蛋白质经过代谢变化，<br/>
-最后大部分成为含氮废物，由肾脏排出体外。<br/>
-人到老年，肾脏排泄废物的能力下降，此时若不注意饮食，<br/>
-大量食用豆腐，摄入过多的植物性蛋白质，势必会使体内生成的含氮废物增多，<br/>
-加重肾脏的负担，使肾功能进一步衰退，不利于身体健康。</p>
-
-<p>问题3：促使动脉硬化形成：<br/>
-美国医学专家指出，豆制品中含有极为丰富的蛋氨酸，蛋氨酸在酶的作用下可转化为半胱氨酸。<br/>
-半胱氨酸会损伤动脉管壁内皮细胞，易使胆固醇和甘油三酯沉积于动脉壁上，促使动脉硬化形成。</p>
-
-<p>问题4：导致碘缺乏：<br/>
-制作豆腐的大豆含有一种叫皂角苷的物质，<br/>
-它不仅能预防动脉粥样硬化，而且还能促进人体内碘的排泄。<br/>
-长期过量食用豆腐很容易引起碘缺乏，导致碘缺乏病。</p>
-
-<p>问题5：促使痛风发作：<br/>
-豆腐含嘌呤较多，嘌呤代谢失常的痛风病人和血尿酸浓度增高的患者<br/>
-多食易导致痛风发作，特别是痛风病患者要少食。</p>
-
-<p>可见，豆腐虽好，也不宜天天吃，一次食用也不要过量。<br/>
-老年人和肾病、缺铁性贫血、痛风病、动脉硬化患者更要控制食用量。<br/>
-中医认为，豆腐性偏寒，胃寒者和易腹泻、腹胀、脾虚者以及常出现遗精的肾亏者也不宜多食。<br/>
-豆腐营养丰富，含有铁、钙、磷、镁等人体必需的多种微量元素，<br/>
-还含有糖类、植物油和丰富的优质蛋白，素有“植物肉”之美称。<br/>
-豆腐的消化吸收率达 95％ 以上。两小块豆腐，即可满足一个人一天钙的需要量。</p>
-
-<p>豆腐为补益清热养生食品，常食之，可补中益气、清热润燥、生津止渴、清洁肠胃。<br/>
-更适于热性体质、口臭口渴、肠胃不清、热病后调养者食用。<br/>
-现代医学证实，豆腐除有增加营养、帮助消化、增进食欲的功能外，<br/>
-对齿、骨骼的生长发育也颇为有益，在造血功能中可增加血液中铁的含量；<br/>
-豆腐不含胆固醇，为高血压、高血脂、高胆固醇症及动脉硬化、冠心病患者的药膳佳肴。<br/>
-也是儿童、病弱者及老年人补充营养的食疗佳品。<br/>
-豆腐含有丰富的植物雌激素，对防治骨质疏松症有良好的作用。<br/>
-还有抑制乳腺癌、前列腺癌及血癌的功能，豆腐中的甾固醇、豆甾醇，均是抑癌的有效成分。</p>
-
-<p>豆腐是中药炮制辅料之一。豆腐煮制，系中药炮制方法中的一种。<br/>
-系将药物植入豆腐中并复以豆腐盖上，用火煮至豆腐呈蜂窝状，药物颜色变浅，时间约4小时即可。<br/>
-如硫黄，含有毒成分，经用豆腐煮制后，一可减毒，二可洁净。<br/>
-因豆腐含有丰富的蛋白质，系两性化合物，既可与碱性物质生成沉淀，又能溶解部分酸性有毒物质，<br/>
-减低毒性成分，且因其表面积大，空隙多，而具有良好的吸附作用。</p>
-
-<p>豆腐亦可用于食疗，具有一定的药用价值。如葱炖豆腐，可治感冒初起，每日食3～5次；<br/>
-鲫鱼与豆腐共煮，可治麻疹出齐尚有余热者，也可用于下乳；<br/>
-葱煎豆腐，可用于水肿膨胀；豆腐萝卜汤，可用于痰火吼喘；<br/>
-豆腐红糖共煮，可用于吐血等。</p>
-
-<p>豆腐如何选购和保鲜？<br/>
-豆腐可以说是素食中的主角了，而海带由于富含碘让有些人喜欢吃传统板豆腐，<br/>
-有些人则偏好盒装豆腐的滑嫩。无论偏好哪一种，都要注意豆腐的选购和保鲜问题。</p>
-
-<p>豆腐本身的颜色是略带点微黄色，如果色泽过于死白，有可能添加漂白剂，则不宜选购。<br/>
-此外，豆腐是高蛋白质的食品，很容易腐败，<br/>
-尤其是自由市场卖的板豆腐较盒装豆腐易遭到污染，应多加留意。</p>
-
-<p>盒装豆腐需要冷藏，所以需要到有良好冷藏设备的场所选购。<br/>
-当盒装豆腐的包装有凸起，里面豆腐则混浊、水泡多且大，便属于不良品，千万不可选购。<br/>
-而没有包装的豆腐很容易腐坏，买回家后，应立刻浸泡于水中，并放入冰箱冷藏，烹调前再取出。<br/>
-取出后不要超过 4 小时，以保持新鲜，最好是在购买当天食用完毕。</p>
-
-<p>盒装豆腐较易保存，但仍须放入冰箱冷藏，以确保在保存期限内不会腐败。<br/>
-若无法一次食用完毕，可依所需的分量切割使用，剩余的部分再放回冷冻室，方便下次食用。</p>
-
-<p>豆腐作为食药兼备的食品，具有益气、补虚等多方面的功能。<br/>
-一般100克豆腐含钙量为140毫克－160毫克，豆腐又是植物食品中含蛋白质比较高的，<br/>
-含有8种人体必需的氨基酸，还含有动物性食物缺乏的不饱和脂肪酸，卵磷脂等。<br/>
-因此，常吃豆腐可以保护肝脏，促进机体代谢，增加免疫力并且有解毒作用。</p>
-
-<p>豆腐不足之处是它所含的大豆蛋白缺少一种必需氨基酸——蛋氛酸，<br/>
-若单独食用，蛋白质利用率低，如搭配一些别的食物，使大豆蛋白中所缺的蛋氨基酸得到补充，<br/>
-使整个氨基酸的配比趋于平衡，人体就能充分吸收利用豆腐中的蛋白质。<br/>
-蛋类、肉类蛋白质中的蛋氨酸含量较高，豆腐应与此类食物混合食用，<br/>
-如豆腐炒鸡蛋、肉末豆腐、肉片烧豆腐等。这样搭配食用，便可提高豆腐中蛋白质的利用率。</p>
-
-<p>豆腐是一种有利健康的功能性食品<br/>
-据现代科学研究，豆腐在保证人类健康方向有一系列的功能。 主要是：<br/>
-1．豆腐是最佳的低胰岛素的氨茎的特种食品。<br/>
-2．豆腐可以改善人体脂肪结构<br/>
-3．食用豆腐可以预防和抵制癌症。<br/>
-4．食用豆腐可以预防和抵制更年期疾病<br/>
-5．食用豆腐可以预防和抵制骨质疏松症<br/>
-6．食用豆腐可以预防和抵制可以提高记忆力和精神集中力<br/>
-7．食用豆腐可以预防和抵制老化和痴呆<br/>
-8．食用豆腐可以预防和抵制肝功能的疾病<br/>
-9．食用豆腐可以预防和抵制糖尿病<br/>
-10．食用豆腐可以预防和抵制动脉硬化<br/>
-11．食用豆腐可以预防和抵制伤风和流行性感冒</p>
-
-<p>豆腐是怎样做成的呢？<br/>
-把黄豆浸在水里，泡胀变软后，在石磨盘里磨成豆浆，再滤去豆渣，煮开。<br/>
-这时候，黄豆里的蛋白质团粒被水簇拥着不停地运动，仿佛在豆浆桶里跳起了集体舞，<br/>
-聚不到一块儿，形成了”胶体”溶液。 要使胶体溶液变成豆腐，必须点卤。<br/>
-点卤用盐卤或石膏，盐卤主要含氯化镁，石膏是硫酸钙，<br/>
-它们能使分散的蛋白质团粒很快地聚集到一块儿，<br/>
-成了白花花的豆腐脑。再挤出水分，豆腐脑就变成了豆腐。<br/>
-豆腐、豆腐脑就是凝聚的豆类蛋白质。</p>
-
-<p>我们喝豆浆，有时就在重复这个豆腐制作过程哩。<br/>
-有人爱喝甜浆。往豆浆里加一匙白糖，豆浆没有什么变化。<br/>
-有人爱喝咸浆。在豆浆里倒些酱油或者加点盐，<br/>
-不多会儿，碗里就出现了白花花的豆腐脑。<br/>
-酱油里有盐，盐和盐卤性质相近，也能破坏豆浆的胶体状态，使蛋白质凝聚。<br/>
-这不和做豆腐的情形一样吗？</p>
-
-<p>豆浆点卤，出现豆腐脑。豆腐脑滤去水，变成豆腐。<br/>
-将豆腐压紧，再榨干去些水，就成了豆腐干。<br/>
-原来，豆浆、豆腐脑、豆腐、豆腐干，都是豆类蛋白质，只不过含的水有多有少罢了。<br/>
-牛奶和豆浆差不多，也是胶体溶液。在新鲜的牛奶里，酪素，也就是蛋白质包裹着奶油，<br/>
-在水里分散开来，不停地运动矿所以，牛奶总是均匀的乳白色液体。<br/>
-让牛奶发酵，做成酸牛奶，酪素就聚集拢来，凝结成块，象豆腐脑似的。</p>
-
-<p>豆腐是我国的一种古老传统食品，在一些古籍中，<br/>
-如明代李时珍的《本草纲目》、叶子奇的《草目子》、<br/>
-罗颀的《物原》等箸作中，都有豆腐之法始于汉淮南王刘安的记载。<br/>
-中国人首开食用豆腐之先河，在人类饮食史上，树立了嘉惠世人的丰功。</p>
-
-<p>制作豆腐的大豆含有丰富的营养。<br/>
-以下是几种主要动植物蛋白食品蛋白质价（以标准蛋白质价为 100 时）的比较：<br/>
-鸡蛋为 100，牛肉为 83，鱼肉平均为 70，稻米为 67，全麦粉为 53，玉米为 59，大豆粉为 74，<br/>
-这说明大豆的蛋白质价可与鱼肉相媲美，是植物蛋白中的佼佼者。<br/>
-大豆蛋白属全价蛋白，其氨基酸的组成比较好，人体所必需的 8 种氨基酸它都有。<br/>
-除蛋白质以外，大豆中含有 18％ 左右的油脂，其绝大部分可以转移到豆制品中去。<br/>
-大豆油脂的亚油酸（人体必需的主要脂肪酸）比例较大，且不含胆固醇，<br/>
-不但有益人体神经、血管、大脑的发育生长，而且还可以预防心血管病、肥胖病等常见病发生。</p>
-
-<p>大豆中也含有一些蛋白酶物质、皂甙和破坏维生素的成分，<br/>
-它们对人体健康有不良影响，但只要适当加热即可消除；<br/>
-另一方面，用大豆直接制成食品，人体对其蛋白质的消化吸收率只有 65％，<br/>
-而制成豆腐以后，消化吸收率就可以提高到 92％ 到 95％。<br/>
-可见，豆腐是大豆家族中于人最有益处的。</p>
-
-<p>豆腐不仅是味美的食品，它还具有养生保健的作用。<br/>
-中医书籍记载：豆腐，味甘性凉，入脾胃大肠经，具有益气和中、生津解毒的功效，<br/>
-可用于赤眼、消渴、休痢等症，并解硫磺、烧酒之毒。<br/>
-这些，都陆续为现代医学、营养池所肯定，比如，豆腐确有解酒精毒的作用；<br/>
-豆腐可消渴，是糖尿病人的良好食品。</p>
-
-<p>俗话说“青菜豆腐保平安”，这正是人们对豆腐营养保健价值的赞语。<br/>
-经过千百年的演化，豆腐及其制品已经形成为中国烹饪原料训的一大类群，<br/>
-有着数不清的地方名特产品，可以烹制出不下万种的菜肴、小吃等食品。<br/>
-这是同豆腐及其制品具有广泛的可烹性分不开的。</p>
-
-<p>比如：
-它可以单独成菜，也可以作主料、辅料，或充作调料；<br/>
-它可以作多种烹调工艺加工，切成块、片或丁或炖或炸；<br/>
-它可做成多种菜式，多种造型，可为冷盘、热菜、汤羹、火锅，<br/>
-可成卷、夹、丸、包等等还可调制成各种味型，既有干香的本味，更具独一无二的吸味特性，<br/>
-“豆腐得味，远胜燕窝”。由于豆腐及其制品具有这么多的优点，难怪它脍炙人口，久盛不衰了。</p>
-
-<p>当今，豆腐及其制品不仅仅是国人的常用食品，它已远出国门，风摩世界了。<br/>
-当美国炸鸡、牛排吸引着别国居民的时候，<br/>
-中国的传统食品——豆腐则以其独具的魅力进入美国市场，<br/>
-以其高蛋白、低脂肪、低热量、低胆固醇的突出优点<br/>
-而成为公认的理想食品，受到美国人的青睐。</p>
 ]]></content>
   </entry>
   

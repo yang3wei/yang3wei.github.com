@@ -1,0 +1,319 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>解读很强很彪悍的 Python 标准 GUI 库 - yang3wei的专栏</title>
+  <meta name="author" content="yang3wei">
+
+  
+  <meta name="description" content="原文链接：解读很强很彪悍的Python标准GUI库
+Python 标准 GUI 库的创始人为 Guido van Rossum。在一个不经意间的时刻决心开发一个新的脚本解释程序，那也就是 Python 语言。 Python 可以使用户避免过分的语法的羁绊而将精力主要集中到所要实现的程序任务上， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="author" content="yang3wei">
+  
+  <meta name="description" content="yang3wei的专栏, yang3wei">
+  <meta name="keywords" content="yang3wei, cocos2d, mac, objective-c, c/c++, game develop, java, OpenGL, shell, box2d, git, python">
+
+  
+  <link rel="canonical" href="http://yang3wei.github.com/blog/2013/02/09/jie-du-hen-qiang-hen-biao-han-de-pythonbiao-zhun-guiku/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="yang3wei的专栏" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-38160149-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">yang3wei的专栏</a></h1>
+  
+    <h2>Enjoy my life!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:yang3wei.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">解读很强很彪悍的 Python 标准 GUI 库</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-09T21:25:00+08:00" pubdate data-updated="true">Feb 9<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>原文链接：<a href="http://developer.51cto.com/art/201002/184975.htm">解读很强很彪悍的Python标准GUI库</a><br/>
+Python 标准 GUI 库的创始人为 Guido van Rossum。在一个不经意间的时刻决心开发一个新的脚本解释程序，那也就是 Python 语言。</p>
+
+<!-- more -->
+
+
+<p>Python 可以使用户避免过分的语法的羁绊而将精力主要集中到所要实现的程序任务上，GUI 开发方面，既有 Python 标准 GUI 库——TKinter，又有很多强大的第三方 GUI 库，例如 Python 标准 GUI 库。</p>
+
+<h3>1. Guido 简介</h3>
+
+<p>Python 创始人，原居荷兰，1995 年移居美国，2005 年加入 Google。</p>
+
+<h3>2. 为什么叫 Python？</h3>
+
+<p>说来很有趣，选用 Python 这个名字，仅仅是因为 Guido 很喜欢一部叫做《Monty Python 飞行马戏团》的肥皂剧。</p>
+
+<h3>3. Python 是什么？</h3>
+
+<p>是一门可以被应用到很多领域、功能强大、面向对象、跨平台的动态编程语言。1990年至今，Python 经过 17 年的发展，已经成为最流行的编程语言之一。在 Google，Python 语言更是被广泛应用，想在 Google 工作，Python 语言似乎成了一个基本要求。</p>
+
+<p>Python何以有这么大的魅力，受到如此的追捧？笔者结合自己的使用经验，认为 Python 的强大，主要体现在以下几个方面：</p>
+
+<h3>一、简单易学</h3>
+
+<p>Python 世界非常强调 “简单” 二字，一个代码风格良好的 Python 程序，阅读起来，感觉就像是在阅读一段英文。Python 的这种伪代码本质，使得你可以更关注如何解决实际问题，而不是关注语言本身。</p>
+
+<p>Python 的语法也相当简单，并且内置了很多高级数据结构。 Python 的简单易学，很适合作为入门语言。目前，包括麻省理工学院在内的国外很多高校，都已选用 Python 作为教学语言。</p>
+
+<h3>二、代码量小</h3>
+
+<p>实现同样的功能，Python 标准 GUI 库与 Java、C# 这样的“大个头”比起来，明显简约很多。 例如，打印出一个文本文件中的所有内容，用 Python 只需要一句。</p>
+
+<p>如果你仅仅认为用 Python 只能写写 “Hello World”，那你就大错特错了。 Python 可以被应用到网络开发、GUI 开发、图形开发、Web 开发、游戏开发、手机开发、数据库开发等众多领域。</p>
+
+<p>网络开发方面，Python 提供了大量可用的网络编程模块，涉及到 Socket、EMail、FTP 等等；众所周知的豆瓣网（http://www.douban.com/），就是使用了专门用于 Python 的网络开发框架——Twisted；</p>
+
+<p>此外，Python 还支持 Jabber 等等。 GUI 开发方面，既有 Python 标准 GUI 库 —— TKinter，又有很多强大的第三方 GUI 库，例如 Python 标准 GUI 库。Web 开发方面，Python 更显强大。应用服务器，有 zope；CMS 系统，有 plone（基于 zope）。国内，润普科技（http://zopen.cn/），就是做基于 plone 应用的；此外，还有 django —— 一个可以和 RoR 相媲美的快速 web 开发框架、Pylons 等等。 游戏开发方面，Python 也有举足轻重的地位。很多网络游戏脚本，例如账号注册系统、物品交换系统、场地转换系统和攻击防御系统，都是用 Python 写的，与 C++ 相比，Python 更加轻便。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">yang3wei</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-09T21:25:00+08:00" pubdate data-updated="true">Feb 9<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/python相关/'>Python相关</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/02/09/git-biao-qian-xiang-guan-cao-zuo/" title="Previous Post: Git 标签相关操作">&laquo; Git 标签相关操作</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/02/09/wxpython-undefined-variable-from-import-pysimpleapp/" title="Next Post: wxPython Undefined variable from import PySimpleApp">wxPython Undefined variable from import PySimpleApp &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/09/wxpython-undefined-variable-from-import-pysimpleapp/">wxPython Undefined variable from import PySimpleApp</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/09/jie-du-hen-qiang-hen-biao-han-de-pythonbiao-zhun-guiku/">解读很强很彪悍的 Python 标准 GUI 库</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/09/git-biao-qian-xiang-guan-cao-zuo/">Git 标签相关操作</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/09/how-to-play-piano-on-a-mac/">How to Play Piano on a Mac</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/09/java-zhong-yong-zhi-pathutil/">Java 重用之 PathUtil</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+    <h1>Tags</h1>
+    <ul class="tag-cloud">
+        <a style="font-size: 100%" href="/tags/c-c-/">C/C++</a>
+<a style="font-size: 100%" href="/tags/algorithm/">algorithm</a>
+<a style="font-size: 100%" href="/tags/ant/">ant</a>
+<a style="font-size: 100%" href="/tags/cocos2d/">cocos2d</a>
+<a style="font-size: 131%" href="/tags/eclipse/">eclipse</a>
+<a style="font-size: 210%" href="/tags/git/">git</a>
+<a style="font-size: 131%" href="/tags/hardware/">hardware</a>
+<a style="font-size: 100%" href="/tags/ios/">iOS</a>
+<a style="font-size: 179%" href="/tags/java/">java</a>
+<a style="font-size: 192%" href="/tags/mac/">mac</a>
+<a style="font-size: 197%" href="/tags/octopress/">octopress</a>
+<a style="font-size: 131%" href="/tags/python/">python</a>
+<a style="font-size: 161%" href="/tags/vim/">vim</a>
+<a style="font-size: 149%" href="/tags/伟少手札/">伟少手札</a>
+<a style="font-size: 131%" href="/tags/养生/">养生</a>
+
+    </ul>
+</section>
+<section>
+    <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/blog/categories/cocos2d相关'>Cocos2d相关 (1)</a></li><li><a href='/blog/categories/git相关'>Git相关 (12)</a></li><li><a href='/blog/categories/java相关'>Java相关 (5)</a></li><li><a href='/blog/categories/mac相关'>Mac相关 (7)</a></li><li><a href='/blog/categories/octopress相关'>Octopress相关 (8)</a></li><li><a href='/blog/categories/python相关'>Python相关 (2)</a></li><li><a href='/blog/categories/vim相关'>Vim相关 (4)</a></li><li><a href='/blog/categories/伟少手札'>伟少手札 (2)</a></li><li><a href='/blog/categories/养生相关'>养生相关 (2)</a></li><li><a href='/blog/categories/硬件相关'>硬件相关 (2)</a></li><li><a href='/blog/categories/算法相关'>算法相关 (1)</a></li></ul>
+</section>
+
+
+<section>
+    <h1>Recent Comments</h1>
+    <div id="recentcomments" class="dsq-widget"><script type="text/javascript" src="http://yang3wei.disqus.com/recent_comments_widget.js?num_items=5&hide_avatars=0&avatar_size=48&excerpt_length=200"></script></div><a href="http://disqus.com/">Powered by Disqus</a>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/yang3wei?count=10&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/yang3wei">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - yang3wei -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'yang3wei';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://yang3wei.github.com/blog/2013/02/09/jie-du-hen-qiang-hen-biao-han-de-pythonbiao-zhun-guiku/';
+        var disqus_url = 'http://yang3wei.github.com/blog/2013/02/09/jie-du-hen-qiang-hen-biao-han-de-pythonbiao-zhun-guiku/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Git相关 | yang3wei的专栏]]></title>
   <link href="http://yang3wei.github.com/blog/categories/git相关/atom.xml" rel="self"/>
   <link href="http://yang3wei.github.com/"/>
-  <updated>2013-02-09T10:11:35+08:00</updated>
+  <updated>2013-02-09T14:25:40+08:00</updated>
   <id>http://yang3wei.github.com/</id>
   <author>
     <name><![CDATA[yang3wei]]></name>
@@ -12,6 +12,81 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Git 标签相关操作]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/09/git-biao-qian-xiang-guan-cao-zuo/"/>
+    <updated>2013-02-09T14:15:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/09/git-biao-qian-xiang-guan-cao-zuo</id>
+    <content type="html"><![CDATA[<p>原文链接：<a href="http://www.csser.com/board/4f3f516e38a5ebc97800050e#/post/4f54fd1bb439efec21000062">Git 标签相关操作</a><br/>
+标签可以针对某一时间点的版本做标记，常用于版本发布。</p>
+
+<!-- more -->
+
+
+<h3>列出标签</h3>
+
+<p><code>
+$ git tag # 在控制台打印出当前仓库的所有标签
+$ git tag -l 'v0.1.*' # 搜索符合模式的标签
+</code></p>
+
+<h3>打标签</h3>
+
+<p>git标签分为两种类型：轻量标签和附注标签。<br/>
+轻量标签是指向提交对象的引用，附注标签则是仓库中的一个独立对象。建议使用附注标签。</p>
+
+<p><strong>创建轻量标签</strong>
+<code>
+$ git tag v0.1.2-light
+</code>
+<strong>创建附注标签</strong>
+<code>
+$ git tag -a v0.1.2 -m "发布0.1.2版本"
+</code></p>
+
+<p>创建轻量标签不需要传递参数，直接指定标签名称即可。</p>
+
+<p>创建附注标签时，参数a即annotated的缩写，指定标签类型，后附标签名。参数m指定标签说明，说明信息会保存在标签对象中。</p>
+
+<h3>切换到标签</h3>
+
+<p>与切换分支命令相同，用 <code>git checkout [tagname]</code></p>
+
+<h3>查看标签信息</h3>
+
+<p>用 <code>git show</code> 命令可以查看标签的版本信息：
+<code>
+$ git show v0.1.2
+</code></p>
+
+<h3>删除标签</h3>
+
+<p>误打或需要修改标签时，需要先将标签删除，再打新标签。
+<code>
+$ git tag -d v0.1.2 # 删除标签
+</code>
+参数d即delete的缩写，意为删除其后指定的标签。</p>
+
+<h3>补打标签</h3>
+
+<p>打标签不必要在 head 之上，也可在之前的版本上打，
+这需要你知道某个提交对象的校验和（通过git log获取）。</p>
+
+<p>补打标签
+<code>
+$ git tag -a v0.1.1 9fbc3d0
+</code></p>
+
+<h3>标签发布</h3>
+
+<p>通常的 <code>git push</code> 不会将标签对象提交到 <code>git</code> 服务器，我们需要进行显式的操作：
+<code>
+$ git push origin v0.1.2 # 将v0.1.2标签提交到git服务器
+$ git push origin --tags # 将本地所有标签一次性提交到git服务器
+</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA["git rm" 和 "rm" 的区别]]></title>
@@ -366,48 +441,6 @@ test<br/>
 <h3>7.gitk</h3>
 
 <p><code>gitk</code> 可以用图形化的方式很清楚地显示改动</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[(转载)Git: Why 'Everything up-to-date' when pushing]]></title>
-    <link href="http://yang3wei.github.com/blog/2013/02/01/git-why-everything-up-to-date-when-pushing/"/>
-    <updated>2013-02-01T23:22:00+08:00</updated>
-    <id>http://yang3wei.github.com/blog/2013/02/01/git-why-everything-up-to-date-when-pushing</id>
-    <content type="html"><![CDATA[<p>原文链接：<br/>
-<a href="http://blog.rexzhao.com/2011/11/28/google-code-git-everything-up-to-date-when-push.html">http://blog.rexzhao.com/2011/11/28/google-code-git-everything-up-to-date-when-push.html</a><br/>
-第一次在 <code>Google Code</code> 上弄项目，注册完毕后，<br/>
-尝试增加一个新文件用以测试 Git 是否好好工作。<br/>
-结果在 <code>Push</code> 时却显示 <code>Every up-to-date</code>，检查文件时却发现实际上一个都没更新上去。</p>
-
-<!-- more -->
-
-
-<p>因为对 <code>Git</code> 不够熟悉，因此只好 <code>Googling</code>，进行一番搜索后找到原因如下：</p>
-
-<p><strong>Why does Git refuse to push, saying "everything up to date"?<br/>
-git push with no additional arguments only pushes branches that exist in the remote already. <br/>
-If the remote repository is empty, nothing will be pushed. <br/>
-In this case, explicitly specify a branch to push, e.g. <code>git push master</code>.</strong></p>
-
-<p>也就是说一开始 <code>git</code> 服务器仓库是完全空的，<br/>
-不包含任何一个分支(<code>branch</code>)，因此刚开始 <code>Push</code> 时需要指定一个。<br/>
-执行 <code>git remote -v</code> 后看到自己的 <code>remote</code> 端名字为 <code>origin</code>:</p>
-
-<pre><code>$ git remote -v
-origin  https://code.google.com/p/micolog2 (fetch) 
-origin  https://code.google.com/p/micolog2 (push)
-</code></pre>
-
-
-<p>执行 <code>git branch</code> 后看到自己当下用的分支是 <code>master</code>:</p>
-
-<pre><code>$ git branch 
-* master
-</code></pre>
-
-
-<p>因此在本地 <code>commit</code> 后，再执行 <code>git push origin master</code> 即可。</p>
 ]]></content>
   </entry>
   

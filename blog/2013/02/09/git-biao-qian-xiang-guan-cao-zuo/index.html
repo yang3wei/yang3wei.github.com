@@ -5,11 +5,15 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Cocos2d相关 - yang3wei的专栏</title>
+  <title>Git 标签相关操作 - yang3wei的专栏</title>
   <meta name="author" content="yang3wei">
 
   
-  <meta name="description" content="Category: Cocos2d相关">
+  <meta name="description" content="原文链接：Git 标签相关操作
+标签可以针对某一时间点的版本做标记，常用于版本发布。 列出标签 1
+2
+$ git tag # 在控制台打印出当前仓库的所有标签
+$ git tag -l 'v0.1.*' # 搜索符合模式的标签 打标签 git标签分为两种类型：轻量标签和附注标签。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,11 +23,11 @@
   
   <meta name="author" content="yang3wei">
   
-  <meta name="description" content="Category: Cocos2d相关">
+  <meta name="description" content="yang3wei的专栏, yang3wei">
   <meta name="keywords" content="yang3wei, cocos2d, mac, objective-c, c/c++, game develop, java, OpenGL, shell, box2d, git, python">
 
   
-  <link rel="canonical" href="http://yang3wei.github.comblog/categories/cocos2d相关/">
+  <link rel="canonical" href="http://yang3wei.github.com/blog/2013/02/09/git-biao-qian-xiang-guan-cao-zuo/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -80,36 +84,167 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Cocos2d相关</h1>
+    
+      <h1 class="entry-title">Git 标签相关操作</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-09T14:15:00+08:00" pubdate data-updated="true">Feb 9<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>原文链接：<a href="http://www.csser.com/board/4f3f516e38a5ebc97800050e#/post/4f54fd1bb439efec21000062">Git 标签相关操作</a><br/>
+标签可以针对某一时间点的版本做标记，常用于版本发布。</p>
 
-  
-  <h2>2013</h2>
-
-<article>
-  
-<h1><a href="/blog/2013/02/08/i-found-a-bug-with-ccparticlesystem/">I found a bug with CCParticleSystem</a></h1>
-<time datetime="2013-02-08T01:41:00+08:00" pubdate><span class='month'>Feb</span> <span class='day'>08</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/cocos2d相关/'>Cocos2d相关</a></span>
-</footer>
+<!-- more -->
 
 
-</article>
+<h3>列出标签</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ git tag # 在控制台打印出当前仓库的所有标签
+</span><span class='line'>$ git tag -l 'v0.1.*' # 搜索符合模式的标签</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>打标签</h3>
+
+<p>git标签分为两种类型：轻量标签和附注标签。<br/>
+轻量标签是指向提交对象的引用，附注标签则是仓库中的一个独立对象。建议使用附注标签。</p>
+
+<p><strong>创建轻量标签</strong></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ git tag v0.1.2-light</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>创建附注标签</strong></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ git tag -a v0.1.2 -m "发布0.1.2版本"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>创建轻量标签不需要传递参数，直接指定标签名称即可。</p>
+
+<p>创建附注标签时，参数a即annotated的缩写，指定标签类型，后附标签名。参数m指定标签说明，说明信息会保存在标签对象中。</p>
+
+<h3>切换到标签</h3>
+
+<p>与切换分支命令相同，用 <code>git checkout [tagname]</code></p>
+
+<h3>查看标签信息</h3>
+
+<p>用 <code>git show</code> 命令可以查看标签的版本信息：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ git show v0.1.2</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>删除标签</h3>
+
+<p>误打或需要修改标签时，需要先将标签删除，再打新标签。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ git tag -d v0.1.2 # 删除标签</span></code></pre></td></tr></table></div></figure>
+
+
+<p>参数d即delete的缩写，意为删除其后指定的标签。</p>
+
+<h3>补打标签</h3>
+
+<p>打标签不必要在 head 之上，也可在之前的版本上打，
+这需要你知道某个提交对象的校验和（通过git log获取）。</p>
+
+<p>补打标签</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ git tag -a v0.1.1 9fbc3d0</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>标签发布</h3>
+
+<p>通常的 <code>git push</code> 不会将标签对象提交到 <code>git</code> 服务器，我们需要进行显式的操作：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ git push origin v0.1.2 # 将v0.1.2标签提交到git服务器
+</span><span class='line'>$ git push origin --tags # 将本地所有标签一次性提交到git服务器</span></code></pre></td></tr></table></div></figure>
 
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">yang3wei</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-09T14:15:00+08:00" pubdate data-updated="true">Feb 9<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/git相关/'>Git相关</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/02/09/how-to-play-piano-on-a-mac/" title="Previous Post: How to Play Piano on a Mac">&laquo; How to Play Piano on a Mac</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -197,7 +332,10 @@
       var disqus_shortname = 'yang3wei';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://yang3wei.github.com/blog/2013/02/09/git-biao-qian-xiang-guan-cao-zuo/';
+        var disqus_url = 'http://yang3wei.github.com/blog/2013/02/09/git-biao-qian-xiang-guan-cao-zuo/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Mac相关 | yang3wei的专栏]]></title>
   <link href="http://yang3wei.github.com/blog/categories/mac相关/atom.xml" rel="self"/>
   <link href="http://yang3wei.github.com/"/>
-  <updated>2013-02-09T02:41:40+08:00</updated>
+  <updated>2013-02-09T10:11:35+08:00</updated>
   <id>http://yang3wei.github.com/</id>
   <author>
     <name><![CDATA[yang3wei]]></name>
@@ -12,6 +12,28 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[How to Play Piano on a Mac]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/09/how-to-play-piano-on-a-mac/"/>
+    <updated>2013-02-09T10:03:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/09/how-to-play-piano-on-a-mac</id>
+    <content type="html"><![CDATA[<p>原文链接：<br/>
+<a href="http://www.ehow.com/how_6364489_play-piano-mac.html">http://www.ehow.com/how_6364489_play-piano-mac.html</a><br/>
+<strong>Instructions:</strong><!-- more --><br/>
+1.Open GarageBand.</p>
+
+<p>2.Click "File," "New," and select "New Music Project."</p>
+
+<p>3.Name the project "Play Piano on a Mac," and click "Create." A new GarageBand session will open. By default, this session will contain an instrumental track that is set to "Grand Piano." To change the default "Grand Piano" track to another type of piano, click on the track, click the "View/Hide Track Info" button, and select another virtual piano from the "Pianos and Keyboards" category. When happy with your selection, click the "View/Hide Track Info" button again to hide this menu.</p>
+
+<p>4.Click "Menu," and select "Musical Typing." After doing so, a dialogue box will pop up showing you which keys on your keyboard correspond to which keys on a piano.</p>
+
+<p>5.Press the corresponding keys on your keyboard to play piano. To record your performance, press the "Record" button at the bottom of GarageBand. When you are finished, press the spacebar to stop recording.</p>
+
+<p>6.Save your track by clicking "File," and "Save." You have now successfully played piano on a Mac (see reference 1).</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[为 Eclipse for Mac 新增 Show in Finder 的功能]]></title>
@@ -379,30 +401,6 @@ command + i: profile<br/>
 <p>特别把 xcode 工程浏览视图中的 show in finder 功能拿出来说一下，在 xcode 中这个简单实用的功能，你要在 eclipse 里面办到，那可就不容易了。在使用 xcode 之前，eclipse 一直是我最忠实、心爱的伙伴，但就这点来说，eclipse 还是让我很失望的。</p>
 
 <p>还要说一说 XCode 的视图控制设计，是我见过的最优秀的了。我一般是把右侧的属性栏视图关掉，仅留下工程结构视图和 代码编辑视图（做游戏对属性栏的需求不是很多）。在代码编辑区按下 command + shift + j 在工程目录视图中可以定位到当前编辑文件的所在的位置。command + 0~ 9 的数字可以在与工程目录视图并列的其他数个视图中快捷切换，特别是 command + 0，能够将 XCode 左侧栏完全的隐藏、打开，另外，整个过程的过度效果也是非常舒服的，比 eclipse 的最大化编辑器、还原到正常尺寸更优秀，隐藏左侧栏在做代码文件的版本对比的时候是非常实用的，还有就是做代码移植的时候，让代码编辑区域贴紧窗口左壁能够得到更合适的视角。暂时就说这么多，伴随这一年多的使用，积累下来的经验、技巧肯定还有遗漏的地方，后面想到了会更新上来，自恋一下，务必让这篇文章成为 mac、iOS 开发者心所向往的神奇篇章~</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[(转载)Mac 终端关机命令]]></title>
-    <link href="http://yang3wei.github.com/blog/2013/02/02/zhuan-zai-mac-zhong-duan-guan-ji-ming-ling/"/>
-    <updated>2013-02-02T15:00:00+08:00</updated>
-    <id>http://yang3wei.github.com/blog/2013/02/02/zhuan-zai-mac-zhong-duan-guan-ji-ming-ling</id>
-    <content type="html"><![CDATA[<p>原文链接：<br/>
-<a href="http://pulading1988.diandian.com/post/2012-04-22/17392701">http://pulading1988.diandian.com/post/2012-04-22/17392701</a><br/>
-<strong>1.立即关机：</strong><br/>
-<code>sudo halt</code> 或 <code>sudo shutdown -h now</code></p>
-
-<!-- more -->
-
-
-<p><strong>2.10 分钟后关机：</strong><br/>
-<code>sudo shutdown -h +10</code></p>
-
-<p><strong>3.晚上 8 点关机：</strong><br/>
-<code>sudo shutdown -h 20:00</code></p>
-
-<p><strong>4.立即重启：</strong><br/>
-<code>sudo reboot</code> 或者 <code>sudo shutdown -r now</code></p>
 ]]></content>
   </entry>
   

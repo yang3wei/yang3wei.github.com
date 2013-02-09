@@ -5,13 +5,14 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>(扩充)为 octopress 添加标签云 - yang3wei的专栏</title>
+  <title>How to Play Piano on a Mac - yang3wei的专栏</title>
   <meta name="author" content="yang3wei">
 
   
-  <meta name="description" content="原文链接：http://codemacro.com/2012/07/18/add-tag-to-octopress/
-同添加 category list 一样，网络上有很多方法，这里列举一种。
-首先将以下两个项目克隆到本地： https://github.com/robbyedwards/ &hellip;">
+  <meta name="description" content="原文链接：
+http://www.ehow.com/how_6364489_play-piano-mac.html
+Instructions:
+1.Open GarageBand. 2.Click &#8220;File,&#8221; &#8220;New,&#8221; and select &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -25,7 +26,7 @@
   <meta name="keywords" content="yang3wei, cocos2d, mac, objective-c, c/c++, game develop, java, OpenGL, shell, box2d, git, python">
 
   
-  <link rel="canonical" href="http://yang3wei.github.com/blog/2013/01/30/zhuan-zai-wei-octopress-tian-jia-biao-qian-yun/">
+  <link rel="canonical" href="http://yang3wei.github.com/blog/2013/02/09/how-to-play-piano-on-a-mac/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -86,7 +87,7 @@
   
   <header>
     
-      <h1 class="entry-title">(扩充)为 octopress 添加标签云</h1>
+      <h1 class="entry-title">How to Play Piano on a Mac</h1>
     
     
       <p class="meta">
@@ -102,7 +103,7 @@
   
 
 
-<time datetime="2013-01-30T02:54:00+08:00" pubdate data-updated="true">Jan 30<span>th</span>, 2013</time>
+<time datetime="2013-02-09T10:03:00+08:00" pubdate data-updated="true">Feb 9<span>th</span>, 2013</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -111,79 +112,20 @@
   </header>
 
 
-<div class="entry-content"><p>原文链接：<a href="http://codemacro.com/2012/07/18/add-tag-to-octopress/" title="loop in codes">http://codemacro.com/2012/07/18/add-tag-to-octopress/</a><br/>
-同添加 <code>category list</code> 一样，网络上有很多方法，这里列举一种。<br/>
-首先将以下两个项目克隆到本地：</p>
+<div class="entry-content"><p>原文链接：<br/>
+<a href="http://www.ehow.com/how_6364489_play-piano-mac.html">http://www.ehow.com/how_6364489_play-piano-mac.html</a><br/>
+<strong>Instructions:</strong><!-- more --><br/>
+1.Open GarageBand.</p>
 
-<pre><code>https://github.com/robbyedwards/octopress-tag-pages 
-https://github.com/robbyedwards/octopress-tag-cloudclone
-</code></pre>
+<p>2.Click &#8220;File,&#8221; &#8220;New,&#8221; and select &#8220;New Music Project.&#8221;</p>
 
+<p>3.Name the project &#8220;Play Piano on a Mac,&#8221; and click &#8220;Create.&#8221; A new GarageBand session will open. By default, this session will contain an instrumental track that is set to &#8220;Grand Piano.&#8221; To change the default &#8220;Grand Piano&#8221; track to another type of piano, click on the track, click the &#8220;View/Hide Track Info&#8221; button, and select another virtual piano from the &#8220;Pianos and Keyboards&#8221; category. When happy with your selection, click the &#8220;View/Hide Track Info&#8221; button again to hide this menu.</p>
 
-<p>这两个项目分别用于产生 <code>tag page</code> 和 <code>tag cloud</code>。<br/>
-针对这两个插件，需要手工复制一些文件到你的 octopress 目录。</p>
+<p>4.Click &#8220;Menu,&#8221; and select &#8220;Musical Typing.&#8221; After doing so, a dialogue box will pop up showing you which keys on your keyboard correspond to which keys on a piano.</p>
 
-<!-- more -->
+<p>5.Press the corresponding keys on your keyboard to play piano. To record your performance, press the &#8220;Record&#8221; button at the bottom of GarageBand. When you are finished, press the spacebar to stop recording.</p>
 
-
-<h3>1.octopress-tag-pages</h3>
-
-<p>复制 <code>tag_generator.rb</code> 到 <code>/plugins</code> 目录。<br/>
-复制 <code>tag_index.html</code> 到 <code>/source/_layouts</code> 目录。<br/>
-复制 <code>tag_feed.xml</code> 到 <code>/source/_includes/custom/</code> 目录。<br/>
-其他文件就不需要复制了，都是些例子。</p>
-
-<h3>2.octopress-tag-cloud</h3>
-
-<p>复制 <code>tag_cloud.rb</code> 到 <code>/plugins</code> 目录。<br/>
-复制以下代码到 <code>/source/_includes/custom/asides/tags.html</code>。<br/>
-<strong>注意：先去掉 % 前面的反斜杠</strong></p>
-
-<pre><code>&lt;section&gt;
-    &lt;h1&gt;Tags&lt;/h1&gt;
-    &lt;ul class="tag-cloud"&gt;
-        {\% tag_cloud font-size: 100-210%, limit: 49, style: para \%}
-    &lt;/ul&gt;
-&lt;/section&gt;
-</code></pre>
-
-
-<p><code>tag_cloud</code> 的参数中：<br/>
-<code>style: para</code> 指定不使用 <code>li</code> 来分割；<br/>
-<code>limit</code> 限定 10 个 tag；<br/>
-<code>font-size</code> 指定 tag 的大小范围，具体参数参看官方文档。</p>
-
-<p>最后，当然是在 <code>_config.yml</code> 的 <code>default_asides</code> 中添加这个 <code>tag cloud</code> 到导航栏，例如：</p>
-
-<pre><code>default_asides: [asides/category_list.html, asides/recent_posts.html, custom/asides/tags.html]</code></pre>
-
-
-<h3>3.本人扩充: 有一个要注意的地方</h3>
-
-<p>结合自身经历，我按照前文所述操作且核对了很多次，<br/>
-发现在 <code>rake generate</code> 和 <code>rake preview</code> 以后，<br/>
-在预览页面却依然无法得到正常的结果，具体表现如下：<br/>
-标签云确实是出现在了右栏里面，不过当我点击某个 tag 的时候，<br/>
-跳转到的却不是有效的地址，而仅仅只是一个 tag 关键词！<br/>
-灰常地荒谬，灰常地震惊，我甚至一度思忖，作者是不是故意在和我开玩笑。<br/>
-经历了艰辛地排查，终于我在 <code>firebug</code> 下面发现了一些蛛丝马迹：<br/>
-常规情况下 tag 对应的地址应该是 <code>/tags/关键字</code>，<br/>
-但是我发现在我的站点上面却不是这样的，仅仅只有 <code>//关键字</code>，<br/>
-体现在浏览器里面就仅仅是一个 tag 关键字了，因为两个斜杠都被滤掉了~<br/>
-发现了问题的症结以后，我就跑到 _config.yml 配置文件去中查看，<br/>
-并且拿自己的配置文件和其他正常人的配置文件作对比，果然发现了一些猫腻：<br/>
-我的配置文件中少了一行配置：<code>tag_dir: tags</code>，也算是歪打正着了，<br/>
-把这一行配置加进去之后，执行 <code>rake generate</code> 和 <code>rake preview</code> 命令，<br/>
-转到浏览器里面键入 <code>localhost:4000</code> 进行查看，标签云的功能总算是回归正常了~</p>
-
-<p>谈一谈我对此的感受吧：<br/>
-之前我也没有删掉过 tag_dir 这一行配置，也就是说 octopress 本身就没有包含这一行配置~<br/>
-我很奇怪为什么其他人竟然都没有提出甚至谈及这个问题，<br/>
-难道是 octopress 在升级的过程中刚才将这一行配置去掉？<br/>
-不论如何，此次经历还是让我相当的不愉快，我花了至少五个小时来解决这个问题！！<br/>
-这让我难以接受，要知道此时此刻我本该已经躺在床上呼呼大睡了！<br/>
-直言不讳吧，虽然拿 MacVim 写 markdown 很舒服，但我不得不承认：<br/>
-octopress 毕竟还是没能达到我心目中理想的高度，此次就是不成熟的一个典型体现~</p>
+<p>6.Save your track by clicking &#8220;File,&#8221; and &#8220;Save.&#8221; You have now successfully played piano on a Mac (see reference 1).</p>
 </div>
 
 
@@ -206,12 +148,12 @@ octopress 毕竟还是没能达到我心目中理想的高度，此次就是不�
   
 
 
-<time datetime="2013-01-30T02:54:00+08:00" pubdate data-updated="true">Jan 30<span>th</span>, 2013</time>
+<time datetime="2013-02-09T10:03:00+08:00" pubdate data-updated="true">Feb 9<span>th</span>, 2013</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/octopress相关/'>Octopress相关</a>
+    <a class='category' href='/blog/categories/mac相关/'>Mac相关</a>
   
 </span>
 
@@ -227,10 +169,8 @@ octopress 毕竟还是没能达到我心目中理想的高度，此次就是不�
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/01/29/git-bi-ji-gai-lan/" title="Previous Post: git 笔记概览">&laquo; git 笔记概览</a>
+        <a class="basic-alignment left" href="/blog/2013/02/09/java-zhong-yong-zhi-pathutil/" title="Previous Post: Java 重用之 PathUtil">&laquo; Java 重用之 PathUtil</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/01/30/macvim-yong-mvim-ming-ling-da-kai-wen-jian-dao-xin-de-biao-qian-ye/" title="Next Post: MacVim 用 mvim 命令打开文件到新的标签页">MacVim 用 mvim 命令打开文件到新的标签页 &raquo;</a>
       
     </p>
   </footer>
@@ -329,8 +269,8 @@ octopress 毕竟还是没能达到我心目中理想的高度，此次就是不�
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://yang3wei.github.com/blog/2013/01/30/zhuan-zai-wei-octopress-tian-jia-biao-qian-yun/';
-        var disqus_url = 'http://yang3wei.github.com/blog/2013/01/30/zhuan-zai-wei-octopress-tian-jia-biao-qian-yun/';
+        var disqus_identifier = 'http://yang3wei.github.com/blog/2013/02/09/how-to-play-piano-on-a-mac/';
+        var disqus_url = 'http://yang3wei.github.com/blog/2013/02/09/how-to-play-piano-on-a-mac/';
         var disqus_script = 'embed.js';
       
     (function () {

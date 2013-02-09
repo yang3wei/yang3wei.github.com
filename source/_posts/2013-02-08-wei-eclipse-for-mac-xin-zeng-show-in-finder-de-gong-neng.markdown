@@ -4,7 +4,7 @@ title: "为 Eclipse for Mac 新增 Show in Finder 的功能"
 date: 2013-02-08 22:47
 comments: true
 categories: Mac相关
-tags: [mac, java]
+tags: [mac, java, eclipse]
 ---
 相信各位使用 Mac OS 作为开发平台的同僚都遇到过如下的问题：  
 想在 Finder 中显示 eclipse 工程中的某个文件，挺不容易的！  

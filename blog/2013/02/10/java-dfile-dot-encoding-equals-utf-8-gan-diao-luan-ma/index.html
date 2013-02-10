@@ -5,12 +5,14 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>"git rm" 和 "rm" 的区别 - yang3wei的专栏</title>
+  <title>Java -Dfile.encoding=UTF-8 干掉乱码 - yang3wei的专栏</title>
   <meta name="author" content="yang3wei">
 
   
-  <meta name="description" content="这是一个比较肤浅的问题，但对于 git 初学者来说，还是有必要提一下的。 用 git rm 来删除文件，同时还会将这个删除操作记录下来；
-用 rm 来删除文件，仅仅是删除了物理文件，没有将其从 git 的记录中剔除。 直观的来讲，git rm 删除过的文件，执行 git commit -m " &hellip;">
+  <meta name="description" content="参考链接：
+java 乱码问题-Dfile.encoding=UTF-8
+Java&#8217;s file.encoding property on Windows platform
+How do you open a jar file on a mac? 遭遇乱码问题的来龙去脉 这两天写了一个 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -24,7 +26,7 @@
   <meta name="keywords" content="yang3wei, cocos2d, mac, objective-c, c/c++, game develop, java, OpenGL, shell, box2d, git, python">
 
   
-  <link rel="canonical" href="http://yang3wei.github.com/blog/2013/02/03/git-rm-he-rm-de-qu-bie/">
+  <link rel="canonical" href="http://yang3wei.github.com/blog/2013/02/10/java-dfile-dot-encoding-equals-utf-8-gan-diao-luan-ma/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -85,7 +87,7 @@
   
   <header>
     
-      <h1 class="entry-title">"git rm" 和 "rm" 的区别</h1>
+      <h1 class="entry-title">Java -Dfile.encoding=UTF-8 干掉乱码</h1>
     
     
       <p class="meta">
@@ -101,7 +103,7 @@
   
 
 
-<time datetime="2013-02-03T14:01:00+08:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2013</time>
+<time datetime="2013-02-10T15:18:00+08:00" pubdate data-updated="true">Feb 10<span>th</span>, 2013</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -110,47 +112,67 @@
   </header>
 
 
-<div class="entry-content"><p>这是一个比较肤浅的问题，但对于 git 初学者来说，还是有必要提一下的。</p>
+<div class="entry-content"><p>参考链接：<br/>
+<a href="http://hi.baidu.com/cnjsp/item/a2c9c9aed1de96a829ce9d24">java 乱码问题-Dfile.encoding=UTF-8</a><br/>
+<a href="http://yaojingguo.blogspot.com/2009/02/javas-fileencoding-property-on-windows.html">Java&#8217;s file.encoding property on Windows platform</a><br/>
+<a href="http://wiki.answers.com/Q/How_do_you_open_a_jar_file_on_a_mac">How do you open a jar file on a mac?</a></p>
 
 <!-- more -->
 
 
-<p>用 <code>git rm</code> 来删除文件，同时还会将这个删除操作记录下来；<br/>
-用 <code>rm</code> 来删除文件，仅仅是删除了物理文件，没有将其从 git 的记录中剔除。</p>
+<h3>遭遇乱码问题的来龙去脉</h3>
 
-<p>直观的来讲，<code>git rm</code> 删除过的文件，执行 <code>git commit -m "abc"</code> 提交时，<br/>
-会自动将删除该文件的操作提交上去。</p>
+<p>这两天写了一个 Java 程序来玩，结果又遭遇了以前遇到过很多次的乱码问题，具体描述一下：<br/>
+在 Mac 系统里面，常用的 Java 程序的启动方式有如下几种：<br/>
+<strong>1.通过 eclipse 执行 class 入口文件启动；</strong><br/>
+<strong>2.在 Terminal 里面用 java Test.class 或 jave -jar Test.jar 启动</strong><br/>
+<strong>3.通过 ant 执行 class 入口文件启动；</strong><br/>
+<strong>4.直接用 ant 执行 jar 文件；</strong><br/>
+<strong>5.用 Mac OS CoreServices 中的 Jar Launcher.app 执行 jar 文件。</strong><br/>
+<strong>6.用 Mac OS 自带的 Jar Bundler.app 将 jar 文件包装成 app，然后执行</strong></p>
 
-<p>而对于用 <code>rm</code> 命令直接删除的文件，执行 <code>git commit -m "abc"</code> 提交时，<br/>
-则不会将删除该文件的操作提交上去。<br/>
-不过不要紧，即使你已经通过 <code>rm</code> 将某个文件删除掉了，<br/>
-也可以再通过 <code>git rm</code> 命令重新将该文件从 git 的记录中删除掉，<br/>
-这样的话，在执行 <code>git commit -m "abc"</code> 以后，也能将这个删除操作提交上去。</p>
+<p>执行途径还是相当地丰富，但以不同的方式来执行，从控制台中得到的程序输出也不一致<br/>
+比如说，刚刚在 <code>eclipse</code> 中还能正常打印出来的汉字，在打成 <code>jar</code> 包以后，<br/>
+双击该 <code>jar</code> 文件以 <code>Jar Launcher.app</code> 的方式来启动，打印出来的文字就成了乱码了。<br/>
+毕竟写出来的 <code>java</code> 程序最终还是要打成 <code>Jar</code> 包来使用的，总不能每次都在 <code>eclipse</code> 中启动吧？<br/>
+前面说过，不是第一次碰到这种问题了，于是便想着要把这个问题给解决下。<br/>
+灵机一动之下想到一个好办法，在这些启动方式下均把 <code>System</code> 中的属性遍历打印出来，<br/>
+然后用 <code>git</code> 来做各个版本的差异比较，有可能会套出一些蛛丝马迹~<br/>
+抱着试一试的想法实践了一把，果然发现一些猫腻，集中体现在 <code>file.encoding</code> 这个属性上面。<br/>
+在 <code>file.encoding</code> 属性的值是 <code>UTF-8</code> 时，是不存在乱码问题的，<code>eclipse</code> 执行就属于这种情况。<br/>
+<code>Jar Launcher.app</code> 执行时，该属性的值就变成 <code>MacRoman</code> 了，<br/>
+上面给出的资料中有对该属性的介绍，可以用 <code>java -D&lt;name&gt;=&lt;value&gt; Test.jar</code> 来更改它。<br/>
+另外，只有在启动 <code>java</code> 程序前通过传递参数来更改才有效，程序一经启动就无法再更改了。<br/>
+这样的话，也就只有通过传递 jvm 参数的方式来做默认编码的变更了：<br/>
+<strong>其一，写一个带 <code>-Dfile.encoding=UTF-8</code> 参数的脚本文件来启动；</strong><br/>
+<strong>其二，用 <code>Jar Bundler.app</code> 打包成 <code>app</code>，效率应该不如第一种方案。</strong><br/>
+原理其实都差不多，都只是将更改 <code>jvm</code> 默认编码的操作封装了起来，执行时就不用再手动键入了。</p>
 
-<p>如果之前不小心用 <code>rm</code> 命令删除了一大批文件呢？<br/>
-是的，此时用 <code>git rm</code> 逐个地再删除一次就显得相当蛋疼了。<br/>
-所幸还有更方便的处理方案，用如下的方式做提交就没有问题了：
-<code>git commit -am "abc"</code></p>
+<h3>java 乱码问题 -Dfile.encoding=UTF-8</h3>
 
-<h3>总结一下：</h3>
+<p><code>-Dfile.encoding</code> 解释：<br/>
+在命令行中输入 java，在给出的提示中会出现 -D 的说明：<br/>
+<code>-D&lt;name&gt;=&lt;value&gt;</code>  # set a system property<br/>
+-D 后面需要跟一个键值对，作用是设置一项系统属性<br/>
+对 <code>-Dfile.encoding=UTF-8</code> 来说就是设置系统属性 <code>file.encoding</code> 为 <code>UTF-8</code><br/>
+那么 <code>file.encoding</code> 什么意思？字面意思为文件编码。<br/>
+搜索 java 源码，只能找到 4 个文件中包含 <code>file.encoding</code> 的文件，<br/>
+也就是说，只有四个文件调用了 <code>file.encoding</code> 这个属性。<br/>
+在 <code>java.nio.charset</code> 包中的 <code>Charset.java</code> 中，这段话的意思说的很明确了。<br/>
+简单说就是默认字符集是在 java 虚拟机启动时决定的，<br/>
+依赖于 java 虚拟机所在的操作系统的区域以及字符集。<br/>
+代码中可以看到，默认字符集就是从 <code>file.encoding</code> 这个属性中获取的。</p>
 
-<p>在被 git 管理的目录中删除文件时，可以选择如下两种方式来记录删除动作：<br/>
-一、<code>rm</code> + <code>git commit -am "abc"</code><br/>
-二、<code>git rm</code> + <code>git commit -m "abc"</code><br/>
-另外，<code>git add .</code> 仅能记录添加、改动的动作，删除的动作需靠 <code>git rm</code> 来完成。<br/>
-最后，<code>rm</code> 删除的文件是处于 <code>not staged</code> 状态的，<br/>
-也就是一种介于 “未改动” 和 “已提交过” 之间的状态。</p>
+<h3>Java&#8217;s file.encoding property on Windows platform</h3>
 
-<h3>下面是测试图</h3>
+<p>This property is used for the default encoding in Java, all readers and writers would default to use this property. &#8220;file.encoding&#8221; is set to the default locale of Windows operationg system since Java 1.4.2. System.getProperty(&#8220;file.encoding&#8221;) can be used to access this property. Code such as System.setProperty(&#8220;file.encoding&#8221;, &#8220;UTF-8&#8221;) can be used to change this property. However, the default encoding can not be changed dynamically even this property can be changed. So the conclusion is that the default encoding can&#8217;t be changed after JVM starts. &#8220;java -Dfile.encoding=UTF-8&#8221; can be used to set the default encoding when starting a JVM. I have searched for this option Java official documentation. But I can&#8217;t find it.</p>
 
-<p>一、<code>git rm</code> 与 <code>rm</code> 之间的区别
-<img class="center" src="/images/posts/differences_btw_git_rm_and_rm.png">
-二、<code>git add .</code> 无法记录 <code>rm</code> 删除动作<br/>
-<img class="center" src="/images/posts/add_dot_make_no_use.png">
-三、<code>git commit -m "abc"</code> 无法提交 <code>rm</code> 删除动作<br/>
-<img class="center" src="/images/posts/git_rm_better_than_rm.png">
-四、<code>git commit -am "abc"</code> 中参数 a 的作用<br/>
-<img class="center" src="/images/posts/usage_of_flag_a.png"></p>
+<h3>How do you open a jar file on a mac?</h3>
+
+<p>You can indeed launch a jar file from the command line, with the following command: <br/>
+<code>java -jar yourfile.jar</code><br/>
+As well as this you can assign &#8220;Jar Launcher&#8221; as the default app. To use when you double-click a jar file, as follows (I don&#8217;t believe you need the developer tools installed for this): <br/>
+Click once on the .jar file in the Finder and then from the menubar in the Finder select File -> Get Info&#8221;. Click on &#8220;Open with&#8221; and from the popup menu select &#8220;Other&#8221;. A file browser window will open. In this window, go to the <code>/System/Library/CoreServices</code> folder and select &#8216;Jar Launcher&#8217;. Then make sure the &#8220;Always Open With&#8221; checkbox is checked and then click Add. Then click the &#8220;Change all&#8221; button so that any jar file will be opened automatically. Finally, close the Info window and now when you double-click any of your jar files they should run automatically.</p>
 </div>
 
 
@@ -173,12 +195,12 @@
   
 
 
-<time datetime="2013-02-03T14:01:00+08:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2013</time>
+<time datetime="2013-02-10T15:18:00+08:00" pubdate data-updated="true">Feb 10<span>th</span>, 2013</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/git相关/'>Git相关</a>
+    <a class='category' href='/blog/categories/java相关/'>Java相关</a>
   
 </span>
 
@@ -194,10 +216,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/02/03/git-credential-osxkeychain-died-of-signal-11-jie-jue-fang-an/" title="Previous Post: git-credential-osxkeychain died of signal 11 解决方案">&laquo; git-credential-osxkeychain died of signal 11 解决方案</a>
+        <a class="basic-alignment left" href="/blog/2013/02/09/wxpython-undefined-variable-from-import-pysimpleapp/" title="Previous Post: wxPython Undefined variable from import PySimpleApp">&laquo; wxPython Undefined variable from import PySimpleApp</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/02/03/wei-octopress-tian-jia-cha-kan-fang-wen-liang-de-gong-neng/" title="Next Post: 为 Octopress 添加查看访问量的功能">为 Octopress 添加查看访问量的功能 &raquo;</a>
       
     </p>
   </footer>
@@ -298,8 +318,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://yang3wei.github.com/blog/2013/02/03/git-rm-he-rm-de-qu-bie/';
-        var disqus_url = 'http://yang3wei.github.com/blog/2013/02/03/git-rm-he-rm-de-qu-bie/';
+        var disqus_identifier = 'http://yang3wei.github.com/blog/2013/02/10/java-dfile-dot-encoding-equals-utf-8-gan-diao-luan-ma/';
+        var disqus_url = 'http://yang3wei.github.com/blog/2013/02/10/java-dfile-dot-encoding-equals-utf-8-gan-diao-luan-ma/';
         var disqus_script = 'embed.js';
       
     (function () {

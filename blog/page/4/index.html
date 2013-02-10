@@ -9,9 +9,10 @@
   <meta name="author" content="yang3wei">
 
   
-  <meta name="description" content="原文链接：
-http://hathaway.cc/2008/06/how-to-edit-your-path-environment-variables-on-mac-os-x/
-If you are new to Mac OS X, you may need to know how to &hellip;">
+  <meta name="description" content="原帖链接：http://segmentfault.com/q/1010000000095119
+Mac OS X Lion 下使用 which git 查看 git，
+发现当前所使用的 git 位于 /usr/bin/git 目录下，
+可能是安装 XCode 时一起安装上来的，执行 git -- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -83,6 +84,55 @@ If you are new to Mac OS X, you may need to know how to &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/02/01/mac-os-x-xia-git-ru-he-sheng-ji/">Mac OS X 下 git 如何升级</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-01T22:58:00+08:00" pubdate data-updated="true">Feb 1<span>st</span>, 2013</time>
+        
+         | <a href="/blog/2013/02/01/mac-os-x-xia-git-ru-he-sheng-ji/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>原帖链接：<a href="http://segmentfault.com/q/1010000000095119">http://segmentfault.com/q/1010000000095119</a><br/>
+<code>Mac OS X Lion</code> 下使用 <code>which git</code> 查看 <code>git</code>，<br/>
+发现当前所使用的 <code>git</code> 位于 <code>/usr/bin/git</code> 目录下，<br/>
+可能是安装 <code>XCode</code> 时一起安装上来的，执行 <code>git --version</code> 得到当前版本为：<code>1.7.5.4</code>。<br/>
+想升级到最新版本，下载 <code>git-osx-installer</code> 安装完成后，在命令行里查看却仍是旧版本。<br/>
+查阅资料发现这个安装包是将 <code>git</code> 安装在 <code>/usr/local/git</code> 目录下的。<br/>
+<strong>我想使用这个新版本的 <code>git</code>，该如何进行设置？</strong></p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/02/01/mac-os-x-xia-git-ru-he-sheng-ji/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -518,61 +568,6 @@ ctrl + w + r    移动当前窗口的布局位置
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/28/bu-wen-guo-qu-ji-duo-she-mi-dan-yuan-qian-lu-liao-wu-yi-han/">不问过去几多奢靡 但愿前路了无遗憾</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-28T23:55:00+08:00" pubdate data-updated="true">Jan 28<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/01/28/bu-wen-guo-qu-ji-duo-she-mi-dan-yuan-qian-lu-liao-wu-yi-han/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>用着 MacVim 作为 octopress 新增博文的编辑器~<br/>
-此刻，我终于明白子龙山人兄台说的话了，能使用本地应用程序作为博文的编辑器，<br/>
-甚至还是功能强大、扩展随心的 vim 来撰写博文，怎么会不爽歪歪~</p>
-
-<p>对比产生幸福，我最开始接触的博客是 csdn，<br/>
-csdn 的博文编辑器是嵌在网页里面的，而且我有幸得知这个编辑器插件的名字叫 xhEditor~<br/>
-不做太多评论，这个编辑器其实也还是挺不错的，能满足我的大部分需求了~<br/>
-不过有一点我是非常不满意的：这个编辑器将会产生大量重复 html 代码，<br/>
-如果你使用过 csdn 的博文编辑器，你应该会认同我的说法，<br/>
-如果你还没有体会到这一点，<br/>
-那么我建议你通过编辑区顶部的小按钮切换到源代码模式下看一看，<br/>
-说实在的，要多丑陋有多丑陋，大量垃圾标签混杂其中，<br/>
-要想把博文数据干净的分离出来真不是一件轻松事儿~</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/01/28/bu-wen-guo-qu-ji-duo-she-mi-dan-yuan-qian-lu-liao-wu-yi-han/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -590,6 +585,10 @@ csdn 的博文编辑器是嵌在网页里面的，而且我有幸得知这个编
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/02/10/java-dfile-dot-encoding-equals-utf-8-gan-diao-luan-ma/">Java -Dfile.encoding=UTF-8 干掉乱码</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/02/09/wxpython-undefined-variable-from-import-pysimpleapp/">wxPython Undefined variable from import PySimpleApp</a>
       </li>
     
@@ -605,10 +604,6 @@ csdn 的博文编辑器是嵌在网页里面的，而且我有幸得知这个编
         <a href="/blog/2013/02/09/how-to-play-piano-on-a-mac/">How to Play Piano on a Mac</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2013/02/09/java-zhong-yong-zhi-pathutil/">Java 重用之 PathUtil</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -622,7 +617,7 @@ csdn 的博文编辑器是嵌在网页里面的，而且我有幸得知这个编
 <a style="font-size: 210%" href="/tags/git/">git</a>
 <a style="font-size: 131%" href="/tags/hardware/">hardware</a>
 <a style="font-size: 100%" href="/tags/ios/">iOS</a>
-<a style="font-size: 179%" href="/tags/java/">java</a>
+<a style="font-size: 186%" href="/tags/java/">java</a>
 <a style="font-size: 192%" href="/tags/mac/">mac</a>
 <a style="font-size: 197%" href="/tags/octopress/">octopress</a>
 <a style="font-size: 131%" href="/tags/python/">python</a>
@@ -634,7 +629,7 @@ csdn 的博文编辑器是嵌在网页里面的，而且我有幸得知这个编
 </section>
 <section>
     <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/cocos2d相关'>Cocos2d相关 (1)</a></li><li><a href='/blog/categories/git相关'>Git相关 (12)</a></li><li><a href='/blog/categories/java相关'>Java相关 (5)</a></li><li><a href='/blog/categories/mac相关'>Mac相关 (7)</a></li><li><a href='/blog/categories/octopress相关'>Octopress相关 (8)</a></li><li><a href='/blog/categories/python相关'>Python相关 (2)</a></li><li><a href='/blog/categories/vim相关'>Vim相关 (4)</a></li><li><a href='/blog/categories/伟少手札'>伟少手札 (2)</a></li><li><a href='/blog/categories/养生相关'>养生相关 (2)</a></li><li><a href='/blog/categories/硬件相关'>硬件相关 (2)</a></li><li><a href='/blog/categories/算法相关'>算法相关 (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/cocos2d相关'>Cocos2d相关 (1)</a></li><li><a href='/blog/categories/git相关'>Git相关 (12)</a></li><li><a href='/blog/categories/java相关'>Java相关 (6)</a></li><li><a href='/blog/categories/mac相关'>Mac相关 (7)</a></li><li><a href='/blog/categories/octopress相关'>Octopress相关 (8)</a></li><li><a href='/blog/categories/python相关'>Python相关 (2)</a></li><li><a href='/blog/categories/vim相关'>Vim相关 (4)</a></li><li><a href='/blog/categories/伟少手札'>伟少手札 (2)</a></li><li><a href='/blog/categories/养生相关'>养生相关 (2)</a></li><li><a href='/blog/categories/硬件相关'>硬件相关 (2)</a></li><li><a href='/blog/categories/算法相关'>算法相关 (1)</a></li></ul>
 </section>
 
 

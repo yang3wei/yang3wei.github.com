@@ -4,7 +4,7 @@
   <title><![CDATA[yang3wei的专栏]]></title>
   <link href="http://yang3wei.github.com/atom.xml" rel="self"/>
   <link href="http://yang3wei.github.com/"/>
-  <updated>2013-02-10T01:12:38+08:00</updated>
+  <updated>2013-02-10T17:02:14+08:00</updated>
   <id>http://yang3wei.github.com/</id>
   <author>
     <name><![CDATA[yang3wei]]></name>
@@ -12,6 +12,75 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Java -Dfile.encoding=UTF-8 干掉乱码]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/10/java-dfile-dot-encoding-equals-utf-8-gan-diao-luan-ma/"/>
+    <updated>2013-02-10T15:18:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/10/java-dfile-dot-encoding-equals-utf-8-gan-diao-luan-ma</id>
+    <content type="html"><![CDATA[<p>参考链接：<br/>
+<a href="http://hi.baidu.com/cnjsp/item/a2c9c9aed1de96a829ce9d24">java 乱码问题-Dfile.encoding=UTF-8</a><br/>
+<a href="http://yaojingguo.blogspot.com/2009/02/javas-fileencoding-property-on-windows.html">Java&#8217;s file.encoding property on Windows platform</a><br/>
+<a href="http://wiki.answers.com/Q/How_do_you_open_a_jar_file_on_a_mac">How do you open a jar file on a mac?</a></p>
+
+<!-- more -->
+
+
+<h3>遭遇乱码问题的来龙去脉</h3>
+
+<p>这两天写了一个 Java 程序来玩，结果又遭遇了以前遇到过很多次的乱码问题，具体描述一下：<br/>
+在 Mac 系统里面，常用的 Java 程序的启动方式有如下几种：<br/>
+<strong>1.通过 eclipse 执行 class 入口文件启动；</strong><br/>
+<strong>2.在 Terminal 里面用 java Test.class 或 jave -jar Test.jar 启动</strong><br/>
+<strong>3.通过 ant 执行 class 入口文件启动；</strong><br/>
+<strong>4.直接用 ant 执行 jar 文件；</strong><br/>
+<strong>5.用 Mac OS CoreServices 中的 Jar Launcher.app 执行 jar 文件。</strong><br/>
+<strong>6.用 Mac OS 自带的 Jar Bundler.app 将 jar 文件包装成 app，然后执行</strong></p>
+
+<p>执行途径还是相当地丰富，但以不同的方式来执行，从控制台中得到的程序输出也不一致<br/>
+比如说，刚刚在 <code>eclipse</code> 中还能正常打印出来的汉字，在打成 <code>jar</code> 包以后，<br/>
+双击该 <code>jar</code> 文件以 <code>Jar Launcher.app</code> 的方式来启动，打印出来的文字就成了乱码了。<br/>
+毕竟写出来的 <code>java</code> 程序最终还是要打成 <code>Jar</code> 包来使用的，总不能每次都在 <code>eclipse</code> 中启动吧？<br/>
+前面说过，不是第一次碰到这种问题了，于是便想着要把这个问题给解决下。<br/>
+灵机一动之下想到一个好办法，在这些启动方式下均把 <code>System</code> 中的属性遍历打印出来，<br/>
+然后用 <code>git</code> 来做各个版本的差异比较，有可能会套出一些蛛丝马迹~<br/>
+抱着试一试的想法实践了一把，果然发现一些猫腻，集中体现在 <code>file.encoding</code> 这个属性上面。<br/>
+在 <code>file.encoding</code> 属性的值是 <code>UTF-8</code> 时，是不存在乱码问题的，<code>eclipse</code> 执行就属于这种情况。<br/>
+<code>Jar Launcher.app</code> 执行时，该属性的值就变成 <code>MacRoman</code> 了，<br/>
+上面给出的资料中有对该属性的介绍，可以用 <code>java -D&lt;name&gt;=&lt;value&gt; Test.jar</code> 来更改它。<br/>
+另外，只有在启动 <code>java</code> 程序前通过传递参数来更改才有效，程序一经启动就无法再更改了。<br/>
+这样的话，也就只有通过传递 jvm 参数的方式来做默认编码的变更了：<br/>
+<strong>其一，写一个带 <code>-Dfile.encoding=UTF-8</code> 参数的脚本文件来启动；</strong><br/>
+<strong>其二，用 <code>Jar Bundler.app</code> 打包成 <code>app</code>，效率应该不如第一种方案。</strong><br/>
+原理其实都差不多，都只是将更改 <code>jvm</code> 默认编码的操作封装了起来，执行时就不用再手动键入了。</p>
+
+<h3>java 乱码问题 -Dfile.encoding=UTF-8</h3>
+
+<p><code>-Dfile.encoding</code> 解释：<br/>
+在命令行中输入 java，在给出的提示中会出现 -D 的说明：<br/>
+<code>-D&lt;name&gt;=&lt;value&gt;</code>  # set a system property<br/>
+-D 后面需要跟一个键值对，作用是设置一项系统属性<br/>
+对 <code>-Dfile.encoding=UTF-8</code> 来说就是设置系统属性 <code>file.encoding</code> 为 <code>UTF-8</code><br/>
+那么 <code>file.encoding</code> 什么意思？字面意思为文件编码。<br/>
+搜索 java 源码，只能找到 4 个文件中包含 <code>file.encoding</code> 的文件，<br/>
+也就是说，只有四个文件调用了 <code>file.encoding</code> 这个属性。<br/>
+在 <code>java.nio.charset</code> 包中的 <code>Charset.java</code> 中，这段话的意思说的很明确了。<br/>
+简单说就是默认字符集是在 java 虚拟机启动时决定的，<br/>
+依赖于 java 虚拟机所在的操作系统的区域以及字符集。<br/>
+代码中可以看到，默认字符集就是从 <code>file.encoding</code> 这个属性中获取的。</p>
+
+<h3>Java&#8217;s file.encoding property on Windows platform</h3>
+
+<p>This property is used for the default encoding in Java, all readers and writers would default to use this property. &#8220;file.encoding&#8221; is set to the default locale of Windows operationg system since Java 1.4.2. System.getProperty(&#8220;file.encoding&#8221;) can be used to access this property. Code such as System.setProperty(&#8220;file.encoding&#8221;, &#8220;UTF-8&#8221;) can be used to change this property. However, the default encoding can not be changed dynamically even this property can be changed. So the conclusion is that the default encoding can&#8217;t be changed after JVM starts. &#8220;java -Dfile.encoding=UTF-8&#8221; can be used to set the default encoding when starting a JVM. I have searched for this option Java official documentation. But I can&#8217;t find it.</p>
+
+<h3>How do you open a jar file on a mac?</h3>
+
+<p>You can indeed launch a jar file from the command line, with the following command: <br/>
+<code>java -jar yourfile.jar</code><br/>
+As well as this you can assign &#8220;Jar Launcher&#8221; as the default app. To use when you double-click a jar file, as follows (I don&#8217;t believe you need the developer tools installed for this): <br/>
+Click once on the .jar file in the Finder and then from the menubar in the Finder select File -> Get Info&#8221;. Click on &#8220;Open with&#8221; and from the popup menu select &#8220;Other&#8221;. A file browser window will open. In this window, go to the <code>/System/Library/CoreServices</code> folder and select &#8216;Jar Launcher&#8217;. Then make sure the &#8220;Always Open With&#8221; checkbox is checked and then click Add. Then click the &#8220;Change all&#8221; button so that any jar file will be opened automatically. Finally, close the Info window and now when you double-click any of your jar files they should run automatically.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[wxPython Undefined variable from import PySimpleApp]]></title>
@@ -3346,130 +3415,6 @@ Octopress 默认为每个页面添加 meta description，其内容为当前文�
 <img class="center" src="http://yang3wei.github.com/images/posts/git_rm_better_than_rm.png">
 四、<code>git commit -am "abc"</code> 中参数 a 的作用<br/>
 <img class="center" src="http://yang3wei.github.com/images/posts/usage_of_flag_a.png"></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[git-credential-osxkeychain died of signal 11 解决方案]]></title>
-    <link href="http://yang3wei.github.com/blog/2013/02/03/git-credential-osxkeychain-died-of-signal-11-jie-jue-fang-an/"/>
-    <updated>2013-02-03T00:30:00+08:00</updated>
-    <id>http://yang3wei.github.com/blog/2013/02/03/git-credential-osxkeychain-died-of-signal-11-jie-jue-fang-an</id>
-    <content type="html"><![CDATA[<p>相关帖子链接：<br/>
-<a href="http://stackoverflow.com/questions/14272634/error-git-credential-osxkeychain-died-of-signal-11/14663780#14663780">&#8230;osxkeychain-died-of-signal-11@stackoverflow.com</a><br/>
-前两天在执行 <code>git push origin master</code> 命令的时候突然发现不灵光了，<br/>
-死活都推不进 GitHub 服务器，给出的提示如下：<br/>
-<code>error: git-credential-osxkeychain died of signal 11</code><br/>
-<code>error: git-credential-osxkeychain died of signal 11</code></p>
-
-<!-- more -->
-
-
-<p>我没有弄错，给出了两行一模一样的提示。<br/>
-遇到这个问题以后我的第一反应就是 googling，<br/>
-直接就找到了文首给出的那个 stackoverflow 的帖子。</p>
-
-<p>不过这个帖子并没有帮我解决掉这个问题，然后我又继续 googling，<br/>
-没有太大的收获，涉及到相关问题的链接不是很多。。<br/>
-我一度多次打开 stackoverflow 的这个帖子，仔细的搜寻，<br/>
-想看一看我是否遗忘了什么重要的步骤，不过很可惜，没有发现有价值的情报。</p>
-
-<p>后来我计上心头，想到了一个好办法，<br/>
-去试一试另外一个本地目录的 work copy 能否推到 GitHub 服务器里面去。<br/>
-我做了一些变更并且提交过以后，就执行 “git push origin master” 命令，<br/>
-很奇葩的没有出错，也没有向我询问用户名和密码~</p>
-
-<p>到这里我就有点儿纳闷儿了，凭什么这里可以那儿却不行？！<br/>
-纠结了好几天了，今天突然又想到一个办法，<br/>
-怎么不对比一下两个 work copy 的 .git/config 文件呢，说不定有有所收获！<br/>
-果不其然，经我对比过后我发现两个 work copy 所采用的配置有所不同。<br/>
-区别在哪里呢？下面我给出来对比一下吧：<br/>
-<strong>这里是 push 时抛错的那个 work copy 的 .git/config 文件的部分配置</strong></p>
-
-<pre><code>...
-[remote "origin"]
-    url = https://github.com/yang3wei/octopress-3-in-one.git
-    fetch = +refs/heads/*:refs/remotes/origin/*
-...
-</code></pre>
-
-
-<p><strong>这里是 push 时没问题的 work copy 的 .git/config 文件对应的部分配置</strong></p>
-
-<pre><code>...
-[remote "origin"]
-    url = git@github.com:yang3wei/game-development-tools
-    fetch = +refs/heads/*:refs/remotes/master/*
-...
-</code></pre>
-
-
-<p>对比后我就多少有些念想了，何不试着把有问题的照着没问题的改弄一翻？<br/>
-说干就干，于是我就将有问题的那块儿配置改成了如下这番：</p>
-
-<pre><code>
-[remote "origin"]
-    url = git@github.com/yang3wei/octopress-3-in-one
-    fetch = +refs/heads/*:refs/remotes/origin/*
-...
-</code></pre>
-
-
-<p>然后再执行 <code>git push origin master</code> 命令，发现那该死的错误已经悄然遁去~</p>
-
-<h3>总结一下</h3>
-
-<p>一言以蔽之，就是更换了一下 .git/config 中 url 的写法而已，<br/>
-将 <code>url = https://github.com/yang3wei/octopress-3-in-one.git</code><br/>
-改为 <code>url = git@github.com:yang3wei/octopress-3-in-one</code><br/>
-说到这里，我隐约想起好像看到过一句话：<br/>
-ssh 加密传输好像是非后面那种 url 格式不可的，<br/>
-那么从这点来看的话，<br/>
-<code>git-credential-osxkeychain</code> 在 https 传输模式下出错也就情有可原了~<br/>
-最后，创建属于自己的 repo 的时候，<br/>
-最好还是能以 <code>git@github.com...</code> 这种 url 的写法来初始化仓库，<br/>
-以避免当前讨论这种问题的出现~</p>
-
-<h3>另外</h3>
-
-<p>其间也试了下将<br/>
-<code>fetch = +refs/heads/*:refs/remotes/origin/*</code><br/>
-改为<br/>
-<code>fetch = +refs/heads/*:refs/remotes/master/*</code><br/>
-如此这般以后我执行 <code>git push origin master</code> 也没有出现错误~<br/>
-不过后来在我查看的时候发现竟然多出了一个分支：<br/>
-<code>* master</code><br/>
-<code> remotes/master/master/</code><br/>
-<code> remotes/origin/master/</code><br/>
-显而易见，那里我不该将 fetch 里面的 origin 改成 master，<br/>
-这里直接导致我远程那边多出了一个无用的分支来~<br/>
-话说这里该如何将这个多余的远程分支 <code>remotes/master/master</code> 给干掉呢？<br/>
-记得删除远程服务器上面的分支可以用这条命令：<code>git push origin :branchname</code><br/>
-不过这里比较特殊，这条多余分支的名字也是 <code>master</code> 呢！<br/>
-搜寻良久，stackoverflow 再次帮了我一把，实在是给力啊！下面是相关链接：<br/>
-<a href="http://stackoverflow.com/questions/1072171/how-do-you-remove-an-invalid-remote-branch-reference-from-git">How do you Remove an Invalid Remote Branch Reference from Git?</a><br/>
-罗列出我所尝试的删除分支的命令：<br/>
-<code>git branch -d remotes/master/master</code> 报错<br/>
-<code>git push master :master</code> 报错<br/>
-<code>git push origin :/remotes/master/master</code> 报错
-<code>git gc --prune=now</code> 无效<br/>
-<code>git remote rm master</code> 报错<br/>
-<code>git branch -rd master/master</code> 删除成功！</p>
-
-<h3>执行 git status 命令后出现如下提示的涵义</h3>
-
-<pre><code># On branch master
-# Your branch is ahead of 'origin/master' by 1 commit.
-#   (use "git push" to publish your local commits)
-#
-nothing to commit, working directory clean
-</code></pre>
-
-
-<p>回忆起前几天对 git 不熟悉时因为老是看到这几行提示而感到心里不舒服的情景，<br/>
-才发现我真是傻得可爱，这些提示的意思不就是说：<br/>
-<strong>你当前有 1 个已完成的提交还没推到远程服务器，执行 push 命令来推出已完成的提交</strong><br/>
-哎，那天也不知道是怎么了，肯定是发现和平时不一样却没有仔细看就匆忙下了定论，<br/>
-今后得把这种粗细大意的毛病给改掉~</p>
 ]]></content>
   </entry>
   

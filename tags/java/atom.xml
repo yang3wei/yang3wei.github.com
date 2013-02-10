@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: java | yang3wei的专栏]]></title>
   <link href="http://yang3wei.github.com/tags/java/atom.xml" rel="self"/>
   <link href="http://yang3wei.github.com/"/>
-  <updated>2013-02-10T01:12:38+08:00</updated>
+  <updated>2013-02-10T17:02:14+08:00</updated>
   <id>http://yang3wei.github.com/</id>
   <author>
     <name><![CDATA[yang3wei]]></name>
@@ -12,6 +12,75 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Java -Dfile.encoding=UTF-8 干掉乱码]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/10/java-dfile-dot-encoding-equals-utf-8-gan-diao-luan-ma/"/>
+    <updated>2013-02-10T15:18:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/10/java-dfile-dot-encoding-equals-utf-8-gan-diao-luan-ma</id>
+    <content type="html"><![CDATA[<p>参考链接：<br/>
+<a href="http://hi.baidu.com/cnjsp/item/a2c9c9aed1de96a829ce9d24">java 乱码问题-Dfile.encoding=UTF-8</a><br/>
+<a href="http://yaojingguo.blogspot.com/2009/02/javas-fileencoding-property-on-windows.html">Java's file.encoding property on Windows platform</a><br/>
+<a href="http://wiki.answers.com/Q/How_do_you_open_a_jar_file_on_a_mac">How do you open a jar file on a mac?</a></p>
+
+<!-- more -->
+
+
+<h3>遭遇乱码问题的来龙去脉</h3>
+
+<p>这两天写了一个 Java 程序来玩，结果又遭遇了以前遇到过很多次的乱码问题，具体描述一下：<br/>
+在 Mac 系统里面，常用的 Java 程序的启动方式有如下几种：<br/>
+<strong>1.通过 eclipse 执行 class 入口文件启动；</strong><br/>
+<strong>2.在 Terminal 里面用 java Test.class 或 jave -jar Test.jar 启动</strong><br/>
+<strong>3.通过 ant 执行 class 入口文件启动；</strong><br/>
+<strong>4.直接用 ant 执行 jar 文件；</strong><br/>
+<strong>5.用 Mac OS CoreServices 中的 Jar Launcher.app 执行 jar 文件。</strong><br/>
+<strong>6.用 Mac OS 自带的 Jar Bundler.app 将 jar 文件包装成 app，然后执行</strong></p>
+
+<p>执行途径还是相当地丰富，但以不同的方式来执行，从控制台中得到的程序输出也不一致<br/>
+比如说，刚刚在 <code>eclipse</code> 中还能正常打印出来的汉字，在打成 <code>jar</code> 包以后，<br/>
+双击该 <code>jar</code> 文件以 <code>Jar Launcher.app</code> 的方式来启动，打印出来的文字就成了乱码了。<br/>
+毕竟写出来的 <code>java</code> 程序最终还是要打成 <code>Jar</code> 包来使用的，总不能每次都在 <code>eclipse</code> 中启动吧？<br/>
+前面说过，不是第一次碰到这种问题了，于是便想着要把这个问题给解决下。<br/>
+灵机一动之下想到一个好办法，在这些启动方式下均把 <code>System</code> 中的属性遍历打印出来，<br/>
+然后用 <code>git</code> 来做各个版本的差异比较，有可能会套出一些蛛丝马迹~<br/>
+抱着试一试的想法实践了一把，果然发现一些猫腻，集中体现在 <code>file.encoding</code> 这个属性上面。<br/>
+在 <code>file.encoding</code> 属性的值是 <code>UTF-8</code> 时，是不存在乱码问题的，<code>eclipse</code> 执行就属于这种情况。<br/>
+<code>Jar Launcher.app</code> 执行时，该属性的值就变成 <code>MacRoman</code> 了，<br/>
+上面给出的资料中有对该属性的介绍，可以用 <code>java -D&lt;name&gt;=&lt;value&gt; Test.jar</code> 来更改它。<br/>
+另外，只有在启动 <code>java</code> 程序前通过传递参数来更改才有效，程序一经启动就无法再更改了。<br/>
+这样的话，也就只有通过传递 jvm 参数的方式来做默认编码的变更了：<br/>
+<strong>其一，写一个带 <code>-Dfile.encoding=UTF-8</code> 参数的脚本文件来启动；</strong><br/>
+<strong>其二，用 <code>Jar Bundler.app</code> 打包成 <code>app</code>，效率应该不如第一种方案。</strong><br/>
+原理其实都差不多，都只是将更改 <code>jvm</code> 默认编码的操作封装了起来，执行时就不用再手动键入了。</p>
+
+<h3>java 乱码问题 -Dfile.encoding=UTF-8</h3>
+
+<p><code>-Dfile.encoding</code> 解释：<br/>
+在命令行中输入 java，在给出的提示中会出现 -D 的说明：<br/>
+<code>-D&lt;name&gt;=&lt;value&gt;</code>  # set a system property<br/>
+-D 后面需要跟一个键值对，作用是设置一项系统属性<br/>
+对 <code>-Dfile.encoding=UTF-8</code> 来说就是设置系统属性 <code>file.encoding</code> 为 <code>UTF-8</code><br/>
+那么 <code>file.encoding</code> 什么意思？字面意思为文件编码。<br/>
+搜索 java 源码，只能找到 4 个文件中包含 <code>file.encoding</code> 的文件，<br/>
+也就是说，只有四个文件调用了 <code>file.encoding</code> 这个属性。<br/>
+在 <code>java.nio.charset</code> 包中的 <code>Charset.java</code> 中，这段话的意思说的很明确了。<br/>
+简单说就是默认字符集是在 java 虚拟机启动时决定的，<br/>
+依赖于 java 虚拟机所在的操作系统的区域以及字符集。<br/>
+代码中可以看到，默认字符集就是从 <code>file.encoding</code> 这个属性中获取的。</p>
+
+<h3>Java's file.encoding property on Windows platform</h3>
+
+<p>This property is used for the default encoding in Java, all readers and writers would default to use this property. "file.encoding" is set to the default locale of Windows operationg system since Java 1.4.2. System.getProperty("file.encoding") can be used to access this property. Code such as System.setProperty("file.encoding", "UTF-8") can be used to change this property. However, the default encoding can not be changed dynamically even this property can be changed. So the conclusion is that the default encoding can't be changed after JVM starts. "java -Dfile.encoding=UTF-8" can be used to set the default encoding when starting a JVM. I have searched for this option Java official documentation. But I can't find it.</p>
+
+<h3>How do you open a jar file on a mac?</h3>
+
+<p>You can indeed launch a jar file from the command line, with the following command: <br/>
+<code>java -jar yourfile.jar</code><br/>
+As well as this you can assign "Jar Launcher" as the default app. To use when you double-click a jar file, as follows (I don't believe you need the developer tools installed for this): <br/>
+Click once on the .jar file in the Finder and then from the menubar in the Finder select File -> Get Info". Click on "Open with" and from the popup menu select "Other". A file browser window will open. In this window, go to the <code>/System/Library/CoreServices</code> folder and select 'Jar Launcher'. Then make sure the "Always Open With" checkbox is checked and then click Add. Then click the "Change all" button so that any jar file will be opened automatically. Finally, close the Info window and now when you double-click any of your jar files they should run automatically.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Java 重用之 PathUtil]]></title>
@@ -1816,201 +1885,6 @@ ${container_loc} 可以拿到当前所选择文件父目录的绝对路径。<br
 </span><span class='line'><span class="cm"> */</span>
 </span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">writeBMPImage</span><span class="o">(</span><span class="n">RenderedImage</span> <span class="n">ri</span><span class="o">,</span> <span class="n">String</span> <span class="n">fileName</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>    <span class="k">return</span> <span class="nf">writeImage</span><span class="o">(</span><span class="n">ri</span><span class="o">,</span> <span class="s">&quot;BMP&quot;</span><span class="o">,</span> <span class="n">fileName</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Java 执行 Mac(Unix) 脚本命令]]></title>
-    <link href="http://yang3wei.github.com/blog/2013/02/05/java-zhi-xing-mac-unix-jiao-ben-ming-ling/"/>
-    <updated>2013-02-05T12:44:00+08:00</updated>
-    <id>http://yang3wei.github.com/blog/2013/02/05/java-zhi-xing-mac-unix-jiao-ben-ming-ling</id>
-    <content type="html"><![CDATA[<p>直接上代码：</p>
-
-<!-- more -->
-
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>UnixScript.java  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">package</span> <span class="n">org</span><span class="o">.</span><span class="na">bruce</span><span class="o">.</span><span class="na">pocket</span><span class="o">.</span><span class="na">tools</span><span class="o">.</span><span class="na">utils</span><span class="o">;&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kn">import</span> <span class="nn">java.io.BufferedReader</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.BufferedWriter</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.InputStream</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.InputStreamReader</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.OutputStream</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.OutputStreamWriter</span><span class="o">;&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;/&lt;</span><span class="n">em</span><span class="o">&gt;*</span>
-</span><span class='line'> <span class="o">*</span> <span class="nd">@author</span> <span class="n">Bruce</span> <span class="n">Yang</span>
-</span><span class='line'> <span class="o">*</span>
-</span><span class='line'> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;/</span>
-</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">UnixScript</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="cm">/**</span>
-</span><span class='line'><span class="cm"> * 执行 mac(unix) 脚本命令~</span>
-</span><span class='line'><span class="cm"> * @param command</span>
-</span><span class='line'><span class="cm"> * @return</span>
-</span><span class='line'><span class="cm"> */</span>
-</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">execute</span><span class="o">(</span><span class="n">String</span> <span class="n">command</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">String</span><span class="o">[]</span> <span class="n">cmd</span> <span class="o">=</span> <span class="o">{</span><span class="s">&quot;/bin/bash&quot;</span><span class="o">};</span>
-</span><span class='line'>    <span class="n">Runtime</span> <span class="n">rt</span> <span class="o">=</span> <span class="n">Runtime</span><span class="o">.</span><span class="na">getRuntime</span><span class="o">();</span>
-</span><span class='line'>    <span class="n">Process</span> <span class="n">proc</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">proc</span> <span class="o">=</span> <span class="n">rt</span><span class="o">.</span><span class="na">exec</span><span class="o">(</span><span class="n">cmd</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// 打开流</span>
-</span><span class='line'>    <span class="n">OutputStream</span> <span class="n">os</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="na">getOutputStream</span><span class="o">();</span>
-</span><span class='line'>    <span class="n">BufferedWriter</span> <span class="n">bw</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedWriter</span><span class="o">(</span><span class="k">new</span> <span class="n">OutputStreamWriter</span><span class="o">(</span><span class="n">os</span><span class="o">));</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">bw</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">command</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">bw</span><span class="o">.</span><span class="na">flush</span><span class="o">();</span>
-</span><span class='line'>        <span class="n">bw</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="cm">/** 真奇怪，把控制台的输出打印一遍之后竟然能正常终止了~ */</span>
-</span><span class='line'>        <span class="n">readConsole</span><span class="o">(</span><span class="n">proc</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="cm">/** waitFor() 的作用在于 java 程序是否等待 Terminal 执行脚本完毕~ */</span>
-</span><span class='line'>        <span class="n">proc</span><span class="o">.</span><span class="na">waitFor</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">retCode</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="na">exitValue</span><span class="o">();</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">//      System.err.println(&quot;unix script retCode = &quot; + retCode);&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="k">if</span> <span class="o">(</span><span class="n">retCode</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">readConsole</span><span class="o">(</span><span class="n">proc</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;UnixScriptUil.execute 出错了!!&quot;</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">retCode</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="cm">/**</span>
-</span><span class='line'><span class="cm"> * 读取控制命令的输出结果</span>
-</span><span class='line'><span class="cm"> * 原文链接：http://lavasoft.blog.51cto.com/62575/15599</span>
-</span><span class='line'><span class="cm"> * @param cmd 命令</span>
-</span><span class='line'><span class="cm"> * @return 控制命令的输出结果</span>
-</span><span class='line'><span class="cm"> * @throws IOException</span>
-</span><span class='line'><span class="cm"> */</span>
-</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">readConsole</span><span class="o">(</span><span class="n">Process</span> <span class="n">process</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">StringBuffer</span> <span class="n">cmdOut</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="o">();</span>
-</span><span class='line'>    <span class="n">InputStream</span> <span class="n">fis</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">();</span>
-</span><span class='line'>    <span class="n">BufferedReader</span> <span class="n">br</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="n">InputStreamReader</span><span class="o">(</span><span class="n">fis</span><span class="o">));</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">String</span> <span class="n">line</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">while</span> <span class="o">((</span><span class="n">line</span> <span class="o">=</span> <span class="n">br</span><span class="o">.</span><span class="na">readLine</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">cmdOut</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">line</span><span class="o">).</span><span class="na">append</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">&quot;line.separator&quot;</span><span class="o">));</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">//      System.out.println(&quot;执行系统命令后的控制台输出为：\n&quot; + cmdOut.toString());&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="k">return</span> <span class="n">cmdOut</span><span class="o">.</span><span class="na">toString</span><span class="o">().</span><span class="na">trim</span><span class="o">();</span>
 </span><span class='line'><span class="o">}</span>
 </span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
 </span><span class='line'>

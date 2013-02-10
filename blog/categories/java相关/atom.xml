@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Java相关 | yang3wei的专栏]]></title>
   <link href="http://yang3wei.github.com/blog/categories/java相关/atom.xml" rel="self"/>
   <link href="http://yang3wei.github.com/"/>
-  <updated>2013-02-10T01:12:38+08:00</updated>
+  <updated>2013-02-10T17:02:14+08:00</updated>
   <id>http://yang3wei.github.com/</id>
   <author>
     <name><![CDATA[yang3wei]]></name>
@@ -12,6 +12,75 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Java -Dfile.encoding=UTF-8 干掉乱码]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/10/java-dfile-dot-encoding-equals-utf-8-gan-diao-luan-ma/"/>
+    <updated>2013-02-10T15:18:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/10/java-dfile-dot-encoding-equals-utf-8-gan-diao-luan-ma</id>
+    <content type="html"><![CDATA[<p>参考链接：<br/>
+<a href="http://hi.baidu.com/cnjsp/item/a2c9c9aed1de96a829ce9d24">java 乱码问题-Dfile.encoding=UTF-8</a><br/>
+<a href="http://yaojingguo.blogspot.com/2009/02/javas-fileencoding-property-on-windows.html">Java's file.encoding property on Windows platform</a><br/>
+<a href="http://wiki.answers.com/Q/How_do_you_open_a_jar_file_on_a_mac">How do you open a jar file on a mac?</a></p>
+
+<!-- more -->
+
+
+<h3>遭遇乱码问题的来龙去脉</h3>
+
+<p>这两天写了一个 Java 程序来玩，结果又遭遇了以前遇到过很多次的乱码问题，具体描述一下：<br/>
+在 Mac 系统里面，常用的 Java 程序的启动方式有如下几种：<br/>
+<strong>1.通过 eclipse 执行 class 入口文件启动；</strong><br/>
+<strong>2.在 Terminal 里面用 java Test.class 或 jave -jar Test.jar 启动</strong><br/>
+<strong>3.通过 ant 执行 class 入口文件启动；</strong><br/>
+<strong>4.直接用 ant 执行 jar 文件；</strong><br/>
+<strong>5.用 Mac OS CoreServices 中的 Jar Launcher.app 执行 jar 文件。</strong><br/>
+<strong>6.用 Mac OS 自带的 Jar Bundler.app 将 jar 文件包装成 app，然后执行</strong></p>
+
+<p>执行途径还是相当地丰富，但以不同的方式来执行，从控制台中得到的程序输出也不一致<br/>
+比如说，刚刚在 <code>eclipse</code> 中还能正常打印出来的汉字，在打成 <code>jar</code> 包以后，<br/>
+双击该 <code>jar</code> 文件以 <code>Jar Launcher.app</code> 的方式来启动，打印出来的文字就成了乱码了。<br/>
+毕竟写出来的 <code>java</code> 程序最终还是要打成 <code>Jar</code> 包来使用的，总不能每次都在 <code>eclipse</code> 中启动吧？<br/>
+前面说过，不是第一次碰到这种问题了，于是便想着要把这个问题给解决下。<br/>
+灵机一动之下想到一个好办法，在这些启动方式下均把 <code>System</code> 中的属性遍历打印出来，<br/>
+然后用 <code>git</code> 来做各个版本的差异比较，有可能会套出一些蛛丝马迹~<br/>
+抱着试一试的想法实践了一把，果然发现一些猫腻，集中体现在 <code>file.encoding</code> 这个属性上面。<br/>
+在 <code>file.encoding</code> 属性的值是 <code>UTF-8</code> 时，是不存在乱码问题的，<code>eclipse</code> 执行就属于这种情况。<br/>
+<code>Jar Launcher.app</code> 执行时，该属性的值就变成 <code>MacRoman</code> 了，<br/>
+上面给出的资料中有对该属性的介绍，可以用 <code>java -D&lt;name&gt;=&lt;value&gt; Test.jar</code> 来更改它。<br/>
+另外，只有在启动 <code>java</code> 程序前通过传递参数来更改才有效，程序一经启动就无法再更改了。<br/>
+这样的话，也就只有通过传递 jvm 参数的方式来做默认编码的变更了：<br/>
+<strong>其一，写一个带 <code>-Dfile.encoding=UTF-8</code> 参数的脚本文件来启动；</strong><br/>
+<strong>其二，用 <code>Jar Bundler.app</code> 打包成 <code>app</code>，效率应该不如第一种方案。</strong><br/>
+原理其实都差不多，都只是将更改 <code>jvm</code> 默认编码的操作封装了起来，执行时就不用再手动键入了。</p>
+
+<h3>java 乱码问题 -Dfile.encoding=UTF-8</h3>
+
+<p><code>-Dfile.encoding</code> 解释：<br/>
+在命令行中输入 java，在给出的提示中会出现 -D 的说明：<br/>
+<code>-D&lt;name&gt;=&lt;value&gt;</code>  # set a system property<br/>
+-D 后面需要跟一个键值对，作用是设置一项系统属性<br/>
+对 <code>-Dfile.encoding=UTF-8</code> 来说就是设置系统属性 <code>file.encoding</code> 为 <code>UTF-8</code><br/>
+那么 <code>file.encoding</code> 什么意思？字面意思为文件编码。<br/>
+搜索 java 源码，只能找到 4 个文件中包含 <code>file.encoding</code> 的文件，<br/>
+也就是说，只有四个文件调用了 <code>file.encoding</code> 这个属性。<br/>
+在 <code>java.nio.charset</code> 包中的 <code>Charset.java</code> 中，这段话的意思说的很明确了。<br/>
+简单说就是默认字符集是在 java 虚拟机启动时决定的，<br/>
+依赖于 java 虚拟机所在的操作系统的区域以及字符集。<br/>
+代码中可以看到，默认字符集就是从 <code>file.encoding</code> 这个属性中获取的。</p>
+
+<h3>Java's file.encoding property on Windows platform</h3>
+
+<p>This property is used for the default encoding in Java, all readers and writers would default to use this property. "file.encoding" is set to the default locale of Windows operationg system since Java 1.4.2. System.getProperty("file.encoding") can be used to access this property. Code such as System.setProperty("file.encoding", "UTF-8") can be used to change this property. However, the default encoding can not be changed dynamically even this property can be changed. So the conclusion is that the default encoding can't be changed after JVM starts. "java -Dfile.encoding=UTF-8" can be used to set the default encoding when starting a JVM. I have searched for this option Java official documentation. But I can't find it.</p>
+
+<h3>How do you open a jar file on a mac?</h3>
+
+<p>You can indeed launch a jar file from the command line, with the following command: <br/>
+<code>java -jar yourfile.jar</code><br/>
+As well as this you can assign "Jar Launcher" as the default app. To use when you double-click a jar file, as follows (I don't believe you need the developer tools installed for this): <br/>
+Click once on the .jar file in the Finder and then from the menubar in the Finder select File -> Get Info". Click on "Open with" and from the popup menu select "Other". A file browser window will open. In this window, go to the <code>/System/Library/CoreServices</code> folder and select 'Jar Launcher'. Then make sure the "Always Open With" checkbox is checked and then click Add. Then click the "Change all" button so that any jar file will be opened automatically. Finally, close the Info window and now when you double-click any of your jar files they should run automatically.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Java 重用之 PathUtil]]></title>
@@ -1943,135 +2012,6 @@
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">//      System.out.println(&quot;执行系统命令后的控制台输出为：\n&quot; + cmdOut.toString());&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="k">return</span> <span class="n">cmdOut</span><span class="o">.</span><span class="na">toString</span><span class="o">().</span><span class="na">trim</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Java Get classes In Package]]></title>
-    <link href="http://yang3wei.github.com/blog/2013/02/05/java-get-classes-in-package/"/>
-    <updated>2013-02-05T12:30:00+08:00</updated>
-    <id>http://yang3wei.github.com/blog/2013/02/05/java-get-classes-in-package</id>
-    <content type="html"><![CDATA[<p>直接上代码：</p>
-
-<!-- more -->
-
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>GetClassesInPackage.java  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">package</span> <span class="n">org</span><span class="o">.</span><span class="na">bruce</span><span class="o">.</span><span class="na">pocket</span><span class="o">.</span><span class="na">tools</span><span class="o">.</span><span class="na">utils</span><span class="o">;&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kn">import</span> <span class="nn">java.io.FileInputStream</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.jar.JarEntry</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.jar.JarInputStream</span><span class="o">;&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;/&lt;</span><span class="n">em</span><span class="o">&gt;*</span>
-</span><span class='line'> <span class="o">*</span> <span class="nd">@author</span> <span class="n">Bruce</span> <span class="n">Yang</span>
-</span><span class='line'> <span class="o">*</span> <span class="nl">http:</span><span class="c1">//www.roseindia.net/java/java-get-example/get-classes-package.shtml</span>
-</span><span class='line'> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;/</span>
-</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">GetClassesInPackage</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="n">getJar</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">List</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">String</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">getClasseNamesInPackage</span><span class="o">(</span><span class="n">String</span> <span class="n">jarName</span><span class="o">,</span> <span class="n">String</span> <span class="n">packageName</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">getJar</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Jar \&quot;&quot;</span> <span class="o">+</span> <span class="n">jarName</span> <span class="o">+</span> <span class="s">&quot;\&quot; for \&quot;&quot;</span> <span class="o">+</span> <span class="n">packageName</span> <span class="o">+</span> <span class="sc">&#39;\&quot;&#39;</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">ArrayList</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">String</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">arrayList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">String</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;();</span>
-</span><span class='line'>    <span class="c1">// replaceAll 第一个参数是正则字符串，第二个参数是普通的替换字符串，不需要对正则进行转义~</span>
-</span><span class='line'>    <span class="n">packageName</span> <span class="o">=</span> <span class="n">packageName</span><span class="o">.</span><span class="na">replaceAll</span><span class="o">(</span><span class="s">&quot;\\.&quot;</span><span class="o">,</span> <span class="s">&quot;/&quot;</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">JarInputStream</span> <span class="n">jarFile</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JarInputStream</span><span class="o">(</span><span class="k">new</span> <span class="n">FileInputStream</span><span class="o">(</span><span class="n">jarName</span><span class="o">));</span>
-</span><span class='line'>        <span class="n">JarEntry</span> <span class="n">jarEntry</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">jarEntry</span> <span class="o">=</span> <span class="n">jarFile</span><span class="o">.</span><span class="na">getNextJarEntry</span><span class="o">();</span>
-</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">jarEntry</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>                <span class="k">break</span><span class="o">;</span>
-</span><span class='line'>            <span class="o">}</span>
-</span><span class='line'>            <span class="k">if</span> <span class="o">((</span><span class="n">jarEntry</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">startsWith</span><span class="o">(</span><span class="n">packageName</span><span class="o">))</span>
-</span><span class='line'>                    <span class="o">&amp;</span><span class="n">amp</span><span class="o">;&amp;</span><span class="n">amp</span><span class="o">;</span> <span class="o">(</span><span class="n">jarEntry</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">endsWith</span><span class="o">(</span><span class="s">&quot;.class&quot;</span><span class="o">)))</span> <span class="o">{</span>
-</span><span class='line'>                <span class="n">arrayList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">jarEntry</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">replaceAll</span><span class="o">(</span><span class="s">&quot;/&quot;</span><span class="o">,</span> <span class="s">&quot;.&quot;</span><span class="o">));</span>
-</span><span class='line'>            <span class="o">}</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">arrayList</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">String</span> <span class="n">jarPath</span> <span class="o">=</span> <span class="s">&quot;/Users/user/Desktop/JavaDynamicComiple.jar&quot;</span><span class="o">;</span>
-</span><span class='line'>    <span class="n">String</span> <span class="n">pkgPath</span> <span class="o">=</span> <span class="s">&quot;org.bruce.pocket.tools.items&quot;</span><span class="o">;</span>
-</span><span class='line'>    <span class="n">List</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">String</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">list</span> <span class="o">=</span> <span class="n">GetClassesInPackage</span><span class="o">.</span><span class="na">getClasseNamesInPackage</span><span class="o">(</span><span class="n">jarPath</span><span class="o">,</span> <span class="n">pkgPath</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Found: &quot;</span><span class="o">);</span>
-</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">item</span> <span class="o">:</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">item</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span>
 </span><span class='line'><span class="o">}</span>
 </span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
 </span><span class='line'>

@@ -1,0 +1,484 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Getting Started with JNI and C++ on OSX Lion - yang3wei的专栏</title>
+  <meta name="author" content="yang3wei">
+
+  
+  <meta name="description" content="原文链接：
+Getting Started with JNI and C++ on OSX Lion
+This tutorial combines a few key ideas to getting started with a Hello World program using the &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="author" content="yang3wei">
+  
+  <meta name="description" content="yang3wei的专栏, yang3wei">
+  <meta name="keywords" content="yang3wei, cocos2d, mac, objective-c, c/c++, game develop, java, OpenGL, shell, box2d, git, python">
+
+  
+  <link rel="canonical" href="http://yang3wei.github.com/blog/2013/02/11/getting-started-with-jni-and-c-plus-plus-on-osx-lion/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="yang3wei的专栏" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-38160149-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">yang3wei的专栏</a></h1>
+  
+    <h2>Enjoy my life!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:yang3wei.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Getting Started with JNI and C++ on OSX Lion</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-11T15:19:00+08:00" pubdate data-updated="true">Feb 11<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>原文链接：<br/>
+<a href="http://mrjoelkemp.com/2012/01/getting-started-with-jni-and-c-on-osx-lion/">Getting Started with JNI and C++ on OSX Lion</a><br/>
+This tutorial combines a few key ideas to getting started with a Hello World program using the Java Native Interface (JNI) on Mac OSX. JNI allows Java code to utilize C++ code (i.e., native code).</p>
+
+<!-- more -->
+
+
+<p>
+This technology is very important if you want to do any computationally intensive operations (games, video processing, audio processing, etc) in mobile (Android) apps or your everyday Java applications.<br/>
+The important point to this article is that most tutorials only talk about compilation for Windows and Solaris machines — I will focus exclusively on OSX. Knowing these subtleties can save you a lot of time and headaches!</p>
+
+<h3>Creating the Java Class</h3>
+
+<p>Let’s start by creating a very simple Hello World program!<br/>
+In a file <strong>HelloWorld.java</strong></p>
+
+<figure class='code'><figcaption><span>HelloWorld.java </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'>
+</span><span class='line'><span class="kd">class</span> <span class="nc">HelloWorld</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">private</span> <span class="kd">native</span> <span class="kt">void</span> <span class="nf">print</span><span class="o">();</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">new</span> <span class="nf">HelloWorld</span><span class="o">().</span><span class="na">print</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="kd">static</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">System</span><span class="o">.</span><span class="na">loadLibrary</span><span class="o">(</span><span class="s">&quot;HelloWorld&quot;</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The above code details a simple Java class that has a very important native method <strong>print()</strong>. The fact that this method is native signifies that it should be implemented in C++. We’ll get to that implementation in a bit.<br/>
+The static section gets executed first, which expects to load a JNI shared or dynamic library known as HelloWorld.</p>
+
+<h3>Compiling the Java Class</h3>
+
+<p>Compiling the newly created HelloWorld class involves opening up the terminal and issuing the command:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>javac HelloWorld.java  </span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+We use the javac command to generate the class file that is needed to generate the appropriate JNI C++ classes. You can’t skip the generation of the class file!<br/>
+To create the JNI C++ files, you can just type the following command into the terminal:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>javah -jni HelloWorld  </span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+The above command will generate the following header file:</p>
+
+<figure class='code'><figcaption><span>HelloWorld.h  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'>
+</span><span class='line'><span class="cm">/* DO NOT EDIT THIS FILE - it is machine generated */</span>
+</span><span class='line'><span class="cp">#include &lt;jni.h&gt;  </span>
+</span><span class='line'><span class="cm">/* Header for class HelloWorld */</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#ifndef _Included_HelloWorld  </span>
+</span><span class='line'><span class="cp">#define _Included_HelloWorld  </span>
+</span><span class='line'><span class="cp">#ifdef __cplusplus  </span>
+</span><span class='line'><span class="k">extern</span> <span class="s">&quot;C&quot;</span> <span class="p">{</span>
+</span><span class='line'><span class="cp">#endif  </span>
+</span><span class='line'><span class="cm">/*  </span>
+</span><span class='line'><span class="cm"> * Class:     HelloWorld  </span>
+</span><span class='line'><span class="cm"> * Method:    print  </span>
+</span><span class='line'><span class="cm"> * Signature: ()V  </span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="n">JNIEXPORT</span> <span class="kt">void</span> <span class="n">JNICALL</span> <span class="n">Java_HelloWorld_print</span>
+</span><span class='line'>  <span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="p">,</span> <span class="n">jobject</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#ifdef __cplusplus  </span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="cp">#endif  </span>
+</span><span class='line'><span class="cp">#endif  </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This file contains a lot of seemingly obscure boiler-plate specific to JNI. The part we care about is the definition of the print() function that was declared to be native in the HelloWorld.java file.<br/>
+By convention, native functions will be named “Java<em>” followed by the class name “HelloWorld</em>” and the function name “print”. Thus, we obtain the native function: Java_HelloWorld_print().<br/>
+Let’s write an implementation file to define the behavior of the Java_HelloWorld_print() function.</p>
+
+<figure class='code'><figcaption><span>HelloWorld.cpp  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'>
+</span><span class='line'><span class="cp">#include &lt;jni.h&gt;  </span>
+</span><span class='line'><span class="cp">#include &lt;iostream&gt;  </span>
+</span><span class='line'><span class="cp">#include &quot;HelloWorld.h&quot;  </span>
+</span><span class='line'><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">JNIEXPORT</span> <span class="kt">void</span> <span class="n">JNICALL</span>
+</span><span class='line'><span class="n">Java_HelloWorld_print</span><span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="p">,</span> <span class="n">jobject</span><span class="p">){</span>
+</span><span class='line'>    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Oh JNI, how cumbersome you are!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">return</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The implementation of the native function simply prints out a literal string.</p>
+
+<h3>Compiling the C++ Code</h3>
+
+<p>To include the native code in the compilation of the Java program, we need to compile our native C++ code into a dynamic library. On OSX, JNI shared/dynamic libraries have the extension <strong>.jnilib</strong>. This is a huge difference from the extensions on Windows and Solaris machines: <strong>.dll</strong> and <strong>.so</strong>, respectively.<br/>
+Before we get to the command, there’s a big problem: your compiler (g++) will need to know the location of the jni.h library. You don’t get this linking for free, so you have to specify the location of the header file within the compilation command.<br/>
+The locations of the the jni.h library that need to be included are:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"-I/System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Headers"  
+</span><span class='line'>"-I/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/JavaVM.framework/Versions/A/Headers"  </span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+Unfortunately, leaving off either of these results in the compiler error:<br/>
+HelloWorld.cpp:1:17: error: jni.h: No such file or directory<br/>
+In your terminal, issue the command (all part of a single command):</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>g++ "-I/System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Headers" "-I/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/JavaVM.framework/Versions/A/Headers" -c HelloWorld.cpp  </span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+Notice that we include the -c option to generate the object file for our native code: <strong>HelloWorld.o</strong>. We also include the implementation file for our native class: <strong>HelloWorld.cpp</strong>.<br/>
+The final step for compiling the native source is to issue the command:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>g++ -dynamiclib -o libhelloworld.jnilib HelloWorld.o  </span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+This command uses the dynamiclib option to specify that the compiler shouldn’t produce a standard executable, but should produce a library. The -o option is used to name the library with the appropriate extension: <strong>libhelloworld.jnilib</strong>. We also include the object file generated in the previous step.<br/>
+The result of this process is the compiled library <strong>libhelloworld.jnilib</strong>.</p>
+
+<h3>Compiling the Native Library and Java Program</h3>
+
+<p>The final piece to this painstaking puzzle is to connect all of the pieces! We’re going to finally compile our Java program which will look for the jnilib library containing our compiled native code.<br/>
+In your terminal, issue the following command:<br/>
+java HelloWorld<br/>
+This will compile and run our HelloWorld program and display the output:<br/>
+Oh JNI, how cumbersome you are!</p>
+
+<h3>One final note</h3>
+
+<p>If you see the error:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Exception in thread "main" java.lang.UnsatisfiedLinkError: no HelloWorld in java.library.path  
+</span><span class='line'>at java.lang.ClassLoader.loadLibrary(ClassLoader.java:1758)  
+</span><span class='line'>at java.lang.Runtime.loadLibrary0(Runtime.java:823)  
+</span><span class='line'>at java.lang.System.loadLibrary(System.java:1045)  
+</span><span class='line'>at HelloWorld.(HelloWorld.java:7)  </span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+Then you’ve mistakenly used a different shared/dynamic library extension than the necessary .jnilib! This is the root of all evil in this exercise!<br/>
+Happy coding!<br/>
+This tutorial is based on the JNI tutorial provided by Sun.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">yang3wei</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-11T15:19:00+08:00" pubdate data-updated="true">Feb 11<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/java相关/'>Java相关</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/02/10/java-dfile-dot-encoding-equals-utf-8-gan-diao-luan-ma/" title="Previous Post: Java -Dfile.encoding=UTF-8 干掉乱码">&laquo; Java -Dfile.encoding=UTF-8 干掉乱码</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/11/getting-started-with-jni-and-c-plus-plus-on-osx-lion/">Getting Started with JNI and C++ on OSX Lion</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/10/java-dfile-dot-encoding-equals-utf-8-gan-diao-luan-ma/">Java -Dfile.encoding=UTF-8 干掉乱码</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/09/wxpython-undefined-variable-from-import-pysimpleapp/">wxPython Undefined variable from import PySimpleApp</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/09/jie-du-hen-qiang-hen-biao-han-de-pythonbiao-zhun-guiku/">解读很强很彪悍的 Python 标准 GUI 库</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/09/git-biao-qian-xiang-guan-cao-zuo/">Git 标签相关操作</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+    <h1>Tags</h1>
+    <ul class="tag-cloud">
+        <a style="font-size: 131%" href="/tags/c-c-/">C/C++</a>
+<a style="font-size: 100%" href="/tags/algorithm/">algorithm</a>
+<a style="font-size: 100%" href="/tags/ant/">ant</a>
+<a style="font-size: 100%" href="/tags/cocos2d/">cocos2d</a>
+<a style="font-size: 131%" href="/tags/eclipse/">eclipse</a>
+<a style="font-size: 210%" href="/tags/git/">git</a>
+<a style="font-size: 131%" href="/tags/hardware/">hardware</a>
+<a style="font-size: 100%" href="/tags/ios/">iOS</a>
+<a style="font-size: 192%" href="/tags/java/">java</a>
+<a style="font-size: 192%" href="/tags/mac/">mac</a>
+<a style="font-size: 197%" href="/tags/octopress/">octopress</a>
+<a style="font-size: 131%" href="/tags/python/">python</a>
+<a style="font-size: 161%" href="/tags/vim/">vim</a>
+<a style="font-size: 149%" href="/tags/伟少手札/">伟少手札</a>
+<a style="font-size: 131%" href="/tags/养生/">养生</a>
+
+    </ul>
+</section>
+<section>
+    <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/blog/categories/cocos2d相关'>Cocos2d相关 (1)</a></li><li><a href='/blog/categories/git相关'>Git相关 (12)</a></li><li><a href='/blog/categories/java相关'>Java相关 (7)</a></li><li><a href='/blog/categories/mac相关'>Mac相关 (7)</a></li><li><a href='/blog/categories/octopress相关'>Octopress相关 (8)</a></li><li><a href='/blog/categories/python相关'>Python相关 (2)</a></li><li><a href='/blog/categories/vim相关'>Vim相关 (4)</a></li><li><a href='/blog/categories/伟少手札'>伟少手札 (2)</a></li><li><a href='/blog/categories/养生相关'>养生相关 (2)</a></li><li><a href='/blog/categories/硬件相关'>硬件相关 (2)</a></li><li><a href='/blog/categories/算法相关'>算法相关 (1)</a></li></ul>
+</section>
+
+
+<section>
+    <h1>Recent Comments</h1>
+    <div id="recentcomments" class="dsq-widget"><script type="text/javascript" src="http://yang3wei.disqus.com/recent_comments_widget.js?num_items=5&hide_avatars=0&avatar_size=48&excerpt_length=200"></script></div><a href="http://disqus.com/">Powered by Disqus</a>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/yang3wei?count=10&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/yang3wei">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - yang3wei -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'yang3wei';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://yang3wei.github.com/blog/2013/02/11/getting-started-with-jni-and-c-plus-plus-on-osx-lion/';
+        var disqus_url = 'http://yang3wei.github.com/blog/2013/02/11/getting-started-with-jni-and-c-plus-plus-on-osx-lion/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

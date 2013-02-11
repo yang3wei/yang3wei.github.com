@@ -4,7 +4,7 @@
   <title><![CDATA[yang3wei的专栏]]></title>
   <link href="http://yang3wei.github.com/atom.xml" rel="self"/>
   <link href="http://yang3wei.github.com/"/>
-  <updated>2013-02-10T17:02:14+08:00</updated>
+  <updated>2013-02-11T15:44:30+08:00</updated>
   <id>http://yang3wei.github.com/</id>
   <author>
     <name><![CDATA[yang3wei]]></name>
@@ -12,6 +12,217 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Getting Started with JNI and C++ on OSX Lion]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/11/getting-started-with-jni-and-c-plus-plus-on-osx-lion/"/>
+    <updated>2013-02-11T15:19:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/11/getting-started-with-jni-and-c-plus-plus-on-osx-lion</id>
+    <content type="html"><![CDATA[<p>原文链接：<br/>
+<a href="http://mrjoelkemp.com/2012/01/getting-started-with-jni-and-c-on-osx-lion/">Getting Started with JNI and C++ on OSX Lion</a><br/>
+This tutorial combines a few key ideas to getting started with a Hello World program using the Java Native Interface (JNI) on Mac OSX. JNI allows Java code to utilize C++ code (i.e., native code).</p>
+
+<!-- more -->
+
+
+<p>
+This technology is very important if you want to do any computationally intensive operations (games, video processing, audio processing, etc) in mobile (Android) apps or your everyday Java applications.<br/>
+The important point to this article is that most tutorials only talk about compilation for Windows and Solaris machines — I will focus exclusively on OSX. Knowing these subtleties can save you a lot of time and headaches!</p>
+
+<h3>Creating the Java Class</h3>
+
+<p>Let’s start by creating a very simple Hello World program!<br/>
+In a file <strong>HelloWorld.java</strong></p>
+
+<figure class='code'><figcaption><span>HelloWorld.java </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'>
+</span><span class='line'><span class="kd">class</span> <span class="nc">HelloWorld</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">private</span> <span class="kd">native</span> <span class="kt">void</span> <span class="nf">print</span><span class="o">();</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">new</span> <span class="nf">HelloWorld</span><span class="o">().</span><span class="na">print</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="kd">static</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">System</span><span class="o">.</span><span class="na">loadLibrary</span><span class="o">(</span><span class="s">&quot;HelloWorld&quot;</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The above code details a simple Java class that has a very important native method <strong>print()</strong>. The fact that this method is native signifies that it should be implemented in C++. We’ll get to that implementation in a bit.<br/>
+The static section gets executed first, which expects to load a JNI shared or dynamic library known as HelloWorld.</p>
+
+<h3>Compiling the Java Class</h3>
+
+<p>Compiling the newly created HelloWorld class involves opening up the terminal and issuing the command:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>javac HelloWorld.java  </span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+We use the javac command to generate the class file that is needed to generate the appropriate JNI C++ classes. You can’t skip the generation of the class file!<br/>
+To create the JNI C++ files, you can just type the following command into the terminal:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>javah -jni HelloWorld  </span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+The above command will generate the following header file:</p>
+
+<figure class='code'><figcaption><span>HelloWorld.h  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'>
+</span><span class='line'><span class="cm">/* DO NOT EDIT THIS FILE - it is machine generated */</span>
+</span><span class='line'><span class="cp">#include &lt;jni.h&gt;  </span>
+</span><span class='line'><span class="cm">/* Header for class HelloWorld */</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#ifndef _Included_HelloWorld  </span>
+</span><span class='line'><span class="cp">#define _Included_HelloWorld  </span>
+</span><span class='line'><span class="cp">#ifdef __cplusplus  </span>
+</span><span class='line'><span class="k">extern</span> <span class="s">&quot;C&quot;</span> <span class="p">{</span>
+</span><span class='line'><span class="cp">#endif  </span>
+</span><span class='line'><span class="cm">/*  </span>
+</span><span class='line'><span class="cm"> * Class:     HelloWorld  </span>
+</span><span class='line'><span class="cm"> * Method:    print  </span>
+</span><span class='line'><span class="cm"> * Signature: ()V  </span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="n">JNIEXPORT</span> <span class="kt">void</span> <span class="n">JNICALL</span> <span class="n">Java_HelloWorld_print</span>
+</span><span class='line'>  <span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="p">,</span> <span class="n">jobject</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#ifdef __cplusplus  </span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="cp">#endif  </span>
+</span><span class='line'><span class="cp">#endif  </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This file contains a lot of seemingly obscure boiler-plate specific to JNI. The part we care about is the definition of the print() function that was declared to be native in the HelloWorld.java file.<br/>
+By convention, native functions will be named “Java<em>” followed by the class name “HelloWorld</em>” and the function name “print”. Thus, we obtain the native function: Java_HelloWorld_print().<br/>
+Let’s write an implementation file to define the behavior of the Java_HelloWorld_print() function.</p>
+
+<figure class='code'><figcaption><span>HelloWorld.cpp  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'>
+</span><span class='line'><span class="cp">#include &lt;jni.h&gt;  </span>
+</span><span class='line'><span class="cp">#include &lt;iostream&gt;  </span>
+</span><span class='line'><span class="cp">#include &quot;HelloWorld.h&quot;  </span>
+</span><span class='line'><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">JNIEXPORT</span> <span class="kt">void</span> <span class="n">JNICALL</span>
+</span><span class='line'><span class="n">Java_HelloWorld_print</span><span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="p">,</span> <span class="n">jobject</span><span class="p">){</span>
+</span><span class='line'>    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Oh JNI, how cumbersome you are!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">return</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The implementation of the native function simply prints out a literal string.</p>
+
+<h3>Compiling the C++ Code</h3>
+
+<p>To include the native code in the compilation of the Java program, we need to compile our native C++ code into a dynamic library. On OSX, JNI shared/dynamic libraries have the extension <strong>.jnilib</strong>. This is a huge difference from the extensions on Windows and Solaris machines: <strong>.dll</strong> and <strong>.so</strong>, respectively.<br/>
+Before we get to the command, there’s a big problem: your compiler (g++) will need to know the location of the jni.h library. You don’t get this linking for free, so you have to specify the location of the header file within the compilation command.<br/>
+The locations of the the jni.h library that need to be included are:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"-I/System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Headers"  
+</span><span class='line'>"-I/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/JavaVM.framework/Versions/A/Headers"  </span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+Unfortunately, leaving off either of these results in the compiler error:<br/>
+HelloWorld.cpp:1:17: error: jni.h: No such file or directory<br/>
+In your terminal, issue the command (all part of a single command):</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>g++ "-I/System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Headers" "-I/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/JavaVM.framework/Versions/A/Headers" -c HelloWorld.cpp  </span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+Notice that we include the -c option to generate the object file for our native code: <strong>HelloWorld.o</strong>. We also include the implementation file for our native class: <strong>HelloWorld.cpp</strong>.<br/>
+The final step for compiling the native source is to issue the command:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>g++ -dynamiclib -o libhelloworld.jnilib HelloWorld.o  </span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+This command uses the dynamiclib option to specify that the compiler shouldn’t produce a standard executable, but should produce a library. The -o option is used to name the library with the appropriate extension: <strong>libhelloworld.jnilib</strong>. We also include the object file generated in the previous step.<br/>
+The result of this process is the compiled library <strong>libhelloworld.jnilib</strong>.</p>
+
+<h3>Compiling the Native Library and Java Program</h3>
+
+<p>The final piece to this painstaking puzzle is to connect all of the pieces! We’re going to finally compile our Java program which will look for the jnilib library containing our compiled native code.<br/>
+In your terminal, issue the following command:<br/>
+java HelloWorld<br/>
+This will compile and run our HelloWorld program and display the output:<br/>
+Oh JNI, how cumbersome you are!</p>
+
+<h3>One final note</h3>
+
+<p>If you see the error:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Exception in thread "main" java.lang.UnsatisfiedLinkError: no HelloWorld in java.library.path  
+</span><span class='line'>at java.lang.ClassLoader.loadLibrary(ClassLoader.java:1758)  
+</span><span class='line'>at java.lang.Runtime.loadLibrary0(Runtime.java:823)  
+</span><span class='line'>at java.lang.System.loadLibrary(System.java:1045)  
+</span><span class='line'>at HelloWorld.(HelloWorld.java:7)  </span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+Then you’ve mistakenly used a different shared/dynamic library extension than the necessary .jnilib! This is the root of all evil in this exercise!<br/>
+Happy coding!<br/>
+This tutorial is based on the JNI tutorial provided by Sun.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Java -Dfile.encoding=UTF-8 干掉乱码]]></title>
@@ -29,7 +240,7 @@
 <h3>遭遇乱码问题的来龙去脉</h3>
 
 <p>这两天写了一个 Java 程序来玩，结果又遭遇了以前遇到过很多次的乱码问题，具体描述一下：<br/>
-在 Mac 系统里面，常用的 Java 程序的启动方式有如下几种：<br/>
+在 Mac 系统里面，常用的 Java 程序启动方式有如下几种：<br/>
 <strong>1.通过 eclipse 执行 class 入口文件启动；</strong><br/>
 <strong>2.在 Terminal 里面用 java Test.class 或 jave -jar Test.jar 启动</strong><br/>
 <strong>3.通过 ant 执行 class 入口文件启动；</strong><br/>
@@ -3366,55 +3577,6 @@ Octopress 默认为每个页面添加 meta description，其内容为当前文�
 比如登记自己的网址，取得 GA 的 <code>Track ID</code>，应该如该样式 <code>UA-28584XXX-X</code>.
 修改 <code>_config.yml</code> 最后部分，将 ID 置于 <code>google_analytics_tracking_id:</code>项目之后，rake一下就行了。<br/>
 之后进入 GA 网站看 report 吧，你就会知道何时多少人访问过你的网站。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA["git rm" 和 "rm" 的区别]]></title>
-    <link href="http://yang3wei.github.com/blog/2013/02/03/git-rm-he-rm-de-qu-bie/"/>
-    <updated>2013-02-03T14:01:00+08:00</updated>
-    <id>http://yang3wei.github.com/blog/2013/02/03/git-rm-he-rm-de-qu-bie</id>
-    <content type="html"><![CDATA[<p>这是一个比较肤浅的问题，但对于 git 初学者来说，还是有必要提一下的。</p>
-
-<!-- more -->
-
-
-<p>用 <code>git rm</code> 来删除文件，同时还会将这个删除操作记录下来；<br/>
-用 <code>rm</code> 来删除文件，仅仅是删除了物理文件，没有将其从 git 的记录中剔除。</p>
-
-<p>直观的来讲，<code>git rm</code> 删除过的文件，执行 <code>git commit -m "abc"</code> 提交时，<br/>
-会自动将删除该文件的操作提交上去。</p>
-
-<p>而对于用 <code>rm</code> 命令直接删除的文件，执行 <code>git commit -m "abc"</code> 提交时，<br/>
-则不会将删除该文件的操作提交上去。<br/>
-不过不要紧，即使你已经通过 <code>rm</code> 将某个文件删除掉了，<br/>
-也可以再通过 <code>git rm</code> 命令重新将该文件从 git 的记录中删除掉，<br/>
-这样的话，在执行 <code>git commit -m "abc"</code> 以后，也能将这个删除操作提交上去。</p>
-
-<p>如果之前不小心用 <code>rm</code> 命令删除了一大批文件呢？<br/>
-是的，此时用 <code>git rm</code> 逐个地再删除一次就显得相当蛋疼了。<br/>
-所幸还有更方便的处理方案，用如下的方式做提交就没有问题了：
-<code>git commit -am "abc"</code></p>
-
-<h3>总结一下：</h3>
-
-<p>在被 git 管理的目录中删除文件时，可以选择如下两种方式来记录删除动作：<br/>
-一、<code>rm</code> + <code>git commit -am "abc"</code><br/>
-二、<code>git rm</code> + <code>git commit -m "abc"</code><br/>
-另外，<code>git add .</code> 仅能记录添加、改动的动作，删除的动作需靠 <code>git rm</code> 来完成。<br/>
-最后，<code>rm</code> 删除的文件是处于 <code>not staged</code> 状态的，<br/>
-也就是一种介于 “未改动” 和 “已提交过” 之间的状态。</p>
-
-<h3>下面是测试图</h3>
-
-<p>一、<code>git rm</code> 与 <code>rm</code> 之间的区别
-<img class="center" src="http://yang3wei.github.com/images/posts/differences_btw_git_rm_and_rm.png">
-二、<code>git add .</code> 无法记录 <code>rm</code> 删除动作<br/>
-<img class="center" src="http://yang3wei.github.com/images/posts/add_dot_make_no_use.png">
-三、<code>git commit -m "abc"</code> 无法提交 <code>rm</code> 删除动作<br/>
-<img class="center" src="http://yang3wei.github.com/images/posts/git_rm_better_than_rm.png">
-四、<code>git commit -am "abc"</code> 中参数 a 的作用<br/>
-<img class="center" src="http://yang3wei.github.com/images/posts/usage_of_flag_a.png"></p>
 ]]></content>
   </entry>
   

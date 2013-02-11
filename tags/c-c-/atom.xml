@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: C/C++ | yang3wei的专栏]]></title>
   <link href="http://yang3wei.github.com/tags/c-c-/atom.xml" rel="self"/>
   <link href="http://yang3wei.github.com/"/>
-  <updated>2013-02-10T17:02:14+08:00</updated>
+  <updated>2013-02-11T15:44:30+08:00</updated>
   <id>http://yang3wei.github.com/</id>
   <author>
     <name><![CDATA[yang3wei]]></name>
@@ -12,6 +12,229 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Getting Started with JNI and C++ on OSX Lion]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/11/getting-started-with-jni-and-c-plus-plus-on-osx-lion/"/>
+    <updated>2013-02-11T15:19:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/11/getting-started-with-jni-and-c-plus-plus-on-osx-lion</id>
+    <content type="html"><![CDATA[<p>原文链接：<br/>
+<a href="http://mrjoelkemp.com/2012/01/getting-started-with-jni-and-c-on-osx-lion/">Getting Started with JNI and C++ on OSX Lion</a><br/>
+This tutorial combines a few key ideas to getting started with a Hello World program using the Java Native Interface (JNI) on Mac OSX. JNI allows Java code to utilize C++ code (i.e., native code).</p>
+
+<!-- more -->
+
+
+<p>
+This technology is very important if you want to do any computationally intensive operations (games, video processing, audio processing, etc) in mobile (Android) apps or your everyday Java applications.<br/>
+The important point to this article is that most tutorials only talk about compilation for Windows and Solaris machines — I will focus exclusively on OSX. Knowing these subtleties can save you a lot of time and headaches!</p>
+
+<h3>Creating the Java Class</h3>
+
+<p>Let’s start by creating a very simple Hello World program!<br/>
+In a file <strong>HelloWorld.java</strong><br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>HelloWorld.java </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="kd">class</span> <span class="nc">HelloWorld</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="kd">native</span> <span class="kt">void</span> <span class="n">print</span><span class="o">();</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">new</span> <span class="nf">HelloWorld</span><span class="o">().</span><span class="na">print</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="kd">static</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">System</span><span class="o">.</span><span class="na">loadLibrary</span><span class="o">(</span><span class="s">&quot;HelloWorld&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div><br/>
+The above code details a simple Java class that has a very important native method <strong>print()</strong>. The fact that this method is native signifies that it should be implemented in C++. We’ll get to that implementation in a bit.<br/>
+The static section gets executed first, which expects to load a JNI shared or dynamic library known as HelloWorld.</p>
+
+<h3>Compiling the Java Class</h3>
+
+<p>Compiling the newly created HelloWorld class involves opening up the terminal and issuing the command:<br/>
+<code>  
+javac HelloWorld.java  
+</code><br/>
+We use the javac command to generate the class file that is needed to generate the appropriate JNI C++ classes. You can’t skip the generation of the class file!<br/>
+To create the JNI C++ files, you can just type the following command into the terminal:<br/>
+<code>  
+javah -jni HelloWorld  
+</code><br/>
+The above command will generate the following header file:<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>HelloWorld.h  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="o">/&lt;</span><span class="n">em</span><span class="o">&gt;</span> <span class="n">DO</span> <span class="n">NOT</span> <span class="n">EDIT</span> <span class="n">THIS</span> <span class="n">FILE</span> <span class="o">-</span> <span class="n">it</span> <span class="n">is</span> <span class="n">machine</span> <span class="n">generated</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;/&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">include</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="n">jni</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;/&lt;</span><span class="n">em</span><span class="o">&gt;</span> <span class="n">Header</span> <span class="k">for</span> <span class="k">class</span> <span class="nc">HelloWorld</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;/&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">ifndef</span> <span class="n">_Included_HelloWorld</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">define</span> <span class="n">_Included_HelloWorld</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">ifdef</span> <span class="n">__cplusplus</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">extern</span> <span class="s">&quot;C&quot;</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">endif</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;/&lt;</span><span class="n">em</span><span class="o">&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'> <span class="o">*</span> <span class="nl">Class:</span>     <span class="n">HelloWorld</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'> <span class="o">*</span> <span class="nl">Method:</span>    <span class="n">print</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'> <span class="o">*</span> <span class="nl">Signature:</span> <span class="p">()</span><span class="n">V</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;/&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">JNIEXPORT</span> <span class="kt">void</span> <span class="n">JNICALL</span> <span class="n">Java_HelloWorld_print</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'>  <span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="p">,</span> <span class="n">jobject</span><span class="p">);</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">ifdef</span> <span class="n">__cplusplus</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">endif</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">endif</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div><br/>
+This file contains a lot of seemingly obscure boiler-plate specific to JNI. The part we care about is the definition of the print() function that was declared to be native in the HelloWorld.java file.<br/>
+By convention, native functions will be named “Java<em>” followed by the class name “HelloWorld</em>” and the function name “print”. Thus, we obtain the native function: Java_HelloWorld_print().<br/>
+Let’s write an implementation file to define the behavior of the Java_HelloWorld_print() function.<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>HelloWorld.cpp  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">include</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="n">jni</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">include</span> <span class="o">&lt;</span><span class="n">iostream</span><span class="o">&gt;&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">include</span> <span class="s">&quot;HelloWorld.h&quot;</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">JNIEXPORT</span> <span class="kt">void</span> <span class="n">JNICALL</span> <span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">Java_HelloWorld_print</span><span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="p">,</span> <span class="n">jobject</span><span class="p">){</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">cout</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="s">&quot;Oh JNI, how cumbersome you are!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="k">return</span><span class="p">;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div><br/>
+The implementation of the native function simply prints out a literal string.</p>
+
+<h3>Compiling the C++ Code</h3>
+
+<p>To include the native code in the compilation of the Java program, we need to compile our native C++ code into a dynamic library. On OSX, JNI shared/dynamic libraries have the extension <strong>.jnilib</strong>. This is a huge difference from the extensions on Windows and Solaris machines: <strong>.dll</strong> and <strong>.so</strong>, respectively.<br/>
+Before we get to the command, there’s a big problem: your compiler (g++) will need to know the location of the jni.h library. You don’t get this linking for free, so you have to specify the location of the header file within the compilation command.<br/>
+The locations of the the jni.h library that need to be included are:<br/>
+<code>  
+"-I/System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Headers"  
+"-I/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/JavaVM.framework/Versions/A/Headers"  
+</code><br/>
+Unfortunately, leaving off either of these results in the compiler error:<br/>
+HelloWorld.cpp:1:17: error: jni.h: No such file or directory<br/>
+In your terminal, issue the command (all part of a single command):<br/>
+<code>  
+g++ "-I/System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Headers" "-I/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/JavaVM.framework/Versions/A/Headers" -c HelloWorld.cpp  
+</code><br/>
+Notice that we include the -c option to generate the object file for our native code: <strong>HelloWorld.o</strong>. We also include the implementation file for our native class: <strong>HelloWorld.cpp</strong>.<br/>
+The final step for compiling the native source is to issue the command:<br/>
+<code>  
+g++ -dynamiclib -o libhelloworld.jnilib HelloWorld.o  
+</code><br/>
+This command uses the dynamiclib option to specify that the compiler shouldn’t produce a standard executable, but should produce a library. The -o option is used to name the library with the appropriate extension: <strong>libhelloworld.jnilib</strong>. We also include the object file generated in the previous step.<br/>
+The result of this process is the compiled library <strong>libhelloworld.jnilib</strong>.</p>
+
+<h3>Compiling the Native Library and Java Program</h3>
+
+<p>The final piece to this painstaking puzzle is to connect all of the pieces! We’re going to finally compile our Java program which will look for the jnilib library containing our compiled native code.<br/>
+In your terminal, issue the following command:<br/>
+java HelloWorld<br/>
+This will compile and run our HelloWorld program and display the output:<br/>
+Oh JNI, how cumbersome you are!</p>
+
+<h3>One final note</h3>
+
+<p>If you see the error:<br/>
+<code>  
+Exception in thread "main" java.lang.UnsatisfiedLinkError: no HelloWorld in java.library.path  
+at java.lang.ClassLoader.loadLibrary(ClassLoader.java:1758)  
+at java.lang.Runtime.loadLibrary0(Runtime.java:823)  
+at java.lang.System.loadLibrary(System.java:1045)  
+at HelloWorld.(HelloWorld.java:7)  
+</code><br/>
+Then you’ve mistakenly used a different shared/dynamic library extension than the necessary .jnilib! This is the root of all evil in this exercise!<br/>
+Happy coding!<br/>
+This tutorial is based on the JNI tutorial provided by Sun.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[多边形顶点按逆时针排列算法]]></title>

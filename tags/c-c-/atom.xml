@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: C/C++ | yang3wei的专栏]]></title>
   <link href="http://yang3wei.github.com/tags/c-c-/atom.xml" rel="self"/>
   <link href="http://yang3wei.github.com/"/>
-  <updated>2013-02-11T15:44:30+08:00</updated>
+  <updated>2013-02-11T18:48:17+08:00</updated>
   <id>http://yang3wei.github.com/</id>
   <author>
     <name><![CDATA[yang3wei]]></name>
@@ -19,14 +19,33 @@
     <updated>2013-02-11T15:19:00+08:00</updated>
     <id>http://yang3wei.github.com/blog/2013/02/11/getting-started-with-jni-and-c-plus-plus-on-osx-lion</id>
     <content type="html"><![CDATA[<p>原文链接：<br/>
-<a href="http://mrjoelkemp.com/2012/01/getting-started-with-jni-and-c-on-osx-lion/">Getting Started with JNI and C++ on OSX Lion</a><br/>
-This tutorial combines a few key ideas to getting started with a Hello World program using the Java Native Interface (JNI) on Mac OSX. JNI allows Java code to utilize C++ code (i.e., native code).</p>
+<a href="http://mrjoelkemp.com/2012/01/getting-started-with-jni-and-c-on-osx-lion/">Getting Started with JNI and C++ on OSX Lion</a></p>
 
 <!-- more -->
 
 
-<p>
-This technology is very important if you want to do any computationally intensive operations (games, video processing, audio processing, etc) in mobile (Android) apps or your everyday Java applications.<br/>
+<p>由 <strong>HelloWorld.cpp</strong> 生成 <strong>HelloWorld.o</strong> 的命令<br/>
+<code>
+g++ "-I/System/Library/Frameworks/JavaVM.framework/Versions/A/Headers" -c HelloWorld.cpp
+</code>
+有 <strong>HelloWorld.o</strong> 生成 <strong>libhelloworld.jnilib</strong> 的命令<br/>
+<code>
+g++ -dynamiclib -o libhelloworld.jnilib HelloWorld.o
+</code>
+获取作为 <strong>java.library.path</strong> 的几个目录的路径<br/>
+<code>
+System.out.println(System.getProperty("java.library.path"));
+</code>
+还可以在执行时将 <strong>jnilib</strong> 所在路径的作为参数传递进去(假如 <strong>HelloWorld.jnilib</strong> 在桌面上)<br/>
+<code>
+java -Djava.library.path=/Users/user/Desktop HelloWorld
+</code></p>
+
+<h2>以下为英文原文</h2>
+
+<p>This tutorial combines a few key ideas to getting started with a Hello World program using the Java Native Interface (JNI) on Mac OSX. JNI allows Java code to utilize C++ code (i.e., native code).</p>
+
+<p>This technology is very important if you want to do any computationally intensive operations (games, video processing, audio processing, etc) in mobile (Android) apps or your everyday Java applications.<br/>
 The important point to this article is that most tutorials only talk about compilation for Windows and Solaris machines — I will focus exclusively on OSX. Knowing these subtleties can save you a lot of time and headaches!</p>
 
 <h3>Creating the Java Class</h3>

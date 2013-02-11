@@ -13,7 +13,7 @@ tags: [java]
 <!-- more -->
 ###遭遇乱码问题的来龙去脉
 这两天写了一个 Java 程序来玩，结果又遭遇了以前遇到过很多次的乱码问题，具体描述一下：  
-在 Mac 系统里面，常用的 Java 程序的启动方式有如下几种：  
+在 Mac 系统里面，常用的 Java 程序启动方式有如下几种：  
 __1.通过 eclipse 执行 class 入口文件启动；__  
 __2.在 Terminal 里面用 java Test.class 或 jave -jar Test.jar 启动__  
 __3.通过 ant 执行 class 入口文件启动；__  

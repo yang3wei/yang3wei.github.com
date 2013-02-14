@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Git相关 | yang3wei的专栏]]></title>
   <link href="http://yang3wei.github.com/blog/categories/git相关/atom.xml" rel="self"/>
   <link href="http://yang3wei.github.com/"/>
-  <updated>2013-02-15T00:30:01+08:00</updated>
+  <updated>2013-02-15T00:33:06+08:00</updated>
   <id>http://yang3wei.github.com/</id>
   <author>
     <name><![CDATA[yang3wei]]></name>
@@ -18,7 +18,8 @@
     <link href="http://yang3wei.github.com/blog/2013/02/15/git-diff-dai-ma-bi-jiao-de-gao-ji-ji-qiao/"/>
     <updated>2013-02-15T00:24:00+08:00</updated>
     <id>http://yang3wei.github.com/blog/2013/02/15/git-diff-dai-ma-bi-jiao-de-gao-ji-ji-qiao</id>
-    <content type="html"><![CDATA[<p>新的 android 的项目涉及到 android 的源码的管理和修改，我们是在 android 源码基础上做 TDSCDMA 和 GSM 的双卡双待功能实现，项目中使用了Git 作为版本管理工具，因此借此机会深入研究了 Git 的原理和使用方法。这里重点说一下 Git diff 相关的技巧。</p>
+    <content type="html"><![CDATA[<p>原文链接：<a href="http://blog.csdn.net/offbye/article/details/6592563">Git diff代码比较的高级技巧</a><br/>
+新的 android 的项目涉及到 android 的源码的管理和修改，我们是在 android 源码基础上做 TDSCDMA 和 GSM 的双卡双待功能实现，项目中使用了Git 作为版本管理工具，因此借此机会深入研究了 Git 的原理和使用方法。这里重点说一下 Git diff 相关的技巧。</p>
 
 <!-- more -->
 

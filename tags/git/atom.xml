@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: git | yang3wei的专栏]]></title>
   <link href="http://yang3wei.github.com/tags/git/atom.xml" rel="self"/>
   <link href="http://yang3wei.github.com/"/>
-  <updated>2013-02-11T18:48:17+08:00</updated>
+  <updated>2013-02-15T00:30:01+08:00</updated>
   <id>http://yang3wei.github.com/</id>
   <author>
     <name><![CDATA[yang3wei]]></name>
@@ -12,6 +12,53 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Git diff 代码比较的高级技巧]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/15/git-diff-dai-ma-bi-jiao-de-gao-ji-ji-qiao/"/>
+    <updated>2013-02-15T00:24:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/15/git-diff-dai-ma-bi-jiao-de-gao-ji-ji-qiao</id>
+    <content type="html"><![CDATA[<p>新的 android 的项目涉及到 android 的源码的管理和修改，我们是在 android 源码基础上做 TDSCDMA 和 GSM 的双卡双待功能实现，项目中使用了Git 作为版本管理工具，因此借此机会深入研究了 Git 的原理和使用方法。这里重点说一下 Git diff 相关的技巧。</p>
+
+<!-- more -->
+
+
+<p>Git 是使用 branch 来管理不同的功能点开发的，那么我们怎样能比较不同 branch 的不同呢？<br/>
+使用 git diff branch1 branch2 , 就可以了，但这个方法不够直观，因为只能显示不同点的上下几行，不方便理解。<br/>
+比较好的做法是使用图形化比较工具比较，例如 meld，使用以下的命令就可以了<br/>
+<code>
+git difftool -t meld -y   branch1 branch2
+</code>
+这样可以使用 meld 一个一个文件的比较，每次关闭 meld 就会自动显示下一个不同的文件。</p>
+
+<p>比较不同的 commit，使用以下命令就可以了<br/>
+<code>
+git difftool -t meld -y  commitId1  commitId2
+</code>
+比较工作区和上次提交的差异，这个最常用了<br/>
+<code>
+git difftool -t meld -y  HEAD
+</code>
+你可以使用 git config 命令设置 meld 为默认的比较工具，并且把 prompt 设为 false，这样以后就可以使用 git difftool 了。<br/>
+也可以直接修改 .gitconfig<br/>
+gedit ~/.gitconfig 在最后加入<br/>
+```
+[diff]</p>
+
+<pre><code>tool = meld
+</code></pre>
+
+<p>[difftool]</p>
+
+<pre><code>prompt = false
+</code></pre>
+
+<p>```
+当然了，如果你不喜欢 meld，也可以使用其他的比较工具，git difftool 支持以下的比较工具：<br/>
+kdiff3, kompare, tkdiff, meld, xxdiff, emerge, vimdiff, <br/>
+gvimdiff, ecmerge, diffuse, opendiff, p4merge and araxis</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Git 标签相关操作]]></title>
@@ -344,103 +391,6 @@ nothing to commit, working directory clean
 
 <p>当然不是。我想这五个只是 “最基本的” 和 “最吸引人” 的，我只想到这五点。<br/>
 如果你发现有比这五点更有趣的，请共享出来，欢迎。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[(转载)很好的一篇 git 入门文章]]></title>
-    <link href="http://yang3wei.github.com/blog/2013/02/02/zhuan-zai-hen-hao-de-%5B%3F%5D-pian-git-ru-men-wen-zhang/"/>
-    <updated>2013-02-02T00:00:00+08:00</updated>
-    <id>http://yang3wei.github.com/blog/2013/02/02/zhuan-zai-hen-hao-de-[?]-pian-git-ru-men-wen-zhang</id>
-    <content type="html"><![CDATA[<p>原文链接：<br/>
-<a href="http://blog.csdn.net/ylm23_24/article/details/8561527">http://blog.csdn.net/ylm23_24/article/details/8561527</a><br/>
-用了几次 git 了，一直没总结，还是不太熟。<br/>
-下载和安装什么的就不说了。<br/>
-Windows 下推荐 git 和 tortoise git。Linux 下的 gitk 貌似还不错。</p>
-
-<!-- more -->
-
-
-<h3>1.本地创建新仓库</h3>
-
-<p>创建新文件夹，打开终端执行<br/>
-<code>git init</code></p>
-
-<p>这样就创建了一个新的 git 仓库</p>
-
-<h3>2.复制仓库</h3>
-
-<p>本地复制，创建一个本地仓库的克隆版本。<br/>
-<code>git clone /path/to/repository</code></p>
-
-<p>将远端服务器上的仓库复制到本地，就跟下载差不多，如下例<br/>
-<code>git clone git@github.com:linus-young/depot.git</code></p>
-
-<h3>3.添加与提交</h3>
-
-<p><code>git add filename</code><br/>
-<code>git commit -m "代码提交信息"</code></p>
-
-<h3>4.推送到远端服务器</h3>
-
-<p>在 github 上申请一个帐号，create a new repo，<br/>
-创建之后其实 github 上有提示要执行哪些命令，注意两个邮箱需一致。<br/>
-至于本地的配置详见 <a href="http://blog.csdn.net/ylm23_24/article/details/8297362">http://blog.csdn.net/ylm23_24/article/details/8297362</a><br/>
-在当前本地文件夹下执行：<br/>
-<code>git remote add origin git@github.com:linus-young/depot.git</code><br/>
-<code>git push origin master</code></p>
-
-<p>第一行代码是确定添加到 github 的哪个仓库，作为第一次提交。<br/>
-第二行是将本地的所有文件上传到远端服务器上。<br/>
-master 是默认分支，可改为其他分支。本地创建的其他分支默认是不可见的。</p>
-
-<h3>5.分支</h3>
-
-<p>master 是默认的。在其他分支上进行开发，完成后再合并到主分支上，有利于多人共同开发。<br/>
-在当前本地仓库新建一个分支 test<br/>
-<code>git branch test</code><br/>
-若此时运行<br/>
-<code>git branch</code></p>
-
-<p>可以看到所有当前存在的分支<br/>
-test<br/>
-*master</p>
-
-<p>切换到 test 分支<br/>
-<code>git checkout test</code><br/>
-现在来随便更改一些文件，并且提交，然后切换到 master<br/>
-<strong>(edit file)</strong><br/>
-<code>git commit -a -m "try branch"</code><br/>
-<code>git checkout master</code></p>
-
-<p>切换之后你打开刚刚修改过的文件，神奇的是貌似这些文件都没有被修改过！<br/>
-原因是你此时处于 master 分支，test 分支里面所作的改动是不起作用的，不信的话可以用<br/>
-<code>git checkout test</code><br/>
-然后看看文件是否被修改了</p>
-
-<p>然后你可以修改 master 分支下的一些文件并且提交<br/>
-<strong>(edit file)</strong><br/>
-<code>git commit -a -m "i just edit some file on master"</code></p>
-
-<p>然后我们来合并 test 分支上的改动到 master 下<br/>
-<code>git merge test</code></p>
-
-<p>报错的话可以用 git diff 查看冲突<br/>
-然后提交<br/>
-<code>git commit -a -m "i have merged test to master"</code></p>
-
-<p>下面这行可以删除 test 分支：<br/>
-<code>git branch -d test</code></p>
-
-<h3>6.其他常见命令</h3>
-
-<p><code>git status</code> 查看文件状态<br/>
-<code>git log</code>   查看提交的历史记录<br/>
-<code>git pull</code> 和 <code>git push</code> 相反</p>
-
-<h3>7.gitk</h3>
-
-<p><code>gitk</code> 可以用图形化的方式很清楚地显示改动</p>
 ]]></content>
   </entry>
   

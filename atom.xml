@@ -4,7 +4,7 @@
   <title><![CDATA[yang3wei的专栏]]></title>
   <link href="http://yang3wei.github.com/atom.xml" rel="self"/>
   <link href="http://yang3wei.github.com/"/>
-  <updated>2013-02-11T18:48:17+08:00</updated>
+  <updated>2013-02-15T00:30:01+08:00</updated>
   <id>http://yang3wei.github.com/</id>
   <author>
     <name><![CDATA[yang3wei]]></name>
@@ -12,6 +12,58 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Git diff 代码比较的高级技巧]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/15/git-diff-dai-ma-bi-jiao-de-gao-ji-ji-qiao/"/>
+    <updated>2013-02-15T00:24:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/15/git-diff-dai-ma-bi-jiao-de-gao-ji-ji-qiao</id>
+    <content type="html"><![CDATA[<p>新的 android 的项目涉及到 android 的源码的管理和修改，我们是在 android 源码基础上做 TDSCDMA 和 GSM 的双卡双待功能实现，项目中使用了Git 作为版本管理工具，因此借此机会深入研究了 Git 的原理和使用方法。这里重点说一下 Git diff 相关的技巧。</p>
+
+<!-- more -->
+
+
+<p>Git 是使用 branch 来管理不同的功能点开发的，那么我们怎样能比较不同 branch 的不同呢？<br/>
+使用 git diff branch1 branch2 , 就可以了，但这个方法不够直观，因为只能显示不同点的上下几行，不方便理解。<br/>
+比较好的做法是使用图形化比较工具比较，例如 meld，使用以下的命令就可以了</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git difftool -t meld -y   branch1 branch2</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这样可以使用 meld 一个一个文件的比较，每次关闭 meld 就会自动显示下一个不同的文件。</p>
+
+<p>比较不同的 commit，使用以下命令就可以了</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git difftool -t meld -y  commitId1  commitId2</span></code></pre></td></tr></table></div></figure>
+
+
+<p>比较工作区和上次提交的差异，这个最常用了</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git difftool -t meld -y  HEAD</span></code></pre></td></tr></table></div></figure>
+
+
+<p>你可以使用 git config 命令设置 meld 为默认的比较工具，并且把 prompt 设为 false，这样以后就可以使用 git difftool 了。<br/>
+也可以直接修改 .gitconfig<br/>
+gedit ~/.gitconfig 在最后加入</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[diff]
+</span><span class='line'>    tool = meld
+</span><span class='line'>[difftool]
+</span><span class='line'>    prompt = false</span></code></pre></td></tr></table></div></figure>
+
+
+<p>当然了，如果你不喜欢 meld，也可以使用其他的比较工具，git difftool 支持以下的比较工具：<br/>
+kdiff3, kompare, tkdiff, meld, xxdiff, emerge, vimdiff, <br/>
+gvimdiff, ecmerge, diffuse, opendiff, p4merge and araxis</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Getting Started with JNI and C++ on OSX Lion]]></title>
@@ -3584,25 +3636,6 @@ Octopress 默认为每个页面添加 meta description，其内容为当前文�
 
 
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[为 Octopress 添加查看访问量的功能]]></title>
-    <link href="http://yang3wei.github.com/blog/2013/02/03/wei-octopress-tian-jia-cha-kan-fang-wen-liang-de-gong-neng/"/>
-    <updated>2013-02-03T16:03:00+08:00</updated>
-    <id>http://yang3wei.github.com/blog/2013/02/03/wei-octopress-tian-jia-cha-kan-fang-wen-liang-de-gong-neng</id>
-    <content type="html"><![CDATA[<p>原文链接：<a href="http://colors4.us/blog/2012/01/08/octopressbo-ke-cong-ling-kai-shi-iii/">sourrabbit &amp; linpx</a><br/>
-我在看了<a href="http://www.whatwherewhy.me/colophon/">这个</a>网页后，发现我还可以添加网站分析，毕竟是自己努力出来的东西，<br/>
-看看大伙是否有兴趣访问还是不错的，不过很多情况是远逊于预期。:)</p>
-
-<!--  more -->
-
-
-<p>先于 <code>Google Analytics</code> 开通和自己网站相关的服务，<br/>
-比如登记自己的网址，取得 GA 的 <code>Track ID</code>，应该如该样式 <code>UA-28584XXX-X</code>.
-修改 <code>_config.yml</code> 最后部分，将 ID 置于 <code>google_analytics_tracking_id:</code>项目之后，rake一下就行了。<br/>
-之后进入 GA 网站看 report 吧，你就会知道何时多少人访问过你的网站。</p>
 ]]></content>
   </entry>
   

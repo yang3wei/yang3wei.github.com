@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: 伟少手札 - yang3wei的专栏</title>
+  <title>Git diff 代码比较的高级技巧 - yang3wei的专栏</title>
   <meta name="author" content="yang3wei">
 
   
-  <meta name="description" content="Category: 伟少手札">
+  <meta name="description" content="新的 android 的项目涉及到 android 的源码的管理和修改，我们是在 android 源码基础上做 TDSCDMA 和 GSM 的双卡双待功能实现，项目中使用了Git 作为版本管理工具，因此借此机会深入研究了 Git 的原理和使用方法。这里重点说一下 Git diff 相关的技巧。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,11 +19,11 @@
   
   <meta name="author" content="yang3wei">
   
-  <meta name="description" content="Category: 伟少手札">
+  <meta name="description" content="yang3wei的专栏, yang3wei">
   <meta name="keywords" content="yang3wei, cocos2d, mac, objective-c, c/c++, game develop, java, OpenGL, shell, box2d, git, python">
 
   
-  <link rel="canonical" href="http://yang3wei.github.comblog/categories/伟少手札/">
+  <link rel="canonical" href="http://yang3wei.github.com/blog/2013/02/15/git-diff-dai-ma-bi-jiao-de-gao-ji-ji-qiao/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -80,50 +80,134 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: 伟少手札</h1>
+    
+      <h1 class="entry-title">Git diff 代码比较的高级技巧</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-15T00:24:00+08:00" pubdate data-updated="true">Feb 15<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>新的 android 的项目涉及到 android 的源码的管理和修改，我们是在 android 源码基础上做 TDSCDMA 和 GSM 的双卡双待功能实现，项目中使用了Git 作为版本管理工具，因此借此机会深入研究了 Git 的原理和使用方法。这里重点说一下 Git diff 相关的技巧。</p>
 
-  
-  <h2>2013</h2>
-
-<article>
-  
-<h1><a href="/blog/2013/02/08/cpan-windows-xp-dpan-windows7-shuang-xi-tong-an-zhuang-ji-lu/">C盘Windows XP D盘Windows7 双系统安装纪录</a></h1>
-<time datetime="2013-02-08T01:19:00+08:00" pubdate><span class='month'>Feb</span> <span class='day'>08</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/伟少手札/'>伟少手札</a></span>
-</footer>
+<!-- more -->
 
 
-</article>
+<p>Git 是使用 branch 来管理不同的功能点开发的，那么我们怎样能比较不同 branch 的不同呢？<br/>
+使用 git diff branch1 branch2 , 就可以了，但这个方法不够直观，因为只能显示不同点的上下几行，不方便理解。<br/>
+比较好的做法是使用图形化比较工具比较，例如 meld，使用以下的命令就可以了</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git difftool -t meld -y   branch1 branch2</span></code></pre></td></tr></table></div></figure>
 
 
+<p>这样可以使用 meld 一个一个文件的比较，每次关闭 meld 就会自动显示下一个不同的文件。</p>
 
-<article>
-  
-<h1><a href="/blog/2013/01/28/bu-wen-guo-qu-ji-duo-she-mi-dan-yuan-qian-lu-liao-wu-yi-han/">不问过去几多奢靡 但愿前路了无遗憾</a></h1>
-<time datetime="2013-01-28T23:55:00+08:00" pubdate><span class='month'>Jan</span> <span class='day'>28</span> <span class='year'>2013</span></time>
+<p>比较不同的 commit，使用以下命令就可以了</p>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/伟少手札/'>伟少手札</a></span>
-</footer>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git difftool -t meld -y  commitId1  commitId2</span></code></pre></td></tr></table></div></figure>
 
 
-</article>
+<p>比较工作区和上次提交的差异，这个最常用了</p>
 
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git difftool -t meld -y  HEAD</span></code></pre></td></tr></table></div></figure>
+
+
+<p>你可以使用 git config 命令设置 meld 为默认的比较工具，并且把 prompt 设为 false，这样以后就可以使用 git difftool 了。<br/>
+也可以直接修改 .gitconfig<br/>
+gedit ~/.gitconfig 在最后加入</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[diff]
+</span><span class='line'>    tool = meld
+</span><span class='line'>[difftool]
+</span><span class='line'>    prompt = false</span></code></pre></td></tr></table></div></figure>
+
+
+<p>当然了，如果你不喜欢 meld，也可以使用其他的比较工具，git difftool 支持以下的比较工具：<br/>
+kdiff3, kompare, tkdiff, meld, xxdiff, emerge, vimdiff, <br/>
+gvimdiff, ecmerge, diffuse, opendiff, p4merge and araxis</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">yang3wei</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-15T00:24:00+08:00" pubdate data-updated="true">Feb 15<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/git相关/'>Git相关</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/02/11/getting-started-with-jni-and-c-plus-plus-on-osx-lion/" title="Previous Post: Getting Started with JNI and C++ on OSX Lion">&laquo; Getting Started with JNI and C++ on OSX Lion</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -213,7 +297,10 @@
       var disqus_shortname = 'yang3wei';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://yang3wei.github.com/blog/2013/02/15/git-diff-dai-ma-bi-jiao-de-gao-ji-ji-qiao/';
+        var disqus_url = 'http://yang3wei.github.com/blog/2013/02/15/git-diff-dai-ma-bi-jiao-de-gao-ji-ji-qiao/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

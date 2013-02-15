@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Tag: OpenCV | yang3wei的专栏]]></title>
+  <link href="http://yang3wei.github.com/tags/opencv/atom.xml" rel="self"/>
+  <link href="http://yang3wei.github.com/"/>
+  <updated>2013-02-15T11:12:22+08:00</updated>
+  <id>http://yang3wei.github.com/</id>
+  <author>
+    <name><![CDATA[yang3wei]]></name>
+    <email><![CDATA[88480585@qq.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Mac 下安装 OpenCV]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/15/mac-xia-an-zhuang-opencv/"/>
+    <updated>2013-02-15T10:32:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/15/mac-xia-an-zhuang-opencv</id>
+    <content type="html"><![CDATA[<p>原文链接：<a href="http://stefan321.iteye.com/blog/1555880">Mac下安装 OpenCV</a><br/>
+本人（yang3wei）的操作系统为 Mac OS X Lion 10.7.2，安装的 OpenCV 版本为 2.4.4。<!-- more --><br/>
+在遵照这篇文章安装 OpenCV 的时候，出现了一些意外，编译执行到 94% 的时候卡住了...<br/>
+看了一下提示信息，是在 java module 出的问题，检查一番后，发现了症结所在：<br/>
+build.xml 在执行过程中找不到 lib 目录，于是切到对应的父目录里面创建了一个 lib 目录，<br/>
+再次执行 make 命令时，继续报错，大意是找不到 junit 的相关 jar 包，<br/>
+然后，我把随便找到一个 junit.jar 丢到之前创建的那个 lib 目录中，问题解决，成功编译完毕。</p>
+
+<h2>1.下载 OpenCV</h2>
+
+<p><code>
+cd ~/&lt;my_working _directory&gt;
+svn co http://code.opencv.org/svn/opencv/trunk
+</code></p>
+
+<h2>2.使用 CMake 编译 OpenCV</h2>
+
+<p><code>
+cd ~/opencv
+mkdir release
+cd release
+cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local ..
+￼make
+sudo make install
+</code></p>
+
+<h2>3.测试</h2>
+
+<p>cpp 代码：<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>DisplayImage.cpp  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">include</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="n">cv</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">include</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="n">highgui</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">cv</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">Mat</span> <span class="n">image</span><span class="p">;</span>
+</span><span class='line'><span class="n">image</span> <span class="o">=</span> <span class="n">imread</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span><span class="p">(</span><span class="n">argc</span> <span class="o">!=</span> <span class="mi">2</span> <span class="o">||</span> <span class="o">!</span><span class="n">image</span><span class="p">.</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;No image data </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">namedWindow</span><span class="p">(</span><span class="s">&quot;Display Image&quot;</span><span class="p">,</span> <span class="n">CV_WINDOW_AUTOSIZE</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">imshow</span><span class="p">(</span><span class="s">&quot;Display Image&quot;</span><span class="p">,</span> <span class="n">image</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+cmake 代码：<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>CMakeLists.txt  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">project</span><span class="o">(</span> <span class="n">DisplayImage</span> <span class="o">)</span>
+</span><span class='line'><span class="n">find_package</span><span class="o">(</span> <span class="n">OpenCV</span> <span class="n">REQUIRED</span> <span class="o">)</span>
+</span><span class='line'><span class="n">add_executable</span><span class="o">(</span> <span class="n">DisplayImage</span> <span class="n">DisplayImage</span> <span class="o">)</span>
+</span><span class='line'><span class="n">target_link_libraries</span><span class="o">(</span> <span class="n">DisplayImage</span> <span class="n">$</span><span class="o">{</span><span class="n">OpenCV_LIBS</span><span class="o">}</span> <span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+终端运行：<br/>
+```
+stefan321@Lius-MacBook$  cmake .
+-- The C compiler identification is GNU 4.2.1
+-- The CXX compiler identification is Clang 3.1.0
+-- Checking whether C compiler has -isysroot
+-- Checking whether C compiler has -isysroot - yes
+-- Checking whether C compiler supports OSX deployment target flag
+-- Checking whether C compiler supports OSX deployment target flag - yes
+-- Check for working C compiler: /usr/bin/gcc
+-- Check for working C compiler: /usr/bin/gcc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+CMake Warning (dev) in CMakeLists.txt:
+  No cmake_minimum_required command is present.  A line of code such as</p>
+
+<pre><code>cmake_minimum_required(VERSION 2.8)
+</code></pre>
+
+<p>  should be added at the top of the file.  The version specified may be lower
+  if you wish to support older CMake versions for this project.  For more
+  information run "cmake --help-policy CMP0000".
+This warning is for project developers.  Use -Wno-dev to suppress it.</p>
+
+<p>-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/stefan321/opencv
+~/opencv
+stefan321@Lius-MacBook$  make
+Scanning dependencies of target DisplayImage
+[100%] Building CXX object CMakeFiles/DisplayImage.dir/DisplayImage.o
+Linking CXX executable DisplayImage
+[100%] Built target DisplayImage
+~/opencv
+stefan321@Lius-MacBook$  ./DisplayImage 123.jpg
+```
+<img class="center" src="/images/posts/f7e13c67-0ebf-387e-8ea8-93ad065d8a39.png">
+<img class="center" src="/images/posts/28ca1db6-438d-3a45-8e33-572f435709c0.png"></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[如何在 Mac OS X Lion 上安装 OpenCV 2.2]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/15/ru-he-zai-mac-os-x-lion-shang-an-zhuang-opencv-2-dot-2/"/>
+    <updated>2013-02-15T10:19:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/15/ru-he-zai-mac-os-x-lion-shang-an-zhuang-opencv-2-dot-2</id>
+    <content type="html"><![CDATA[<p>原文链接：<a href="http://blog.sina.com.cn/s/blog_677a6d640100xcx9.html">如何在Mac OS X Lion上安装OpenCV 2.2! </a><br/>
+OpenCV 对于做计算机视觉的童鞋来说就想老鼠与大米的关系，总之一个词——重要！</p>
+
+<!-- more -->
+
+
+<p>现在网上很多的帖子都是教如何在 VS2008、VS2010 下配置 OpenCV 2.x 的，这里就不再赘述。本帖主要解决的问题是介绍如何在 Mac OS X Lion（10.7.2) 下安装 OpenCV 2.2。其实本帖所描述的方法并不是原创的，最原始的帖子请参考<a href="http://salemsayed.me/?p=240">这里</a>（英文）。</p>
+
+<h2>准备</h2>
+
+<p>首先你需要下载并安装好 <a href="https://distfiles.macports.org/MacPorts/MacPorts-2.0.3-10.7-Lion.dmg">MacPorts</a> 这一大神级的软件。如果没有听说过 MacPorts，请 Google 或者上<a href="http://en.wikipedia.org/wiki/Macports">这里</a>。注意要下载 Lion 版的，这个跟 Snow Leopard 版的安装文件不一样，本文中的链接即是。<br/>
+安装好了以后，进入 Terminal，输入以下两条命令，这是保证你的 MacPorts 是最新的。<br/>
+<code>
+sudo port selfupdate
+sudo port upgrade outdated
+</code>
+至此，准备工作完毕，下面开始正式安装。（不要关掉 Terminal ！）</p>
+
+<h2>安装OpenCV</h2>
+
+<p>可能有童鞋会问问什么到现在都没有讲到哪里下载 OpenCV？有这个问题就说明你不知道 MacPorts 为啥是大神级的工具啦。MacPorts 是一个维护了 8300 多个（还在增长）开源软件的 port，它能够自动地帮你下载、安装、配置好一款软件。你所要做的仅仅是输入一条命令，这里，我们只需要输入：<br/>
+<code>
+sudo port install opencv
+</code>
+然后呢？然后就是漫长的等待，你可以去做其他事情，但请不要碰你的 Mac，Terminal 上会列出一串串下载列表，机器会比较热。<br/>
+大约。。。一个多小时后，当 Terminal 里的提示符再次出现时，你的 OpenCV 就安装好了。当前 OpenCV 的最新版本是 2.3.1，但 MacPorts 的数据库里记住的版本还是 2.2，估计这里还有一个延时吧。</p>
+
+<h2>XCode 中配置 OpenCV</h2>
+
+<p>现在，你可以启动你的 XCode4 了。创建一个 CommandLine Tool 项目。在写程序之前，需要配置两个地方：<br/>
+1、在左侧栏里的 Targets 栏目下，选择右侧窗口中的 “All”，这样可以显示所有选项；然后搜索 “Headers search path”，在这个里面添加 “opt/local/include”这个 OpenCV 的包含文件目录；<br/>
+2、在左侧栏的 Project 栏目下，添加一个 New Group，随便起个名字，然后右击添加文件到这个 Group 中，在添加文件窗口中输入 “/” 弹出寻找目录窗口，输入 “/opt/local/lib”，打开 OpenCV 的库文件目录，选择一下几个文件： libopencv_ml.2.2.0.dylib, libopencv_highgui.2.2.0.dylib, libopencv_core.2.2.0.dylib，当然根据需要可以添加其他库文件。</p>
+
+<p>这样，你就可以写一些简单的利用 OpenCV 的程序了。</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -9,9 +9,9 @@
   <meta name="author" content="yang3wei">
 
   
-  <meta name="description" content="原文链接：http://www.ruanyifeng.com/blog/2012/07/git.html
-如果你严肃对待编程，就必定会使用&#8221;版本管理系统&#8221;（Version Control System）。
-眼下最流行的&#8221;版本管理系统&#8221;，非 Git &hellip;">
+  <meta name="description" content="原文链接：
+http://www.reake.com/how-to-use-terminal-command-to-open-file-to-macvim-mvim-tab/
+从 MacVim(GitHub) 官网下载后，解压出两个文件：MacVim.app 和 mvim # 将 `MacVim. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -83,6 +83,157 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/30/macvim-yong-mvim-ming-ling-da-kai-wen-jian-dao-xin-de-biao-qian-ye/">MacVim 用 mvim 命令打开文件到新的标签页</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-30T15:22:00+08:00" pubdate data-updated="true">Jan 30<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/01/30/macvim-yong-mvim-ming-ling-da-kai-wen-jian-dao-xin-de-biao-qian-ye/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>原文链接：<br/>
+<a href="http://www.reake.com/how-to-use-terminal-command-to-open-file-to-macvim-mvim-tab/" title="瑞克互动">http://www.reake.com/how-to-use-terminal-command-to-open-file-to-macvim-mvim-tab/</a><br/>
+从 <code>MacVim(GitHub)</code> 官网下载后，解压出两个文件：<code>MacVim.app</code> 和 <code>mvim</code></p>
+
+<pre><code># 将 `MacVim.app` 拷入 `/Applications` 目录
+sudo cp -f MacVim.app /Applications/
+# 将 `mvim` 拷入 `/usr/bin` 目录
+sudo cp -f mvim /usr/bin/</code></pre>
+
+
+<p>然后在 <code>Terminal</code> 键入命令 <code>mvim project_file.php</code> ，出现了一个 MacVim 窗口。<br/>
+但 <code>MacVim</code> 支持当前窗口多标签页功能，每次打开都是新窗口，<br/>
+虽然苹果有 <code>Mission Control</code> 切换，但文件窗口多了，显示还是很麻烦，<br/>
+所以想让 <code>mvim</code> 打开文件直接在 <code>MacVim</code> 当前窗口的新标签页里打开，<br/>
+需要在命令后加 <code>--remote-tab</code> 参数，感觉挺麻烦，何不设置为默认就在标签页中打开呢?</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/01/30/macvim-yong-mvim-ming-ling-da-kai-wen-jian-dao-xin-de-biao-qian-ye/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/30/zhuan-zai-wei-octopress-tian-jia-biao-qian-yun/">(扩充)为 octopress 添加标签云</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-30T02:54:00+08:00" pubdate data-updated="true">Jan 30<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/01/30/zhuan-zai-wei-octopress-tian-jia-biao-qian-yun/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>原文链接：<a href="http://codemacro.com/2012/07/18/add-tag-to-octopress/" title="loop in codes">http://codemacro.com/2012/07/18/add-tag-to-octopress/</a><br/>
+同添加 <code>category list</code> 一样，网络上有很多方法，这里列举一种。<br/>
+首先将以下两个项目克隆到本地：</p>
+
+<pre><code>https://github.com/robbyedwards/octopress-tag-pages 
+https://github.com/robbyedwards/octopress-tag-cloudclone
+</code></pre>
+
+
+<p>这两个项目分别用于产生 <code>tag page</code> 和 <code>tag cloud</code>。<br/>
+针对这两个插件，需要手工复制一些文件到你的 octopress 目录。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/01/30/zhuan-zai-wei-octopress-tian-jia-biao-qian-yun/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/29/git-bi-ji-gai-lan/">git 笔记概览</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-29T16:12:00+08:00" pubdate data-updated="true">Jan 29<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/01/29/git-bi-ji-gai-lan/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"></div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/01/29/git-bi-ji-gai-lan/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -440,110 +591,9 @@ csdn 的博文编辑器是嵌在网页里面的，而且我有幸得知这个编
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/15/zhuan-zai-da-zao-shu-yu-zi-ji-de-vim-shen-qi/">(转载)打造属于自己的 Vim 神器</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-15T13:39:00+08:00" pubdate data-updated="true">Jan 15<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/01/15/zhuan-zai-da-zao-shu-yu-zi-ji-de-vim-shen-qi/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>转载自：<a href="http://zilongshanren.com/blog/2013/01/15/vim-the-killer/" title="子龙山人">http://zilongshanren.com/blog/2013/01/15/vim-the-killer/</a></p>
-
-<h2>Why Vim?</h2>
-
-<p>为什么要使用Vim？</p>
-
-<p>我们先看看其他人怎么说：</p>
-
-<blockquote><p>Vim or Emacs就好比倚天和屠龙，得一可得天下。 &#8211; By vimer.cn</p>
-
-<p>Vim就像学钢琴一样，一旦学会，终身受益无穷。   &#8211;By Practical Vim</p></blockquote>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/01/15/zhuan-zai-da-zao-shu-yu-zi-ji-de-vim-shen-qi/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/03/zhuan-zai-wo-wei-shi-yao-yao-cong-wordpress-zhuan-dao-octopress/">(转载)我为什么要从wordpress转到octopress</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-03T13:44:00+08:00" pubdate data-updated="true">Jan 3<span>rd</span>, 2013</time>
-        
-         | <a href="/blog/2013/01/03/zhuan-zai-wo-wei-shi-yao-yao-cong-wordpress-zhuan-dao-octopress/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>原文链接：<a href="http://zilongshanren.com/blog/2013/01/03/migrate-to-octopress/" title="子龙山人">http://zilongshanren.com/blog/2013/01/03/migrate-to-octopress/</a>
-<img class="right" src="/images/posts/octpress-logo.png" width="300" height="300"></p>
-
-<h2>我的博客写作历史</h2>
-
-<p>我是从2011年3月开始写博客的，博客主要是分享学习cocos2d、以及iOS游戏开发的一些内容。目前，该博客已经超过80万的访问量了。Amazing!</p>
-
-<p>其实我最早开始写博客可能是07年了。那时候刚开始学c语言，为了锻炼自己的c语言能力，在百度知道里面回答各种c语言基础题，为了一个所谓的“专家”称号而乐此不疲。后来，由于找我做“学生成绩管理系统”的人实在是太多了，我就在百度开设了自己的第一个博客。当然，主要的内容就是c语言制作XX管理系统，还有一些算法题的解法以及一些百度知道的问题的答案。后来由于学习的压力，加上疏于打理，渐渐的我也不准备写博客了。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/01/03/zhuan-zai-wo-wei-shi-yao-yao-cong-wordpress-zhuan-dao-octopress/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
+    
+      <a class="prev" href="/blog/page/6/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -558,6 +608,18 @@ csdn 的博文编辑器是嵌在网页里面的，而且我有幸得知这个编
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/02/15/mac-xia-an-zhuang-opencv/">Mac 下安装 OpenCV</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/15/ru-he-zai-mac-os-x-lion-shang-an-zhuang-opencv-2-dot-2/">如何在 Mac OS X Lion 上安装 OpenCV 2.2</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/15/cmake-xue-xi-bi-ji-1/">cmake 学习笔记1</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/02/15/git-diff-dai-ma-bi-jiao-de-gao-ji-ji-qiao/">Git diff 代码比较的高级技巧</a>
       </li>
     
@@ -565,24 +627,13 @@ csdn 的博文编辑器是嵌在网页里面的，而且我有幸得知这个编
         <a href="/blog/2013/02/11/getting-started-with-jni-and-c-plus-plus-on-osx-lion/">Getting Started with JNI and C++ on OSX Lion</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2013/02/10/java-dfile-dot-encoding-equals-utf-8-gan-diao-luan-ma/">Java -Dfile.encoding=UTF-8 干掉乱码</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/02/09/wxpython-undefined-variable-from-import-pysimpleapp/">wxPython Undefined variable from import PySimpleApp</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/02/09/jie-du-hen-qiang-hen-biao-han-de-pythonbiao-zhun-guiku/">解读很强很彪悍的 Python 标准 GUI 库</a>
-      </li>
-    
   </ul>
 </section>
 <section>
     <h1>Tags</h1>
     <ul class="tag-cloud">
-        <a style="font-size: 130%" href="/tags/c-c-/">C/C++</a>
+        <a style="font-size: 159%" href="/tags/c-c-/">C/C++</a>
+<a style="font-size: 130%" href="/tags/opencv/">OpenCV</a>
 <a style="font-size: 100%" href="/tags/algorithm/">algorithm</a>
 <a style="font-size: 100%" href="/tags/ant/">ant</a>
 <a style="font-size: 100%" href="/tags/cocos2d/">cocos2d</a>
@@ -602,7 +653,7 @@ csdn 的博文编辑器是嵌在网页里面的，而且我有幸得知这个编
 </section>
 <section>
     <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/cocos2d相关'>Cocos2d相关 (1)</a></li><li><a href='/blog/categories/git相关'>Git相关 (13)</a></li><li><a href='/blog/categories/java相关'>Java相关 (7)</a></li><li><a href='/blog/categories/mac相关'>Mac相关 (7)</a></li><li><a href='/blog/categories/octopress相关'>Octopress相关 (8)</a></li><li><a href='/blog/categories/python相关'>Python相关 (2)</a></li><li><a href='/blog/categories/vim相关'>Vim相关 (4)</a></li><li><a href='/blog/categories/伟少手札'>伟少手札 (2)</a></li><li><a href='/blog/categories/养生相关'>养生相关 (2)</a></li><li><a href='/blog/categories/硬件相关'>硬件相关 (2)</a></li><li><a href='/blog/categories/算法相关'>算法相关 (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/c-c-相关'>C/C++相关 (1)</a></li><li><a href='/blog/categories/cocos2d相关'>Cocos2d相关 (1)</a></li><li><a href='/blog/categories/git相关'>Git相关 (13)</a></li><li><a href='/blog/categories/java相关'>Java相关 (7)</a></li><li><a href='/blog/categories/mac相关'>Mac相关 (7)</a></li><li><a href='/blog/categories/octopress相关'>Octopress相关 (8)</a></li><li><a href='/blog/categories/opencv相关'>OpenCV相关 (2)</a></li><li><a href='/blog/categories/python相关'>Python相关 (2)</a></li><li><a href='/blog/categories/vim相关'>Vim相关 (4)</a></li><li><a href='/blog/categories/伟少手札'>伟少手札 (2)</a></li><li><a href='/blog/categories/养生相关'>养生相关 (2)</a></li><li><a href='/blog/categories/硬件相关'>硬件相关 (2)</a></li><li><a href='/blog/categories/算法相关'>算法相关 (1)</a></li></ul>
 </section>
 
 

@@ -4,7 +4,7 @@
   <title><![CDATA[yang3wei的专栏]]></title>
   <link href="http://yang3wei.github.com/atom.xml" rel="self"/>
   <link href="http://yang3wei.github.com/"/>
-  <updated>2013-02-15T00:33:06+08:00</updated>
+  <updated>2013-02-15T11:12:22+08:00</updated>
   <id>http://yang3wei.github.com/</id>
   <author>
     <name><![CDATA[yang3wei]]></name>
@@ -12,6 +12,742 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Mac 下安装 OpenCV]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/15/mac-xia-an-zhuang-opencv/"/>
+    <updated>2013-02-15T10:32:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/15/mac-xia-an-zhuang-opencv</id>
+    <content type="html"><![CDATA[<p>原文链接：<a href="http://stefan321.iteye.com/blog/1555880">Mac下安装 OpenCV</a><br/>
+本人（yang3wei）的操作系统为 Mac OS X Lion 10.7.2，安装的 OpenCV 版本为 2.4.4。<!-- more --><br/>
+在遵照这篇文章安装 OpenCV 的时候，出现了一些意外，编译执行到 94% 的时候卡住了&#8230;<br/>
+看了一下提示信息，是在 java module 出的问题，检查一番后，发现了症结所在：<br/>
+build.xml 在执行过程中找不到 lib 目录，于是切到对应的父目录里面创建了一个 lib 目录，<br/>
+再次执行 make 命令时，继续报错，大意是找不到 junit 的相关 jar 包，<br/>
+然后，我把随便找到一个 junit.jar 丢到之前创建的那个 lib 目录中，问题解决，成功编译完毕。</p>
+
+<h2>1.下载 OpenCV</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd ~/&lt;my_working _directory&gt;
+</span><span class='line'>svn co http://code.opencv.org/svn/opencv/trunk</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2.使用 CMake 编译 OpenCV</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd ~/opencv
+</span><span class='line'>mkdir release
+</span><span class='line'>cd release
+</span><span class='line'>cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local ..
+</span><span class='line'>￼make
+</span><span class='line'>sudo make install</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>3.测试</h2>
+
+<p>cpp 代码：</p>
+
+<figure class='code'><figcaption><span>DisplayImage.cpp  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="cp">#include &lt;cv.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;highgui.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">using</span> <span class="k">namespace</span> <span class="n">cv</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">Mat</span> <span class="n">image</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">image</span> <span class="o">=</span> <span class="n">imread</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="n">argc</span> <span class="o">!=</span> <span class="mi">2</span> <span class="o">||</span> <span class="o">!</span><span class="n">image</span><span class="p">.</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;No image data </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">namedWindow</span><span class="p">(</span><span class="s">&quot;Display Image&quot;</span><span class="p">,</span> <span class="n">CV_WINDOW_AUTOSIZE</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">imshow</span><span class="p">(</span><span class="s">&quot;Display Image&quot;</span><span class="p">,</span> <span class="n">image</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>cmake 代码：</p>
+
+<figure class='code'><figcaption><span>CMakeLists.txt  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">project</span><span class="o">(</span> <span class="n">DisplayImage</span> <span class="o">)</span>
+</span><span class='line'><span class="n">find_package</span><span class="o">(</span> <span class="n">OpenCV</span> <span class="n">REQUIRED</span> <span class="o">)</span>
+</span><span class='line'><span class="n">add_executable</span><span class="o">(</span> <span class="n">DisplayImage</span> <span class="n">DisplayImage</span> <span class="o">)</span>
+</span><span class='line'><span class="n">target_link_libraries</span><span class="o">(</span> <span class="n">DisplayImage</span> <span class="n">$</span><span class="o">{</span><span class="n">OpenCV_LIBS</span><span class="o">}</span> <span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>终端运行：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>stefan321@Lius-MacBook$  cmake .
+</span><span class='line'>-- The C compiler identification is GNU 4.2.1
+</span><span class='line'>-- The CXX compiler identification is Clang 3.1.0
+</span><span class='line'>-- Checking whether C compiler has -isysroot
+</span><span class='line'>-- Checking whether C compiler has -isysroot - yes
+</span><span class='line'>-- Checking whether C compiler supports OSX deployment target flag
+</span><span class='line'>-- Checking whether C compiler supports OSX deployment target flag - yes
+</span><span class='line'>-- Check for working C compiler: /usr/bin/gcc
+</span><span class='line'>-- Check for working C compiler: /usr/bin/gcc -- works
+</span><span class='line'>-- Detecting C compiler ABI info
+</span><span class='line'>-- Detecting C compiler ABI info - done
+</span><span class='line'>-- Check for working CXX compiler: /usr/bin/c++
+</span><span class='line'>-- Check for working CXX compiler: /usr/bin/c++ -- works
+</span><span class='line'>-- Detecting CXX compiler ABI info
+</span><span class='line'>-- Detecting CXX compiler ABI info - done
+</span><span class='line'>CMake Warning (dev) in CMakeLists.txt:
+</span><span class='line'>  No cmake_minimum_required command is present.  A line of code such as
+</span><span class='line'>
+</span><span class='line'>    cmake_minimum_required(VERSION 2.8)
+</span><span class='line'>
+</span><span class='line'>  should be added at the top of the file.  The version specified may be lower
+</span><span class='line'>  if you wish to support older CMake versions for this project.  For more
+</span><span class='line'>  information run "cmake --help-policy CMP0000".
+</span><span class='line'>This warning is for project developers.  Use -Wno-dev to suppress it.
+</span><span class='line'>
+</span><span class='line'>-- Configuring done
+</span><span class='line'>-- Generating done
+</span><span class='line'>-- Build files have been written to: /Users/stefan321/opencv
+</span><span class='line'>~/opencv
+</span><span class='line'>stefan321@Lius-MacBook$  make
+</span><span class='line'>Scanning dependencies of target DisplayImage
+</span><span class='line'>[100%] Building CXX object CMakeFiles/DisplayImage.dir/DisplayImage.o
+</span><span class='line'>Linking CXX executable DisplayImage
+</span><span class='line'>[100%] Built target DisplayImage
+</span><span class='line'>~/opencv
+</span><span class='line'>stefan321@Lius-MacBook$  ./DisplayImage 123.jpg</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img class="center" src="http://yang3wei.github.com/images/posts/f7e13c67-0ebf-387e-8ea8-93ad065d8a39.png">
+<img class="center" src="http://yang3wei.github.com/images/posts/28ca1db6-438d-3a45-8e33-572f435709c0.png"></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[如何在 Mac OS X Lion 上安装 OpenCV 2.2]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/15/ru-he-zai-mac-os-x-lion-shang-an-zhuang-opencv-2-dot-2/"/>
+    <updated>2013-02-15T10:19:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/15/ru-he-zai-mac-os-x-lion-shang-an-zhuang-opencv-2-dot-2</id>
+    <content type="html"><![CDATA[<p>原文链接：<a href="http://blog.sina.com.cn/s/blog_677a6d640100xcx9.html">如何在Mac OS X Lion上安装OpenCV 2.2! </a><br/>
+OpenCV 对于做计算机视觉的童鞋来说就想老鼠与大米的关系，总之一个词——重要！</p>
+
+<!-- more -->
+
+
+<p>现在网上很多的帖子都是教如何在 VS2008、VS2010 下配置 OpenCV 2.x 的，这里就不再赘述。本帖主要解决的问题是介绍如何在 Mac OS X Lion（10.7.2) 下安装 OpenCV 2.2。其实本帖所描述的方法并不是原创的，最原始的帖子请参考<a href="http://salemsayed.me/?p=240">这里</a>（英文）。</p>
+
+<h2>准备</h2>
+
+<p>首先你需要下载并安装好 <a href="https://distfiles.macports.org/MacPorts/MacPorts-2.0.3-10.7-Lion.dmg">MacPorts</a> 这一大神级的软件。如果没有听说过 MacPorts，请 Google 或者上<a href="http://en.wikipedia.org/wiki/Macports">这里</a>。注意要下载 Lion 版的，这个跟 Snow Leopard 版的安装文件不一样，本文中的链接即是。<br/>
+安装好了以后，进入 Terminal，输入以下两条命令，这是保证你的 MacPorts 是最新的。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo port selfupdate
+</span><span class='line'>sudo port upgrade outdated</span></code></pre></td></tr></table></div></figure>
+
+
+<p>至此，准备工作完毕，下面开始正式安装。（不要关掉 Terminal ！）</p>
+
+<h2>安装OpenCV</h2>
+
+<p>可能有童鞋会问问什么到现在都没有讲到哪里下载 OpenCV？有这个问题就说明你不知道 MacPorts 为啥是大神级的工具啦。MacPorts 是一个维护了 8300 多个（还在增长）开源软件的 port，它能够自动地帮你下载、安装、配置好一款软件。你所要做的仅仅是输入一条命令，这里，我们只需要输入：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo port install opencv</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然后呢？然后就是漫长的等待，你可以去做其他事情，但请不要碰你的 Mac，Terminal 上会列出一串串下载列表，机器会比较热。<br/>
+大约。。。一个多小时后，当 Terminal 里的提示符再次出现时，你的 OpenCV 就安装好了。当前 OpenCV 的最新版本是 2.3.1，但 MacPorts 的数据库里记住的版本还是 2.2，估计这里还有一个延时吧。</p>
+
+<h2>XCode 中配置 OpenCV</h2>
+
+<p>现在，你可以启动你的 XCode4 了。创建一个 CommandLine Tool 项目。在写程序之前，需要配置两个地方：<br/>
+1、在左侧栏里的 Targets 栏目下，选择右侧窗口中的 “All”，这样可以显示所有选项；然后搜索 “Headers search path”，在这个里面添加 “opt/local/include”这个 OpenCV 的包含文件目录；<br/>
+2、在左侧栏的 Project 栏目下，添加一个 New Group，随便起个名字，然后右击添加文件到这个 Group 中，在添加文件窗口中输入 “/” 弹出寻找目录窗口，输入 “/opt/local/lib”，打开 OpenCV 的库文件目录，选择一下几个文件： libopencv_ml.2.2.0.dylib, libopencv_highgui.2.2.0.dylib, libopencv_core.2.2.0.dylib，当然根据需要可以添加其他库文件。</p>
+
+<p>这样，你就可以写一些简单的利用 OpenCV 的程序了。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[cmake 学习笔记1]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/15/cmake-xue-xi-bi-ji-1/"/>
+    <updated>2013-02-15T09:28:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/15/cmake-xue-xi-bi-ji-1</id>
+    <content type="html"><![CDATA[<p>原文链接：<a href="http://blog.csdn.net/dbzhang800/article/details/6314073">cmake 学习笔记(一)</a><br/>
+最大的 Qt4 程序群 (KDE4) 采用 cmake 作为构建系统<br/>
+Qt4 的 python 绑定 (pyside) 采用了 cmake 作为构建系统<br/>
+开源的图像处理库 opencv 采用 cmake 作为构建系统&#8230;<br/>
+看来不学习一下 cmake 是不行了，一点一点来吧，找个最简单的 C 程序，慢慢复杂化，试试看：</p>
+
+<!-- more -->
+
+
+<blockquote><p>例子一，单个源文件 main.c<br/>
+例子二，分解成多个 main.c hello.h hello.c<br/>
+例子三，先生成一个静态库，链接该库<br/>
+例子四，将源文件放置到不同的目录<br/>
+例子五，控制生成的程序和库所在的目录<br/>
+例子六，使用动态库而不是静态库</p></blockquote>
+
+<h2>例子一</h2>
+
+<p>一个经典的C程序，如何用 cmake 来进行构建程序呢？</p>
+
+<figure class='code'><figcaption><span>main.c  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello World!/n&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>编写一个 <code>CMakeLists.txt</code> 文件(可看做 cmake 的工程文件)：</p>
+
+<figure class='code'><figcaption><span>CMakeLists.txt  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">project</span><span class="o">(</span><span class="n">HELLO</span><span class="o">)</span>
+</span><span class='line'><span class="n">set</span><span class="o">(</span><span class="n">SRC_LIST</span> <span class="n">main</span><span class="o">.</span><span class="na">c</span><span class="o">)</span>
+</span><span class='line'><span class="n">add_executable</span><span class="o">(</span><span class="n">hello</span> <span class="n">$</span><span class="o">{</span><span class="n">SRC_LIST</span><span class="o">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然后，建立一个任意目录（比如本目录下创建一个 build 子目录），在该 build 目录下调用 cmake</p>
+
+<p>注意：为了简单起见，我们从一开始就采用 cmake 的 out-of-source 方式来构建（即生成中间产物与源代码分离），并始终坚持这种方法，这也就是此处为什么单独创建一个目录，然后在该目录下执行 cmake 的原因</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cmake .. -G"NMake Makefiles"
+</span><span class='line'>nmake</span></code></pre></td></tr></table></div></figure>
+
+
+<p>或者</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cmake .. -G"MinGW Makefiles"
+</span><span class='line'>make</span></code></pre></td></tr></table></div></figure>
+
+
+<p>即可生成可执行程序 hello(.exe)<br/>
+目录结构</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>+
+</span><span class='line'>| 
+</span><span class='line'>+--- main.c
+</span><span class='line'>+--- CMakeList.txt
+</span><span class='line'>|
+</span><span class='line'>/--+ build/
+</span><span class='line'>   |
+</span><span class='line'>   +--- hello.exe</span></code></pre></td></tr></table></div></figure>
+
+
+<p>cmake 真的不太好用哈，使用 cmake 的过程，本身也就是一个编程的过程，只有多练才行。<br/>
+我们先看看：前面提到的这些都是什么呢？</p>
+
+<h3>CMakeLists.txt</h3>
+
+<p>第一行 <strong>project</strong> 不是强制性的，但最好始终都加上。这一行会引入两个变量<br/>
+<strong>HELLO_BINARY_DIR</strong> 和 <strong>HELLO_SOURCE_DIR</strong><br/>
+同时，cmake 自动定义了两个等价的变量<br/>
+<strong>PROJECT_BINARY_DIR</strong> 和 <strong>PROJECT_SOURCE_DIR</strong><br/>
+因为是 out-of-source 方式构建，所以我们要时刻区分这两个变量对应的目录<br/>
+可以通过 <strong>message</strong> 来输出变量的值</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>message(${PROJECT_SOURCE_DIR})</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>set</strong> 命令用来设置变量<br/>
+<strong>add_exectuable</strong> 告诉工程生成一个可执行文件。<br/>
+<strong>add_library</strong> 则告诉生成一个库文件。<br/>
+注意：CMakeLists.txt 文件中，命令名字是不区分大小写的，而参数和变量是大小写相关的。</p>
+
+<h3>cmake命令</h3>
+
+<p>cmake 命令后跟一个路径(..)，用来指出 CMakeLists.txt 所在的位置。<br/>
+由于系统中可能有多套构建环境，我们可以通过 <code>-G</code> 来制定生成哪种工程文件，通过 cmake -h 可得到详细信息。<br/>
+要显示执行构建过程中详细的信息(比如为了得到更详细的出错信息)，可以在 CMakeLists.txt 内加入：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>SET( CMAKE_VERBOSE_MAKEFILE on )</span></code></pre></td></tr></table></div></figure>
+
+
+<p>或者执行 make 时</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ make VERBOSE=1</span></code></pre></td></tr></table></div></figure>
+
+
+<p>或者</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ export VERBOSE=1
+</span><span class='line'>$ make</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>例子二</h2>
+
+<p>一个源文件的例子一似乎没什么意思，拆成 3 个文件再试试看：</p>
+
+<figure class='code'><figcaption><span>hello.h  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#ifndef DBZHANG_HELLO_</span>
+</span><span class='line'><span class="cp">#define DBZHANG_HELLO_</span>
+</span><span class='line'><span class="kt">void</span> <span class="nf">hello</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">name</span><span class="p">);</span>
+</span><span class='line'><span class="cp">#endif </span><span class="c1">//DBZHANG_HELLO_</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>hello.c  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class='line'><span class="cp">#include &quot;hello.h&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="nf">hello</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">name</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">printf</span> <span class="p">(</span><span class="s">&quot;Hello %s!/n&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>main.c  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &quot;hello.h&quot;</span>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">hello</span><span class="p">(</span><span class="s">&quot;World&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然后准备好 CMakeLists.txt 文件</p>
+
+<figure class='code'><figcaption><span>CMakeLists.txt  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">project</span><span class="o">(</span><span class="n">HELLO</span><span class="o">)</span>
+</span><span class='line'><span class="n">set</span><span class="o">(</span><span class="n">SRC_LIST</span> <span class="n">main</span><span class="o">.</span><span class="na">c</span> <span class="n">hello</span><span class="o">.</span><span class="na">c</span><span class="o">)</span>
+</span><span class='line'><span class="n">add_executable</span><span class="o">(</span><span class="n">hello</span> <span class="n">$</span><span class="o">{</span><span class="n">SRC_LIST</span><span class="o">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>执行 cmake 的过程同上，目录结构</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>+
+</span><span class='line'>| 
+</span><span class='line'>+--- main.c
+</span><span class='line'>+--- hello.h
+</span><span class='line'>+--- hello.c
+</span><span class='line'>+--- CMakeList.txt
+</span><span class='line'>|
+</span><span class='line'>/--+ build/
+</span><span class='line'>   |
+</span><span class='line'>   +--- hello.exe</span></code></pre></td></tr></table></div></figure>
+
+
+<p>例子很简单，没什么可说的。</p>
+
+<h2>例子三</h2>
+
+<p>接前面的例子，我们将 hello.c 生成一个库，然后再使用会怎么样？<br/>
+改写一下前面的 CMakeLists.txt 文件 试试：</p>
+
+<figure class='code'><figcaption><span>CMakeLists.txt  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">project</span><span class="o">(</span><span class="n">HELLO</span><span class="o">)</span>
+</span><span class='line'><span class="n">set</span><span class="o">(</span><span class="n">LIB_SRC</span> <span class="n">hello</span><span class="o">.</span><span class="na">c</span><span class="o">)</span>
+</span><span class='line'><span class="n">set</span><span class="o">(</span><span class="n">APP_SRC</span> <span class="n">main</span><span class="o">.</span><span class="na">c</span><span class="o">)</span>
+</span><span class='line'><span class="n">add_library</span><span class="o">(</span><span class="n">libhello</span> <span class="n">$</span><span class="o">{</span><span class="n">LIB_SRC</span><span class="o">})</span>
+</span><span class='line'><span class="n">add_executable</span><span class="o">(</span><span class="n">hello</span> <span class="n">$</span><span class="o">{</span><span class="n">APP_SRC</span><span class="o">})</span>
+</span><span class='line'><span class="n">target_link_libraries</span><span class="o">(</span><span class="n">hello</span> <span class="n">libhello</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>和前面相比，我们添加了一个新的目标 libhello，并将其链接进 hello 程序</p>
+
+<p>然后想前面一样，运行 cmake，得到</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>+
+</span><span class='line'>| 
+</span><span class='line'>+--- main.c
+</span><span class='line'>+--- hello.h
+</span><span class='line'>+--- hello.c
+</span><span class='line'>+--- CMakeList.txt
+</span><span class='line'>|
+</span><span class='line'>/--+ build/
+</span><span class='line'>   |
+</span><span class='line'>   +--- hello.exe
+</span><span class='line'>   +--- libhello.lib</span></code></pre></td></tr></table></div></figure>
+
+
+<p>里面有一点不爽，对不？<br/>
+因为我的可执行程序 (add_executable) 占据了 hello 这个名字，所以 add_library 就不能使用这个名字了<br/>
+然后，我们去了个 libhello 的名字，这将导致生成的库为 libhello.lib (或 liblibhello.a)，很不爽<br/>
+想生成 hello.lib(或 libhello.a) 怎么办?<br/>
+添加一行</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>set_target_properties(libhello PROPERTIES OUTPUT_NAME "hello")  </span></code></pre></td></tr></table></div></figure>
+
+
+<p>就可以了</p>
+
+<h2>例子四</h2>
+
+<p>在前面，我们成功地使用了库，可是源代码放在同一个路径下，还是不太正规，怎么办呢？分开放呗<br/>
+我们期待是这样一种结构</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>+
+</span><span class='line'>|
+</span><span class='line'>+--- CMakeList.txt
+</span><span class='line'>+--+ src/
+</span><span class='line'>|  |
+</span><span class='line'>|  +--- main.c
+</span><span class='line'>|  /--- CMakeList.txt
+</span><span class='line'>|
+</span><span class='line'>+--+ libhello/
+</span><span class='line'>|  |
+</span><span class='line'>|  +--- hello.h
+</span><span class='line'>|  +--- hello.c
+</span><span class='line'>|  /--- CMakeList.txt
+</span><span class='line'>|
+</span><span class='line'>/--+ build/</span></code></pre></td></tr></table></div></figure>
+
+
+<p>哇，现在需要 3 个 CMakeLists.txt 文件了，每个源文件目录都需要一个，还好，每一个都不是太复杂<br/>
+顶层的 CMakeLists.txt 文件</p>
+
+<figure class='code'><figcaption><span>CMakeLists.txt  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">project</span><span class="o">(</span><span class="n">HELLO</span><span class="o">)</span>
+</span><span class='line'><span class="n">add_subdirectory</span><span class="o">(</span><span class="n">src</span><span class="o">)</span>
+</span><span class='line'><span class="n">add_subdirectory</span><span class="o">(</span><span class="n">libhello</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>src 中的 CMakeLists.txt 文件</p>
+
+<figure class='code'><figcaption><span>CMakeLists.txt  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">include_directories</span><span class="o">(</span><span class="n">$</span><span class="o">{</span><span class="n">PROJECT_SOURCE_DIR</span><span class="o">}/</span><span class="n">libhello</span><span class="o">)</span>
+</span><span class='line'><span class="n">set</span><span class="o">(</span><span class="n">APP_SRC</span> <span class="n">main</span><span class="o">.</span><span class="na">c</span><span class="o">)</span>
+</span><span class='line'><span class="n">add_executable</span><span class="o">(</span><span class="n">hello</span> <span class="n">$</span><span class="o">{</span><span class="n">APP_SRC</span><span class="o">})</span>
+</span><span class='line'><span class="n">target_link_libraries</span><span class="o">(</span><span class="n">hello</span> <span class="n">libhello</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>libhello 中的 CMakeLists.txt 文件</p>
+
+<figure class='code'><figcaption><span>CMakeLists.txt  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">set</span><span class="o">(</span><span class="n">LIB_SRC</span> <span class="n">hello</span><span class="o">.</span><span class="na">c</span><span class="o">)</span>
+</span><span class='line'><span class="n">add_library</span><span class="o">(</span><span class="n">libhello</span> <span class="n">$</span><span class="o">{</span><span class="n">LIB_SRC</span><span class="o">})</span>
+</span><span class='line'><span class="n">set_target_properties</span><span class="o">(</span><span class="n">libhello</span> <span class="n">PROPERTIES</span> <span class="n">OUTPUT_NAME</span> <span class="s">&quot;hello&quot;</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>恩，和前面一样，建立一个 build 目录，在其内运行 cmake，然后可以得到</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>build/src/hello.exe
+</span><span class='line'>build/libhello/hello.lib</span></code></pre></td></tr></table></div></figure>
+
+
+<p>回头看看，这次多了点什么，顶层的 CMakeLists.txt 文件中使用 <strong>add_subdirectory</strong> 告诉 cmake 去子目录寻找新的 CMakeLists.txt 子文件<br/>
+在 src 的 CMakeLists.txt 文件中，新增加了 <strong>include_directories</strong>，用来指明头文件所在的路径。</p>
+
+<h2>例子五</h2>
+
+<p>前面还是有一点不爽：如果想让可执行文件在 bin 目录，库文件在 lib 目录怎么办？<br/>
+就像下面显示的一样：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>+ build/
+</span><span class='line'>|
+</span><span class='line'>+--+ bin/
+</span><span class='line'>|  |
+</span><span class='line'>|  /--- hello.exe
+</span><span class='line'>|
+</span><span class='line'>/--+ lib/
+</span><span class='line'>   |
+</span><span class='line'>   /--- hello.lib</span></code></pre></td></tr></table></div></figure>
+
+
+<p>一种办法：修改顶级的 CMakeLists.txt 文件</p>
+
+<figure class='code'><figcaption><span>CMakeLists.txt  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">project</span><span class="o">(</span><span class="n">HELLO</span><span class="o">)</span>
+</span><span class='line'><span class="n">add_subdirectory</span><span class="o">(</span><span class="n">src</span> <span class="n">bin</span><span class="o">)</span>
+</span><span class='line'><span class="n">add_subdirectory</span><span class="o">(</span><span class="n">libhello</span> <span class="n">lib</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>不是 build 中的目录默认和源代码中结构一样么，我们可以指定其对应的目录在 build 中的名字。<br/>
+这样一来：build/src 就成了 build/bin 了，可是除了 hello.exe，中间产物也进来了。还不是我们最想要的。<br/>
+另一种方法：不修改顶级的文件，修改其他两个文件<br/>
+src/CMakeLists.txt 文件</p>
+
+<figure class='code'><figcaption><span>CMakeLists.txt  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">include_directories</span><span class="o">(</span><span class="n">$</span><span class="o">{</span><span class="n">PROJECT_SOURCE_DIR</span><span class="o">}/</span><span class="n">libhello</span><span class="o">)</span>
+</span><span class='line'><span class="err">#</span><span class="n">link_directories</span><span class="o">(</span><span class="n">$</span><span class="o">{</span><span class="n">PROJECT_BINARY_DIR</span><span class="o">}/</span><span class="n">lib</span><span class="o">)</span>
+</span><span class='line'><span class="n">set</span><span class="o">(</span><span class="n">APP_SRC</span> <span class="n">main</span><span class="o">.</span><span class="na">c</span><span class="o">)</span>
+</span><span class='line'><span class="n">set</span><span class="o">(</span><span class="n">EXECUTABLE_OUTPUT_PATH</span> <span class="n">$</span><span class="o">{</span><span class="n">PROJECT_BINARY_DIR</span><span class="o">}/</span><span class="n">bin</span><span class="o">)</span>
+</span><span class='line'><span class="n">add_executable</span><span class="o">(</span><span class="n">hello</span> <span class="n">$</span><span class="o">{</span><span class="n">APP_SRC</span><span class="o">})</span>
+</span><span class='line'><span class="n">target_link_libraries</span><span class="o">(</span><span class="n">hello</span> <span class="n">libhello</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>libhello/CMakeLists.txt 文件</p>
+
+<figure class='code'><figcaption><span>CMakeLists.txt  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">set</span><span class="o">(</span><span class="n">LIB_SRC</span> <span class="n">hello</span><span class="o">.</span><span class="na">c</span><span class="o">)</span>
+</span><span class='line'><span class="n">add_library</span><span class="o">(</span><span class="n">libhello</span> <span class="n">$</span><span class="o">{</span><span class="n">LIB_SRC</span><span class="o">})</span>
+</span><span class='line'><span class="n">set</span><span class="o">(</span><span class="n">LIBRARY_OUTPUT_PATH</span> <span class="n">$</span><span class="o">{</span><span class="n">PROJECT_BINARY_DIR</span><span class="o">}/</span><span class="n">lib</span><span class="o">)</span>
+</span><span class='line'><span class="n">set_target_properties</span><span class="o">(</span><span class="n">libhello</span> <span class="n">PROPERTIES</span> <span class="n">OUTPUT_NAME</span> <span class="s">&quot;hello&quot;</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>例子六</h2>
+
+<p>在例子三至五中，我们始终用的静态库，那么用动态库应该更酷一点吧。试着写一下<br/>
+如果不考虑 windows 下，这个例子应该是很简单的，只需要在上个例子的 libhello/CMakeLists.txt 文件中的 <strong>add_library</strong> 命令中加入一个 <strong>SHARED</strong> 参数：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>add_library(libhello SHARED ${LIB_SRC})</span></code></pre></td></tr></table></div></figure>
+
+
+<p>可是，我们既然用 cmake 了，还是兼顾不同的平台吧，于是，事情有点复杂：
+修改 hello.h 文件</p>
+
+<figure class='code'><figcaption><span>hello.h  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#ifndef DBZHANG_HELLO_</span>
+</span><span class='line'><span class="cp">#define DBZHANG_HELLO_</span>
+</span><span class='line'><span class="cp">#if defined _WIN32</span>
+</span><span class='line'>    <span class="err">#</span><span class="k">if</span> <span class="n">LIBHELLO_BUILD</span>
+</span><span class='line'>        <span class="err">#</span><span class="n">define</span> <span class="n">LIBHELLO_API</span> <span class="kr">__declspec</span><span class="p">(</span><span class="n">dllexport</span><span class="p">)</span>
+</span><span class='line'>    <span class="err">#</span><span class="k">else</span>
+</span><span class='line'>        <span class="err">#</span><span class="n">define</span> <span class="n">LIBHELLO_API</span> <span class="kr">__declspec</span><span class="p">(</span><span class="n">dllimport</span><span class="p">)</span>
+</span><span class='line'>    <span class="err">#</span><span class="n">endif</span>
+</span><span class='line'><span class="cp">#else</span>
+</span><span class='line'>    <span class="err">#</span><span class="n">define</span> <span class="n">LIBHELLO_API</span>
+</span><span class='line'><span class="cp">#endif</span>
+</span><span class='line'><span class="n">LIBHELLO_API</span> <span class="kt">void</span> <span class="n">hello</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">name</span><span class="p">);</span>
+</span><span class='line'><span class="cp">#endif </span><span class="c1">//DBZHANG_HELLO_</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>修改 libhello/CMakeLists.txt 文件</p>
+
+<figure class='code'><figcaption><span>CMakeLists.txt  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">set</span><span class="o">(</span><span class="n">LIB_SRC</span> <span class="n">hello</span><span class="o">.</span><span class="na">c</span><span class="o">)</span>
+</span><span class='line'><span class="n">add_definitions</span><span class="o">(</span><span class="s">&quot;-DLIBHELLO_BUILD&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="n">add_library</span><span class="o">(</span><span class="n">libhello</span> <span class="n">SHARED</span> <span class="n">$</span><span class="o">{</span><span class="n">LIB_SRC</span><span class="o">})</span>
+</span><span class='line'><span class="n">set</span><span class="o">(</span><span class="n">LIBRARY_OUTPUT_PATH</span> <span class="n">$</span><span class="o">{</span><span class="n">PROJECT_BINARY_DIR</span><span class="o">}/</span><span class="n">lib</span><span class="o">)</span>
+</span><span class='line'><span class="n">set_target_properties</span><span class="o">(</span><span class="n">libhello</span> <span class="n">PROPERTIES</span> <span class="n">OUTPUT_NAME</span> <span class="s">&quot;hello&quot;</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>恩，剩下来的工作就和原来一样了。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Git diff 代码比较的高级技巧]]></title>
@@ -3229,411 +3965,6 @@ command + i: profile<br/>
 </span><span class='line'>  <span class="o">}</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
-
-
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Java Get classes In Package]]></title>
-    <link href="http://yang3wei.github.com/blog/2013/02/05/java-get-classes-in-package/"/>
-    <updated>2013-02-05T12:30:00+08:00</updated>
-    <id>http://yang3wei.github.com/blog/2013/02/05/java-get-classes-in-package</id>
-    <content type="html"><![CDATA[<p>直接上代码：</p>
-
-<!-- more -->
-
-
-
-
-<figure class='code'><figcaption><span>GetClassesInPackage.java  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">package</span> <span class="n">org</span><span class="o">.</span><span class="na">bruce</span><span class="o">.</span><span class="na">pocket</span><span class="o">.</span><span class="na">tools</span><span class="o">.</span><span class="na">utils</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.FileInputStream</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.jar.JarEntry</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.jar.JarInputStream</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="cm">/**</span>
-</span><span class='line'><span class="cm"> * @author Bruce Yang</span>
-</span><span class='line'><span class="cm"> * http://www.roseindia.net/java/java-get-example/get-classes-package.shtml</span>
-</span><span class='line'><span class="cm"> */</span>
-</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">GetClassesInPackage</span> <span class="o">{</span>
-</span><span class='line'>  <span class="kd">private</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="n">getJar</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="nf">getClasseNamesInPackage</span><span class="o">(</span><span class="n">String</span> <span class="n">jarName</span><span class="o">,</span> <span class="n">String</span> <span class="n">packageName</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>      <span class="k">if</span> <span class="o">(</span><span class="n">getJar</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>          <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Jar \&quot;&quot;</span> <span class="o">+</span> <span class="n">jarName</span> <span class="o">+</span> <span class="s">&quot;\&quot; for \&quot;&quot;</span> <span class="o">+</span> <span class="n">packageName</span> <span class="o">+</span> <span class="sc">&#39;\&quot;&#39;</span><span class="o">);</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>      
-</span><span class='line'>      <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">arrayList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;();</span>
-</span><span class='line'>      <span class="c1">// replaceAll 第一个参数是正则字符串，第二个参数是普通的替换字符串，不需要对正则进行转义~</span>
-</span><span class='line'>      <span class="n">packageName</span> <span class="o">=</span> <span class="n">packageName</span><span class="o">.</span><span class="na">replaceAll</span><span class="o">(</span><span class="s">&quot;\\.&quot;</span><span class="o">,</span> <span class="s">&quot;/&quot;</span><span class="o">);</span>
-</span><span class='line'>      
-</span><span class='line'>      <span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>          <span class="n">JarInputStream</span> <span class="n">jarFile</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JarInputStream</span><span class="o">(</span><span class="k">new</span> <span class="n">FileInputStream</span><span class="o">(</span><span class="n">jarName</span><span class="o">));</span>
-</span><span class='line'>          <span class="n">JarEntry</span> <span class="n">jarEntry</span><span class="o">;</span>
-</span><span class='line'>          
-</span><span class='line'>          <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>              <span class="n">jarEntry</span> <span class="o">=</span> <span class="n">jarFile</span><span class="o">.</span><span class="na">getNextJarEntry</span><span class="o">();</span>
-</span><span class='line'>              <span class="k">if</span> <span class="o">(</span><span class="n">jarEntry</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>                  <span class="k">break</span><span class="o">;</span>
-</span><span class='line'>              <span class="o">}</span>
-</span><span class='line'>              <span class="k">if</span> <span class="o">((</span><span class="n">jarEntry</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">startsWith</span><span class="o">(</span><span class="n">packageName</span><span class="o">))</span>
-</span><span class='line'>                      <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">jarEntry</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">endsWith</span><span class="o">(</span><span class="s">&quot;.class&quot;</span><span class="o">)))</span> <span class="o">{</span>
-</span><span class='line'>                  <span class="n">arrayList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">jarEntry</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">replaceAll</span><span class="o">(</span><span class="s">&quot;/&quot;</span><span class="o">,</span> <span class="s">&quot;.&quot;</span><span class="o">));</span>
-</span><span class='line'>              <span class="o">}</span>
-</span><span class='line'>          <span class="o">}</span>
-</span><span class='line'>      <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>          <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>      <span class="k">return</span> <span class="n">arrayList</span><span class="o">;</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">String</span> <span class="n">jarPath</span> <span class="o">=</span> <span class="s">&quot;/Users/user/Desktop/JavaDynamicComiple.jar&quot;</span><span class="o">;</span>
-</span><span class='line'>      <span class="n">String</span> <span class="n">pkgPath</span> <span class="o">=</span> <span class="s">&quot;org.bruce.pocket.tools.items&quot;</span><span class="o">;</span>
-</span><span class='line'>      <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="n">GetClassesInPackage</span><span class="o">.</span><span class="na">getClasseNamesInPackage</span><span class="o">(</span><span class="n">jarPath</span><span class="o">,</span> <span class="n">pkgPath</span><span class="o">);</span>
-</span><span class='line'>      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Found: &quot;</span><span class="o">);</span>
-</span><span class='line'>      <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">item</span> <span class="o">:</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>          <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">item</span><span class="o">);</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Octopress 代码高亮]]></title>
-    <link href="http://yang3wei.github.com/blog/2013/02/03/octopress-dai-ma-gao-liang/"/>
-    <updated>2013-02-03T17:43:00+08:00</updated>
-    <id>http://yang3wei.github.com/blog/2013/02/03/octopress-dai-ma-gao-liang</id>
-    <content type="html"><![CDATA[<p>原文链接：<br/>
-<a href="http://xiongbupt.github.com/blog/2012/06/08/octopressdai-ma-gao-liang/">http://xiongbupt.github.com/blog/2012/06/08/octopressdai-ma-gao-liang/</a><br/>
-现在博客已经基本搭建完毕，下面对从<code>jekyll bootstrap</code>搬迁到做一个基本介绍。首先是代码高亮部分，下面的文章主要来自于<a href="http://octopress.org/docs/blogging/code/" title="Octopress代码高亮">Octopress关于代码高亮部分</a>。文章主要是对上面的内容进行一个简单的翻译，以及简单介绍从<code>jekyll bootstrap</code>上面的代码移动到<code>Octopress</code>上面做一个简单的介绍。</p>
-
-<!-- more -->
-
-
-<h2>共享代码片段</h2>
-
-<p>在博客上共享代码片段应该是简单的，并且代码应该具有简单的高亮功能。Octopress也具有这种功能，在<code>jekyll</code>上，其使用的是<code>pygment</code>来实现代码高亮的功能，Octopress实现的更好。在Octopress上面有下面几种选择：</p>
-
-<ul>
-<li>使用<a href="http://ethanschoonover.com/solarized" title="Solarized高亮">Solarized高亮</a>主题来实现（该方法未尝试，实际上不知道怎么弄，只是凭借个人的猜测）。</li>
-<li>使用Gist的代码内嵌。</li>
-<li>从自己的文件系统中插入代码片段，该代码具有下载链接。</li>
-<li>简单的内嵌代码块带有<code>&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure&gt;</code>和<code>&lt;figcaption&gt;</code>和可选的下载链接。</li>
-<li>Pygments caching（似乎还是使用Pygnment来实现代码高亮）。</li>
-<li>通过javascript脚本使得代码具有行号。</li>
-</ul>
-
-
-<h3>Solarized高亮</h3>
-
-<p>这部分内容自己没有尝试，待更新。</p>
-
-<h3>反引号的代码块</h3>
-
-<p>同时使用<code>backtick_codelock</code>过滤器，可以使用Github的最适用的代码高亮块。使用三个反引号开始，后面跟着一个空格，接下来是高亮语言，具体语法如下所示：</p>
-
-<pre><code>  ``` [language] [title] [url] [link text]
-  code snippet
-  ```
-</code></pre>
-
-<p>按照上述方式便可以对相应的代码块进行高亮，如下面的例子。</p>
-
-<h4>example1（原文)</h4>
-
-<pre><code> ```
- $sudo give me a hug
- ```
-</code></pre>
-
-<p>按照上面的方式在文本中输入之后，产生的效果如下：
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$sudo give me a hug</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<h4>example2带有说明和连接</h4>
-
-<pre><code> ``` ruby Discover if a number is prime http://www.noulakaz.net/weblog/2007/03/18/a-regular-expression-to-check-for-prime-numbers/ Source Article
- class Fixnum
-   def prime?
-     ('1' * self) !~ /^1?$|^(11+?)\1+$/
-   end
- end
- ```
-</code></pre>
-
-<p>产生的代码片段如下：</p>
-
-<figure class='code'><figcaption><span>Discover if a number is prime</span><a href='http://www.noulakaz.net/weblog/2007/03/18/a-regular-expression-to-check-for-prime-numbers/'>Source Article</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Fixnum</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">prime?</span>
-</span><span class='line'>    <span class="p">(</span><span class="s1">&#39;1&#39;</span> <span class="o">*</span> <span class="nb">self</span><span class="p">)</span> <span class="o">!~</span> <span class="sr">/^1?$|^(11+?)\1+$/</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Gist代码内嵌</h3>
-
-<p>当使用这种方式的代码高亮时，仅仅需要的是gist的id，对gist不了解的可以上google搜索下，个人的理解是，gist对每段用户上传的代码段都会有一个对应的id，当用户给出对应的代码的id后，将会从gist上面下载对应的已经高亮的html文件，最终在用户的页面上显示出来。</p>
-
-<h4>语法</h4>
-
-<pre><code> { % gist gist_id [filename] %}
-</code></pre>
-
-<h4>example</h4>
-
-<pre><code> { % gist 996818 %}
-</code></pre>
-
-<p>上述代码的片段在Octopress中的markdown文件中输入之后，得到的效果如下：</p>
-
-<div><script src='https://gist.github.com/996818.js'></script>
-<noscript><pre><code>@@ -590,7 +590,7 @@ class SpritesTest &lt; Test::Unit::TestCase
-  it &quot;should generate a sprite from nested folders&quot; do
-    css = render &lt;&lt;-SCSS
--     @import &quot;nested/*.png&quot;;
-+     @import &quot;nested/**/*.png&quot;;
-      @include all-nested-sprites;
-    SCSS
-    assert_correct css, &lt;&lt;-CSS</code></pre></noscript></div>
-
-
-<p>如果一个gist的id对应有多个文件，这时需要对想要高亮的文件添加文件名，具体语法如下所示：</p>
-
-<pre><code>  { % gist 1059334 svg_bullets.rb %}
-  { % gist 1059334 usage.scss %}
-</code></pre>
-
-<p>总体来说，gist代码高亮是很简单的，只是需要将代码上传到<a href="https://gist.github.com/">gist</a>，然后获取相应的id然后按照上面的语法进行设置即可。只是每次在写博客时，都需要对博客文章中的代码拷贝到网址上生成，在没有网时，代码高亮比较麻烦。</p>
-
-<h3>从本地文件中引入代码</h3>
-
-<p>这种方式在Arch上面有个小问题，在Arch上的报错如下所示：</p>
-
-<figure class='code'><figcaption><span>Arch error</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>Building site: <span class="nb">source</span> -&gt; public
-</span><span class='line'>  File <span class="s2">&quot;&lt;string&gt;&quot;</span>, line 1
-</span><span class='line'>    import sys; print sys.executable
-</span><span class='line'>                        ^
-</span><span class='line'>SyntaxError: invalid syntax
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>上网搜索之后在<a href="http://blog.gonzih.org/blog/2011/09/21/fix-octopress-pygments-error-on-arch-linux/">该网址</a>发现解决方法。 <br/>
-这种方式需要使用python2来完成代码高亮的操作，由于Arch的python指向的是python3，而python3无法完成该功能，因此需要在<code>plugin</code>文件夹中再添加一个新文件，指定在<code>Octopress</code>运行时使用的是python2，具体增加的文件内容如下所示，文件的名字为<code>ruby_python_arch_linux_fix.rb</code><br/>
-File /Users/user/git/Octopress/source/downloads/code/ruby/ruby_python_arch_linux_fix.rb could not be found</p>
-
-<p>在完成该操作之后，仍然报错，得到如下错误：</p>
-
-<figure class='code'><figcaption><span>Error message</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>LoadError: Could not open library <span class="s1">&#39;lib.so&#39;</span>: lib.so: cannot open shared object file: No such file or directory
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>参考<a href="https://github.com/tmm1/pygments.rb/issues/10">该网址</a>的由<code>elidos</code>提出的解决方法可以知道是<code>rubypython</code>自身的bug，需要修复，具体修改文件在Arch上面为<code>/usr/lib/ruby/gems/1.9.1/gems/rubypython-0.5.3/lib/rubypython/pythonexec.rb</code>，修改位置大概在126行左右，修改后的内容如下所示：</p>
-
-<figure class='code'><figcaption><span>fix the rubypython bug</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='diff'><span class='line'><span class="gd">--126 %x(#{@python} -c &quot;#{command}&quot;).chomp if @python</span>
-</span><span class='line'><span class="gi">++126 %x(&quot;#{@python} -c #{command}&quot;).chomp if @python</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>完成该修改之后，便可以使用这种包含代码的方式来进行代码高亮。 <br/>
-使用这种方式的语法也参见<a href="http://octopress.org/docs/blogging/code/" title="Octopress代码高亮">octopress手册</a>，此处不再进行详细说明，这种方式的代码是单独存放成一个文件保存在本地系统下，当代码长度较长，又不想放在博客的正文中时，使用该方法比较好。<br/>
-简单记录下这种方式的语法如下所示：（目前不知道为什么，在octopress中输入{ %的方式都会进行代码解析，所以上面的{ %都进行了添加了<code></code>来取消，在实际文章中输入的时候，将<code></code>取消掉）</p>
-
-<pre><code>{ % include_code [title] [lang:language] path/to/file %}
-</code></pre>
-
-<p>其中的中括号的内容是可选的，具体语言便是这种方式，当需要强制高亮时，需要指定<code>lang:</code>这个参数，很好用。</p>
-
-<h3>使用Code Block的方式</h3>
-
-<p>目前自己的博客这种方式用的比较多，前面写的文章目前全部修改成为了这种方式，感觉这种方式和<code>pygnment</code>的方式差不多，之前全部采用的是<code>pygnment</code>的方式，利用正则表达式把所有文章的代码高亮全部改成了使用<code>code block</code>。它的具体语法如下所示：（与<code>pygnment</code>很相似，指定语言即可）</p>
-
-<pre><code>  { % codeblock [title] [lang:language] [url] [link text] %}
-  code snippet
-  { % endcodeblock %}
-</code></pre>
-
-<p>和之前描述的类似，中括号的内容是可选的。</p>
-
-<h4>使用正则表达式替换</h4>
-
-<p>这种方式可以替换博客内容，使得博客中所有文章的代码高亮使用<code>Code Block</code>。自己使用的是<code>sed</code>来完成的操作，似乎都没有用到正则表达式，只是简单的替换，做个简单的记录吧。</p>
-
-<h5>替换方法</h5>
-
-<p>进入到<code>source/_posts</code>目录下，在终端输入如下代码：</p>
-
-<figure class='code'><figcaption><span>Sed查看文章代码</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sed -n <span class="s1">&#39;s/\(\ highlight\ \)/\1/p&#39;</span> *
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>上面将会把当前目录下的含有{\% highlight的文件的那行都显示出来，中间会将含有该特殊字符的行都打印出来，中间可以看到自己的博客内容都用到了哪些类型文件的语法高亮，将对应的代码高亮进行替换即可。<br/>
-其实这种方式就是简单的搜索替换，应该算不上使用正则表达式了，只是写下来做下笔记了，防止以后再用具体操作如下所示：</p>
-
-<figure class='code'><figcaption><span>Sed替换文件内容</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sed -i <span class="s1">&#39;s/\(\ highlight\ bash %}\)/\ codeblock\ lang:bash\ %}/&#39;</span> *
-</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Octopress 中的 SEO]]></title>
-    <link href="http://yang3wei.github.com/blog/2013/02/03/octopress-zhong-de-seo/"/>
-    <updated>2013-02-03T16:12:00+08:00</updated>
-    <id>http://yang3wei.github.com/blog/2013/02/03/octopress-zhong-de-seo</id>
-    <content type="html"><![CDATA[<p>原文链接：<br/>
-<a href="http://codemacro.com/2012/09/06/octopress-seo/">loop in codes &#8211; Kevin Lynx BLOG</a><br/>
-Octopress 默认为每个页面添加 meta description，其内容为当前文章的前150个字符，<br/>
-如果是首页就会是第一篇文章的前 150 个字符。这里主要通过增加 meta keywords 来提高 SEO。</p>
-
-<!-- more -->
-
-
-<h2>为每篇文章增加 keywors 和 description</h2>
-
-<p>就像我的这篇博客，这下文章头得填很多数据了，有点麻烦：</p>
-
-<figure class='code'><figcaption><span>code snippet 1 </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>---
-</span><span class='line'>layout: post
-</span><span class='line'>title: "Octopress中的SEO"
-</span><span class='line'>date: 2012-09-06 19:02
-</span><span class='line'>comments: true
-</span><span class='line'>categories: tips
-</span><span class='line'>tags: [tips, octopress]
-</span><span class='line'>keywords: seo, octopress
-</span><span class='line'>description: Octopress默认为每个页面添加`meta description`，其内容为当前文章的前150个字符，如果是首页就会是第一篇文章的前150个字符。这里主要通过增加`meta keywords`来提高SEO。
-</span><span class='line'>---</span></code></pre></td></tr></table></div></figure>
-
-
-<p>这样，每篇文章页面头就会自动增加 meta keywords 项，description也会使用这里填的，<br/>
-而不是自动为文章前若干个字符。这个功能的实现在 <code>_includes/head.html</code> 中。</p>
-
-<figure class='code'><figcaption><span>code snippet 2  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;author&quot;</span> <span class="na">content=</span><span class="s">&quot;Kevin Lynx&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'><span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;description&quot;</span> <span class="na">content=</span><span class="s">&quot;Octopress默认为每个页面添加`meta description`，其内容为当前文章的前150个字符，如果是首页就会是第一篇文章的前150个字符。这里主要通过增加`meta keywords`来提高SEO。 &quot;</span><span class="nt">&gt;</span>
-</span><span class='line'><span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;keywords&quot;</span> <span class="na">content=</span><span class="s">&quot;seo, octopress&quot;</span><span class="nt">&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>为页面 (Page) 增加 keywords</h2>
-
-<p>上面只是修正了每篇博客页面的 meta 信息，octopress 中还有几个页面需要修正，例如首页，<br/>
-这个可以通过修改 <code>_includes/head.html</code> 来完成。替换相关内容为以下：</p>
-
-<figure class='code'><figcaption><span>code snippet 3  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;author&quot;</span> <span class="na">content=</span><span class="s">&quot;{{ site.author }}&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>{% capture description %}{% if page.description %}{{ page.description }}{% elsif site.description %}{{ site.description }}{%else%}{{ content | raw_content }}{% endif %}{% endcapture %}
-</span><span class='line'><span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;description&quot;</span> <span class="na">content=</span><span class="s">&quot;{{ description | strip_html | condense_spaces | truncate:150 }}&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>{% if page.keywords %}<span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;keywords&quot;</span> <span class="na">content=</span><span class="s">&quot;{{ page.keywords }}&quot;</span><span class="nt">&gt;</span>{%else%}<span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;keywords&quot;</span> <span class="na">content=</span><span class="s">&quot;{{ site.keywords }}&quot;</span><span class="nt">&gt;</span>{% endif %}
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>如果页面没有提供 keywords 或者 description 的话，<br/>
-就使用 site 里的设置，也就需要修改 <code>_config.yml</code>：</p>
-
-<figure class='code'><figcaption><span>code snippet 4 </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>description: loop in codes, Kevin Lynx blog
-</span><span class='line'>keywords: c/c++, mmo, game develop, lisp, ruby, lua, web development</span></code></pre></td></tr></table></div></figure>
 
 
 

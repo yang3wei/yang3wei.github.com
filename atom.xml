@@ -4,7 +4,7 @@
   <title><![CDATA[yang3wei的专栏]]></title>
   <link href="http://yang3wei.github.com/atom.xml" rel="self"/>
   <link href="http://yang3wei.github.com/"/>
-  <updated>2013-02-15T11:12:22+08:00</updated>
+  <updated>2013-02-17T08:19:02+08:00</updated>
   <id>http://yang3wei.github.com/</id>
   <author>
     <name><![CDATA[yang3wei]]></name>
@@ -12,6 +12,124 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Ant fileset 用法]]></title>
+    <link href="http://yang3wei.github.com/blog/2013/02/17/ant-fileset-yong-fa/"/>
+    <updated>2013-02-17T07:53:00+08:00</updated>
+    <id>http://yang3wei.github.com/blog/2013/02/17/ant-fileset-yong-fa</id>
+    <content type="html"><![CDATA[<p>原文链接：<a href="http://blog.csdn.net/ajaxbloger/article/details/2303841">ant fileset用法</a>  <br/>
+fileset用来定义目录位置及操作适用于该目录下的那些子目录或文件<!-- more --></p>
+
+<h2>1. 拷贝单个文件到指定目录下，例：</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;copy todir="${basedir}/new" file="${basedir}/old/old1.txt1"&gt;   </span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+将 <strong>${basedir}/old/old.txt</strong> 文件拷贝到 <strong>${basedir}/new</strong> 下</p>
+
+<h2>2. 拷贝一批文件到指定目录下，例：</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;copy todir="${basedir}/new"&gt;  
+</span><span class='line'>    &lt;fileset dir="${basedir}/old"&gt;  
+</span><span class='line'>        &lt;include name="old1.txt" /&gt;  
+</span><span class='line'>        &lt;include name="old2.txt" /&gt;  
+</span><span class='line'>        &lt;exclude name="old3.txt" /&gt;  
+</span><span class='line'>    &lt;/fileset&gt;  
+</span><span class='line'>&lt;/copy&gt;  </span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+这里 fileset 定义的是原文件的组成形式，<code>&lt;include/&gt;</code> 子属性表示包括，<code>&lt;exclude/&gt;</code> 子属性表示排除，很简单，通过他们组合实现多文件的筛选，当然我这个例子用得很傻。比如</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;include name="appgen/**"/&gt;  
+</span><span class='line'>&lt;include name="ibatis/**"/&gt;  
+</span><span class='line'>&lt;exclude name="**/*.log"/&gt;  </span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+拷贝 <code>appgen</code> 目录和 <code>ibatis</code> 目录下除了 <code>.log</code> 文件以外的其它所有文件和子目录。<br/>
+可以把 <code>&lt;fileset/&gt;</code> 简写成 <code>&lt;fileset dir="${basedir}/old" includes="old1.txt,old2.txt" /&gt;</code>，<code>includes</code> 可以理解成 <code>include</code> 的复数形式，包含多个文件时用逗号隔开，<code>excludes</code> 也一样。</p>
+
+<h2>3. 拷贝一个目录到指定目录下，例：</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;copy todir="${basedir}/new"&gt;  
+</span><span class='line'>    &lt;fileset dir="${basedir}/old"&gt;  
+</span><span class='line'>        &lt;include name="appgen" /&gt;  
+</span><span class='line'>        &lt;include name="appgen/" /&gt;  
+</span><span class='line'>        &lt;include name=appgen/**" /&gt;  
+</span><span class='line'>        &lt;include name="appgen/***" /&gt;  
+</span><span class='line'>    &lt;/fileset&gt;  
+</span><span class='line'>&lt;/copy&gt;  </span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+同样使用 <code>&lt;fileset/&gt;</code> 属性，<code>name</code> 指定目录名，不过这里要分两种情况，用 <code>&lt;include/&gt;</code> 子属性和不用 <code>&lt;include/&gt;</code> 子属性.<br/>
+若使用 <code>&lt;include/&gt;</code>， 又要分三种情况：<br/>
+若是 <code>appgen</code>，则只会拷贝名为 <code>appgen</code> 的空目录过去，它里面的文件和子目录则不会拷贝。<br/>
+若是 <code>appgen/</code>，或 <code>appgen/**</code>，则会把整个 <code>appgen</code> 目录拷贝过去，包括里面的文件和子目录。<br/>
+若是 <code>appgen/*</code>，则只会把该目录和该目录下第一级子目录的所有东西拷贝过去，而不会拷贝第二级和第二级以下的。<br/>
+<strong>注： <code>appgen/*</code> 这儿是一个 * 号，* 号若大于两个，也跟一个 * 号是同样效果。比如 <code>appgen/*</code> 和 <code>appgen/****</code> 都只拷贝 <code>appgen</code> 目录下第一级子目录。</strong><br/>
+<strong>注：若 <code>appgen</code> 这个目录本身就是个空目录(就是不存在)，无论怎么写，这个空目录都不会被拷贝。也就是说，<code>copy</code> 操作不会产生创建空目录的作用，要想创建空目录，只有用 <code>mkdir</code>。</strong><br/>
+若不使用任何 <code>&lt;include&gt;</code> 属性，如</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;fileset dir="${basedir}/old"&gt;  
+</span><span class='line'>&lt;/fileset&gt;  </span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+则会拷贝 <strong>${basedir}/old</strong> 下的所有文件和子目录。<br/>
+<strong>注：使用 <code>&lt;exclude/&gt;</code> 排除目录时，目录名必须写成 <code>appgen/</code> 或 <code>appgen/**</code> 形式，否则不会生效。</strong></p>
+
+<p>以上是三种拷贝到目录的种类，注意如果计算机中没有 <code>todir</code> 指定的路径，Ant将会自动创建这个路径。</p>
+
+<h2>4. 拷贝单个的文件：</h2>
+
+<p><code>〈copy tofile="old.txt" file="new.txt" /〉</code> 就这么简单就行了。<br/>
+当然也可以写成</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;copy tofile="${basedir}/new/new.txt"&gt;  
+</span><span class='line'>    &lt;fileset dir="${basedir}/old" includes="old.txt" /&gt;  
+</span><span class='line'>&lt;/copy&gt;  </span></code></pre></td></tr></table></div></figure>
+
+
+<p>这里 <code>includes</code> 就只能写一个文件，不能写上多个文件，因为不能将多个文件复制到一个文件中去，所以这样麻烦的写法是没有意义的。这个地方还有待去验证一下.</p>
+
+<p>复制肯定还要涉及到同名覆盖的问题，Ant 在 copy 类的 API 中说明：<strong>Files are only copied if the source file is newer than the destination file</strong>，这里的 newer 是指文件的修改时间，即使你在修改时文件内容没有任何变化，只是导致修改时间变了，Ant 同样会覆盖同名文件，也就是说，Ant不会检查文件内容。</p>
+
+<p>对于是复制目录的情况，由于目录没有修改时间，Ant 还是通过检查目录内文件的修改时间来决定是否覆盖的，若目录内某文件修改时间有变化，则会覆盖这个文件，而不是整个目录。</p>
+
+<p>如果要强行覆盖，<code>&lt;copy/&gt;</code> 有个 <code>overwrite</code> 属性，默认为 <code>false</code>，改成 <code>true</code> 就行了。<br/>
+Ant 真是太方便了，以前都没注意到它。功能很强大，能创建数据库，配置服务器，部署发布应用……只需要写好 <code>build.xml</code> 文件，剩下的就交给 Ant 来 “安装” 你的 WEB 应用了。<br/>
+以上就这些:<br/>
+您也可以去 apache Ant 项目里去看一下 fileset 的用法:</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Mac 下安装 OpenCV]]></title>
@@ -3778,190 +3896,6 @@ command + i: profile<br/>
 </span><span class='line'><span class="cm">  */</span>
 </span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">writeBMPImage</span><span class="o">(</span><span class="n">RenderedImage</span> <span class="n">ri</span><span class="o">,</span> <span class="n">String</span> <span class="n">fileName</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>      <span class="k">return</span> <span class="nf">writeImage</span><span class="o">(</span><span class="n">ri</span><span class="o">,</span> <span class="s">&quot;BMP&quot;</span><span class="o">,</span> <span class="n">fileName</span><span class="o">);</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Java 执行 Mac(Unix) 脚本命令]]></title>
-    <link href="http://yang3wei.github.com/blog/2013/02/05/java-zhi-xing-mac-unix-jiao-ben-ming-ling/"/>
-    <updated>2013-02-05T12:44:00+08:00</updated>
-    <id>http://yang3wei.github.com/blog/2013/02/05/java-zhi-xing-mac-unix-jiao-ben-ming-ling</id>
-    <content type="html"><![CDATA[<p>直接上代码：</p>
-
-<!-- more -->
-
-
-
-
-<figure class='code'><figcaption><span>UnixScript.java  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">package</span> <span class="n">org</span><span class="o">.</span><span class="na">bruce</span><span class="o">.</span><span class="na">pocket</span><span class="o">.</span><span class="na">tools</span><span class="o">.</span><span class="na">utils</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.BufferedReader</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.BufferedWriter</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.InputStream</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.InputStreamReader</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.OutputStream</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.OutputStreamWriter</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="cm">/**</span>
-</span><span class='line'><span class="cm"> * @author Bruce Yang</span>
-</span><span class='line'><span class="cm"> *</span>
-</span><span class='line'><span class="cm"> */</span>
-</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">UnixScript</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="cm">/**</span>
-</span><span class='line'><span class="cm">  * 执行 mac(unix) 脚本命令~</span>
-</span><span class='line'><span class="cm">  * @param command</span>
-</span><span class='line'><span class="cm">  * @return</span>
-</span><span class='line'><span class="cm">  */</span>
-</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">execute</span><span class="o">(</span><span class="n">String</span> <span class="n">command</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">String</span><span class="o">[]</span> <span class="n">cmd</span> <span class="o">=</span> <span class="o">{</span><span class="s">&quot;/bin/bash&quot;</span><span class="o">};</span>
-</span><span class='line'>      <span class="n">Runtime</span> <span class="n">rt</span> <span class="o">=</span> <span class="n">Runtime</span><span class="o">.</span><span class="na">getRuntime</span><span class="o">();</span>
-</span><span class='line'>      <span class="n">Process</span> <span class="n">proc</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-</span><span class='line'>      <span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>          <span class="n">proc</span> <span class="o">=</span> <span class="n">rt</span><span class="o">.</span><span class="na">exec</span><span class="o">(</span><span class="n">cmd</span><span class="o">);</span>
-</span><span class='line'>      <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>          <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="c1">// 打开流</span>
-</span><span class='line'>      <span class="n">OutputStream</span> <span class="n">os</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="na">getOutputStream</span><span class="o">();</span>
-</span><span class='line'>      <span class="n">BufferedWriter</span> <span class="n">bw</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedWriter</span><span class="o">(</span><span class="k">new</span> <span class="n">OutputStreamWriter</span><span class="o">(</span><span class="n">os</span><span class="o">));</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>          <span class="n">bw</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">command</span><span class="o">);</span>
-</span><span class='line'>          
-</span><span class='line'>          <span class="n">bw</span><span class="o">.</span><span class="na">flush</span><span class="o">();</span>
-</span><span class='line'>          <span class="n">bw</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-</span><span class='line'>          
-</span><span class='line'>          <span class="cm">/** 真奇怪，把控制台的输出打印一遍之后竟然能正常终止了~ */</span>
-</span><span class='line'>          <span class="n">readConsole</span><span class="o">(</span><span class="n">proc</span><span class="o">);</span>
-</span><span class='line'>          
-</span><span class='line'>          <span class="cm">/** waitFor() 的作用在于 java 程序是否等待 Terminal 执行脚本完毕~ */</span>
-</span><span class='line'>          <span class="n">proc</span><span class="o">.</span><span class="na">waitFor</span><span class="o">();</span>
-</span><span class='line'>      <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>          <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>      <span class="kt">int</span> <span class="n">retCode</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="na">exitValue</span><span class="o">();</span>
-</span><span class='line'><span class="c1">//       System.err.println(&quot;unix script retCode = &quot; + retCode);</span>
-</span><span class='line'>      <span class="k">if</span> <span class="o">(</span><span class="n">retCode</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>          <span class="n">readConsole</span><span class="o">(</span><span class="n">proc</span><span class="o">);</span>
-</span><span class='line'>          <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;UnixScriptUil.execute 出错了!!&quot;</span><span class="o">);</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>      <span class="k">return</span> <span class="n">retCode</span><span class="o">;</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="cm">/**</span>
-</span><span class='line'><span class="cm">  * 读取控制命令的输出结果</span>
-</span><span class='line'><span class="cm">  * 原文链接：http://lavasoft.blog.51cto.com/62575/15599</span>
-</span><span class='line'><span class="cm">  * @param cmd 命令</span>
-</span><span class='line'><span class="cm">  * @return 控制命令的输出结果</span>
-</span><span class='line'><span class="cm">  * @throws IOException</span>
-</span><span class='line'><span class="cm">  */</span>
-</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">readConsole</span><span class="o">(</span><span class="n">Process</span> <span class="n">process</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">StringBuffer</span> <span class="n">cmdOut</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="o">();</span>
-</span><span class='line'>      <span class="n">InputStream</span> <span class="n">fis</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">();</span>
-</span><span class='line'>      <span class="n">BufferedReader</span> <span class="n">br</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="n">InputStreamReader</span><span class="o">(</span><span class="n">fis</span><span class="o">));</span>
-</span><span class='line'>      
-</span><span class='line'>      <span class="n">String</span> <span class="n">line</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-</span><span class='line'>      <span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>          <span class="k">while</span> <span class="o">((</span><span class="n">line</span> <span class="o">=</span> <span class="n">br</span><span class="o">.</span><span class="na">readLine</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>              <span class="n">cmdOut</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">line</span><span class="o">).</span><span class="na">append</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">&quot;line.separator&quot;</span><span class="o">));</span>
-</span><span class='line'>          <span class="o">}</span>
-</span><span class='line'>      <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>          <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'><span class="c1">//       System.out.println(&quot;执行系统命令后的控制台输出为：\n&quot; + cmdOut.toString());</span>
-</span><span class='line'>      <span class="k">return</span> <span class="n">cmdOut</span><span class="o">.</span><span class="na">toString</span><span class="o">().</span><span class="na">trim</span><span class="o">();</span>
 </span><span class='line'>  <span class="o">}</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>

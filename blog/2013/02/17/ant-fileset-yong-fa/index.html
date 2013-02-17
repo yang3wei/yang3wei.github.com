@@ -5,15 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Git 标签相关操作 - yang3wei的专栏</title>
+  <title>Ant fileset 用法 - yang3wei的专栏</title>
   <meta name="author" content="yang3wei">
 
   
-  <meta name="description" content="原文链接：Git 标签相关操作
-标签可以针对某一时间点的版本做标记，常用于版本发布。 列出标签 1
-2
-$ git tag # 在控制台打印出当前仓库的所有标签
-$ git tag -l 'v0.1.*' # 搜索符合模式的标签 打标签 git标签分为两种类型：轻量标签和附注标签。 &hellip;">
+  <meta name="description" content="原文链接：ant fileset用法 fileset用来定义目录位置及操作适用于该目录下的那些子目录或文件 1. 拷贝单个文件到指定目录下，例： 1
+&lt;copy todir="${basedir}/new" file="${basedir}/old/old1.txt1"&gt; 将 ${ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -27,7 +24,7 @@ $ git tag -l 'v0.1.*' # 搜索符合模式的标签 打标签 git标签分为两
   <meta name="keywords" content="yang3wei, cocos2d, mac, objective-c, c/c++, game develop, java, OpenGL, shell, box2d, git, python">
 
   
-  <link rel="canonical" href="http://yang3wei.github.com/blog/2013/02/09/git-biao-qian-xiang-guan-cao-zuo/">
+  <link rel="canonical" href="http://yang3wei.github.com/blog/2013/02/17/ant-fileset-yong-fa/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -88,7 +85,7 @@ $ git tag -l 'v0.1.*' # 搜索符合模式的标签 打标签 git标签分为两
   
   <header>
     
-      <h1 class="entry-title">Git 标签相关操作</h1>
+      <h1 class="entry-title">Ant fileset 用法</h1>
     
     
       <p class="meta">
@@ -104,7 +101,7 @@ $ git tag -l 'v0.1.*' # 搜索符合模式的标签 打标签 git标签分为两
   
 
 
-<time datetime="2013-02-09T14:15:00+08:00" pubdate data-updated="true">Feb 9<span>th</span>, 2013</time>
+<time datetime="2013-02-17T07:53:00+08:00" pubdate data-updated="true">Feb 17<span>th</span>, 2013</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -113,83 +110,116 @@ $ git tag -l 'v0.1.*' # 搜索符合模式的标签 打标签 git标签分为两
   </header>
 
 
-<div class="entry-content"><p>原文链接：<a href="http://www.csser.com/board/4f3f516e38a5ebc97800050e#/post/4f54fd1bb439efec21000062">Git 标签相关操作</a><br/>
-标签可以针对某一时间点的版本做标记，常用于版本发布。</p>
+<div class="entry-content"><p>原文链接：<a href="http://blog.csdn.net/ajaxbloger/article/details/2303841">ant fileset用法</a>  <br/>
+fileset用来定义目录位置及操作适用于该目录下的那些子目录或文件<!-- more --></p>
 
-<!-- more -->
+<h2>1. 拷贝单个文件到指定目录下，例：</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;copy todir="${basedir}/new" file="${basedir}/old/old1.txt1"&gt;   </span></code></pre></td></tr></table></div></figure>
 
 
-<h3>列出标签</h3>
+<p>
+将 <strong>${basedir}/old/old.txt</strong> 文件拷贝到 <strong>${basedir}/new</strong> 下</p>
+
+<h2>2. 拷贝一批文件到指定目录下，例：</h2>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ git tag # 在控制台打印出当前仓库的所有标签
-</span><span class='line'>$ git tag -l 'v0.1.*' # 搜索符合模式的标签</span></code></pre></td></tr></table></div></figure>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;copy todir="${basedir}/new"&gt;  
+</span><span class='line'>    &lt;fileset dir="${basedir}/old"&gt;  
+</span><span class='line'>        &lt;include name="old1.txt" /&gt;  
+</span><span class='line'>        &lt;include name="old2.txt" /&gt;  
+</span><span class='line'>        &lt;exclude name="old3.txt" /&gt;  
+</span><span class='line'>    &lt;/fileset&gt;  
+</span><span class='line'>&lt;/copy&gt;  </span></code></pre></td></tr></table></div></figure>
 
 
-<h3>打标签</h3>
-
-<p>git标签分为两种类型：轻量标签和附注标签。<br/>
-轻量标签是指向提交对象的引用，附注标签则是仓库中的一个独立对象。建议使用附注标签。</p>
-
-<p><strong>创建轻量标签</strong></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ git tag v0.1.2-light</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>创建附注标签</strong></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ git tag -a v0.1.2 -m "发布0.1.2版本"</span></code></pre></td></tr></table></div></figure>
-
-
-<p>创建轻量标签不需要传递参数，直接指定标签名称即可。</p>
-
-<p>创建附注标签时，参数a即annotated的缩写，指定标签类型，后附标签名。参数m指定标签说明，说明信息会保存在标签对象中。</p>
-
-<h3>切换到标签</h3>
-
-<p>与切换分支命令相同，用 <code>git checkout [tagname]</code></p>
-
-<h3>查看标签信息</h3>
-
-<p>用 <code>git show</code> 命令可以查看标签的版本信息：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ git show v0.1.2</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>删除标签</h3>
-
-<p>误打或需要修改标签时，需要先将标签删除，再打新标签。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ git tag -d v0.1.2 # 删除标签</span></code></pre></td></tr></table></div></figure>
-
-
-<p>参数d即delete的缩写，意为删除其后指定的标签。</p>
-
-<h3>补打标签</h3>
-
-<p>打标签不必要在 head 之上，也可在之前的版本上打，
-这需要你知道某个提交对象的校验和（通过git log获取）。</p>
-
-<p>补打标签</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ git tag -a v0.1.1 9fbc3d0</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>标签发布</h3>
-
-<p>通常的 <code>git push</code> 不会将标签对象提交到 <code>git</code> 服务器，我们需要进行显式的操作：</p>
+<p>
+这里 fileset 定义的是原文件的组成形式，<code>&lt;include/&gt;</code> 子属性表示包括，<code>&lt;exclude/&gt;</code> 子属性表示排除，很简单，通过他们组合实现多文件的筛选，当然我这个例子用得很傻。比如</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ git push origin v0.1.2 # 将v0.1.2标签提交到git服务器
-</span><span class='line'>$ git push origin --tags # 将本地所有标签一次性提交到git服务器</span></code></pre></td></tr></table></div></figure>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;include name="appgen/**"/&gt;  
+</span><span class='line'>&lt;include name="ibatis/**"/&gt;  
+</span><span class='line'>&lt;exclude name="**/*.log"/&gt;  </span></code></pre></td></tr></table></div></figure>
 
+
+<p>
+拷贝 <code>appgen</code> 目录和 <code>ibatis</code> 目录下除了 <code>.log</code> 文件以外的其它所有文件和子目录。<br/>
+可以把 <code>&lt;fileset/&gt;</code> 简写成 <code>&lt;fileset dir="${basedir}/old" includes="old1.txt,old2.txt" /&gt;</code>，<code>includes</code> 可以理解成 <code>include</code> 的复数形式，包含多个文件时用逗号隔开，<code>excludes</code> 也一样。</p>
+
+<h2>3. 拷贝一个目录到指定目录下，例：</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;copy todir="${basedir}/new"&gt;  
+</span><span class='line'>    &lt;fileset dir="${basedir}/old"&gt;  
+</span><span class='line'>        &lt;include name="appgen" /&gt;  
+</span><span class='line'>        &lt;include name="appgen/" /&gt;  
+</span><span class='line'>        &lt;include name=appgen/**" /&gt;  
+</span><span class='line'>        &lt;include name="appgen/***" /&gt;  
+</span><span class='line'>    &lt;/fileset&gt;  
+</span><span class='line'>&lt;/copy&gt;  </span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+同样使用 <code>&lt;fileset/&gt;</code> 属性，<code>name</code> 指定目录名，不过这里要分两种情况，用 <code>&lt;include/&gt;</code> 子属性和不用 <code>&lt;include/&gt;</code> 子属性.<br/>
+若使用 <code>&lt;include/&gt;</code>， 又要分三种情况：<br/>
+若是 <code>appgen</code>，则只会拷贝名为 <code>appgen</code> 的空目录过去，它里面的文件和子目录则不会拷贝。<br/>
+若是 <code>appgen/</code>，或 <code>appgen/**</code>，则会把整个 <code>appgen</code> 目录拷贝过去，包括里面的文件和子目录。<br/>
+若是 <code>appgen/*</code>，则只会把该目录和该目录下第一级子目录的所有东西拷贝过去，而不会拷贝第二级和第二级以下的。<br/>
+<strong>注： <code>appgen/*</code> 这儿是一个 * 号，* 号若大于两个，也跟一个 * 号是同样效果。比如 <code>appgen/*</code> 和 <code>appgen/****</code> 都只拷贝 <code>appgen</code> 目录下第一级子目录。</strong><br/>
+<strong>注：若 <code>appgen</code> 这个目录本身就是个空目录(就是不存在)，无论怎么写，这个空目录都不会被拷贝。也就是说，<code>copy</code> 操作不会产生创建空目录的作用，要想创建空目录，只有用 <code>mkdir</code>。</strong><br/>
+若不使用任何 <code>&lt;include&gt;</code> 属性，如</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;fileset dir="${basedir}/old"&gt;  
+</span><span class='line'>&lt;/fileset&gt;  </span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+则会拷贝 <strong>${basedir}/old</strong> 下的所有文件和子目录。<br/>
+<strong>注：使用 <code>&lt;exclude/&gt;</code> 排除目录时，目录名必须写成 <code>appgen/</code> 或 <code>appgen/**</code> 形式，否则不会生效。</strong></p>
+
+<p>以上是三种拷贝到目录的种类，注意如果计算机中没有 <code>todir</code> 指定的路径，Ant将会自动创建这个路径。</p>
+
+<h2>4. 拷贝单个的文件：</h2>
+
+<p><code>〈copy tofile="old.txt" file="new.txt" /〉</code> 就这么简单就行了。<br/>
+当然也可以写成</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;copy tofile="${basedir}/new/new.txt"&gt;  
+</span><span class='line'>    &lt;fileset dir="${basedir}/old" includes="old.txt" /&gt;  
+</span><span class='line'>&lt;/copy&gt;  </span></code></pre></td></tr></table></div></figure>
+
+
+<p>这里 <code>includes</code> 就只能写一个文件，不能写上多个文件，因为不能将多个文件复制到一个文件中去，所以这样麻烦的写法是没有意义的。这个地方还有待去验证一下.</p>
+
+<p>复制肯定还要涉及到同名覆盖的问题，Ant 在 copy 类的 API 中说明：<strong>Files are only copied if the source file is newer than the destination file</strong>，这里的 newer 是指文件的修改时间，即使你在修改时文件内容没有任何变化，只是导致修改时间变了，Ant 同样会覆盖同名文件，也就是说，Ant不会检查文件内容。</p>
+
+<p>对于是复制目录的情况，由于目录没有修改时间，Ant 还是通过检查目录内文件的修改时间来决定是否覆盖的，若目录内某文件修改时间有变化，则会覆盖这个文件，而不是整个目录。</p>
+
+<p>如果要强行覆盖，<code>&lt;copy/&gt;</code> 有个 <code>overwrite</code> 属性，默认为 <code>false</code>，改成 <code>true</code> 就行了。<br/>
+Ant 真是太方便了，以前都没注意到它。功能很强大，能创建数据库，配置服务器，部署发布应用……只需要写好 <code>build.xml</code> 文件，剩下的就交给 Ant 来 “安装” 你的 WEB 应用了。<br/>
+以上就这些:<br/>
+您也可以去 apache Ant 项目里去看一下 fileset 的用法:</p>
 </div>
 
 
@@ -212,12 +242,12 @@ $ git tag -l 'v0.1.*' # 搜索符合模式的标签 打标签 git标签分为两
   
 
 
-<time datetime="2013-02-09T14:15:00+08:00" pubdate data-updated="true">Feb 9<span>th</span>, 2013</time>
+<time datetime="2013-02-17T07:53:00+08:00" pubdate data-updated="true">Feb 17<span>th</span>, 2013</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/git相关/'>Git相关</a>
+    <a class='category' href='/blog/categories/java相关/'>Java相关</a>
   
 </span>
 
@@ -233,10 +263,8 @@ $ git tag -l 'v0.1.*' # 搜索符合模式的标签 打标签 git标签分为两
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/02/09/how-to-play-piano-on-a-mac/" title="Previous Post: How to Play Piano on a Mac">&laquo; How to Play Piano on a Mac</a>
+        <a class="basic-alignment left" href="/blog/2013/02/15/mac-xia-an-zhuang-opencv/" title="Previous Post: Mac 下安装 OpenCV">&laquo; Mac 下安装 OpenCV</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/02/09/jie-du-hen-qiang-hen-biao-han-de-pythonbiao-zhun-guiku/" title="Next Post: 解读很强很彪悍的 Python 标准 GUI 库">解读很强很彪悍的 Python 标准 GUI 库 &raquo;</a>
       
     </p>
   </footer>
@@ -338,8 +366,8 @@ $ git tag -l 'v0.1.*' # 搜索符合模式的标签 打标签 git标签分为两
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://yang3wei.github.com/blog/2013/02/09/git-biao-qian-xiang-guan-cao-zuo/';
-        var disqus_url = 'http://yang3wei.github.com/blog/2013/02/09/git-biao-qian-xiang-guan-cao-zuo/';
+        var disqus_identifier = 'http://yang3wei.github.com/blog/2013/02/17/ant-fileset-yong-fa/';
+        var disqus_url = 'http://yang3wei.github.com/blog/2013/02/17/ant-fileset-yong-fa/';
         var disqus_script = 'embed.js';
       
     (function () {

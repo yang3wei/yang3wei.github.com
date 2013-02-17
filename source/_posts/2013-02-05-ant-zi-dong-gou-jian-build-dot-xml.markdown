@@ -169,8 +169,6 @@ public class GenBuildXml extends Dta {
 	}
 }
 {% endcodeblock %}
-
-
 {% codeblock ant_template.properties lang:js %}
 # App name(e.g. "JavaDynamicComiple")
 name=__APPLICATION_NAME__
@@ -185,20 +183,20 @@ res.pkg=
 # Classpath of entry class(e.g. "org.bruce.test.Main")
 entry.class=
 {% endcodeblock %}
-
 {% codeblock ant_template.xml lang:xml %}
-<project name="__PROJECT_NAME__" default="execute.class" basedir=".">
-	
+<project name="__PROJECT_NAME__" default="execute.class">
+
 	<echo message="1.define variables~" />
 	<!-- 
 	也可以从 xml 文件中读取属性：<xmlproperty file="config.xml" />
 	详细请参见：http://blog.csdn.net/jzy23682891/article/details/7063489 
 	-->
 	<property file="build.properties" />
-	<property name="src" value="${basedir}/src" />
-	<property name="libs" value="${basedir}/libs" />
-	<property name="build" value="${basedir}/build" />
-	<property name="dist" value="${basedir}/dist" />
+	<property name="src" value="./src" />
+	<property name="bin" value="./bin" />
+	<property name="libs" value="./libs" />
+	<property name="build" value="./build" />
+	<property name="dist" value="./dist" />
 
 	<echo message="2.define external.jars.path" />
 	<path id="external.jars.path">
@@ -220,13 +218,7 @@ entry.class=
 		<description>将src目录下的资源文件复制到 build目录下面(保留包结构)</description>
 		<delete dir="${build}/${res.pkg}" />
 		<copy todir="${build}/${res.pkg}">
-			<fileset dir="${src}/${res.pkg}">
-				<include name="**/*.jpg" />
-				<include name="**/*.png" />
-				<include name="**/*.gif" />
-				<include name="**/*.prop" />
-				<include name="**/*.properties" />
-			</fileset>
+			<fileset dir="${src}/${res.pkg}" />
 		</copy>
 
 		<javac srcdir="${src}" destdir="${build}" encoding="UTF-8" deprecation="true" listfiles="off" fork="true" target="1.6" debug="false" failonerror="false">
@@ -246,9 +238,10 @@ entry.class=
 		</java>
 	</target>
 
+	<!-- 优点：所依赖的外部 jar 包的名称不用再一一写出了 -->
 	<target name="package2jar" depends="compile">
 		<echo message="${name}.package2jar" />
-		<jar destfile="${dist}/${name}${version}.jar" basedir="${build}">
+		<jar destfile="${dist}/${name}${version}.jar">
 			<manifest>
 				<attribute name="App-Name" value="${name}" />
 				<attribute name="App-Version" value="${version}" />
@@ -256,7 +249,9 @@ entry.class=
 				<attribute name="Created-By" value="${author}" />
 				<attribute name="Main-Class" value="${entry.class}" />
 			</manifest>
-__EXTERNAL_JARS__		</jar>
+			<fileset dir="${build}" />
+			<zipgroupfileset dir="./libs" includes="**/*.jar" />
+		</jar>
 	</target>
 
 	<target name="execute.jar" depends="package2jar">
@@ -277,101 +272,6 @@ __EXTERNAL_JARS__		</jar>
 		<delete dir="${dist}" />
 	</target>
 
-<project name="__PROJECT_NAME__" default="execute.class" basedir=".">
-	
-	<echo message="1.define variables~" />
-	<!-- 
-	也可以从 xml 文件中读取属性：<xmlproperty file="config.xml" />
-	详细请参见：http://blog.csdn.net/jzy23682891/article/details/7063489 
-	-->
-	<property file="build.properties" />
-	<property name="src" value="${basedir}/src" />
-	<property name="libs" value="${basedir}/libs" />
-	<property name="build" value="${basedir}/build" />
-	<property name="dist" value="${basedir}/dist" />
-
-	<echo message="2.define external.jars.path" />
-	<path id="external.jars.path">
-		<fileset dir="${libs}">
-			<include name="**/*.jar" />
-		</fileset>
-	</path>
-
-
-	<target name="prepare">
-		<echo message="3.prepare" />
-		<mkdir dir="${build}" />
-		<mkdir dir="${dist}" />
-	</target>
-
-
-	<target name="compile" depends="prepare">
-		<echo message="5.compile" />
-		<description>将src目录下的资源文件复制到 build目录下面(保留包结构)</description>
-		<delete dir="${build}/${res.pkg}" />
-		<copy todir="${build}/${res.pkg}">
-			<fileset dir="${src}/${res.pkg}">
-				<include name="**/*.jpg" />
-				<include name="**/*.png" />
-				<include name="**/*.gif" />
-				<include name="**/*.prop" />
-				<include name="**/*.properties" />
-			</fileset>
-		</copy>
-
-		<javac srcdir="${src}" destdir="${build}" encoding="UTF-8" deprecation="true" listfiles="off" fork="true" target="1.6" debug="false" failonerror="false">
-			<!--给编译器指定编码，防止出现："警告： 编码 GBK 的不可映射字符"-->
-			<compilerarg line="-encoding UTF-8 " />
-			<classpath refid="external.jars.path" />
-		</javac>
-		<echo message="compile finished!" />
-	</target>
-
-
-	<target name="execute.class" depends="compile">
-		<echo message="${name}.execute" />
-		<java classname="${entry.class}" classpath="${build}" fork="true">
-			<sysproperty key="file.encoding" value="UTF-8" />
-			<classpath refid="external.jars.path" />
-		</java>
-	</target>
-
-	<target name="package2jar" depends="compile">
-		<echo message="${name}.package2jar" />
-		<jar destfile="${dist}/${name}${version}.jar" basedir="${build}">
-			<manifest>
-				<attribute name="App-Name" value="${name}" />
-				<attribute name="App-Version" value="${version}" />
-				<attribute name="App-Author" value="${author}" />
-				<attribute name="Created-By" value="${author}" />
-				<attribute name="Main-Class" value="${entry.class}" />
-			</manifest>
-__EXTERNAL_JARS__		</jar>
-	</target>
-
-	<target name="execute.jar" depends="package2jar">
-		<echo message="${name}.jar.execute" />
-		<java fork="true" failonerror="true" jar="${dist}/${name}${version}.jar">
-			<sysproperty key="file.encoding" value="UTF-8" />
-		</java>
-	</target>
-
-	<target name="copy2desktop" depends="package2jar">
-		<echo message="${name}.copy2desktop" />
-		<copy file="${dist}/${name}${version}.jar" tofile="${desktop}/${name}${version}.jar" />
-	</target>
-
-	<target name="clean">
-		<delete dir="${build}" />
-		<delete file="${dist}/${name}${version}.jar" />
-		<delete dir="${dist}" />
-	</target>
-
-	<target name="rerun" depends="clean">
-		<ant antfile="build.xml" target="execute.class" />
-	</target>
-
-</project>
 	<target name="rerun" depends="clean">
 		<ant antfile="build.xml" target="execute.class" />
 	</target>

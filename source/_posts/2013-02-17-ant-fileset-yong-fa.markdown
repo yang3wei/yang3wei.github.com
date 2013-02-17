@@ -62,8 +62,10 @@ __注：使用 `<exclude/>` 排除目录时，目录名必须写成 `appgen/` �
 以上是三种拷贝到目录的种类，注意如果计算机中没有 `todir` 指定的路径，Ant将会自动创建这个路径。  
   
 ##4. 拷贝单个的文件：   
-`〈copy tofile="old.txt" file="new.txt" /〉` 就这么简单就行了。  
-当然也可以写成  
+```
+<copy tofile="old.txt" file="new.txt" />
+```
+就这么简单就行了。当然也可以写成：  
 ```
 <copy tofile="${basedir}/new/new.txt">  
     <fileset dir="${basedir}/old" includes="old.txt" />  
@@ -78,4 +80,4 @@ __注：使用 `<exclude/>` 排除目录时，目录名必须写成 `appgen/` �
 如果要强行覆盖，`<copy/>` 有个 `overwrite` 属性，默认为 `false`，改成 `true` 就行了。  
 Ant 真是太方便了，以前都没注意到它。功能很强大，能创建数据库，配置服务器，部署发布应用……只需要写好 `build.xml` 文件，剩下的就交给 Ant 来 “安装” 你的 WEB 应用了。  
 以上就这些:  
-您也可以去 apache Ant 项目里去看一下 fileset 的用法:  
+您也可以去 apache Ant 项目里去看一下 fileset 的用法。  

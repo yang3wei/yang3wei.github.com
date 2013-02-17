@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: ant | yang3wei的专栏]]></title>
   <link href="http://yang3wei.github.com/tags/ant/atom.xml" rel="self"/>
   <link href="http://yang3wei.github.com/"/>
-  <updated>2013-02-17T08:19:02+08:00</updated>
+  <updated>2013-02-17T11:03:09+08:00</updated>
   <id>http://yang3wei.github.com/</id>
   <author>
     <name><![CDATA[yang3wei]]></name>
@@ -314,9 +314,8 @@
 </span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>ant_template.properties  </span></figcaption>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>ant_template.properties  </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -367,9 +366,8 @@
 </span><span class='line'><span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Classpath</span> <span class="nx">of</span> <span class="nx">entry</span> <span class="kr">class</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">g</span><span class="p">.</span> <span class="s2">&quot;org.bruce.test.Main&quot;</span><span class="p">)</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">entry</span><span class="p">.</span><span class="kr">class</span><span class="o">=</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>ant_template.xml  </span></figcaption>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>ant_template.xml  </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -464,113 +462,7 @@
 <span class='line-number'>92</span>
 <span class='line-number'>93</span>
 <span class='line-number'>94</span>
-<span class='line-number'>95</span>
-<span class='line-number'>96</span>
-<span class='line-number'>97</span>
-<span class='line-number'>98</span>
-<span class='line-number'>99</span>
-<span class='line-number'>100</span>
-<span class='line-number'>101</span>
-<span class='line-number'>102</span>
-<span class='line-number'>103</span>
-<span class='line-number'>104</span>
-<span class='line-number'>105</span>
-<span class='line-number'>106</span>
-<span class='line-number'>107</span>
-<span class='line-number'>108</span>
-<span class='line-number'>109</span>
-<span class='line-number'>110</span>
-<span class='line-number'>111</span>
-<span class='line-number'>112</span>
-<span class='line-number'>113</span>
-<span class='line-number'>114</span>
-<span class='line-number'>115</span>
-<span class='line-number'>116</span>
-<span class='line-number'>117</span>
-<span class='line-number'>118</span>
-<span class='line-number'>119</span>
-<span class='line-number'>120</span>
-<span class='line-number'>121</span>
-<span class='line-number'>122</span>
-<span class='line-number'>123</span>
-<span class='line-number'>124</span>
-<span class='line-number'>125</span>
-<span class='line-number'>126</span>
-<span class='line-number'>127</span>
-<span class='line-number'>128</span>
-<span class='line-number'>129</span>
-<span class='line-number'>130</span>
-<span class='line-number'>131</span>
-<span class='line-number'>132</span>
-<span class='line-number'>133</span>
-<span class='line-number'>134</span>
-<span class='line-number'>135</span>
-<span class='line-number'>136</span>
-<span class='line-number'>137</span>
-<span class='line-number'>138</span>
-<span class='line-number'>139</span>
-<span class='line-number'>140</span>
-<span class='line-number'>141</span>
-<span class='line-number'>142</span>
-<span class='line-number'>143</span>
-<span class='line-number'>144</span>
-<span class='line-number'>145</span>
-<span class='line-number'>146</span>
-<span class='line-number'>147</span>
-<span class='line-number'>148</span>
-<span class='line-number'>149</span>
-<span class='line-number'>150</span>
-<span class='line-number'>151</span>
-<span class='line-number'>152</span>
-<span class='line-number'>153</span>
-<span class='line-number'>154</span>
-<span class='line-number'>155</span>
-<span class='line-number'>156</span>
-<span class='line-number'>157</span>
-<span class='line-number'>158</span>
-<span class='line-number'>159</span>
-<span class='line-number'>160</span>
-<span class='line-number'>161</span>
-<span class='line-number'>162</span>
-<span class='line-number'>163</span>
-<span class='line-number'>164</span>
-<span class='line-number'>165</span>
-<span class='line-number'>166</span>
-<span class='line-number'>167</span>
-<span class='line-number'>168</span>
-<span class='line-number'>169</span>
-<span class='line-number'>170</span>
-<span class='line-number'>171</span>
-<span class='line-number'>172</span>
-<span class='line-number'>173</span>
-<span class='line-number'>174</span>
-<span class='line-number'>175</span>
-<span class='line-number'>176</span>
-<span class='line-number'>177</span>
-<span class='line-number'>178</span>
-<span class='line-number'>179</span>
-<span class='line-number'>180</span>
-<span class='line-number'>181</span>
-<span class='line-number'>182</span>
-<span class='line-number'>183</span>
-<span class='line-number'>184</span>
-<span class='line-number'>185</span>
-<span class='line-number'>186</span>
-<span class='line-number'>187</span>
-<span class='line-number'>188</span>
-<span class='line-number'>189</span>
-<span class='line-number'>190</span>
-<span class='line-number'>191</span>
-<span class='line-number'>192</span>
-<span class='line-number'>193</span>
-<span class='line-number'>194</span>
-<span class='line-number'>195</span>
-<span class='line-number'>196</span>
-<span class='line-number'>197</span>
-<span class='line-number'>198</span>
-<span class='line-number'>199</span>
-<span class='line-number'>200</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;project</span> <span class="na">name=</span><span class="s">&quot;__PROJECT_NAME__&quot;</span> <span class="na">default=</span><span class="s">&quot;execute.class&quot;</span> <span class="na">basedir=</span><span class="s">&quot;.&quot;</span><span class="nt">&gt;&lt;/p&gt;</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;project</span> <span class="na">name=</span><span class="s">&quot;__PROJECT_NAME__&quot;</span> <span class="na">default=</span><span class="s">&quot;execute.class&quot;</span><span class="nt">&gt;&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>echo message=&quot;1.define variables~&quot; /<span class="ni">&amp;gt;</span>
 </span><span class='line'><span class="ni">&amp;lt;</span>!--
@@ -578,10 +470,11 @@
 </span><span class='line'>详细请参见：http://blog.csdn.net/jzy23682891/article/details/7063489
 </span><span class='line'>--<span class="ni">&amp;gt;</span>
 </span><span class='line'><span class="ni">&amp;lt;</span>property file=&quot;build.properties&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;src&quot; value=&quot;${basedir}/src&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;libs&quot; value=&quot;${basedir}/libs&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;build&quot; value=&quot;${basedir}/build&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;dist&quot; value=&quot;${basedir}/dist&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;src&quot; value=&quot;./src&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;bin&quot; value=&quot;./bin&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;libs&quot; value=&quot;./libs&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;build&quot; value=&quot;./build&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;dist&quot; value=&quot;./dist&quot; /<span class="ni">&amp;gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="ni">&amp;lt;</span>echo message=&quot;2.define external.jars.path&quot; /<span class="ni">&amp;gt;</span>
 </span><span class='line'><span class="ni">&amp;lt;</span>path id=&quot;external.jars.path&quot;<span class="ni">&amp;gt;</span>
@@ -603,13 +496,7 @@
 </span><span class='line'>    <span class="ni">&amp;lt;</span>description<span class="ni">&amp;gt;</span>将src目录下的资源文件复制到 build目录下面(保留包结构)<span class="ni">&amp;lt;</span>/description<span class="ni">&amp;gt;</span>
 </span><span class='line'>    <span class="ni">&amp;lt;</span>delete dir=&quot;${build}/${res.pkg}&quot; /<span class="ni">&amp;gt;</span>
 </span><span class='line'>    <span class="ni">&amp;lt;</span>copy todir=&quot;${build}/${res.pkg}&quot;<span class="ni">&amp;gt;</span>
-</span><span class='line'>        <span class="ni">&amp;lt;</span>fileset dir=&quot;${src}/${res.pkg}&quot;<span class="ni">&amp;gt;</span>
-</span><span class='line'>            <span class="ni">&amp;lt;</span>include name=&quot;**/*.jpg&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>            <span class="ni">&amp;lt;</span>include name=&quot;**/*.png&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>            <span class="ni">&amp;lt;</span>include name=&quot;**/*.gif&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>            <span class="ni">&amp;lt;</span>include name=&quot;**/*.prop&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>            <span class="ni">&amp;lt;</span>include name=&quot;**/*.properties&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>        <span class="ni">&amp;lt;</span>/fileset<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>fileset dir=&quot;${src}/${res.pkg}&quot; /<span class="ni">&amp;gt;</span>
 </span><span class='line'>    <span class="ni">&amp;lt;</span>/copy<span class="ni">&amp;gt;</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="ni">&amp;lt;</span>javac srcdir=&quot;${src}&quot; destdir=&quot;${build}&quot; encoding=&quot;UTF-8&quot; deprecation=&quot;true&quot; listfiles=&quot;off&quot; fork=&quot;true&quot; target=&quot;1.6&quot; debug=&quot;false&quot; failonerror=&quot;false&quot;<span class="ni">&amp;gt;</span>
@@ -629,9 +516,10 @@
 </span><span class='line'>    <span class="ni">&amp;lt;</span>/java<span class="ni">&amp;gt;</span>
 </span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
 </span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>!-- 优点：所依赖的外部 jar 包的名称不用再一一写出了 --<span class="ni">&amp;gt;</span>
 </span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;package2jar&quot; depends=&quot;compile&quot;<span class="ni">&amp;gt;</span>
 </span><span class='line'>    <span class="ni">&amp;lt;</span>echo message=&quot;${name}.package2jar&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>    <span class="ni">&amp;lt;</span>jar destfile=&quot;${dist}/${name}${version}.jar&quot; basedir=&quot;${build}&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>jar destfile=&quot;${dist}/${name}${version}.jar&quot;<span class="ni">&amp;gt;</span>
 </span><span class='line'>        <span class="ni">&amp;lt;</span>manifest<span class="ni">&amp;gt;</span>
 </span><span class='line'>            <span class="ni">&amp;lt;</span>attribute name=&quot;App-Name&quot; value=&quot;${name}&quot; /<span class="ni">&amp;gt;</span>
 </span><span class='line'>            <span class="ni">&amp;lt;</span>attribute name=&quot;App-Version&quot; value=&quot;${version}&quot; /<span class="ni">&amp;gt;</span>
@@ -639,105 +527,10 @@
 </span><span class='line'>            <span class="ni">&amp;lt;</span>attribute name=&quot;Created-By&quot; value=&quot;${author}&quot; /<span class="ni">&amp;gt;</span>
 </span><span class='line'>            <span class="ni">&amp;lt;</span>attribute name=&quot;Main-Class&quot; value=&quot;${entry.class}&quot; /<span class="ni">&amp;gt;</span>
 </span><span class='line'>        <span class="ni">&amp;lt;</span>/manifest<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;p&gt;&lt;strong&gt;</span>EXTERNAL_JARS<span class="nt">&lt;/strong&gt;</span>       <span class="nt">&lt;/jar&gt;&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;execute.jar&quot; depends=&quot;package2jar&quot;<span class="ni">&amp;gt;</span>
-</span><span class='line'>    <span class="ni">&amp;lt;</span>echo message=&quot;${name}.jar.execute&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>    <span class="ni">&amp;lt;</span>java fork=&quot;true&quot; failonerror=&quot;true&quot; jar=&quot;${dist}/${name}${version}.jar&quot;<span class="ni">&amp;gt;</span>
-</span><span class='line'>        <span class="ni">&amp;lt;</span>sysproperty key=&quot;file.encoding&quot; value=&quot;UTF-8&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>    <span class="ni">&amp;lt;</span>/java<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>fileset dir=&quot;${build}&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>zipgroupfileset dir=&quot;./libs&quot; includes=&quot;**/*.jar&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>/jar<span class="ni">&amp;gt;</span>
 </span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;copy2desktop&quot; depends=&quot;package2jar&quot;<span class="ni">&amp;gt;</span>
-</span><span class='line'>    <span class="ni">&amp;lt;</span>echo message=&quot;${name}.copy2desktop&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>    <span class="ni">&amp;lt;</span>copy file=&quot;${dist}/${name}${version}.jar&quot; tofile=&quot;${desktop}/${name}${version}.jar&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;clean&quot;<span class="ni">&amp;gt;</span>
-</span><span class='line'>    <span class="ni">&amp;lt;</span>delete dir=&quot;${build}&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>    <span class="ni">&amp;lt;</span>delete file=&quot;${dist}/${name}${version}.jar&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>    <span class="ni">&amp;lt;</span>delete dir=&quot;${dist}&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;p&gt;&lt;project</span> <span class="na">name=</span><span class="s">&quot;__PROJECT_NAME__&quot;</span> <span class="na">default=</span><span class="s">&quot;execute.class&quot;</span> <span class="na">basedir=</span><span class="s">&quot;.&quot;</span><span class="nt">&gt;&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>echo message=&quot;1.define variables~&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>!--
-</span><span class='line'>也可以从 xml 文件中读取属性：<span class="ni">&amp;lt;</span>xmlproperty file=&quot;config.xml&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>详细请参见：http://blog.csdn.net/jzy23682891/article/details/7063489
-</span><span class='line'>--<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>property file=&quot;build.properties&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;src&quot; value=&quot;${basedir}/src&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;libs&quot; value=&quot;${basedir}/libs&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;build&quot; value=&quot;${basedir}/build&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>property name=&quot;dist&quot; value=&quot;${basedir}/dist&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="ni">&amp;lt;</span>echo message=&quot;2.define external.jars.path&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>path id=&quot;external.jars.path&quot;<span class="ni">&amp;gt;</span>
-</span><span class='line'>    <span class="ni">&amp;lt;</span>fileset dir=&quot;${libs}&quot;<span class="ni">&amp;gt;</span>
-</span><span class='line'>        <span class="ni">&amp;lt;</span>include name=&quot;**/*.jar&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>    <span class="ni">&amp;lt;</span>/fileset<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>/path<span class="ni">&amp;gt;</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;prepare&quot;<span class="ni">&amp;gt;</span>
-</span><span class='line'>    <span class="ni">&amp;lt;</span>echo message=&quot;3.prepare&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>    <span class="ni">&amp;lt;</span>mkdir dir=&quot;${build}&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>    <span class="ni">&amp;lt;</span>mkdir dir=&quot;${dist}&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;compile&quot; depends=&quot;prepare&quot;<span class="ni">&amp;gt;</span>
-</span><span class='line'>    <span class="ni">&amp;lt;</span>echo message=&quot;5.compile&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>    <span class="ni">&amp;lt;</span>description<span class="ni">&amp;gt;</span>将src目录下的资源文件复制到 build目录下面(保留包结构)<span class="ni">&amp;lt;</span>/description<span class="ni">&amp;gt;</span>
-</span><span class='line'>    <span class="ni">&amp;lt;</span>delete dir=&quot;${build}/${res.pkg}&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>    <span class="ni">&amp;lt;</span>copy todir=&quot;${build}/${res.pkg}&quot;<span class="ni">&amp;gt;</span>
-</span><span class='line'>        <span class="ni">&amp;lt;</span>fileset dir=&quot;${src}/${res.pkg}&quot;<span class="ni">&amp;gt;</span>
-</span><span class='line'>            <span class="ni">&amp;lt;</span>include name=&quot;**/*.jpg&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>            <span class="ni">&amp;lt;</span>include name=&quot;**/*.png&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>            <span class="ni">&amp;lt;</span>include name=&quot;**/*.gif&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>            <span class="ni">&amp;lt;</span>include name=&quot;**/*.prop&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>            <span class="ni">&amp;lt;</span>include name=&quot;**/*.properties&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>        <span class="ni">&amp;lt;</span>/fileset<span class="ni">&amp;gt;</span>
-</span><span class='line'>    <span class="ni">&amp;lt;</span>/copy<span class="ni">&amp;gt;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="ni">&amp;lt;</span>javac srcdir=&quot;${src}&quot; destdir=&quot;${build}&quot; encoding=&quot;UTF-8&quot; deprecation=&quot;true&quot; listfiles=&quot;off&quot; fork=&quot;true&quot; target=&quot;1.6&quot; debug=&quot;false&quot; failonerror=&quot;false&quot;<span class="ni">&amp;gt;</span>
-</span><span class='line'>        <span class="ni">&amp;lt;</span>!--给编译器指定编码，防止出现：&quot;警告： 编码 GBK 的不可映射字符&quot;--<span class="ni">&amp;gt;</span>
-</span><span class='line'>        <span class="ni">&amp;lt;</span>compilerarg line=&quot;-encoding UTF-8 &quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>        <span class="ni">&amp;lt;</span>classpath refid=&quot;external.jars.path&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>    <span class="ni">&amp;lt;</span>/javac<span class="ni">&amp;gt;</span>
-</span><span class='line'>    <span class="ni">&amp;lt;</span>echo message=&quot;compile finished!&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;execute.class&quot; depends=&quot;compile&quot;<span class="ni">&amp;gt;</span>
-</span><span class='line'>    <span class="ni">&amp;lt;</span>echo message=&quot;${name}.execute&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>    <span class="ni">&amp;lt;</span>java classname=&quot;${entry.class}&quot; classpath=&quot;${build}&quot; fork=&quot;true&quot;<span class="ni">&amp;gt;</span>
-</span><span class='line'>        <span class="ni">&amp;lt;</span>sysproperty key=&quot;file.encoding&quot; value=&quot;UTF-8&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>        <span class="ni">&amp;lt;</span>classpath refid=&quot;external.jars.path&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>    <span class="ni">&amp;lt;</span>/java<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;package2jar&quot; depends=&quot;compile&quot;<span class="ni">&amp;gt;</span>
-</span><span class='line'>    <span class="ni">&amp;lt;</span>echo message=&quot;${name}.package2jar&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>    <span class="ni">&amp;lt;</span>jar destfile=&quot;${dist}/${name}${version}.jar&quot; basedir=&quot;${build}&quot;<span class="ni">&amp;gt;</span>
-</span><span class='line'>        <span class="ni">&amp;lt;</span>manifest<span class="ni">&amp;gt;</span>
-</span><span class='line'>            <span class="ni">&amp;lt;</span>attribute name=&quot;App-Name&quot; value=&quot;${name}&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>            <span class="ni">&amp;lt;</span>attribute name=&quot;App-Version&quot; value=&quot;${version}&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>            <span class="ni">&amp;lt;</span>attribute name=&quot;App-Author&quot; value=&quot;${author}&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>            <span class="ni">&amp;lt;</span>attribute name=&quot;Created-By&quot; value=&quot;${author}&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>            <span class="ni">&amp;lt;</span>attribute name=&quot;Main-Class&quot; value=&quot;${entry.class}&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'>        <span class="ni">&amp;lt;</span>/manifest<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;p&gt;&lt;strong&gt;</span>EXTERNAL_JARS<span class="nt">&lt;/strong&gt;</span>       <span class="nt">&lt;/jar&gt;&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;execute.jar&quot; depends=&quot;package2jar&quot;<span class="ni">&amp;gt;</span>
 </span><span class='line'>    <span class="ni">&amp;lt;</span>echo message=&quot;${name}.jar.execute&quot; /<span class="ni">&amp;gt;</span>
@@ -758,13 +551,6 @@
 </span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="ni">&amp;lt;</span>target name=&quot;rerun&quot; depends=&quot;clean&quot;<span class="ni">&amp;gt;</span>
-</span><span class='line'>    <span class="ni">&amp;lt;</span>ant antfile=&quot;build.xml&quot; target=&quot;execute.class&quot; /<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;p&gt;&lt;/project&gt;&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>target name=&quot;rerun&quot; depends=&quot;clean&quot;<span class="ni">&amp;gt;</span>
 </span><span class='line'>    <span class="ni">&amp;lt;</span>ant antfile=&quot;build.xml&quot; target=&quot;execute.class&quot; /<span class="ni">&amp;gt;</span>
 </span><span class='line'><span class="ni">&amp;lt;</span>/target<span class="ni">&amp;gt;</span>
 </span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>

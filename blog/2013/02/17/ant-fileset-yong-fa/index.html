@@ -199,8 +199,11 @@ fileset用来定义目录位置及操作适用于该目录下的那些子目录�
 
 <h2>4. 拷贝单个的文件：</h2>
 
-<p><code>〈copy tofile="old.txt" file="new.txt" /〉</code> 就这么简单就行了。<br/>
-当然也可以写成</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;copy tofile="old.txt" file="new.txt" /&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>就这么简单就行了。当然也可以写成：</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -219,7 +222,7 @@ fileset用来定义目录位置及操作适用于该目录下的那些子目录�
 <p>如果要强行覆盖，<code>&lt;copy/&gt;</code> 有个 <code>overwrite</code> 属性，默认为 <code>false</code>，改成 <code>true</code> 就行了。<br/>
 Ant 真是太方便了，以前都没注意到它。功能很强大，能创建数据库，配置服务器，部署发布应用……只需要写好 <code>build.xml</code> 文件，剩下的就交给 Ant 来 “安装” 你的 WEB 应用了。<br/>
 以上就这些:<br/>
-您也可以去 apache Ant 项目里去看一下 fileset 的用法:</p>
+您也可以去 apache Ant 项目里去看一下 fileset 的用法。</p>
 </div>
 
 

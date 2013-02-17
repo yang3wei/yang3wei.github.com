@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: java | yang3wei的专栏]]></title>
   <link href="http://yang3wei.github.com/tags/java/atom.xml" rel="self"/>
   <link href="http://yang3wei.github.com/"/>
-  <updated>2013-02-17T08:19:02+08:00</updated>
+  <updated>2013-02-17T11:03:09+08:00</updated>
   <id>http://yang3wei.github.com/</id>
   <author>
     <name><![CDATA[yang3wei]]></name>
@@ -85,8 +85,10 @@ __注：使用</code><exclude/><code>排除目录时，目录名必须写成</co
 
 <h2>4. 拷贝单个的文件：</h2>
 
-<p><code>〈copy tofile="old.txt" file="new.txt" /〉</code> 就这么简单就行了。<br/>
-当然也可以写成<br/>
+<p><code>
+&lt;copy tofile="old.txt" file="new.txt" /&gt;
+</code>
+就这么简单就行了。当然也可以写成：<br/>
 ```
 <copy tofile="${basedir}/new/new.txt"></p>
 
@@ -104,7 +106,7 @@ __注：使用</code><exclude/><code>排除目录时，目录名必须写成</co
 <p>如果要强行覆盖，<code>&lt;copy/&gt;</code> 有个 <code>overwrite</code> 属性，默认为 <code>false</code>，改成 <code>true</code> 就行了。<br/>
 Ant 真是太方便了，以前都没注意到它。功能很强大，能创建数据库，配置服务器，部署发布应用……只需要写好 <code>build.xml</code> 文件，剩下的就交给 Ant 来 “安装” 你的 WEB 应用了。<br/>
 以上就这些:<br/>
-您也可以去 apache Ant 项目里去看一下 fileset 的用法:</p>
+您也可以去 apache Ant 项目里去看一下 fileset 的用法。</p>
 ]]></content>
   </entry>
   
